@@ -6,10 +6,16 @@
     "browser": true,
     "es2021": true
   },
-  "plugins": ["react", "react-hooks"],
-  "extends": ["eslint:recommended", "prettier", "plugin:react/recommended"],
+  "plugins": ["react", "react-hooks", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended"
+  ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true

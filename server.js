@@ -6,11 +6,15 @@ const PORT = 666;
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  console.log(req.body);
   return res.sendFile(path.join(__dirname, './src/index.html'));
 });
 
-// This seems to break the server
+app.get('/api', (req, res) => {
+  console.log(res.body);
+  res.json({ posts: ['post1', 'post2', 'post3'] });
+});
+
+// This does not seem to work
 app.listen(666, () => {
   console.log('Server started on port 666');
 });
