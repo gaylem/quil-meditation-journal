@@ -38,7 +38,7 @@ module.exports = {
             publicPath: '/'
         },
         proxy: {
-            '/api': 'http://localhost:666/'
+            '/api': 'http://localhost:4000/'
         }
     },
 
