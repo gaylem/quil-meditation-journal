@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { createRoot } from 'react-dom/client';
-
 function App() {
     const [nasaData, setNasaData] = useState({});
     const [postData, setPostData] = useState([]);
@@ -32,8 +30,5 @@ function App() {
         </div>
     );
 }
-
-const root = createRoot(document.querySelector('#root'));
-root.render(<App />);
 
 export default App;
