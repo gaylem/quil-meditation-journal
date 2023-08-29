@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const MONGO_URI =
-    '';
+    'DB_URI';
 
 mongoose
     .connect(MONGO_URI, {
