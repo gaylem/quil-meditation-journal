@@ -13,20 +13,27 @@ function NewPost() {
         setDate(now.format('ll'));
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-        // const newEntry = {
-        //     date: date,
-        //     body:
-        // };
+        // const form = e.target;
+        // console.log(form);
+        // const formData = new FormData(form);
+        // console.log(formData);
+        const body = document.getElementById('body').value;
+        console.log(body);
 
-        fetch('/api/addEntry', {
+        fetch('/api', {
             method: 'POST',
-            body: JSON.stringify(newEntry), // data can be `string` or {object}!
-            headers: { 'Content-Type': 'application/json' }
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ body })
         })
-            .then((res) => res.json())
+            .then((res) => {
+                console.log(res);
+                res.json();
+            })
             .catch((error) => console.error('Error:', error));
     };
 
@@ -39,8 +46,14 @@ function NewPost() {
             <div className="form">
                 {open && (
                     <div className="toggle">
-                        <form onSubmit={handleSubmit}>
-                            <input className="entryText" type="text" id="body" name="body" />
+                        <form method="post" onSubmit={handleSubmit}>
+                            <textarea
+                                className="entryText"
+                                id="body"
+                                name="body"
+                                rows={10}
+                                cols={30}
+                            />
                             <div className="newPostButtons">
                                 <input id="cancel" type="submit" value="Cancel"></input>
                                 <input id="save" type="submit" value="Save"></input>

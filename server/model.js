@@ -16,10 +16,12 @@ mongoose
 
 const Schema = mongoose.Schema;
 
-const entrySchema = new Schema({
-    date: { type: Date, required: true },
-    body: { type: String, required: true }
-});
+const entrySchema = new Schema(
+    {
+        body: { type: String, required: true }
+    },
+    { timestamps: true }
+);
 
 const Entry = mongoose.model('entry', entrySchema);
 
