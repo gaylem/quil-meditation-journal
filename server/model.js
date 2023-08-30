@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const MONGO_URI =
-    'mongodb+srv://hellogmartin:CQuNruGxHjXwP9vJ@cluster0.yhyya61.mongodb.net/?retryWrites=true&w=majority';
+    'mongodb+srv://hellogmartin:YH8RshIUeh6sst2d@cluster0.yhyya61.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose
     .connect(MONGO_URI, {
@@ -17,8 +17,8 @@ mongoose
 const Schema = mongoose.Schema;
 
 const entrySchema = new Schema({
-    date: Date,
-    body: String
+    date: { type: Date, required: true },
+    body: { type: String, required: true }
 });
 
 const Entry = mongoose.model('entry', entrySchema);

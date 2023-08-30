@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import Header from './Header';
+import NewPost from './NewPost';
+import OldPosts from './OldPosts';
+import '../scss/app.scss';
 
 function App() {
     const [nasaData, setNasaData] = useState({});
@@ -23,10 +27,11 @@ function App() {
     }, []);
 
     return (
-        <div>
-            <p>is anyone home?</p>
-            <p>{nasaData.explanation}</p>
-            <p>{postData.posts}</p>
+        <div className="App">
+            <Header />
+            <NewPost />
+            <hr />
+            <OldPosts label="Old journal entry" />
         </div>
     );
 }
