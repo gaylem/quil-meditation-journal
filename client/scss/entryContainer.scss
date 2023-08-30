@@ -1,0 +1,29 @@
+.EntryContainer {
+    display: flex;
+    box-shadow:
+        8px 0 20px -12px rgba(211, 211, 211, 0.8),
+        -8px 0 13px -12px rgba(211, 211, 211, 0.8);
+
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: left;
+    max-width: 700px;
+    min-height: 100vh;
+    color: black;
+}
+
+.quote-block {
+    font-family:
+        Ysabeau Office,
+        san-serif;
+    padding: 2em;
+    font-size: larger;
+    line-height: 1.5;
+    background-image: linear-gradient(rgb(249, 235, 237), white);
+}
+
+#author {
+    font-weight: bold;
+    color: rgb(104, 104, 104);
+    padding-top: 1em;
+}

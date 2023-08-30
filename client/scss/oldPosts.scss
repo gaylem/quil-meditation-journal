@@ -1,14 +1,60 @@
-h2 {
-    display: flex;
-    align-items: center;
-    margin: 10px;
+.OldPost {
+    padding: 1em;
 }
 
-button {
-    border-radius: 50%;
-    font-size: larger;
-    padding: 0.25em 0.5em 0.25em 0.5em;
-    border: 0;
-    color: rgb(95, 93, 93);
-    margin-right: 0.5em;
+.buttonHeader {
+    display: flex;
+    align-items: center;
+    margin: 0.5em;
+    font-family: Helvetica, sans-serif;
+    button {
+        border-radius: 50%;
+        font-size: larger;
+        padding: 0.25em 0.5em 0.25em 0.5em;
+        border: 0;
+        color: rgb(95, 93, 93);
+        margin-right: 0.5em;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1em;
+}
+
+.entryText {
+    width: 98%;
+    height: 15em;
+    border: 1px solid lightgray;
+    border-radius: 0.25em;
+    line-height: 1em;
+    padding: 5px;
+}
+
+.newPostButtons {
+    display: flex;
+    justify-content: end;
+    padding: 0.5em;
+}
+
+#cancel,
+#save {
+    padding: 0.25em 0.5em;
+    margin: 0.25em 0.5em;
+}
+
+#cancel {
+    border: 1px solid rgb(109, 150, 164);
+    background-color: white;
+    color: rgb(109, 150, 164);
+    border-radius: 0.25em;
+}
+
+#save {
+    border: 1px solid rgb(109, 150, 164);
+    background-color: rgb(109, 150, 164);
+    color: white;
+    border-radius: 0.25em;
 }

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 function NewPost() {
     const now = moment();
-    const [date, setDate] = useState('New Post');
+    const [date, setDate] = useState('New Meditation');
     const [open, setOpen] = useState(false);
 
     const toggle = () => {
@@ -39,10 +39,10 @@ function NewPost() {
 
     return (
         <div className="NewPost">
-            <p>
+            <div className="buttonHeader">
                 <button onClick={toggle}>+</button>
                 <p>{date}</p>
-            </p>
+            </div>
             <div className="form">
                 {open && (
                     <div className="toggle">

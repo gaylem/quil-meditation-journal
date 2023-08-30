@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from './Header';
-import NewPost from './NewPost';
-import OldPosts from './OldPosts';
+import EntryContainer from './EntryContainer';
 import '../scss/app.scss';
 
 function App() {
@@ -29,9 +28,7 @@ function App() {
     return (
         <div className="App">
             <Header />
-            <NewPost />
-            <hr />
-            <OldPosts label="Old journal entry" />
+            <EntryContainer />
         </div>
     );
 }

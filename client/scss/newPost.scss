@@ -1,7 +1,8 @@
 .NewPost {
     padding: 1em;
 }
-p {
+
+.buttonHeader {
     display: flex;
     align-items: center;
     margin: 0.5em;
@@ -30,6 +31,7 @@ form {
     border-radius: 0.25em;
     line-height: 1em;
     padding: 5px;
+    font-family: Helvetica, san-serif;
 }
 
 .newPostButtons {
