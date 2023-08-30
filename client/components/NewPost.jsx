@@ -13,6 +13,23 @@ function NewPost() {
         setDate(now.format('ll'));
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        // const newEntry = {
+        //     date: date,
+        //     body:
+        // };
+
+        fetch('/api/addEntry', {
+            method: 'POST',
+            body: JSON.stringify(newEntry), // data can be `string` or {object}!
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error('Error:', error));
+    };
+
     return (
         <div className="NewPost">
             <p>
@@ -22,8 +39,8 @@ function NewPost() {
             <div className="form">
                 {open && (
                     <div className="toggle">
-                        <form>
-                            <input className="entryText" type="text" id="body" />
+                        <form onSubmit={handleSubmit}>
+                            <input className="entryText" type="text" id="body" name="body" />
                             <div className="newPostButtons">
                                 <input id="cancel" type="submit" value="Cancel"></input>
                                 <input id="save" type="submit" value="Save"></input>
