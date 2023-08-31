@@ -14,17 +14,17 @@ router.get('/:id', (req, res) => {
 
 // Route for deleting specific entries
 router.delete('/:id', entryController.deleteEntry, (req, res) => {
-    return res.status(200).send('you did it!');
+    return res.status(200).json(res.locals.deleteEntry);
 });
 
 // Route for creating new entries
 router.post('/', entryController.addEntry, (req, res) => {
-    return res.status(201).send('you did it!');
+    return res.status(201).json('you did it!');
 });
 
 // Route for updating specific entries
-router.patch('/:id', (req, res) => {
-    return res.status(200).send('Entry updated');
+router.patch('/:id', entryController.updateEntry, (req, res) => {
+    return res.status(200).json(res.locals.updatedEntry);
 });
 
 module.exports = router;

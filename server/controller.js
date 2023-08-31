@@ -7,7 +7,7 @@ entryController.addEntry = (req, res, next) => {
     model.Entry.create({ date, body })
         .then((response) => {
             console.log(response);
-            next();
+            return next();
         })
         .catch((err) => console.log(err));
 };
@@ -40,19 +40,22 @@ entryController.findEntry = (req, res, next) => {
         });
 };
 
-// TODO: UPDATE
+// UPDATE
 entryController.updateEntry = (req, res, next) => {
-    const id = req.params.id;
-    const newBody = req.params.body;
-    console.log(newBody);
-    model.Entry.updateOne({ _id: id }, { $set: { body: newBody } })
-        .then((res) => {
-            next();
+    const { _id } = req.params;
+    const { body } = req.body;
+    const newBody = { body };
+
+    model.Entry.findOneAndUpdate(_id, newBody, { returnOriginal: false })
+        .then((data) => {
+            console.log('updated data: ', data);
+            res.locals.updatedEntry = data;
+            return next();
         })
         .catch((err) => {
             return next({
                 log: `entryController.updateEntry : ERROR ${err}`,
-                status: 500,
+                status: 400,
                 message: { err: 'An error occurred' }
             });
         });
@@ -62,8 +65,9 @@ entryController.updateEntry = (req, res, next) => {
 entryController.deleteEntry = (req, res, next) => {
     const id = req.params.id;
     model.Entry.findOneAndDelete({ _id: id })
-        .then((res) => {
-            next();
+        .then((data) => {
+            res.locals.deletedEntry = data;
+            return next();
         })
         .catch((err) => {
             return next({

@@ -10,16 +10,13 @@ function NewEntry() {
 
     const toggle = () => {
         setOpen(!open);
-        setDate(now.format('ll'));
+        if (open === false) setDate(now.format('LL'));
+        if (open === true) setDate('New Meditation');
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // const form = e.target;
-        // console.log(form);
-        // const formData = new FormData(form);
-        // console.log(formData);
         const body = document.getElementById('body').value;
         console.log(body);
 
@@ -55,7 +52,12 @@ function NewEntry() {
                                 cols={30}
                             />
                             <div className="newEntryButtons">
-                                <input id="cancel" type="submit" value="Cancel"></input>
+                                <input
+                                    id="cancel"
+                                    type="submit"
+                                    onClick={toggle}
+                                    value="Cancel"
+                                ></input>
                                 <input id="save" type="submit" value="Save"></input>
                             </div>
                         </form>

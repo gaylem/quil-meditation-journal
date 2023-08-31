@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import PastEntry from './PastEntry';
+import '../scss/pastEntriesFeed.scss';
 
 const PastEntriesFeed = (props) => {
     const [entries, updateEntries] = useState([]);
@@ -9,15 +10,23 @@ const PastEntriesFeed = (props) => {
             .then((data) => data.json())
             .then((data) => {
                 updateEntries(data);
+                console.log(data);
             })
             .catch((error) => console.log('Error:', error));
-    }, [entries]);
+    }, []);
 
     const pastEntries = entries.map((entry, i) => {
-        return <PastEntry entry={entry} key={i} />;
+        return <PastEntry entry={props.entry} body={entry.body} date={entry.createdAt} id={entry._id} key={i} />;
     });
 
-    return <div className="PastEntry">{pastEntries}</div>;
+    pastEntries.reverse();
+
+    return (
+        <div>
+            <p className="pastMeditationTitle">Past Meditation Sessions</p>
+            {pastEntries}
+        </div>
+    );
 };
 
 export default PastEntriesFeed;
