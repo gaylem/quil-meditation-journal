@@ -4,16 +4,19 @@ import { useState } from 'react';
 import moment from 'moment';
 
 function NewEntry() {
+    // TODAY'S DATE
     const now = moment();
     const [date, setDate] = useState('New Meditation');
-    const [open, setOpen] = useState(false);
 
+    // TOGGLE DROPDOWN
+    const [open, setOpen] = useState(false);
     const toggle = () => {
         setOpen(!open);
         if (open === false) setDate(now.format('LL'));
         if (open === true) setDate('New Meditation');
     };
 
+    // HANDLE SUBMIT/SAVE
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -32,6 +35,8 @@ function NewEntry() {
                 res.json();
             })
             .catch((error) => console.error('Error:', error));
+
+        toggle();
     };
 
     return (

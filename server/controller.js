@@ -23,22 +23,22 @@ entryController.getAllEntries = (req, res, next) => {
 };
 
 // TODO: READ ONE
-entryController.findEntry = (req, res, next) => {
-    const id = req.params.id;
-    model.Entry.findOne({ _id: id })
-        .then((res) => {
-            res.locals.entry = res;
-            console.log(res.locals.entry);
-            next();
-        })
-        .catch((err) => {
-            return next({
-                log: `entryController.updateEntry : ERROR ${err}`,
-                status: 500,
-                message: { err: 'An error occurred' }
-            });
-        });
-};
+// entryController.findEntry = (req, res, next) => {
+//     const id = req.params.id;
+//     model.Entry.findOne({ _id: id })
+//         .then((res) => {
+//             res.locals.entry = res;
+//             console.log(res.locals.entry);
+//             next();
+//         })
+//         .catch((err) => {
+//             return next({
+//                 log: `entryController.updateEntry : ERROR ${err}`,
+//                 status: 404,
+//                 message: { err: 'An error occurred' }
+//             });
+//         });
+// };
 
 // UPDATE
 entryController.updateEntry = (req, res, next) => {
@@ -77,4 +77,5 @@ entryController.deleteEntry = (req, res, next) => {
             });
         });
 };
+
 module.exports = entryController;

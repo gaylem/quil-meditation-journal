@@ -26,11 +26,11 @@ const PastEntry = (props) => {
                 console.log(res._id);
             })
             .catch((error) => console.error('Error:', error));
+
+        toggle();
     };
 
-    // HANDLE EDIT
-    const [isEditing, setIsEditing] = useState(false);
-
+    // TODO: HANDLE EDIT - Button works when I have postman opened
     const handleEdit = (e) => {
         e.preventDefault();
 
