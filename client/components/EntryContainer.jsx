@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import NewEntry from './NewEntry';
-import PastEntries from './PastEntries';
+import PastEntriesFeed from './PastEntriesFeed';
 import '../scss/entryContainer.scss';
 
 function EntryContainer() {
@@ -15,7 +15,7 @@ function EntryContainer() {
             </div>
             <NewEntry />
             <hr />
-            <PastEntries />
+            <PastEntriesFeed />
         </div>
     );
 }
