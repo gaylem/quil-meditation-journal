@@ -8,9 +8,9 @@ router.get('/', entryController.getAllEntries, (req, res) => {
 });
 
 // Route for getting specific entries data
-// router.get('/:id', (req, res) => {
-//     return res.status(200).json(res.locals.entry);
-// });
+router.get('/:id', (req, res) => {
+    return res.status(200).json(res.locals.entry);
+});
 
 // Route for deleting specific entries
 router.delete('/:id', entryController.deleteEntry, (req, res) => {

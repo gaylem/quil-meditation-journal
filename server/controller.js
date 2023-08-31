@@ -12,7 +12,7 @@ entryController.addEntry = (req, res, next) => {
         .catch((err) => console.log(err));
 };
 
-// READ
+// READ ALL
 entryController.getAllEntries = (req, res, next) => {
     model.Entry.find({})
         .then((data) => {
@@ -22,7 +22,25 @@ entryController.getAllEntries = (req, res, next) => {
         .catch((err) => console.log(err));
 };
 
-// UPDATE
+// TODO: READ ONE
+entryController.findEntry = (req, res, next) => {
+    const id = req.params.id;
+    model.Entry.findOne({ _id: id })
+        .then((res) => {
+            res.locals.entry = res;
+            console.log(res.locals.entry);
+            next();
+        })
+        .catch((err) => {
+            return next({
+                log: `entryController.updateEntry : ERROR ${err}`,
+                status: 500,
+                message: { err: 'An error occurred' }
+            });
+        });
+};
+
+// TODO: UPDATE
 entryController.updateEntry = (req, res, next) => {
     const id = req.params.id;
     const newBody = req.params.body;
