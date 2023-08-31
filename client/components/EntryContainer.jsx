@@ -4,6 +4,7 @@ import OldPosts from './OldPosts';
 import '../scss/entryContainer.scss';
 
 function EntryContainer() {
+
     return (
         <div className="EntryContainer">
             <div className="quote-block">
@@ -15,7 +16,7 @@ function EntryContainer() {
             </div>
             <NewPost />
             <hr />
-            <OldPosts label="Old journal entry" />
+            <OldPosts />
         </div>
     );
 }

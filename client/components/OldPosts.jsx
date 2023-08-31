@@ -1,53 +1,21 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import moment from 'moment';
+import OldPostEntries from './OldPostEntries';
 import '../scss/oldPosts.scss';
 
 const OldPosts = (props) => {
-    const [date, setDate] = useState('New Post');
-    const [open, setOpen] = useState(false);
-
-    const toggle = () => {
-        setOpen(!open);
-    };
-
-    useEffect(() => {
-        fetch('/api')
-            .then((res) => {
-                console.log(res);
-                res.json();
-            })
-            .catch((error) => console.error('Error:', error));
-    }, []);
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     const body = document.getElementById('body').value;
-    //     console.log(body);
-
-    //     fetch('/api', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({ body })
-    //     })
-    //         .then((res) => {
-    //             console.log(res);
-    //             res.json();
+    // const [entries, updateEntries] = useState([]);
+    // useEffect(() => {
+    //     fetch('/api')
+    //         .then((data) => data.json())
+    //         .then((data) => {
+    //             updateEntries(data);
     //         })
-    //         .catch((error) => console.error('Error:', error));
-    // };
-
-    return (
-        <div className="OldPost">
-            <div className="buttonHeader">
-                <button onClick={toggle}>+</button>
-                <p>{date}</p>
-            </div>
-            <div className="form">{open && <div className="toggle">test</div>}</div>
-        </div>
-    );
+    //         .catch((error) => console.log('Error:', error));
+    // }, [entries]);
+    // const oldPosts = entries.map((item, i) => {
+    //     return <OldPosts entry={entries} key={i} />;
+    // });
 };
+
 export default OldPosts;

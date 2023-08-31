@@ -8,12 +8,14 @@ router.get('/', entryController.getAllEntries, (req, res) => {
 });
 
 // Route for getting specific entries data
-router.get('/:id', (req, res) => {
-    const id = req.params.id;
-});
+// router.get('/:id', (req, res) => {
+//     return res.status(200).json(res.locals.entry);
+// });
 
 // Route for deleting specific entries
-router.delete('/:id', (req, res) => {});
+router.delete('/:id', entryController.deleteEntry, (req, res) => {
+    return res.status(200).send('you did it!');
+});
 
 // Route for creating new entries
 router.post('/', entryController.addEntry, (req, res) => {
@@ -21,9 +23,8 @@ router.post('/', entryController.addEntry, (req, res) => {
 });
 
 // Route for updating specific entries
-router.put('/:id', (req, res) => {
-    const itemId = req.params.id;
-    const updatedItem = req.body;
+router.patch('/:id', (req, res) => {
+    return res.status(200).send('Entry updated');
 });
 
 module.exports = router;

@@ -29,7 +29,7 @@ app.use((err, req, res, next) => {
     return res.status(errorObj.status).json(errorObj.message);
 });
 
-// Emvironments
+// Environments
 if (process.env.NODE_ENV === 'production') {
     // statically serve everything in the build folder on the route '/build'
     app.use('/build', express.static(path.join(__dirname, '../build')));
