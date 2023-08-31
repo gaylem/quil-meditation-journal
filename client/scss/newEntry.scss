@@ -1,5 +1,6 @@
-.OldPost {
+.NewEntry {
     padding: 1em;
+    color: rgb(68, 68, 68);
 }
 
 .buttonHeader {
@@ -31,9 +32,10 @@ form {
     border-radius: 0.25em;
     line-height: 1em;
     padding: 5px;
+    font-family: Helvetica, san-serif;
 }
 
-.newPostButtons {
+.newEntryButtons {
     display: flex;
     justify-content: end;
     padding: 0.5em;

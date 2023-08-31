@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import OldPostEntries from './OldPostEntries';
-import '../scss/oldPosts.scss';
+import OldPostEntries from './PastEntryList';
+import '../scss/pastEntries.scss';
 
-const OldPosts = (props) => {
+const PastEntries = (props) => {
     // const [entries, updateEntries] = useState([]);
     // useEffect(() => {
     //     fetch('/api')
@@ -18,4 +18,4 @@ const OldPosts = (props) => {
     // });
 };
 
-export default OldPosts;
+export default PastEntries;

@@ -1,9 +1,9 @@
 import React from 'react';
-import '../scss/newPost.scss';
+import '../scss/newEntry.scss';
 import { useState } from 'react';
 import moment from 'moment';
 
-function NewPost() {
+function NewEntry() {
     const now = moment();
     const [date, setDate] = useState('New Meditation');
     const [open, setOpen] = useState(false);
@@ -38,7 +38,7 @@ function NewPost() {
     };
 
     return (
-        <div className="NewPost">
+        <div className="NewEntry">
             <div className="buttonHeader">
                 <button onClick={toggle}>+</button>
                 <p>{date}</p>
@@ -54,7 +54,7 @@ function NewPost() {
                                 rows={10}
                                 cols={30}
                             />
-                            <div className="newPostButtons">
+                            <div className="newEntryButtons">
                                 <input id="cancel" type="submit" value="Cancel"></input>
                                 <input id="save" type="submit" value="Save"></input>
                             </div>
@@ -66,4 +66,4 @@ function NewPost() {
     );
 }
 
-export default NewPost;
+export default NewEntry;

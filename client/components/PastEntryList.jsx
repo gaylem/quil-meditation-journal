@@ -1,14 +1,14 @@
 import React from 'react';
-import '../scss/oldPosts.scss';
+import '../scss/pastEntries.scss';
 
-const OldPostEntries = (props) => {
+const PastEntryList = (props) => {
     const [open, setOpen] = useState(false);
 
     const toggle = () => {
         setOpen(!open);
     };
 
-    <div className="OldPost">
+    <div className="PastEntry">
         <div className="buttonHeader">
             <button onClick={toggle}>+</button>
             <p>{props.entry.createdAt}</p>
@@ -16,4 +16,4 @@ const OldPostEntries = (props) => {
         <div className="form">{open && <div className="toggle"></div>}</div>
     </div>;
 };
-export default OldPostEntries;
+export default PastEntryList;

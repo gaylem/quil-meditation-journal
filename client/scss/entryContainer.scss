@@ -12,13 +12,15 @@
 }
 
 .quote-block {
-    font-family:
-        Ysabeau Office,
-        san-serif;
+    font-family: Neucha, Tahoma, san-serif;
     padding: 2em;
-    font-size: larger;
+    font-size: 1.3em;
     line-height: 1.5;
     background-image: linear-gradient(#fbeaeb, white);
+}
+
+#quote {
+    color: rgb(55, 54, 54);
 }
 
 #quote,
@@ -29,7 +31,7 @@
 
 #author {
     font-weight: bold;
-    color: rgb(104, 104, 104);
+    color: rgb(110, 110, 110);
     padding-top: 1em;
 }
 
