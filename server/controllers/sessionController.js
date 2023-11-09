@@ -1,6 +1,3 @@
-//TODO: How do I do this with Mongo?
-const pool = require('./../db/pg-model');
-
 const sessionController = {};
 
 /**
@@ -14,22 +11,15 @@ const sessionController = {};
  */
 sessionController.isLoggedIn = async (req, res, next) => {
   try {
-    // documents in the sessions collection will expire due to the schema expire setting
-
-    const text = `
-    SELECT *
-    FROM user_session
-    WHERE cookie_id=($1) AND user_id=($2);
-    `;
-    const values = [req.cookies.ssid, res.locals.user];
-    const user_session = await pool.query(text, values);
+    const user_session = await Session.findOne({
+      cookieId: req.cookies.ssid,
+      userId: res.locals.user,
+    });
 
     if (!user_session) {
-      // no session found
-      console.log('YOU ARE NOT LOGGED IN. NO SESSION!');
+      console.log('You must be logged in to access this page.');
       return res.redirect('/login');
     } else {
-      // session found then what?
       return next();
     }
   } catch (err) {
@@ -51,10 +41,6 @@ sessionController.isLoggedIn = async (req, res, next) => {
  */
 sessionController.startSession = async (req, res, next) => {
   try {
-    const text = `
-      INSERT INTO sessions (user_id, cookie_id, date_of_creation)
-      VALUES ($1, $2, $3);
-    `;
     function generateUniqueSessionId() {
       // Generate a random string
       const randomString = Math.random().toString(36).substr(2, 10);
@@ -66,14 +52,16 @@ sessionController.startSession = async (req, res, next) => {
     }
 
     const sessionId = generateUniqueSessionId();
-    console.log(sessionId);
-    const timestamp = new Date().toISOString();
-    const values = [res.locals.user, sessionId, timestamp];
 
-    await pool.query(text, values);
-    console.log(pool.query(text, values));
+    const newSession = new Session({
+      userId: res.locals.user,
+      cookieId: sessionId,
+    });
+
+    await newSession.save();
 
     return next();
+
   } catch (err) {
     console.error('Error executing database query:', err);
 
