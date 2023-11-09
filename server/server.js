@@ -17,6 +17,11 @@ const cookieController = require('./controllers/cookieController');
 // Handle requests for static files
 app.use(express.static(join(__dirname, '../assets')));
 
+//Home Page
+app.get('/', cookieController.setSSIDCookie, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', '/index.html'));
+});
+
 // Define route handlers
 app.use('/api', apiRouter);
 
