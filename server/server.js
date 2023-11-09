@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const express = require('express');
 const app = express();
-const apiRouter = require('./api');
+const apiRouter = require('./routers/api');
 const PORT = 4000;
 
 // Middleware
@@ -12,10 +12,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Cookies
-const cookieController = require('./controllers/cookieController');
+// const cookieController = require('./controllers/cookieController');
 
 // Handle requests for static files
-app.use(express.static(join(__dirname, '../assets')));
+app.use(express.static(path.join(__dirname, '../assets')));
+
+//Home Page
+// app.get('/', cookieController.setSSIDCookie, (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', '/index.html'));
+// });
 
 // Define route handlers
 app.use('/api', apiRouter);
