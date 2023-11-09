@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const express = require('express');
 const app = express();
-const apiRouter = require('./api');
+const apiRouter = require('./routers/api');
 const PORT = 4000;
 
 // Middleware
