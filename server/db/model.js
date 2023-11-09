@@ -14,6 +14,7 @@ mongoose
 
 const Schema = mongoose.Schema;
 
+// ENTRY SCHEMA
 const entrySchema = new Schema(
   {
     body: { type: String, required: true },
@@ -23,4 +24,27 @@ const entrySchema = new Schema(
 
 const Entry = mongoose.model('entry', entrySchema);
 
-module.exports = { Entry };
+// SESSION SCHEMA
+const sessionSchema = new Schema(
+  {
+    userId: { type: Schema.Types.ObjectId, ref: userSchema, required: true },
+    cookieId: String,
+  },
+  { timestamps: true },
+);
+
+const Session = mongoose.model('session', sessionSchema);
+
+// USER SCHEMA
+const userSchema = new Schema(
+  {
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true },
+  },
+  { timestamps: true },
+);
+
+const User = mongoose.model('user', userSchema);
+
+module.exports = { Entry, Session, User };

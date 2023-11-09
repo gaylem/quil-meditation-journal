@@ -1,4 +1,4 @@
-const pool = require('./../db/pg-model');
+const pool = require('./../db/model');
 const SALT_WORK_FACTOR = 10;
 const bcrypt = require('bcryptjs');
 const userController = {};
