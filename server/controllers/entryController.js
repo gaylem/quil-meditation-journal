@@ -1,4 +1,4 @@
-const model = require('../db/model');
+const model = require('../db/models');
 const entryController = {};
 
 // CREATE

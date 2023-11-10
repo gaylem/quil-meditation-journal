@@ -1,4 +1,4 @@
-const pool = require('./../db/model');
+const pool = require('./../db/models');
 const SALT_WORK_FACTOR = 10;
 const bcrypt = require('bcryptjs');
 const userController = {};

@@ -3,8 +3,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const express = require('express');
 const app = express();
-const apiRouter = require('./routers/api');
-const PORT = 4000;
+const port = process.env.PORT || 4000;
 
 // Middleware
 app.use(express.json());
@@ -22,8 +21,11 @@ app.use(express.static(path.join(__dirname, '../assets')));
 //   res.sendFile(path.resolve(__dirname, '..', '/index.html'));
 // });
 
-// Define route handlers
-app.use('/api', apiRouter);
+// Routes
+const entryRouter = require('./routes/entryRouter');
+const userRouter = require('./routes/userRouter');
+app.use('/entries', entryRouter);
+app.use('/users', userRouter);
 
 // Catch-all route handler for any requests to an unknown route
 app.use((req, res) => res.status(404).send("This is not the page you're looking for..."));
@@ -53,8 +55,8 @@ if (process.env.NODE_ENV === 'production') {
 console.log('NODE_ENV: ', process.env.NODE_ENV);
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
 
 module.exports = app;
