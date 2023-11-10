@@ -3,7 +3,8 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 4000;
+
+PORT = 4000;
 
 // Middleware
 app.use(express.json());
@@ -11,19 +12,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Cookies
-// const cookieController = require('./controllers/cookieController');
+const cookieController = require('./controllers/cookieController');
+
+// Import Routes
+const entryRouter = require('./routers/entryRouter');
+const userRouter = require('./routers/userRouter');
 
 // Handle requests for static files
 app.use(express.static(path.join(__dirname, '../assets')));
 
 //Home Page
-// app.get('/', cookieController.setSSIDCookie, (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '..', '/index.html'));
-// });
+app.get('/', cookieController.setSSIDCookie, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', '/index.html'));
+});
 
-// Routes
-const entryRouter = require('./routes/entryRouter');
-const userRouter = require('./routes/userRouter');
+// Routers
 app.use('/entries', entryRouter);
 app.use('/users', userRouter);
 
@@ -55,8 +58,8 @@ if (process.env.NODE_ENV === 'production') {
 console.log('NODE_ENV: ', process.env.NODE_ENV);
 
 // Start Server
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
 
 module.exports = app;
