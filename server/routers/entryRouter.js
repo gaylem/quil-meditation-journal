@@ -4,6 +4,7 @@ const router = express.Router();
 
 // Route for getting all entries data
 router.get('/', entryController.getAllEntries, (req, res) => {
+  console.log('Received GET request for /entries');
   return res.status(200).json(res.locals.allEntries);
 });
 
