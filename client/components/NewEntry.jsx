@@ -23,7 +23,7 @@ function NewEntry() {
         const body = document.getElementById('body').value;
         console.log(body);
 
-        fetch('/api', {
+        fetch('/entries', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

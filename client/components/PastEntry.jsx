@@ -17,7 +17,7 @@ const PastEntry = (props) => {
     const handleDelete = (e) => {
         e.preventDefault();
 
-        fetch(`api/${props.id}`, {
+        fetch(`entries/${props.id}`, {
             method: 'DELETE',
             body: JSON.stringify(props.entry)
         })
@@ -34,7 +34,7 @@ const PastEntry = (props) => {
     const handleEdit = (e) => {
         e.preventDefault();
 
-        fetch(`api/${props.id}`, {
+        fetch(`entries/${props.id}`, {
             method: 'PATCH'
         })
             .then((res) => {

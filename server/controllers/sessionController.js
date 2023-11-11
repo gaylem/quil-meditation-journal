@@ -1,3 +1,4 @@
+const { Session } = require('../db/models');
 const sessionController = {};
 
 /**
@@ -52,16 +53,26 @@ sessionController.startSession = async (req, res, next) => {
     }
 
     const sessionId = generateUniqueSessionId();
+    console.log(sessionId);
+
+    if (!res.locals.user) {
+      return next({
+        log: 'No user ID found in res.locals.user.',
+        status: 400,
+        message: { error: 'An error occurred' },
+      });
+    }
+
+    console.log(res.locals.user);
 
     const newSession = new Session({
-      userId: res.locals.user,
+      userId: res.locals.user._id,
       cookieId: sessionId,
     });
 
     await newSession.save();
 
     return next();
-
   } catch (err) {
     console.error('Error executing database query:', err);
 
