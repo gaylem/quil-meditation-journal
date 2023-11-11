@@ -24,17 +24,6 @@ const entrySchema = new Schema(
 
 const Entry = mongoose.model('entry', entrySchema);
 
-// SESSION SCHEMA
-const sessionSchema = new Schema(
-  {
-    userId: { type: Schema.Types.ObjectId, ref: userSchema, required: true },
-    cookieId: String,
-  },
-  { timestamps: true },
-);
-
-const Session = mongoose.model('session', sessionSchema);
-
 // USER SCHEMA
 const userSchema = new Schema(
   {
@@ -46,5 +35,16 @@ const userSchema = new Schema(
 );
 
 const User = mongoose.model('user', userSchema);
+
+// SESSION SCHEMA
+const sessionSchema = new Schema(
+  {
+    userId: { type: Schema.Types.ObjectId, ref: User, required: true },
+    cookieId: String,
+  },
+  { timestamps: true },
+);
+
+const Session = mongoose.model('session', sessionSchema);
 
 module.exports = { Entry, Session, User };

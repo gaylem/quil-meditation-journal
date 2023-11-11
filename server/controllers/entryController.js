@@ -1,5 +1,15 @@
-const model = require('../db/model');
+const model = require('../db/models');
 const entryController = {};
+
+// READ ALL
+entryController.getAllEntries = (req, res, next) => {
+  model.Entry.find({})
+    .then(data => {
+      res.locals.allEntries = data;
+      return next();
+    })
+    .catch(err => console.log(err));
+};
 
 // CREATE
 entryController.addEntry = (req, res, next) => {
@@ -7,16 +17,6 @@ entryController.addEntry = (req, res, next) => {
   model.Entry.create({ date, body })
     .then(response => {
       console.log(response);
-      return next();
-    })
-    .catch(err => console.log(err));
-};
-
-// READ ALL
-entryController.getAllEntries = (req, res, next) => {
-  model.Entry.find({})
-    .then(data => {
-      res.locals.allEntries = data;
       return next();
     })
     .catch(err => console.log(err));

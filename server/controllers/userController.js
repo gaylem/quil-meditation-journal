@@ -1,6 +1,7 @@
-const pool = require('./../db/model');
+const models = require('./../db/models');
 const SALT_WORK_FACTOR = 10;
 const bcrypt = require('bcryptjs');
+
 const userController = {};
 
 /**
@@ -15,7 +16,6 @@ const userController = {};
 userController.verifyUser = async (req, res, next) => {
   try {
     // Deconstruct user
-    console.log('Im here');
     const { username, password } = req.body;
 
     if (!username || !password)
@@ -25,35 +25,27 @@ userController.verifyUser = async (req, res, next) => {
         message: { error: 'An error occurred' },
       });
 
-    // Check if username and password exist together if so -> proceed
-    // else -> throw error
-    const text = `
-    SELECT *
-    FROM users
-    WHERE username = $1;
-    `;
-    const value = [username];
-    const user = await pool.query(text, value);
+    const user = await models.User.findOne({ username });
 
-    if (!user.rows[0]._id) {
+    if (!user) {
       console.log('no user found');
     }
-    const comparison = await bcrypt.compare(password, user.rows[0].password);
+
+    const comparison = await bcrypt.compare(password, user.password);
 
     if (!comparison) {
       console.log('wrong password');
     } else {
-      res.locals.user = user.rows[0]._id;
-      // If we have a row we can move on to the next verification
+      res.locals.user = user._id;
       return next();
     }
   } catch (err) {
-    const errObj = {
+    console.error('userController.verifyUser Error:', err);
+    return next({
       log: 'userController.verifyUser Error',
       message: { error: 'An error occurred' },
       status: 500,
-    };
-    return next({ ...errObj, log: err.message });
+    });
   }
 };
 
@@ -67,8 +59,7 @@ userController.verifyUser = async (req, res, next) => {
  */
 userController.createUser = async (req, res, next) => {
   try {
-    // Destructure user properties from the request body
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
 
     if (!username || !password) {
       return next({
@@ -76,44 +67,37 @@ userController.createUser = async (req, res, next) => {
         status: 400,
         message: { error: 'An error occurred' },
       });
-    } else {
-      const checkUserQuery = `
-        SELECT *
-        FROM users
-        WHERE username = $1;
-      `;
-      const checkUserValues = [username];
-      const user = await pool.query(checkUserQuery, checkUserValues);
-
-      if (user.rows.length === 0) {
-        const encryptedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
-        const createUserQuery = `
-        INSERT INTO users (username, password)
-        VALUES ($1, $2)
-        RETURNING _id;
-        `;
-        const createUserValues = [username, encryptedPassword];
-        const result = await pool.query(createUserQuery, createUserValues);
-        res.locals.user = result.rows[0]._id;
-        return next();
-      } else {
-        return next({
-          log: 'Username already exists',
-          status: 409,
-          message: { error: 'Username already exists' },
-        });
-      }
     }
+
+    const existingUser = await models.User.findOne({ username });
+
+    if (existingUser) {
+      return next({
+        log: 'Username already exists',
+        status: 409,
+        message: { error: 'Username already exists' },
+      });
+    }
+
+    const encryptedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
+    const result = await models.User.create({
+      username,
+      password: encryptedPassword,
+      email,
+    });
+
+    res.locals.user = await models.User.findOne({ username });
+
+    return next();
   } catch (err) {
-    const errObj = {
+    console.error('userController.createUser Error:', err);
+    return next({
       log: 'userController.createUser Error',
       message: { error: 'An error occurred' },
       status: 500,
-    };
-    return next({ ...errObj, log: err.message });
+    });
   }
 };
-
 /**
  * updateUser - updates username and hashed password in the users database.
  *
@@ -125,33 +109,30 @@ userController.createUser = async (req, res, next) => {
  */
 userController.updateUser = async (req, res, next) => {
   try {
-    // Destructure
     const { userId } = req.params;
     const { username, password } = req.body;
 
-    // Write statement to update
-    const text = `
-    UPDATE users
-    SET
-      username = $1,
-      password = $2
-      WHERE _id = $3
-      RETURNING _id;
-  `;
     const encryptedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
-    const values = [username, encryptedPassword, userId];
-    const user = await pool.query(text, values);
 
-    res.locals.user = user.rows[0]._id;
+    const result = await models.User.findOneAndUpdate({ _id: userId }, { $set: { username, password: encryptedPassword } });
 
+    if (result.matchedCount === 0) {
+      return next({
+        log: 'User not found.',
+        status: 404,
+        message: { error: 'User not found' },
+      });
+    }
+
+    res.locals.user = userId;
     return next();
   } catch (err) {
-    const errObj = {
+    console.error('userController.updateUser Error:', err);
+    return next({
       log: 'userController.updateUser Error',
       message: { error: 'An error occurred' },
       status: 500,
-    };
-    return next({ ...errObj, log: err.message });
+    });
   }
 };
 
@@ -166,46 +147,28 @@ userController.deleteUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
 
-    // First, delete related sessions
-    const deleteSessionsQuery = `
-      DELETE FROM sessions
-      WHERE user_id = $1;
-    `;
-    const sessionsDeleteResult = await pool.query(deleteSessionsQuery, [userId]);
+    const userDeleteResult = await models.User.findOneAndDelete({ _id: userId });
 
-    // Check if any sessions were deleted
-    if (sessionsDeleteResult.rowCount > 0) {
-      // If sessions were deleted, now you can safely delete the user
-      const deleteUserQuery = `
-        DELETE FROM users
-        WHERE _id = $1;
-      `;
-      const userDeleteResult = await pool.query(deleteUserQuery, [userId]);
+    const sessionsDeleteResult = await models.Session.deleteMany({ userId: userId });
 
-      if (userDeleteResult.rowCount > 0) {
-        return next();
-      } else {
-        return next({
-          log: 'User not found or could not be deleted.',
-          status: 404,
-          message: { error: 'An error occurred' },
-        });
-      }
-    } else {
+    if (userDeleteResult === null || sessionsDeleteResult.deletedCount === 0) {
       return next({
-        log: 'No sessions found for the user.',
+        log: 'User or sessions could not be deleted.',
         status: 404,
         message: { error: 'An error occurred' },
       });
     }
+
+    return next();
   } catch (err) {
-    const errObj = {
+    console.error('userController.deleteUser Error:', err);
+    return next({
       log: 'userController.deleteUser Error',
       message: { error: 'An error occurred' },
       status: 500,
-    };
-    return next({ ...errObj, log: err.message });
+    });
   }
 };
+
 
 module.exports = userController;
