@@ -1,46 +1,79 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Header from './Header';
+import axios from '../axiosConfig';
+import '../scss/login-signup.scss';
+import { useNavigate, Link } from 'react-router-dom';
 
-const SignUp = ({ setPageState }) => {
-  const handlePageSwitch = () => {
-    setPageState('login');
-  };
+function Login() {
+  const history = useNavigate();
 
-  const handleSignup = async e => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function submit(e) {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const formDataObject = Object.fromEntries(formData.entries());
-    console.log(formDataObject);
+
     try {
-      const response = await fetch('/user/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formDataObject.username,
-          password: formDataObject.password,
-        }),
-      });
-      if (response.ok) {
-        setPageState('login');
-      }
-    } catch {
-      console.log('not working');
+      await axios
+        .post('/users/signup', {
+          username,
+          email,
+          password,
+        })
+        .then(res => {
+          if (res.data == 'exist') {
+            console.log('then');
+            alert('User already exists');
+          } else if (res.data == 'notexist') {
+            history('/home', { state: { id: email } });
+          }
+        })
+        .catch(e => {
+          alert('wrong details');
+          console.log(e);
+        });
+    } catch (e) {
+      console.log(e);
     }
-  };
+  }
 
   return (
-    <div id='signupBody'>
-      {/* // method & action are how frontend is linked to the back */}
-      <h1 className='h1'>SIGNUP</h1>
-      <form className='form' method='POST' onSubmit={handleSignup}>
-        <input name='username' type='text' placeholder='Create Username' required /> <br />
-        <input name='password' type='password' placeholder='Create Password' required /> <br />
-        <input className='button' type='submit' value='Create Account'></input>
-      </form>
-      {/* <Link id='profileLink' className="links" to="/profile"><strong>PROFILE</strong></Link> */}
+    <div className='App'>
+      <Header />
+      <div className='login-signup'>
+        <h1>Signup</h1>
+
+        <form action='POST'>
+          <input
+            type='username'
+            onChange={e => {
+              setUsername(e.target.value);
+            }}
+            placeholder='Username'
+          />
+          <input
+            type='email'
+            onChange={e => {
+              setEmail(e.target.value);
+            }}
+            placeholder='Email'
+          />
+          <input
+            type='password'
+            onChange={e => {
+              setPassword(e.target.value);
+            }}
+            placeholder='Password'
+          />
+          <button type='submit' onClick={submit}>Sign Up</button>
+          <p>
+            Already have an account? <Link to='/'>Sign in!</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
-};
+}
 
-export default SignUp;
+export default Login;

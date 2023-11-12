@@ -1,56 +1,53 @@
 import React, { useState } from 'react';
+import Header from './Header';
+import axios from '../axiosConfig';
+import '../scss/login-signup.scss';
+import { useNavigate, Link } from 'react-router-dom';
 
-const Login = ({ setPageState }) => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
+function Login() {
+  const history = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handlePageSwitch = () => {
-    setPageState('signup');
-  };
-
-  const handleSubmit = async e => {
-    e.preventDefault(); // Prevent the default form submission (which is a GET request).
-
-    const { username, password } = formData;
+  async function submit(e) {
+    e.preventDefault();
 
     try {
-      const response = await fetch('/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+      const response = await axios.post('/users/login', {
+        username,
+        password,
       });
-      if (response.ok) {
-        setPageState('main');
-      }
-    } catch {
-      console.log('not working');
-    }
-  };
 
-  const handleInputChange = e => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    console.log(formData);
-  };
+      if (response.data) {
+        const { _id } = response.data;
+        history(`/home`, { state: { id: _id } });
+      } else {
+        alert('User has not signed up');
+      }
+    } catch (error) {
+      alert('Wrong details');
+      console.error(error);
+    }
+  }
 
   return (
-    <div id='loginBody'>
-      <h1 id='login' className='h1'>
-        LOGIN
-      </h1>
-      <form id='loginForm' className='form' onSubmit={handleSubmit}>
-        <input name='username' type='text' placeholder='Username' value={formData.username} onChange={handleInputChange}></input>
-        <input name='password' type='password' placeholder='Password' value={formData.password} onChange={handleInputChange}></input>
-        <input className='button' type='submit' value='Login'></input>
-      </form>
-      <button onClick={handlePageSwitch}>Don't have an account? Sign up!</button>
+    <div className='App'>
+      <Header />
+
+      <div className='login-signup'>
+        <h1>Login</h1>
+
+        <form onSubmit={submit}>
+          <input type='username' onChange={e => setUsername(e.target.value)} placeholder='Username' />
+          <input type='password' onChange={e => setPassword(e.target.value)} placeholder='Password' />
+          <button type='submit'>Login</button>
+          <p>
+          Don't have an account? <Link to='/signup'>Sign up!</Link>
+        </p>
+        </form>
+      </div>
     </div>
   );
-};
+}
 
 export default Login;
