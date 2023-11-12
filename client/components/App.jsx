@@ -1,15 +1,22 @@
 import React from 'react';
-import Header from './Header';
-import EntryContainer from './EntryContainer';
-import '../scss/app.scss';
+import Home from './Home';
+import Login from './Login';
+import Signup from './Signup';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 
 function App() {
-    return (
-        <div className="App">
-            <Header />
-            <EntryContainer />
-        </div>
-    );
+  return (
+    <div className='App'>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/home' element={<Home />} />
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
