@@ -5,7 +5,7 @@ const cookieController = {};
  */
 cookieController.setSSIDCookie = async (req, res, next) => {
   await res.cookie('ssid', res.locals.user, { httpOnly: true });
-
+  console.log("user", res.locals.user);
   return next();
 };
 
