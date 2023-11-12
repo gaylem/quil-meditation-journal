@@ -19,8 +19,9 @@ function Login() {
       });
 
       if (response.data) {
-        const { _id } = response.data;
-        history(`/home`, { state: { id: _id } });
+        const id = response.data;
+        console.log(id);
+        history(`/home`, { state: { id: id } });
       } else {
         alert('User has not signed up');
       }
@@ -42,8 +43,8 @@ function Login() {
           <input type='password' onChange={e => setPassword(e.target.value)} placeholder='Password' />
           <button type='submit'>Login</button>
           <p>
-          Don't have an account? <Link to='/signup'>Sign up!</Link>
-        </p>
+            Don't have an account? <Link to='/signup'>Sign up!</Link>
+          </p>
         </form>
       </div>
     </div>

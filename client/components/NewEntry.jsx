@@ -3,7 +3,7 @@ import '../scss/newEntry.scss';
 import { useState } from 'react';
 import moment from 'moment';
 
-const NewEntry = ({ updateEntries }) => {
+function NewEntry() {
   // TODAY'S DATE
   const now = moment();
   const [date, setDate] = useState('New Meditation');
@@ -21,6 +21,7 @@ const NewEntry = ({ updateEntries }) => {
     e.preventDefault();
 
     const body = document.getElementById('body').value;
+    console.log(body);
 
     fetch('/entries', {
       method: 'POST',
@@ -29,10 +30,9 @@ const NewEntry = ({ updateEntries }) => {
       },
       body: JSON.stringify({ body }),
     })
-      .then(res => res.json())
-      .then(newEntry => {
-        // Call the updateEntries function with the new entry
-        updateEntries(newEntry);
+      .then(res => {
+        console.log(res);
+        res.json();
       })
       .catch(error => console.error('Error:', error));
 
@@ -60,6 +60,6 @@ const NewEntry = ({ updateEntries }) => {
       </div>
     </div>
   );
-};
+}
 
 export default NewEntry;

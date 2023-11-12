@@ -37,7 +37,6 @@ userController.verifyUser = async (req, res, next) => {
       console.log('wrong password');
     } else {
       res.locals.user = user._id;
-      console.log(res.locals.user);
       return next();
     }
   } catch (err) {
@@ -170,6 +169,5 @@ userController.deleteUser = async (req, res, next) => {
     });
   }
 };
-
 
 module.exports = userController;

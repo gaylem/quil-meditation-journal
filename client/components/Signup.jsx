@@ -23,10 +23,9 @@ function Login() {
         })
         .then(res => {
           if (res.data == 'exist') {
-            console.log('then');
             alert('User already exists');
           } else if (res.data == 'notexist') {
-            history('/home', { state: { id: email } });
+            history('/home', { state: { email: email } });
           }
         })
         .catch(e => {
@@ -66,7 +65,9 @@ function Login() {
             }}
             placeholder='Password'
           />
-          <button type='submit' onClick={submit}>Sign Up</button>
+          <button type='submit' onClick={submit}>
+            Sign Up
+          </button>
           <p>
             Already have an account? <Link to='/'>Sign in!</Link>
           </p>
