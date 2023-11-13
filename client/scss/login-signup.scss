@@ -1,0 +1,35 @@
+.login-signup {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+  font-family: Helvetica, sans-serif;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: left;
+}
+
+input {
+  max-width: 200px;
+  min-width: 100px;
+  margin: 0.1em;
+  padding: 0.2em;
+  border: 1px solid darkgray;
+  border-radius: 3px;
+}
+
+button {
+  margin: 0.1em;
+  max-width: 207px;
+  background-color: #721bac;
+  color: white;
+  padding: 0.4em;
+  border-radius: 3px;
+  border: 0px;
+}
+
+p {
+  padding-top: 1em;
+}

@@ -3,13 +3,15 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 PORT = 4000;
 
 // Middleware
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cors());
 
 // Cookies
 const cookieController = require('./controllers/cookieController');
@@ -22,9 +24,9 @@ const userRouter = require('./routers/userRouter');
 app.use(express.static(path.join(__dirname, '../assets')));
 
 //Home Page
-app.get('/', cookieController.setSSIDCookie, (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', '/index.html'));
-});
+// app.get('/home', cookieController.setSSIDCookie, (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', '/index.html'));
+// });
 
 // Routers
 app.use('/entries', entryRouter);
