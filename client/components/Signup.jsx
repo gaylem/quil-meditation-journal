@@ -16,7 +16,7 @@ function Login() {
 
     try {
       await axios
-        .post('/users/signup', {
+        .post('/api/users/signup', {
           username,
           email,
           password,
