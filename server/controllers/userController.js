@@ -1,11 +1,15 @@
-const models = require('./../db/models');
-const SALT_WORK_FACTOR = 10;
-const bcrypt = require('bcryptjs');
+const { User } = require('../db/models');
 const jwt = require('jsonwebtoken');
 
 const createToken = _id => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
+  if (!process.env.SECRET) {
+    throw Error('Secret key is missing');
+  }
+  const token = jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
+  console.log('Token generated:', token);
+  return token;
 };
+
 
 const userController = {};
 
@@ -19,39 +23,16 @@ const userController = {};
  * @returns res.locals.user
  */
 userController.verifyUser = async (req, res, next) => {
-  console.log("it got this far");
+  const { username, password } = req.body;
   try {
-    // Deconstruct user
-    const { username, password } = req.body;
-
-    if (!username || !password)
-      return next({
-        log: 'Missing username or password in userController.verifyUser.',
-        status: 400,
-        message: { error: 'An error occurred' },
-      });
-
-    const user = await models.User.findOne({ username });
-
-    if (!user) {
-      console.log('no user found');
-    }
-
-    const comparison = await bcrypt.compare(password, user.password);
-
-    if (!comparison) {
-      console.log('wrong password');
-    } else {
-      res.locals.user = user._id;
-      return next();
-    }
-  } catch (err) {
-    console.error('userController.verifyUser Error:', err);
-    return next({
-      log: 'userController.verifyUser Error',
-      message: { error: 'An error occurred' },
-      status: 500,
-    });
+    const user = await User.login(username, password);
+    console.log(user);
+    // create a token
+    const token = createToken(user._id);
+    console.log(token);
+    res.status(200).json({ username, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -64,44 +45,17 @@ userController.verifyUser = async (req, res, next) => {
  * @returns res.locals.user
  */
 userController.createUser = async (req, res, next) => {
+  const { username, email, password } = req.body;
+
   try {
-    const { username, password, email } = req.body;
+    const user = await User.signup(username, email, password);
 
-    if (!username || !password) {
-      return next({
-        log: 'Missing username or password in userController.createUser',
-        status: 400,
-        message: { error: 'An error occurred' },
-      });
-    }
+    // create a token
+    const token = createToken(user._id);
 
-    const existingUser = await models.User.findOne({ username });
-
-    if (existingUser) {
-      return next({
-        log: 'Username already exists',
-        status: 409,
-        message: { error: 'Username already exists' },
-      });
-    }
-
-    const encryptedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
-    const result = await models.User.create({
-      username,
-      password: encryptedPassword,
-      email,
-    });
-
-    res.locals.user = await models.User.findOne({ username });
-
-    return next();
-  } catch (err) {
-    console.error('userController.createUser Error:', err);
-    return next({
-      log: 'userController.createUser Error',
-      message: { error: 'An error occurred' },
-      status: 500,
-    });
+    res.status(200).json({ username, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 /**

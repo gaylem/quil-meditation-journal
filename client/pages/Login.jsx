@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLogin } from '../hooks/useLogin';
 
 import Header from '../components/Header';
-import axios from '../axiosConfig';
 import '../scss/login-signup.scss';
 
 function Login() {
@@ -13,26 +12,7 @@ function Login() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-
     await login(username, password);
-
-    // try {
-    //   const response = await axios.post('/api/users/login', {
-    //     username,
-    //     password,
-    //   });
-
-    //   if (response.data) {
-    //     const id = response.data;
-    //     console.log(id);
-    //     history(`/home`, { state: { id: id } });
-    //   } else {
-    //     alert('User has not signed up');
-    //   }
-    // } catch (error) {
-    //   alert('Wrong details');
-    //   console.error(error);
-    // }
   };
 
   return (

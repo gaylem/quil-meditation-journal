@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSignup } from '../hooks/useSignup';
 
 import Header from '../components/Header';
-import axios from '../axiosConfig';
 import '../../client/scss/login-signup';
 
 function Signup() {
@@ -14,30 +13,7 @@ function Signup() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-
     await signup(email, password);
-
-    // try {
-    //   await axios
-    //     .post('/api/users/signup', {
-    //       username,
-    //       email,
-    //       password,
-    //     })
-    //     .then(res => {
-    //       if (res.data == 'exist') {
-    //         alert('User already exists');
-    //       } else if (res.data == 'notexist') {
-    //         history('/home', { state: { email: email } });
-    //       }
-    //     })
-    //     .catch(e => {
-    //       alert('wrong details');
-    //       console.log(e);
-    //     });
-    // } catch (e) {
-    //   console.log(e);
-    // }
   };
 
   return (
