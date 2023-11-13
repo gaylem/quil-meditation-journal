@@ -1,6 +1,8 @@
 import React from 'react';
 import '../scss/newEntry.scss';
 import { useState } from 'react';
+import { useEntriesContext } from '../hooks/useEntriesContext';
+import axios from '../axiosConfig';
 import moment from 'moment';
 
 function NewEntry() {
@@ -8,33 +10,39 @@ function NewEntry() {
   const now = moment();
   const [date, setDate] = useState('New Meditation');
 
-  // TOGGLE DROPDOWN
+  // TOGGLE
   const [open, setOpen] = useState(false);
   const toggle = () => {
     setOpen(!open);
-    if (open === false) setDate(now.format('LL'));
-    if (open === true) setDate('New Meditation');
+    setDate(open ? now.format('LL') : 'New Meditation');
   };
 
-  // HANDLE SUBMIT/SAVE
-  const handleSubmit = e => {
+  const { dispatch } = useEntriesContext();
+  const [body, setBody] = useState('');
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async e => {
+    console.log('handleSubmit triggered'); // Add this line
+
     e.preventDefault();
 
-    const body = document.getElementById('body').value;
-    console.log(body);
+    try {
+      const response = await axios.post('/api/entries', { body });
 
-    fetch('/entries', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ body }),
-    })
-      .then(res => {
-        console.log(res);
-        res.json();
-      })
-      .catch(error => console.error('Error:', error));
+      if (!response.data.ok) {
+        setError(response.data.error);
+      } else {
+        const json = response.data;
+        console.log('New entry data:', json);
+        dispatch({ type: 'CREATE_ENTRY', payload: json });
+
+        setBody('');
+        console.log('new entry added', json);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred while processing your request.');
+    }
 
     toggle();
   };
@@ -49,7 +57,7 @@ function NewEntry() {
         {open && (
           <div className='toggle'>
             <form method='post' onSubmit={handleSubmit}>
-              <textarea className='entryText' id='body' name='body' rows={10} cols={30} />
+              <textarea className='entryText' id='body' name='body' rows={10} cols={30} onChange={e => setBody(e.target.value)} value={body} />
               <div className='newEntryButtons'>
                 <input id='cancel' type='submit' onClick={toggle} value='Cancel'></input>
                 <input id='save' type='submit' value='Save'></input>
