@@ -1,25 +1,37 @@
 import React, { useEffect } from 'react';
 import { useEntriesContext } from '../hooks/useEntriesContext';
+import { useAuthContext } from '../hooks/useAuthContext';
+import axios from '../axiosConfig'; 
+
 import PastEntry from './PastEntry';
-import axios from '../axiosConfig';
 import '../scss/pastEntriesFeed.scss';
 
-const PastEntriesFeed = props => {
+const PastEntriesFeed = () => {
   // GET AND RENDER PAST ENTRIES
   const { entries, dispatch } = useEntriesContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchEntries = async () => {
       try {
-        const response = await axios.get('/api/entries');
-        dispatch({ type: 'SET_ENTRIES', payload: response.data });
+        const response = await axios.get('/api/entries', {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+
+        const json = response.data;
+
+        if (response.status === 200) {
+          dispatch({ type: 'SET_ENTRIES', payload: json });
+        }
       } catch (error) {
         console.error('Error fetching entries:', error);
       }
     };
 
-    fetchEntries();
-  }, [dispatch]);
+    if (user) {
+      fetchEntries();
+    }
+  }, [dispatch, user]);
 
   // Check if entries is null
   if (entries === null) {
