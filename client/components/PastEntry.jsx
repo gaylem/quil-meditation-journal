@@ -18,7 +18,7 @@ const handleDelete = async e => {
   e.preventDefault();
 
   try {
-    const response = await axios.delete(`entries/${id}`);
+    const response = await axios.delete(`/api/entries/${id}`);
     console.log(response.data); // Check the server response
   } catch (error) {
     console.error('Error deleting entry:', error);
@@ -31,7 +31,7 @@ const handleDelete = async e => {
   const handleEdit = e => {
     e.preventDefault();
 
-    fetch(`entries/${id}`, {
+    fetch(`api/entries/${id}`, {
       method: 'PATCH',
     })
       .then(res => {

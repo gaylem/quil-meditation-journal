@@ -27,7 +27,7 @@ function NewEntry() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/entries', { body });
+      const response = await axios.post('/api/entries', { body });
 
       if (!response.data.ok) {
         setError(response.data.error);

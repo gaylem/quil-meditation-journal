@@ -11,7 +11,7 @@ const PastEntriesFeed = props => {
   useEffect(() => {
     const fetchEntries = async () => {
       try {
-        const response = await axios.get('/entries');
+        const response = await axios.get('/api/entries');
         dispatch({ type: 'SET_ENTRIES', payload: response.data });
       } catch (error) {
         console.error('Error fetching entries:', error);
