@@ -24,9 +24,9 @@ const userRouter = require('./routers/userRouter');
 app.use(express.static(path.join(__dirname, '../assets')));
 
 //Home Page
-app.get('/home', cookieController.setSSIDCookie, (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', '/index.html'));
-});
+// app.get('/home', cookieController.setSSIDCookie, (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', '/index.html'));
+// });
 
 // Routers
 app.use('/entries', entryRouter);

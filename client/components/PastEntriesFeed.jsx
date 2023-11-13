@@ -19,7 +19,7 @@ const PastEntriesFeed = props => {
         updateEntries(data);
       })
       .catch(error => console.error('Error:', error));
-  }, [entries]);
+  }, []);
 
   const pastEntries = entries.map((entry, i) => {
     return <PastEntry entry={props.entry} body={entry.body} date={entry.createdAt} id={entry._id} key={i} />;
