@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
-import axios from '../axiosConfig'; // Adjust the import based on your file structure
+import axios from '../axiosConfig'; 
 
 export const useLogin = () => {
   const [error, setError] = useState(null);

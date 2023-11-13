@@ -10,7 +10,6 @@ const createToken = _id => {
   return token;
 };
 
-
 const userController = {};
 
 /**
@@ -45,13 +44,17 @@ userController.verifyUser = async (req, res, next) => {
  * @returns res.locals.user
  */
 userController.createUser = async (req, res, next) => {
+  console.log(req.body);
   const { username, email, password } = req.body;
+  console.log('username, email, password: ', username, email, password);
 
   try {
     const user = await User.signup(username, email, password);
+    console.log('user: ', user);
 
     // create a token
     const token = createToken(user._id);
+    console.log('token: ', token);
 
     res.status(200).json({ username, token });
   } catch (error) {

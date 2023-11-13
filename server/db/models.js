@@ -24,8 +24,6 @@ const entrySchema = new Schema(
   { timestamps: true },
 );
 
-const Entry = mongoose.model('entry', entrySchema);
-
 // USER SCHEMA
 const userSchema = new Schema(
   {
@@ -47,22 +45,43 @@ const sessionSchema = new Schema(
   { timestamps: true },
 );
 
-const Session = mongoose.model('session', sessionSchema);
-
 // static signup method
 userSchema.statics.signup = async function (username, email, password) {
   // validation
+  console.log('Before validation checks');
   if (!username || !email || !password) {
     throw Error('All fields must be filled');
   }
   if (!validator.isEmail(email)) {
     throw Error('Email not valid');
   }
+
+  /* Check if the string can be considered a strong password or not. 
+      Allows for custom requirements or scoring rules. 
+      If returnScore is true, then the function returns an integer score for the password rather than a boolean.
+
+      Default options: { 
+        minLength: 8, 
+        minLowercase: 1, 
+        minUppercase: 1, 
+        minNumbers: 1, 
+        minSymbols: 1, 
+        returnScore: false, 
+        pointsPerUnique: 1, 
+        pointsPerRepeat: 0.5, 
+        pointsForContainingLower: 10, 
+        pointsForContainingUpper: 10, 
+        pointsForContainingNumber: 10, 
+        pointsForContainingSymbol: 10 
+      }
+  */
+
   if (!validator.isStrongPassword(password)) {
     throw Error('Password not strong enough');
   }
 
   const exists = await this.findOne({ email });
+  console.log('After findOne, exists: ', exists);
 
   if (exists) {
     throw Error('Email already in use');
