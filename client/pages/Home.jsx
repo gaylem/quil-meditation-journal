@@ -1,10 +1,9 @@
 import React from 'react';
-import Header from './Header';
-import EntryContainer from './EntryContainer';
+import Header from '../components/Header';
+import EntryContainer from '../components/EntryContainer';
 import '../scss/app.scss';
 
 function Home() {
-
   return (
     <div className='App'>
       <Header />

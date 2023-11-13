@@ -1,6 +1,11 @@
 const models = require('./../db/models');
 const SALT_WORK_FACTOR = 10;
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const createToken = _id => {
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
+};
 
 const userController = {};
 
@@ -14,6 +19,7 @@ const userController = {};
  * @returns res.locals.user
  */
 userController.verifyUser = async (req, res, next) => {
+  console.log("it got this far");
   try {
     // Deconstruct user
     const { username, password } = req.body;
