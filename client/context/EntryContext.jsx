@@ -6,15 +6,18 @@ export const entriesReducer = (state, action) => {
   switch (action.type) {
     case 'SET_ENTRIES':
       return {
+        ...state,
         entries: action.payload,
       };
     case 'CREATE_ENTRY':
       return {
+        ...state,
         entries: [action.payload, ...state.entries],
       };
     case 'DELETE_ENTRY':
       return {
-        entries: state.entries.filter(w => w._id !== action.payload._id),
+        ...state,
+        entries: state.entries.filter(entry => entry._id !== action.payload._id),
       };
     default:
       return state;
@@ -23,7 +26,7 @@ export const entriesReducer = (state, action) => {
 
 export const EntriesContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(entriesReducer, {
-    entries: null,
+    entries: [],
   });
 
   return <EntriesContext.Provider value={{ ...state, dispatch }}>{children}</EntriesContext.Provider>;

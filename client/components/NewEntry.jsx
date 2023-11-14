@@ -1,16 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../scss/newEntry.scss';
-import { useState } from 'react';
 import { useEntriesContext } from '../hooks/useEntriesContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import axios from '../axiosConfig';
 import moment from 'moment';
 
 function NewEntry() {
-  // TODAY'S DATE
   const now = moment();
   const [date, setDate] = useState('New Meditation');
-
-  // TOGGLE
   const [open, setOpen] = useState(false);
   const toggle = () => {
     setOpen(!open);
@@ -18,34 +15,47 @@ function NewEntry() {
   };
 
   const { dispatch } = useEntriesContext();
+  const { user } = useAuthContext();
+
   const [body, setBody] = useState('');
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async e => {
-    console.log('handleSubmit triggered'); // Add this line
-
     e.preventDefault();
 
+    if (!user) {
+      setError('You must be logged in');
+      return;
+    }
+
+    const entry = { body };
+
     try {
-      const response = await axios.post('/api/entries', { body });
+      const response = await axios.post('/api/entries', entry, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
-      if (!response.data.ok) {
-        setError(response.data.error);
-      } else {
-        const json = response.data;
-        console.log('New entry data:', json);
-        dispatch({ type: 'CREATE_ENTRY', payload: json });
-
-        setBody('');
-        console.log('new entry added', json);
-      }
+      setBody('');
+      setError(null);
+      setEmptyFields([]);
+      dispatch({ type: 'CREATE_ENTRY', payload: response.data });
+      console.log('Current entries state:', entries);
+      
     } catch (error) {
-      console.error('Error:', error);
-      setError('An error occurred while processing your request.');
+      if (error.response) {
+        setError(error.response.data.error);
+        setEmptyFields(error.response.data.emptyFields);
+      } else {
+        setError('An error occurred while processing your request');
+      }
     }
 
     toggle();
   };
+
 
   return (
     <div className='NewEntry'>
