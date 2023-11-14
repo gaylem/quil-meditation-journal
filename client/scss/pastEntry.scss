@@ -1,70 +1,72 @@
 .PastEntry {
-    margin: 1em;
-    font-family: Helvetica, sans-serif;
+  margin: 1em;
+  font-family: Helvetica, sans-serif;
+  color: rgb(68, 68, 68);
+  background-color: rgb(246, 246, 246);
+  border-radius: 4px;
+  p {
+    padding: 1em;
     color: rgb(68, 68, 68);
-    background-color: rgb(246, 246, 246);
-    border-radius: 4px;
-    p {
-        padding: 1em;
-        color: rgb(68, 68, 68);
-    }
+  }
 }
 
 .buttonHeaderPast {
-    display: flex;
-    align-items: center;
-    margin: 0.5em;
-    color: rgb(68, 68, 68);
-    button {
-        border-radius: 10%;
-        font-size: larger;
-        padding: 0.2em 0.6em 0.2em 0.6em;
-        border: 0;
-        color: rgb(254, 252, 252);
-        background-color: rgb(133, 132, 132);
-    }
+  display: flex;
+  align-items: center;
+  margin: 0.5em;
+  color: rgb(68, 68, 68);
+  button {
+    border-radius: 10%;
+    font-size: larger;
+    padding: 0.2em 0.6em 0.2em 0.6em;
+    border: 0;
+    color: rgb(254, 252, 252);
+    background-color: rgb(133, 132, 132);
+  }
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em;
 }
 
 .pastEntryText {
-    color: rgb(68, 68, 68);
-    width: 90%;
-    padding: 1em !important;
-    line-height: 1.5em;
+  color: rgb(68, 68, 68);
+  width: 90%;
+  padding: 1em !important;
+  line-height: 1.5em;
+  margin: 0 auto;
+  p {
     margin: 0 auto;
-    p {
-        margin: 0 auto;
-    }
+  }
 }
 
 .pastEntryButtons {
+  button {
     display: flex;
-    justify-content: end;
+    justify-content: center;
     padding: 0.5em;
+  }
 }
 
 #cancel,
-#save {
+  #save {
     padding: 0.25em 0.5em;
     margin: 0.25em 0.5em;
-}
+  }
 
 #cancel {
-    border: 1px solid #2f3c7e;
-    background-color: white;
-    color: #2f3c7e;
-    border-radius: 0.25em;
+  border: 1px solid #2f3c7e;
+  background-color: white;
+  color: #2f3c7e;
+  border-radius: 0.25em;
 }
 
 #save {
-    border: 1px solid #2f3c7e;
-    background-color: #2f3c7e;
-    color: white;
-    border-radius: 0.25em;
+  border: 1px solid #2f3c7e;
+  background-color: #2f3c7e;
+  color: white;
+  border-radius: 0.25em;
 }

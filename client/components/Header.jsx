@@ -2,6 +2,7 @@ import React from 'react';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import '../scss/header.scss';
+import hamburger from '../../public/assets/hamburger.png';
 
 function Header() {
   const { logout } = useLogout();
@@ -13,7 +14,9 @@ function Header() {
   return (
     <div className='Header'>
       <div className='HeaderContents'>
-        <img src='/assets/hamburger.png' alt='hamburger-menu' />
+        <div className='hamburger'>
+          <img src={hamburger} alt='hamburger-menu' />
+        </div>
         <h1>quil</h1>
         <div className='logout'>{user && <button onClick={handleClick}>Log out</button>}</div>
       </div>

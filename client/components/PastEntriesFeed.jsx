@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useEntriesContext } from '../hooks/useEntriesContext';
 import { useAuthContext } from '../hooks/useAuthContext';
-import axios from '../axiosConfig'; 
+import axios from '../axiosConfig';
 
 import PastEntry from './PastEntry';
 import '../scss/pastEntriesFeed.scss';
@@ -18,7 +18,11 @@ const PastEntriesFeed = () => {
           headers: { Authorization: `Bearer ${user.token}` },
         });
 
-        const json = response.data;
+        const json = response.data.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt) : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt) : 0;
+          return dateB - dateA;
+        });
 
         if (response.status === 200) {
           dispatch({ type: 'SET_ENTRIES', payload: json });
@@ -35,18 +39,17 @@ const PastEntriesFeed = () => {
 
   // Check if entries is null
   if (entries === null) {
-    return <div>Loading...</div>; // You can customize the loading state
+    return <div>Loading...</div>;
   }
 
-  // Sort entries by createdAt in descending order
-  const sortedEntries = [...entries].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  console.log('entries', entries);
 
   return (
     <div>
       <p className='pastMeditationTitle'>Past Meditation Sessions</p>
       <div className='entries'>
-        {sortedEntries.map(entry => (
-          <PastEntry key={entry._id} entry={entry} />
+        {entries.map((entry, index) => (
+          <PastEntry key={entry._id || index} entry={entry} />
         ))}
       </div>
     </div>
