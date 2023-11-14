@@ -16,29 +16,32 @@ entryController.addEntry = (req, res, next) => {
   const { date, body } = req.body;
   model.Entry.create({ date, body })
     .then(response => {
-      console.log(response);
+      res.locals.newEntry = response;
       return next();
     })
     .catch(err => console.log(err));
 };
 
 // TODO: READ ONE
-// entryController.findEntry = (req, res, next) => {
-//     const id = req.params.id;
-//     model.Entry.findOne({ _id: id })
-//         .then((res) => {
-//             res.locals.entry = res;
-//             console.log(res.locals.entry);
-//             next();
-//         })
-//         .catch((err) => {
-//             return next({
-//                 log: `entryController.updateEntry : ERROR ${err}`,
-//                 status: 404,
-//                 message: { err: 'An error occurred' }
-//             });
-//         });
-// };
+entryController.findEntry = (req, res, next) => {
+  const id = req.params.id;
+  console.log('id: ', id);
+  model.Entry.findOne({ _id: id })
+    .then(foundEntry => {
+      // Use a different name here, e.g., foundEntry
+      res.locals.entry = foundEntry;
+      console.log(res.locals.entry);
+      next();
+    })
+    .catch(err => {
+      return next({
+        log: `entryController.findEntry: ERROR ${err}`,
+        status: 404,
+        message: { err: 'An error occurred' },
+      });
+    });
+};
+
 
 // UPDATE
 entryController.updateEntry = (req, res, next) => {

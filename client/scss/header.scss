@@ -21,10 +21,26 @@
   align-items: center;
 }
 
-button {
-  background-color: red;
+.logout {
+  button {
+    margin: 0.2em;
+    width: 94%;
+    font-size: medium;
+    background-color: #721bac;
+    color: white;
+    padding: 0.4em;
+    border-radius: 3px;
+    border: 0px;
+  }
 }
 
-img {
-  size: 50%;
+.hamburger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2em;
+  img {
+    width: 50%;
+    height: auto;
+  }
 }

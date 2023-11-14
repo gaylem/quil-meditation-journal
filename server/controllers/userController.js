@@ -25,10 +25,10 @@ userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const user = await User.login(username, password);
-    console.log(user);
+    console.log('user: ', user);
     // create a token
     const token = createToken(user._id);
-    console.log(token);
+    console.log('token: ', token);
     res.status(200).json({ username, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
