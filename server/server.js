@@ -17,8 +17,7 @@ app.use(cors());
 // Cookies
 const cookieController = require('./controllers/cookieController');
 
-// Handle requests for static files
-// Serve static files
+// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Import Routes

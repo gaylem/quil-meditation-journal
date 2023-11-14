@@ -34,11 +34,12 @@ module.exports = {
 
   devServer: {
     static: {
-      directory: path.resolve(__dirname, 'build'),
+      directory: path.resolve(__dirname, 'public'),
       publicPath: '/',
     },
     proxy: {
-      '/entries': 'http://localhost:4000/',
+      '/api': 'http://localhost:4000/',
+      '/assets': 'http://localhost:4000/',
     },
   },
 
