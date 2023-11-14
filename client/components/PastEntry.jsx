@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../scss/pastEntry.scss';
 import moment from 'moment';
+import axios from '../axiosConfig';
 
 const PastEntry = ({ entry, id }) => {
   // TOGGLE ENTRYå
@@ -14,18 +15,18 @@ const PastEntry = ({ entry, id }) => {
   const formattedDate = moment(createdDate).format('LL');
 
   // HANDLE DELETE
-const handleDelete = async e => {
-  e.preventDefault();
+  const handleDelete = async e => {
+    e.preventDefault();
 
-  try {
-    const response = await axios.delete(`/api/entries/${id}`);
-    console.log(response.data); // Check the server response
-  } catch (error) {
-    console.error('Error deleting entry:', error);
-  }
+    try {
+      const response = await axios.delete(`/api/entries/${id}`);
+      console.log(response.data); // Check the server response
+    } catch (error) {
+      console.error('Error deleting entry:', error);
+    }
 
-  toggle();
-};
+    toggle();
+  };
 
   // TODO: HANDLE EDIT - Button works when I have postman opened
   const handleEdit = e => {
