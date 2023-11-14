@@ -6,8 +6,6 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-PORT = 4000;
-
 // Middleware
 app.use(cookieParser());
 app.use(express.json());
@@ -52,17 +50,12 @@ app.use((err, req, res, next) => {
 if (process.env.NODE_ENV === 'production') {
   // statically serve everything in the build folder on the route '/build'
   app.use('/build', express.static(path.join(__dirname, '../build')));
-
-  // serve the index.html on a request to the root
-  // app.get('/', (req, res) => {
-  //     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
-  // });
 }
 console.log('NODE_ENV: ', process.env.NODE_ENV);
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Listening on port ${process.env.PORT}`);
 });
 
 module.exports = app;
