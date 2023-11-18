@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { verifyUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { verifyUser, refreshTokens, logoutUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
 
 /**
  * Login user
@@ -12,6 +12,24 @@ const { verifyUser, createUser, updateUser, deleteUser } = require('../controlle
  */
 //
 router.post('/login', verifyUser);
+
+/**
+ * Logout user
+ *
+ * @param {String} refreshTokens
+ *
+ */
+//
+router.post('/token', refreshTokens);
+
+/**
+ * Logout user
+ *
+ * @param {String} refreshToken
+ *
+ */
+//
+router.post('/logout', logoutUser);
 
 /**
  * Signup user
