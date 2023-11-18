@@ -17,9 +17,19 @@ userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const user = await User.login(username, password);
+    console.log('user: ', user);
+    
+    const obj = {
+      id: user._id.toString(),
+      username: user.username,
+    };
+    const token = User.createToken(obj);
 
-    const token = User.createToken(user);
-    console.log(token);
+    // Add token to database
+    const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.accessToken } }, { new: true });
+    
+     console.log('Updated User:', updatedUser);
+
     return res.status(200).json({ username, token });
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -33,7 +43,6 @@ userController.verifyUser = async (req, res, next) => {
  *
  * @returns newAccessToken
  */
-
 userController.refreshTokens = async (req, res, next) => {
   const { refreshToken } = req.body;
 
@@ -53,6 +62,9 @@ userController.refreshTokens = async (req, res, next) => {
     // Call createToken to generate a new set of tokens
     const newTokenData = { _id: decoded._id }; // Customize this based on your user object
     const { accessToken, refreshToken: newRefreshToken } = User.createToken(newTokenData);
+
+    // Update the user's refreshTokens array with the new refresh token
+    await User.findOneAndUpdate({ _id: decoded._id }, { $push: { refreshTokens: newRefreshToken } }, { new: true });
 
     return res.status(200).json({ accessToken, refreshToken: newRefreshToken });
   } catch (error) {

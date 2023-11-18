@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
-require('dotenv');
+require('dotenv').config();
 
 //* Connect to DB
 async function connectToDatabase() {
@@ -114,7 +114,7 @@ userSchema.statics.signup = async function (username, email, password) {
       id: user._id.toString(),
       username: user.username,
     };
-  } catch {
+  } catch (error) {
     console.error('Error creating user in the database:', error);
     throw error;
   }
@@ -137,13 +137,10 @@ userSchema.statics.login = async function (username, password) {
     if (!match) {
       throw new Error('Incorrect password');
     }
-    return {
-      id: user._id.toString(),
-      username: user.username,
-    };
+    return user;
   } catch (error) {
     console.error('Login error:', error);
-    throw error; // Re-throw the error to be caught in the calling function
+    throw error; 
   }
 };
 

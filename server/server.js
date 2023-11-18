@@ -16,6 +16,32 @@ app.use((req, res, next) => {
   next();
 });
 
+
+//TODO: This isn't doing anything right now
+// Sample middleware to verify the access token
+const verifyAccessToken = (req, res, next) => {
+  const accessToken = req.headers.authorization?.split(' ')[1];
+
+  if (!accessToken) {
+    return res.status(401).json({ error: 'Access token missing' });
+  }
+
+  try {
+    const decoded = jwt.verify(accessToken, ACCESS_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(403).json({ error: 'Invalid access token' });
+  }
+};
+
+//TODO: This isn't doing anything right now
+// Protected endpoint
+app.get('/protected', verifyAccessToken, (req, res) => {
+  res.json({ message: 'Protected resource accessed successfully' });
+});
+
+
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -28,9 +54,9 @@ app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
 
 // Catch-all route handler for any requests to an unknown route
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+// });
 
 // Catch-all route handler for any requests to an unknown route
 app.use((req, res) => res.status(404).send("This is not the page you're looking for..."));

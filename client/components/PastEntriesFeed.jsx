@@ -42,8 +42,6 @@ const PastEntriesFeed = () => {
     return <div>Loading...</div>;
   }
 
-  console.log('entries', entries);
-
   return (
     <div>
       <p className='pastMeditationTitle'>Past Meditation Sessions</p>

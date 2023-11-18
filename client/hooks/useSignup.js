@@ -19,8 +19,7 @@ export const useSignup = () => {
       });
 
       const json = response.data;
-      console.log('json: ', json);
-
+      
       if (!response.status === 200) {
         setIsLoading(false);
         setError(json.error);
