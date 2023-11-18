@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { verifyUser, refreshTokens, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { verifyUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
 
 /**
  * Login user
@@ -12,17 +12,6 @@ const { verifyUser, refreshTokens, createUser, updateUser, deleteUser } = requir
  */
 //
 router.post('/login', verifyUser);
-
-/**
- * Logout user
- *
- * @param {Object} req.body
- * @param {String} req.body.username
- * @param {String} req.body.password
- *
- */
-//
-router.delete('/logout', refreshTokens);
 
 /**
  * Signup user
