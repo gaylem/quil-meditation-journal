@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
+const { verifyUser, refreshTokens, createUser, updateUser, deleteUser } = require('../controllers/userController');
 
 /**
  * Login user
@@ -9,13 +9,20 @@ const userController = require('../controllers/userController');
  * @param {String} req.body.username
  * @param {String} req.body.password
  *
- * @returns response status 200
  */
 //
-router.post('/login', userController.verifyUser, (req, res) => {
-  console.log('login');
-  return res.status(200).json(res.locals.user);
-});
+router.post('/login', verifyUser);
+
+/**
+ * Logout user
+ *
+ * @param {Object} req.body
+ * @param {String} req.body.username
+ * @param {String} req.body.password
+ *
+ */
+//
+router.delete('/logout', refreshTokens);
 
 /**
  * Signup user
@@ -24,35 +31,23 @@ router.post('/login', userController.verifyUser, (req, res) => {
  * @param {String} req.body.username
  * @param {String} req.body.password
  *
- * @returns response status 201
  */
-router.post('/signup', userController.createUser, (req, res) => {
-  console.log('signup');
-  return res.status(201).redirect('/home');
-});
+router.post('/signup', createUser);
 
 /**
  * Update user
  *
  * @param {Int} req.params.userId
  *
- * @returns response status 200
  */
-router.put('/update/:userId', userController.updateUser, (req, res) => {
-  console.log('user updated');
-  return res.sendStatus(200);
-});
+router.put('/update/:userId', updateUser);
 
 /**
  * Delete user
  *
  * @param {Int} req.params.userId
  *
- * @returns successful deletion status
  */
-router.delete('/delete/:userId', userController.deleteUser, (req, res) => {
-  console.log('user deleted');
-  return res.status(204).redirect('/signup');
-});
+router.delete('/delete/:userId', deleteUser);
 
 module.exports = router;

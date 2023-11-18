@@ -30,8 +30,6 @@ const entrySchema = new Schema(
   { timestamps: true },
 );
 
-const Entry = mongoose.model('entry', entrySchema);
-
 //* USER SCHEMA
 const userSchema = new Schema(
   {
@@ -41,8 +39,6 @@ const userSchema = new Schema(
   },
   { timestamps: true },
 );
-
-const User = mongoose.model('user', userSchema);
 
 //* SIGNUP METHOD
 userSchema.statics.signup = async function (username, email, password) {
