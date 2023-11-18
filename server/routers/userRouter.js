@@ -1,11 +1,9 @@
-const userController = require('../controllers/userController');
-const cookieController = require('../controllers/cookieController');
-const sessionController = require('../controllers/sessionController');
 const express = require('express');
 const router = express.Router();
+const userController = require('../controllers/userController');
 
 /**
- * login
+ * Login user
  *
  * @param {Object} req.body
  * @param {String} req.body.username
@@ -14,12 +12,13 @@ const router = express.Router();
  * @returns response status 200
  */
 //
-router.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+router.post('/login', userController.verifyUser, (req, res) => {
   console.log('login');
   return res.status(200).json(res.locals.user);
 });
 
 /**
+ * Signup user
  *
  * @param {Object} req.body
  * @param {String} req.body.username
@@ -27,12 +26,13 @@ router.post('/login', userController.verifyUser, cookieController.setSSIDCookie,
  *
  * @returns response status 201
  */
-router.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
+router.post('/signup', userController.createUser, (req, res) => {
   console.log('signup');
   return res.status(201).redirect('/home');
 });
 
 /**
+ * Update user
  *
  * @param {Int} req.params.userId
  *
@@ -44,6 +44,7 @@ router.put('/update/:userId', userController.updateUser, (req, res) => {
 });
 
 /**
+ * Delete user
  *
  * @param {Int} req.params.userId
  *

@@ -44,17 +44,6 @@ const userSchema = new Schema(
 
 const User = mongoose.model('user', userSchema);
 
-//* SESSION SCHEMA
-const sessionSchema = new Schema(
-  {
-    userId: { type: Schema.Types.ObjectId, ref: User, required: true },
-    cookieId: String,
-  },
-  { timestamps: true },
-);
-
-const Session = mongoose.model('session', sessionSchema);
-
 //* SIGNUP METHOD
 userSchema.statics.signup = async function (username, email, password) {
   if (!username || !email || !password) {
@@ -126,5 +115,4 @@ userSchema.statics.login = async function (username, password) {
 module.exports = {
   Entry: mongoose.model('Entry', entrySchema),
   User: mongoose.model('User', userSchema),
-  Session: mongoose.model('Session', sessionSchema),
 };

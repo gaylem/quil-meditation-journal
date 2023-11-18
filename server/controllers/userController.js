@@ -13,8 +13,7 @@ const createToken = _id => {
 const userController = {};
 
 /**
- * If the username and password are not found in the users database
- * we should throw an error because this combination was not found.
+ * Verify user in the database
  *
  * @param {Str} req.body.username
  * @param {Str} req.body.password
@@ -36,7 +35,7 @@ userController.verifyUser = async (req, res, next) => {
 };
 
 /**
- * createUser - create and save a new User into the users database.
+ * Create user in the database
  *
  * @param {Int} req.body
  * @param {Int} res.locals.userId
@@ -62,7 +61,7 @@ userController.createUser = async (req, res, next) => {
   }
 };
 /**
- * updateUser - updates username and hashed password in the users database.
+ * Update user in the database
  *
  * @param {Str} req.body.username
  * @param {Str} req.body.password
@@ -100,7 +99,7 @@ userController.updateUser = async (req, res, next) => {
 };
 
 /**
- * deleteUser - deletes a User from the users database.
+ * Delete user from the database
  *
  * @param {Int} req.params.userId
  *
