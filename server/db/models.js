@@ -1,8 +1,8 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 //* Connect to DB
 async function connectToDatabase() {
