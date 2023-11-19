@@ -1,15 +1,16 @@
 const express = require('express');
 const entryController = require('../controllers/entryController');
+const userController = require('../controllers/userController');
 const router = express.Router();
 
 // Route for getting all entries data
-router.get('/', entryController.getAllEntries, (req, res) => {
+router.get('/', userController.verifyAccessToken, entryController.getAllEntries, (req, res) => {
   return res.status(200).json(res.locals.allEntries);
 });
 
 // Route for getting specific entries data
 router.get('/:id', (req, res) => {
-    return res.status(200).json(res.locals.entry);
+  return res.status(200).json(res.locals.entry);
 });
 
 // Route for deleting specific entries

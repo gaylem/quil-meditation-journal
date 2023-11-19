@@ -1,13 +1,11 @@
 require('dotenv').config();
 
-const cookieParser = require('cookie-parser');
 const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 
 // Middleware
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -17,9 +15,6 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-
-// Cookies
-const cookieController = require('./controllers/cookieController');
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -31,11 +26,6 @@ const userRouter = require('./routers/userRouter');
 // Routers
 app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
-
-// Catch-all route handler for any requests to an unknown route
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-});
 
 // Catch-all route handler for any requests to an unknown route
 app.use((req, res) => res.status(404).send("This is not the page you're looking for..."));

@@ -9,20 +9,24 @@ import '../scss/pastEntriesFeed.scss';
 const PastEntriesFeed = () => {
   // GET AND RENDER PAST ENTRIES
   const { entries, dispatch } = useEntriesContext();
-  const { user } = useAuthContext();
+  const { user, userId } = useAuthContext();
 
   useEffect(() => {
     const fetchEntries = async () => {
       try {
         const response = await axios.get('/api/entries', {
-          headers: { Authorization: `Bearer ${user.token}` },
+          headers: { Authorization: `Bearer ${user.token.accessToken}` },
         });
+
+        console.log('response', response);
 
         const json = response.data.sort((a, b) => {
           const dateA = a.createdAt ? new Date(a.createdAt) : 0;
           const dateB = b.createdAt ? new Date(b.createdAt) : 0;
           return dateB - dateA;
         });
+
+        console.log(json);
 
         if (response.status === 200) {
           dispatch({ type: 'SET_ENTRIES', payload: json });
@@ -41,8 +45,6 @@ const PastEntriesFeed = () => {
   if (entries === null) {
     return <div>Loading...</div>;
   }
-
-  console.log('entries', entries);
 
   return (
     <div>

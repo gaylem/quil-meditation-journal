@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
-import axios from '../axiosConfig'; 
+import axios from '../axiosConfig';
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -19,7 +19,7 @@ export const useLogin = () => {
 
       const json = response.data;
 
-      if (!response.status === 200) {
+      if (response.status !== 200) {
         setIsLoading(false);
         setError(json.error);
       }

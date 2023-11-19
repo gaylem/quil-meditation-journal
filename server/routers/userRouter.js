@@ -1,57 +1,61 @@
-const userController = require('../controllers/userController');
-const cookieController = require('../controllers/cookieController');
-const sessionController = require('../controllers/sessionController');
 const express = require('express');
 const router = express.Router();
+const { verifyUser, refreshTokens, logoutUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
 
 /**
- * login
+ * Login user
  *
  * @param {Object} req.body
  * @param {String} req.body.username
  * @param {String} req.body.password
  *
- * @returns response status 200
  */
 //
-router.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-  console.log('login');
-  return res.status(200).json(res.locals.user);
-});
+router.post('/login', verifyUser);
 
 /**
+ * Logout user
+ *
+ * @param {String} refreshTokens
+ *
+ */
+//
+router.post('/token', refreshTokens);
+
+/**
+ * Logout user
+ *
+ * @param {String} refreshToken
+ *
+ */
+//
+router.post('/logout', logoutUser);
+
+/**
+ * Signup user
  *
  * @param {Object} req.body
  * @param {String} req.body.username
  * @param {String} req.body.password
  *
- * @returns response status 201
  */
-router.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-  console.log('signup');
-  return res.status(201).redirect('/home');
-});
+router.post('/signup', createUser);
 
 /**
+ * Update user
  *
  * @param {Int} req.params.userId
  *
- * @returns response status 200
  */
-router.put('/update/:userId', userController.updateUser, (req, res) => {
-  console.log('user updated');
-  return res.sendStatus(200);
-});
+router.put('/update/:userId', updateUser);
 
 /**
+ * Delete user
  *
  * @param {Int} req.params.userId
  *
- * @returns successful deletion status
  */
-router.delete('/delete/:userId', userController.deleteUser, (req, res) => {
-  console.log('user deleted');
-  return res.status(204).redirect('/signup');
-});
+router.delete('/delete/:userId', deleteUser);
+
 
 module.exports = router;
