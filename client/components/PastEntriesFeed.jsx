@@ -15,7 +15,7 @@ const PastEntriesFeed = () => {
     const fetchEntries = async () => {
       try {
         const response = await axios.get('/api/entries', {
-          headers: { Authorization: `Bearer ${user.token}` },
+          headers: { Authorization: `Bearer ${user.token.accessToken}` },
         });
 
         const json = response.data.sort((a, b) => {
@@ -23,6 +23,8 @@ const PastEntriesFeed = () => {
           const dateB = b.createdAt ? new Date(b.createdAt) : 0;
           return dateB - dateA;
         });
+
+        console.log(json);
 
         if (response.status === 200) {
           dispatch({ type: 'SET_ENTRIES', payload: json });
