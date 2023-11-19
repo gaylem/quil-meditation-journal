@@ -29,7 +29,10 @@ function NewEntry() {
       return;
     }
 
-    const entry = { body };
+    const userId = user.userId;
+
+    const entry = { body, userId };
+    console.log('entry : ', entry );
 
     try {
       const response = await axios.post('/api/entries', entry, {
@@ -43,7 +46,6 @@ function NewEntry() {
       setEmptyFields([]);
       dispatch({ type: 'CREATE_ENTRY', payload: response.data });
       console.log('Current entries state:', entries);
-      
     } catch (error) {
       if (error.response) {
         setError(error.response.data.error);
@@ -55,7 +57,6 @@ function NewEntry() {
 
     toggle();
   };
-
 
   return (
     <div className='NewEntry'>

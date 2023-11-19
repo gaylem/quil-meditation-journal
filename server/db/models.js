@@ -1,8 +1,8 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 //* Connect to DB
 async function connectToDatabase() {
@@ -23,14 +23,6 @@ connectToDatabase();
 //* Create Schema
 const Schema = mongoose.Schema;
 
-//* Entry Schema
-const entrySchema = new Schema(
-  {
-    body: { type: String, required: true },
-  },
-  { timestamps: true },
-);
-
 //* User Schema
 const userSchema = new Schema(
   {
@@ -38,6 +30,15 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     email: { type: String, required: true },
     refreshTokens: [{ type: String }],
+  },
+  { timestamps: true },
+);
+
+//* Entry Schema
+const entrySchema = new Schema(
+  {
+    body: { type: String, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
   { timestamps: true },
 );
@@ -53,9 +54,14 @@ userSchema.statics.createToken = obj => {
       throw Error('Secret keys are missing');
     }
 
-    const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, { expiresIn: '15m' });
+    // TODO: Commenting out lines with expirations to see if that fixes my issues
+    // const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, { expiresIn: '15m' });
 
-    const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, { expiresIn: '7d' });
+    // const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, { expiresIn: '7d' });
+
+    const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, { algorithm: 'HS256' });
+
+    const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, { algorithm: 'HS256' });
 
     return { accessToken, refreshToken };
   } catch (error) {
@@ -140,7 +146,7 @@ userSchema.statics.login = async function (username, password) {
     return user;
   } catch (error) {
     console.error('Login error:', error);
-    throw error; 
+    throw error;
   }
 };
 
