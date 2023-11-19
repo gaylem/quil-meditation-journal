@@ -1,5 +1,6 @@
 // AuthContext.jsx
 import React, { createContext, useReducer, useEffect } from 'react';
+import axios from '../axiosConfig';
 
 export const AuthContext = createContext();
 
@@ -8,7 +9,7 @@ export const authReducer = (state, action) => {
     case 'LOGIN':
       return { user: action.payload };
     case 'LOGOUT':
-      return { user: null };
+      return { user: null, accessToken: null, refreshToken: null };
     case 'REFRESH_TOKENS':
       return { ...state, accessToken: action.payload.accessToken, refreshToken: action.payload.refreshToken };
     default:
@@ -19,47 +20,43 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
-    accessToken: localStorage.getItem('accessToken') || null,
-    refreshToken: localStorage.getItem('refreshToken') || null,
+    accessToken: null,
+    refreshToken: null,
   });
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-
     if (user) {
       dispatch({ type: 'LOGIN', payload: user });
     }
+    console.log("useEffect", user);
   }, []);
 
+  useEffect(() => {
+    console.log('Updated Tokens:', state.accessToken, state.refreshToken);
+  }, [state.accessToken, state.refreshToken]);
+
   const updateTokens = (accessToken, refreshToken) => {
-    // Update your stored tokens
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
+    // Update your stored tokens in the context
+    dispatch({ type: 'REFRESH_TOKENS', payload: { accessToken, refreshToken } });
   };
 
   const refreshToken = async () => {
     try {
-      const response = await fetch('/refreshTokens', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ refreshToken: state.refreshToken }),
+      const response = await axios.post('/api/users/refreshTokens', {
+        refreshToken: state.refreshToken,
       });
+      console.log(response);
 
-      if (!response.ok) {
-        throw new Error('Failed to refresh tokens');
-      }
+      const { accessToken, refreshToken: newRefreshToken, user } = response.data;
 
-      const { accessToken, refreshToken: newRefreshToken } = await response.json();
-
-      // Update tokens in the context
+      // Update tokens and user in the context
       dispatch({ type: 'REFRESH_TOKENS', payload: { accessToken, refreshToken: newRefreshToken } });
-
-      return accessToken;
+      dispatch({ type: 'LOGIN', payload: user });
+      console.log('return', user);
+      return user;
     } catch (error) {
       console.error('Token refresh error:', error);
-      // Handle the error (e.g., redirect to login page)
     }
   };
 
