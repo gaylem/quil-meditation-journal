@@ -3,9 +3,13 @@ const entryController = {};
 
 // READ ALL
 entryController.getAllEntries = (req, res, next) => {
-  model.Entry.find({})
+  const userId = res.locals.decoded.id;
+
+  model.Entry.find({ userId })
     .then(data => {
       res.locals.allEntries = data;
+      console.log('res.locals.allEntries: ', res.locals.allEntries);
+
       return next();
     })
     .catch(err => console.log(err));
@@ -13,8 +17,10 @@ entryController.getAllEntries = (req, res, next) => {
 
 // CREATE
 entryController.addEntry = (req, res, next) => {
-  const { date, body } = req.body;
-  model.Entry.create({ date, body })
+  const { body, userId } = req.body;
+  console.log(req.body);
+
+  model.Entry.create({ body, userId })
     .then(response => {
       res.locals.newEntry = response;
       return next();
@@ -41,7 +47,6 @@ entryController.findEntry = (req, res, next) => {
       });
     });
 };
-
 
 // UPDATE
 entryController.updateEntry = (req, res, next) => {

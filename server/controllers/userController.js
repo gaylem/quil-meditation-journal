@@ -1,21 +1,25 @@
 require('dotenv').config();
 const { User } = require('../db/models');
+const jwt = require('jsonwebtoken');
 
 //* USER CONTROLLER
 const userController = {};
 
 userController.verifyAccessToken = (req, res, next) => {
   const accessToken = req.headers.authorization?.split(' ')[1];
-  console.log('accessToken: ', accessToken);
+  console.log('accessToken verifyAccesToken: ', accessToken);
 
   if (!accessToken) {
     return res.status(401).json({ error: 'Access token missing' });
   }
 
   try {
-    const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET, { algorithms: ['HS256'] });
+
+    console.log('Token Header:', decoded.header);
+
     console.log('decoded: ', decoded);
-    req.user = decoded;
+    res.locals.decoded = decoded;
     next();
   } catch (error) {
     return res.status(403).json({ error: 'Invalid access token' });
@@ -43,13 +47,14 @@ userController.verifyUser = async (req, res, next) => {
     };
 
     const token = User.createToken(obj);
-    console.log(token);
     // Add token to database
     const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.accessToken } }, { new: true });
 
-    console.log('Updated User:', updatedUser);
+    userId = updatedUser._id;
+    console.log('updatedUser._id: ', updatedUser._id);
 
-    return res.status(200).json({ username, token });
+
+    return res.status(200).json({ username, token, userId });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -213,5 +218,7 @@ userController.deleteUser = async (req, res, next) => {
     });
   }
 };
+
+//* Find user by username
 
 module.exports = userController;
