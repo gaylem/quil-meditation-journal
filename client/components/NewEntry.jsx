@@ -32,7 +32,7 @@ function NewEntry() {
     const userId = user.userId;
 
     const entry = { body, userId };
-    console.log('entry : ', entry );
+    console.log('entry : ', entry);
 
     try {
       const response = await axios.post('/api/entries', entry, {

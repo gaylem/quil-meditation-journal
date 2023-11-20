@@ -3,7 +3,6 @@ const { User } = require('../db/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-
 //* USER CONTROLLER
 const userController = {};
 
@@ -54,7 +53,6 @@ userController.verifyUser = async (req, res) => {
 
     const userId = updatedUser._id;
     console.log('updatedUser._id: ', updatedUser._id);
-
 
     return res.status(200).json({ username, token, userId });
   } catch (error) {
@@ -202,7 +200,6 @@ userController.deleteUser = async (req, res, next) => {
 
     // const userDeleteResult = await User.findOneAndDelete({ _id: userId });
 
-   
     // const sessionsDeleteResult = await Session.deleteMany({ userId: userId });
 
     // if (userDeleteResult === null || sessionsDeleteResult.deletedCount === 0) {
