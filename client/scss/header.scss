@@ -1,46 +1,85 @@
-.Header {
-  font-family: Pacifico, sans-serif;
-  font-size: 1.2em;
-  width: 100%;
+// Colors
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
+$shadow-color: rgb(172, 172, 172);
+$font-family: Pacifico, sans-serif;
+
+// Mixins
+@mixin box-shadow($offset-x, $offset-y, $blur, $color) {
+  box-shadow: $offset-x $offset-y $blur $color;
+}
+
+@mixin button-styles($bg-color: $primary-color, $font-size: medium) {
+  max-width: 8em;
+  min-width: 5px;
+  font-size: $font-size;
+  background-color: $bg-color;
+  color: white;
+  padding: 1em;
+  border-radius: 3px;
+  border: 0px;
+}
+
+// Utility Classes
+.flex-center {
   display: flex;
-  padding-bottom: 0.5em;
   justify-content: center;
   align-items: center;
-  // background-color: #2f3c7e;
-  background-image: linear-gradient(to bottom right, #721bac, #2f3c7e);
-  color: #fff;
-  box-shadow: 0 2px 8px rgb(172, 172, 172);
+}
+
+// Header Styles
+.header {
+  @extend .flex-center;
+  font-family: $font-family;
+  font-size: 1.2em;
+  padding: 0.5em;
+  @include box-shadow(0, 2px, 8px, $shadow-color);
   position: sticky;
   top: 0;
-}
+  background-image: linear-gradient(to bottom right, $primary-color, $secondary-color);
+  color: white;
 
-.HeaderContents {
-  width: 90%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  // Header Container Styles
+  .header-container {
+    display: grid;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    width: 90%;
+    @extend .flex-center;
 
-.logout {
-  button {
-    margin: 0.2em;
-    width: 94%;
-    font-size: medium;
-    background-color: #721bac;
-    color: white;
-    padding: 0.4em;
-    border-radius: 3px;
-    border: 0px;
-  }
-}
+    // Hamburger Styles
+    .hamburger {
+      width: 2em;
+      height: auto;
+    }
 
-.hamburger {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.2em;
-  img {
-    width: 50%;
-    height: auto;
+    // Title Styles
+    h1 {
+      flex: 1;
+      text-align: center;
+      margin: 0; // Remove default margin
+      padding: 0 0.5em 0 0.5em;
+    }
+
+    // Logout Container Styles
+    .logout {
+      display: flex;
+      justify-content: flex-end;
+
+      // Button Styles
+      button {
+        @include button-styles;
+        @media (max-width: 600px) {
+          font-size: small;
+        }
+        @media (max-width: 300px) {
+          font-size: x-small;
+        }
+      }
+      button:hover {
+        border: 0.5px solid white;
+        cursor: pointer;
+      }
+    }
   }
 }

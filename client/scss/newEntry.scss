@@ -1,3 +1,16 @@
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
+$tertiary-color: white;
+$shadow-color: rgb(172, 172, 172);
+
+@mixin new-entry-input-styles($bg-color: $primary-color, $font-size: medium) {
+  padding: 0.5em 0 0.5em 0;
+  margin: 0 0.5em 0.5em 0.5em;
+  min-width: 80px;
+  border-radius: 3px;
+  font-size: $font-size;
+}
+
 .NewEntry {
   padding: 0 3em 3em 2em;
   color: rgb(68, 68, 68);
@@ -16,7 +29,7 @@
     padding: 0.25em 0.5em 0.25em 0.5em;
     border: 0;
     color: white;
-    background-color: #2f3c7e;
+    background-color: $secondary-color;
     margin-right: 0.5em;
   }
 }
@@ -40,26 +53,35 @@ form {
 
 .newEntryButtons {
   display: flex;
-  justify-content: end;
-  padding: 0.5em;
-}
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 0.5em;
+  .cancel {
+    @include new-entry-input-styles;
+    border: 1px solid $secondary-color;
+    background-color: $tertiary-color;
+    color: $secondary-color;
+  }
 
-#cancel,
-#save {
-  padding: 0.25em 0.5em;
-  margin: 0.25em 0.5em;
-}
+  .cancel:hover {
+    background-color: $primary-color;
+    color: $tertiary-color;
+    border: 1px solid $primary-color;
+    opacity: 50%;
+    cursor: pointer;
+  }
 
-#cancel {
-  border: 1px solid #2f3c7e;
-  background-color: white;
-  color: #2f3c7e;
-  border-radius: 0.25em;
-}
+  .save {
+    @include new-entry-input-styles;
+    border: 1px solid $secondary-color;
+    background-color: $secondary-color;
+    color: $tertiary-color;
+  }
 
-#save {
-  border: 1px solid #2f3c7e;
-  background-color: #2f3c7e;
-  color: white;
-  border-radius: 0.25em;
+  .save:hover {
+    background-color: $primary-color;
+    color: $tertiary-color;
+    border: 1px solid $primary-color;
+    cursor: pointer;
+  }
 }
