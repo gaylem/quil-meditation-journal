@@ -44,11 +44,11 @@ const PastEntry = ({ entry }) => {
       </div>
       <div>
         {open && (
-          <div className='toggle'>
+          <div className='toggle-container'>
             <p className='pastEntryText'>{body}</p>
             <div className='pastEntryButtons'>
-              <input id='cancel' type='submit' onClick={handleDelete} value='Delete'></input>
-              <input id='save' type='submit' onClick={handleEdit} value='Edit'></input>
+              <input className='delete' type='submit' onClick={handleDelete} value='Delete' />
+              <input className='edit' type='submit' onClick={handleEdit} value='Edit' />
             </div>
           </div>
         )}

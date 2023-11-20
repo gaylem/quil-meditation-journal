@@ -13,15 +13,13 @@ function Header() {
     logout(refreshToken);
   };
   return (
-    <div className='Header'>
-      <div className='HeaderContents'>
-        <div className='hamburger'>
-          <img src={hamburger} alt='hamburger-menu' />
-        </div>
+    <div className='header'>
+      <div className='header-container'>
+          <img className='hamburger' src={hamburger} alt='hamburger-menu' />
         <h1>quil</h1>
-        <div className='logout'>{user && <button onClick={handleClick}>Log out</button>}</div>
+          <div className='logout'>{user && <button onClick={handleClick}>Log Out</button>}</div>
+        </div>
       </div>
-    </div>
   );
 }
 

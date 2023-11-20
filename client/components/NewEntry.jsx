@@ -9,9 +9,11 @@ function NewEntry() {
   const now = moment();
   const [date, setDate] = useState('New Meditation');
   const [open, setOpen] = useState(false);
+
+  // Toggle new meditation section open
   const toggle = () => {
     setOpen(!open);
-    setDate(open ? now.format('LL') : 'New Meditation');
+    setDate(open ? 'New Meditation' : now.format('LL'));
   };
 
   const { dispatch } = useEntriesContext();
@@ -32,7 +34,6 @@ function NewEntry() {
     const userId = user.userId;
 
     const entry = { body, userId };
-    console.log('entry : ', entry);
 
     try {
       const response = await axios.post('/api/entries', entry, {
@@ -70,8 +71,8 @@ function NewEntry() {
             <form method='post' onSubmit={handleSubmit}>
               <textarea className='entryText' id='body' name='body' rows={10} cols={30} onChange={e => setBody(e.target.value)} value={body} />
               <div className='newEntryButtons'>
-                <input id='cancel' type='submit' onClick={toggle} value='Cancel'></input>
-                <input id='save' type='submit' value='Save'></input>
+                <input className='cancel' type='submit' onClick={toggle} value='Cancel'></input>
+                <input className='save' type='submit' value='Save'></input>
               </div>
             </form>
           </div>
