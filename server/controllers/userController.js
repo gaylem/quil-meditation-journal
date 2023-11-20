@@ -1,6 +1,8 @@
 require('dotenv').config();
 const { User } = require('../db/models');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
 
 //* USER CONTROLLER
 const userController = {};
@@ -35,7 +37,7 @@ userController.verifyAccessToken = (req, res, next) => {
  * @returns username, token
  */
 
-userController.verifyUser = async (req, res, next) => {
+userController.verifyUser = async (req, res) => {
   const { username, password } = req.body;
   try {
     const user = await User.login(username, password);
@@ -50,7 +52,7 @@ userController.verifyUser = async (req, res, next) => {
     // Add token to database
     const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.accessToken } }, { new: true });
 
-    userId = updatedUser._id;
+    const userId = updatedUser._id;
     console.log('updatedUser._id: ', updatedUser._id);
 
 
@@ -67,7 +69,7 @@ userController.verifyUser = async (req, res, next) => {
  *
  * @returns newAccessToken
  */
-userController.refreshTokens = async (req, res, next) => {
+userController.refreshTokens = async (req, res) => {
   const { refreshToken } = req.body;
 
   try {
@@ -78,6 +80,7 @@ userController.refreshTokens = async (req, res, next) => {
     // Verify the refresh token
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
 
+    // TODO: Where is refreshTokens coming from?
     // Check if the refresh token is in the stored tokens
     if (!refreshTokens.includes(refreshToken)) {
       throw Error('Invalid refresh token');
@@ -104,7 +107,7 @@ userController.refreshTokens = async (req, res, next) => {
  * @returns status 204
  */
 
-userController.logoutUser = async (req, res, next) => {
+userController.logoutUser = async (req, res) => {
   const { refreshToken } = req.body;
   console.log('refreshToken: ', refreshToken);
 
@@ -130,7 +133,7 @@ userController.logoutUser = async (req, res, next) => {
  *
  * @returns username, token
  */
-userController.createUser = async (req, res, next) => {
+userController.createUser = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
@@ -158,9 +161,9 @@ userController.updateUser = async (req, res, next) => {
     const { userId } = req.params;
     const { username, password } = req.body;
 
-    const encryptedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
+    const encryptedPassword = await bcrypt.hash(password, process.env.SALT_WORK_FACTOR);
 
-    const result = await models.User.findOneAndUpdate({ _id: userId }, { $set: { username, password: encryptedPassword } });
+    const result = await User.findOneAndUpdate({ _id: userId }, { $set: { username, password: encryptedPassword } });
 
     if (result.matchedCount === 0) {
       return next({
@@ -191,21 +194,24 @@ userController.updateUser = async (req, res, next) => {
  *
  * @returns to login page
  */
+
+// TODO: Remove sessions
 userController.deleteUser = async (req, res, next) => {
   try {
-    const { userId } = req.params;
+    // const { userId } = req.params;
 
-    const userDeleteResult = await models.User.findOneAndDelete({ _id: userId });
+    // const userDeleteResult = await User.findOneAndDelete({ _id: userId });
 
-    const sessionsDeleteResult = await models.Session.deleteMany({ userId: userId });
+   
+    // const sessionsDeleteResult = await Session.deleteMany({ userId: userId });
 
-    if (userDeleteResult === null || sessionsDeleteResult.deletedCount === 0) {
-      return next({
-        log: 'User or sessions could not be deleted.',
-        status: 404,
-        message: { error: 'An error occurred' },
-      });
-    }
+    // if (userDeleteResult === null || sessionsDeleteResult.deletedCount === 0) {
+    //   return next({
+    //     log: 'User or sessions could not be deleted.',
+    //     status: 404,
+    //     message: { error: 'An error occurred' },
+    //   });
+    // }
 
     console.log('user deleted');
     return res.status(204).redirect('/signup');
