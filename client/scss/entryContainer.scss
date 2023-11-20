@@ -1,45 +1,45 @@
 .EntryContainer {
-    display: flex;
-    box-shadow:
-        8px 0 20px -12px rgba(211, 211, 211, 0.8),
-        -8px 0 13px -12px rgba(211, 211, 211, 0.8);
-    flex-direction: column;
-    margin: 0 auto;
-    text-align: left;
-    max-width: 700px;
-    min-height: 100vh;
-    color: black;
+  display: flex;
+  box-shadow:
+    8px 0 20px -12px rgba(211, 211, 211, 0.8),
+    -8px 0 13px -12px rgba(211, 211, 211, 0.8);
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: left;
+  max-width: 700px;
+  min-height: 100vh;
+  color: black;
 }
 
 .quote-block {
-    font-family: Neucha, Tahoma, san-serif;
-    padding: 2em;
-    font-size: 1.3em;
-    line-height: 1.5;
-    background-image: linear-gradient(#fbeaeb, white);
+  font-family: Neucha, Tahoma, san-serif;
+  padding: 2em;
+  font-size: 1.3em;
+  line-height: 1.5;
+  background-image: linear-gradient(#fbeaeb, white);
 }
 
 #quote {
-    color: rgb(55, 54, 54);
+  color: rgb(55, 54, 54);
 }
 
 #quote,
 #author {
-    animation: fadeInAnimation ease 3s;
-    animation-iteration-count: 1;
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
 }
 
 #author {
-    font-weight: bold;
-    color: rgb(110, 110, 110);
-    padding-top: 1em;
+  font-weight: bold;
+  color: rgb(110, 110, 110);
+  padding-top: 1em;
 }
 
 @keyframes fadeInAnimation {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

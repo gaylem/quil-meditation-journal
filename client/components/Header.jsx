@@ -9,8 +9,8 @@ function Header() {
   const { user } = useAuthContext();
 
   const handleClick = () => {
-       const refreshToken = localStorage.getItem('refreshToken');
-       logout(refreshToken);
+    const refreshToken = localStorage.getItem('refreshToken');
+    logout(refreshToken);
   };
   return (
     <div className='Header'>
