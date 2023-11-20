@@ -9,9 +9,11 @@ function NewEntry() {
   const now = moment();
   const [date, setDate] = useState('New Meditation');
   const [open, setOpen] = useState(false);
+
+  // Toggle new meditation section open
   const toggle = () => {
     setOpen(!open);
-    setDate(open ? now.format('LL') : 'New Meditation');
+    setDate(open ? 'New Meditation' : now.format('LL'));
   };
 
   const { dispatch } = useEntriesContext();
@@ -32,7 +34,6 @@ function NewEntry() {
     const userId = user.userId;
 
     const entry = { body, userId };
-    console.log('entry : ', entry);
 
     try {
       const response = await axios.post('/api/entries', entry, {
