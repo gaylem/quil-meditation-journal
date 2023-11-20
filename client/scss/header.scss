@@ -32,7 +32,7 @@ $font-family: Pacifico, sans-serif;
   @extend .flex-center;
   font-family: $font-family;
   font-size: 1.2em;
-  padding: 1em;
+  padding: 0.5em;
   @include box-shadow(0, 2px, 8px, $shadow-color);
   position: sticky;
   top: 0;
@@ -72,9 +72,13 @@ $font-family: Pacifico, sans-serif;
         @media (max-width: 600px) {
           font-size: small;
         }
-        @media (max-width: 400px) {
+        @media (max-width: 300px) {
           font-size: x-small;
         }
+      }
+      button:hover {
+        border: 0.5px solid white;
+        cursor: pointer;
       }
     }
   }
