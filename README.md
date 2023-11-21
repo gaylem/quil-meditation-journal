@@ -1,6 +1,12 @@
 # quil, a meditation journal
 
-quil is a combination of the words "tranquil" and "quill," as in the classic feather pen. It's built with simplicity and customer confidentiality in mind.
+quil is your distraction-free space for chronicling your meditation journey. Sure, you could use any other digital note taking app instead, but the last thing you need when you’re about to meditate is to glance at your to do list. quil also steers clear of social sharing features and alerts, recognizing that true success in meditation lies in your ability to dedicate time and space to your practice. 
+
+With quil, your meditation journal is accessible wherever you go, leveraging the convenience of your mobile device. No longer reliant on a physical meditation notebook, you can effortlessly capture and reflect on your mindfulness moments at any time.
+
+We recognize that your meditation journal contains your personal inner experiences and reflections, which is why we take privacy and security very seriously. All journal entries are fully encrypted, and we will never share or sell your data to third parties. You can meditate with quil knowing your journal is completely confidential and seen only by you. 
+
+quil is also an open-source product, which is why we can offer it to the public at no cost. We believe that meditation should be free, and accessible to everyone who wants to learn regardless of their beliefs (or lack thereof). We also hope that, in addition to learning about meditation, quil will also foster growth and collaboration within the open source software community. 
 <br />
 
 ## Tech Stack
