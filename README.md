@@ -6,7 +6,7 @@ With quil, your meditation journal is accessible wherever you go, leveraging the
 
 We recognize that your meditation journal contains your personal inner experiences and reflections, which is why we take privacy and security very seriously. All journal entries are fully encrypted, and we will never share or sell your data to third parties. You can meditate with quil knowing your journal is completely confidential and seen only by you. 
 
-quil is also an open-source product, which is why we can offer it to the public at no cost. We believe that meditation should be free, and accessible to everyone who wants to learn regardless of their beliefs (or lack thereof). We also hope that, in addition to learning about meditation, quil will also foster growth and collaboration within the open source software community. 
+quil is also an open-source product, which is why we can offer it to the public at no cost. We believe that meditation should be free and accessible to everyone who wants to learn regardless of their beliefs (or lack thereof). We also hope that, in addition to learning about meditation, quil will also foster growth and collaboration within the open source software community. 
 <br />
 
 ## Tech Stack
