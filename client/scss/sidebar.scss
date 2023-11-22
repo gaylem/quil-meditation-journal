@@ -1,0 +1,30 @@
+/* Sidebar Container Styles */
+.sidebar {
+  width: 15%;
+  height: 100vh;
+  position: fixed;
+  left: -15%;
+  transition: left 0.3s ease;
+  background-color: #811010;
+  color: #1c1c1c;
+  z-index: 2; /* Set z-index higher than the main content */
+}
+
+/* Opened Sidebar Styles */
+.sidebar.open {
+  left: 0;
+}
+
+/* Sidebar Content Styles */
+.sidebar-content {
+  padding: 20px;
+}
+
+/* Main Content Styles (Shifted when sidebar is open) */
+.main-content {
+  transition: margin-left 0.3s ease;
+}
+
+.main-content.open {
+  margin-left: 250px;
+}
