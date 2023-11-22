@@ -18,15 +18,11 @@ const PastEntriesFeed = () => {
           headers: { Authorization: `Bearer ${user.token.accessToken}` },
         });
 
-        console.log('response', response);
-
         const json = response.data.sort((a, b) => {
           const dateA = a.createdAt ? new Date(a.createdAt) : 0;
           const dateB = b.createdAt ? new Date(b.createdAt) : 0;
           return dateB - dateA;
         });
-
-        console.log(json);
 
         if (response.status === 200) {
           dispatch({ type: 'SET_ENTRIES', payload: json });

@@ -1,23 +1,23 @@
 # quil, a meditation journal
 
-quil is your distraction-free space for chronicling your meditation journey. Sure, you could use any other digital note taking app instead, but the last thing you need when you’re about to meditate is to glance at your to do list. quil also steers clear of social sharing features and alerts, recognizing that true success in meditation lies in your ability to dedicate time and space to your practice. 
+quil is your distraction-free space for chronicling your meditation journey. Sure, you could use any other digital note taking app instead, but the last thing you need when you’re about to meditate is to glance at your to do list. quil also steers clear of social sharing features and alerts, recognizing that true success in meditation lies in your ability to dedicate time and space to your practice.
 
 With quil, your meditation journal is accessible wherever you go, leveraging the convenience of your mobile device. No longer reliant on a physical meditation notebook, you can effortlessly capture and reflect on your mindfulness moments at any time.
 
-We recognize that your meditation journal contains your personal inner experiences and reflections, which is why we take privacy and security very seriously. All journal entries are fully encrypted, and we will never share or sell your data to third parties. You can meditate with quil knowing your journal is completely confidential and seen only by you. 
+We recognize that your meditation journal contains your personal inner experiences and reflections, which is why we take privacy and security very seriously. All journal entries are fully encrypted, and we will never share or sell your data to third parties. You can meditate with quil knowing your journal is completely confidential and seen only by you.
 
-quil is also an open-source product, which is why we can offer it to the public at no cost. We believe that meditation should be free, and accessible to everyone who wants to learn regardless of their beliefs (or lack thereof). We also hope that, in addition to learning about meditation, quil will also foster growth and collaboration within the open source software community. 
-<br />
+quil is also an open-source product, which is why we can offer it to the public at no cost. We believe that meditation should be free and accessible to everyone who wants to learn regardless of their beliefs (or lack thereof). We also hope that, in addition to learning about meditation, quil will also foster growth and collaboration within the open source software community. <br />
 
 ## Tech Stack
+
 <div>
-<img align="left" alt="JavaScript" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg" />
-<img align="left" alt="React" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" />
-<img align="left" alt="HTML" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain.svg" />
-<img align="left" alt="CSS" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain.svg" />
-<img align="left" alt="NodeJS" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" />
-<img align="left" alt="Express" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" />
-<img align="left" alt="MongoDB" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" />
+    <img align="left" alt="JavaScript" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg" />
+    <img align="left" alt="React" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" />
+    <img align="left" alt="HTML" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain.svg" />
+    <img align="left" alt="CSS" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain.svg" />
+    <img align="left" alt="NodeJS" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" />
+    <img align="left" alt="Express" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" />
+    <img align="left" alt="MongoDB" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" />
 </div>
 
 <br/>
@@ -26,21 +26,27 @@ quil is also an open-source product, which is why we can offer it to the public 
 ## Preview
 
 ### Account Page
+
 <img width="907" alt="Screenshot 2023-11-20 at 6 55 07 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/4e87a02a-dd88-460c-bbf2-9b9ecd6809db">
 
 ### Add New Entry
+
 <img width="903" alt="Screenshot 2023-11-20 at 6 55 35 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/c4cbde4b-2c7d-4b24-9c81-5cd374c8672f">
 
 ### New Entry Added
+
 <img width="905" alt="Screenshot 2023-11-20 at 6 54 45 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/d8394074-d131-4969-9b97-21e1fcff33c5">
 
 ### Login Page
+
 <img width="905" alt="Screenshot 2023-11-20 at 6 53 45 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/d8e20536-caec-451e-910e-d92ee47af3e8">
 
 ### Signup Page
+
 <img width="908" alt="Screenshot 2023-11-20 at 6 53 56 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/3c89f91a-719b-4c22-be22-7b1a5c93a1ab">
 
 ---
+
 ## Progress
 
 | Feature                                                   | Status |
@@ -63,35 +69,42 @@ quil is also an open-source product, which is why we can offer it to the public 
 ---
 
 # How to Contribute
+
 This repo is contribution-friendly! If you're interested in helping out, please follow these guidelines:
 
 1. Fork and clone the repository.
 2. Install the dependencies.
+
 ```bash
 npm install
 ```
+
 3. Launch quil from the command line:
+
 ```bash
 npm run dev
 ```
-4. CREATE BRANCH with the format:
-    > **category/your-branch-name-here**
 
-    | Category | Description |
-    | ------------- | ------------- |
-    | hotfix | for quickly fixing critical issues, usually with a temporary solution  |
-    | bugfix  | for fixing a bug  |
-    | feature  | for adding, removing or modifying a feature  |
-    | test  | for experimenting with something that is not an issue  |
+4. CREATE BRANCH with the format:
+
+   > **category/your-branch-name-here**
+
+   | Category | Description                                                           |
+   | -------- | --------------------------------------------------------------------- |
+   | hotfix   | for quickly fixing critical issues, usually with a temporary solution |
+   | bugfix   | for fixing a bug                                                      |
+   | feature  | for adding, removing or modifying a feature                           |
+   | test     | for experimenting with something that is not an issue                 |
 
 5. Guidelines for commit messages:
+
    - Capitalize first word
    - Use active voice: “Create sidebar component”
    - Give why/how context when helpful to other developers
    - Commit early and often
    - Use multi-author commits if you paired with another developer on your contribution
 
-5. DID YOU ADD ANY SENSITIVE INFORMATION TO CODE? Before you commit, move your sensitive data to a .env file. and add .env to .gitignore file.
-5. COMMIT when you make a meaningful change and use the guidelines.
-6. When you are ready to push your code, pull down dev and merge your code BEFORE pushing.
-7. Submit a pull request to the dev branch and fill out the pull request template (feature or bug).
+6. DID YOU ADD ANY SENSITIVE INFORMATION TO CODE? Before you commit, move your sensitive data to a .env file. and add .env to .gitignore file.
+7. COMMIT when you make a meaningful change and use the guidelines.
+8. When you are ready to push your code, pull down dev and merge your code BEFORE pushing.
+9. Submit a pull request to the dev branch and fill out the pull request template (feature or bug).

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSignup } from '../hooks/useSignup';
-
-import Header from '../components/Header';
 import '../../client/scss/login-signup';
 
 function Signup() {
@@ -18,7 +16,6 @@ function Signup() {
 
   return (
     <div className='App'>
-      <Header />
       <div className='login-signup'>
         <div className='box'>
           <form onSubmit={handleSubmit}>

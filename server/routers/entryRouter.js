@@ -24,7 +24,7 @@ router.post('/', entryController.addEntry, (req, res) => {
 });
 
 // Route for updating specific entries
-router.patch('/:id', entryController.updateEntry, (req, res) => {
+router.patch('/:id', userController.verifyAccessToken, entryController.updateEntry, (req, res) => {
   return res.status(200).json(res.locals.updatedEntry);
 });
 

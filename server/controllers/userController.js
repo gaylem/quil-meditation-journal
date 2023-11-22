@@ -8,7 +8,8 @@ const userController = {};
 
 userController.verifyAccessToken = (req, res, next) => {
   const accessToken = req.headers.authorization?.split(' ')[1];
-  console.log('accessToken verifyAccesToken: ', accessToken);
+  console.log('req.headers.authorization', req.headers.authorization);
+  console.log('accessToken', accessToken);
 
   if (!accessToken) {
     return res.status(401).json({ error: 'Access token missing' });
@@ -16,8 +17,6 @@ userController.verifyAccessToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET, { algorithms: ['HS256'] });
-
-    console.log('Token Header:', decoded.header);
 
     console.log('decoded: ', decoded);
     res.locals.decoded = decoded;
