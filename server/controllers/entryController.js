@@ -56,7 +56,7 @@ entryController.updateEntry = (req, res, next) => {
 
   model.Entry.findOneAndUpdate(_id, newBody, { returnOriginal: false })
     .then(data => {
-      console.log('updated data: ', data);
+      console.log('data: ', data);
       res.locals.updatedEntry = data;
       return next();
     })
@@ -75,6 +75,7 @@ entryController.deleteEntry = (req, res, next) => {
   model.Entry.findOneAndDelete({ _id: id })
     .then(data => {
       res.locals.deletedEntry = data;
+      console.log('data: ', data);
       return next();
     })
     .catch(err => {

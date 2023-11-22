@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
+import { useEntriesContext } from '../hooks/useEntriesContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import '../scss/pastEntry.scss';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import axios from '../axiosConfig';
 
 const PastEntry = ({ entry }) => {
   const { _id, createdAt, body } = entry;
 
-  // TOGGLE ENTRY
+  const { dispatch } = useEntriesContext();
+  const { user } = useAuthContext();
+  console.log('PastEntry', user);
+
+  // useState
   const [open, setOpen] = useState(false);
+
+  // TOGGLE ENTRY
   const toggle = () => {
     setOpen(!open);
   };
@@ -18,8 +27,19 @@ const PastEntry = ({ entry }) => {
   // HANDLE DELETE
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`/api/entries/${_id}`);
-      console.log(response.data); // Check the server response
+      await axios.delete(`/api/entries/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token.accessToken}`,
+        },
+      });
+
+      const response = await axios.get(`/api/entries`, {
+           headers: {
+             Authorization: `Bearer ${user.token.accessToken}`,
+           },
+         });
+      
+      dispatch({ type: 'SET_ENTRIES', payload: response.data });
     } catch (error) {
       console.error('Error deleting entry:', error);
     }
@@ -55,6 +75,14 @@ const PastEntry = ({ entry }) => {
       </div>
     </div>
   );
+};
+
+PastEntry.propTypes = {
+  entry: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default PastEntry;
