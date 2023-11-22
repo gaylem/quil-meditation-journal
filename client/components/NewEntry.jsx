@@ -13,7 +13,7 @@ function NewEntry() {
   // Toggle new meditation section open
   const toggle = () => {
     setOpen(!open);
-    setDate(open ? 'New Meditation' : now.format('LL'));
+    setDate(open ? 'New Meditation' : now.format('dddd, LL'));
   };
 
   const { dispatch } = useEntriesContext();

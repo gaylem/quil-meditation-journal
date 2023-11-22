@@ -11,7 +11,6 @@ const PastEntry = ({ entry }) => {
 
   const { dispatch } = useEntriesContext();
   const { user } = useAuthContext();
-  console.log('PastEntry', user);
 
   // useState
   const [open, setOpen] = useState(false);
@@ -22,7 +21,7 @@ const PastEntry = ({ entry }) => {
   };
 
   // FORMAT DATE
-  const formattedDate = moment(createdAt).format('LL');
+  const formattedDate = moment(createdAt).format('dddd, LL');
 
   // HANDLE DELETE
   const handleDelete = async () => {
@@ -34,26 +33,38 @@ const PastEntry = ({ entry }) => {
       });
 
       const response = await axios.get(`/api/entries`, {
-           headers: {
-             Authorization: `Bearer ${user.token.accessToken}`,
-           },
-         });
-      
+        headers: {
+          Authorization: `Bearer ${user.token.accessToken}`,
+        },
+      });
+
       dispatch({ type: 'SET_ENTRIES', payload: response.data });
+      toggle();
     } catch (error) {
       console.error('Error deleting entry:', error);
     }
-
-    toggle();
   };
 
   // TODO: HANDLE EDIT - Button works when I have postman opened
-  const handleEdit = () => {
-    fetch(`api/entries/${_id}`, {
-      method: 'PATCH',
-    })
-      .then(res => res.json())
-      .catch(error => console.error('Error:', error));
+  const handleEdit = async () => {
+    try {
+      await axios.patch(`/api/entries/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token.accessToken}`,
+        },
+      });
+
+      const response = await axios.get(`/api/entries`, {
+        headers: {
+          Authorization: `Bearer ${user.token.accessToken}`,
+        },
+      });
+
+      dispatch({ type: 'SET_ENTRIES', payload: response.data });
+      toggle();
+    } catch (error) {
+      console.error('Error deleting entry:', error);
+    }
   };
 
   return (
