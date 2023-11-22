@@ -32,7 +32,6 @@ function NewEntry() {
     }
 
     const userId = user.userId;
-
     const entry = { body, userId };
 
     try {
@@ -46,7 +45,6 @@ function NewEntry() {
       setError(null);
       setEmptyFields([]);
       dispatch({ type: 'CREATE_ENTRY', payload: response.data });
-      console.log('Current entries state:', entries);
     } catch (error) {
       if (error.response) {
         setError(error.response.data.error);
