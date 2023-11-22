@@ -50,13 +50,12 @@ entryController.findEntry = (req, res, next) => {
 
 // UPDATE
 entryController.updateEntry = (req, res, next) => {
-  const { _id } = req.params;
-  const { body } = req.body;
-  const newBody = { body };
-
-  model.Entry.findOneAndUpdate(_id, newBody, { returnOriginal: false })
+  const _id = req.params.id;
+  const { body, userId } = req.body;
+  console.log('req.body: ', req.body);
+  model.Entry.findOneAndUpdate({ _id }, { body, userId }, { new: true })
     .then(data => {
-      console.log('data: ', data);
+      console.log('this data: ', data);
       res.locals.updatedEntry = data;
       return next();
     })

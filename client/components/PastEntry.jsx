@@ -8,16 +8,20 @@ import axios from '../axiosConfig';
 
 const PastEntry = ({ entry }) => {
   const { _id, createdAt, body } = entry;
+  console.log(entry);
 
   const { dispatch } = useEntriesContext();
   const { user } = useAuthContext();
 
   // useState
   const [open, setOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedBody, setEditedBody] = useState(body);
 
   // TOGGLE ENTRY
   const toggle = () => {
     setOpen(!open);
+    setIsEditing(false);
   };
 
   // FORMAT DATE
@@ -48,22 +52,45 @@ const PastEntry = ({ entry }) => {
   // TODO: HANDLE EDIT - Button works when I have postman opened
   const handleEdit = async () => {
     try {
-      await axios.patch(`/api/entries/${_id}`, {
-        headers: {
-          Authorization: `Bearer ${user.token.accessToken}`,
-        },
-      });
-
-      const response = await axios.get(`/api/entries`, {
-        headers: {
-          Authorization: `Bearer ${user.token.accessToken}`,
-        },
-      });
-
-      dispatch({ type: 'SET_ENTRIES', payload: response.data });
+      await updateEntryWithPatch();
+      await fetchUpdatedEntries();
       toggle();
     } catch (error) {
-      console.error('Error deleting entry:', error);
+      console.error('Error editing entry:', error);
+    }
+  };
+  console.log(`/api/entries/${_id}`);
+  const updateEntryWithPatch = async () => {
+    try {
+      console.log('Before PATCH request');
+      await axios.patch(
+        `/api/entries/${_id}`,
+        { body: editedBody, userId: user.userId },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token.accessToken}`,
+          },
+        },
+      );
+      console.log('After PATCH request');
+    } catch (error) {
+      console.error('Error updating entry with PATCH request:', error);
+      throw error; // Re-throw the error to be caught by the outer try-catch block
+    }
+  };
+
+  const fetchUpdatedEntries = async () => {
+    try {
+      const updatedResponse = await axios.get(`/api/entries`, {
+        headers: {
+          Authorization: `Bearer ${user.token.accessToken}`,
+        },
+      });
+      console.log('response.data', updatedResponse.data);
+      dispatch({ type: 'SET_ENTRIES', payload: updatedResponse.data });
+    } catch (error) {
+      console.error('Error fetching updated entries:', error);
+      throw error; // Re-throw the error to be caught by the outer try-catch block
     }
   };
 
@@ -76,10 +103,10 @@ const PastEntry = ({ entry }) => {
       <div>
         {open && (
           <div className='toggle-container'>
-            <p className='pastEntryText'>{body}</p>
+            {isEditing ? <textarea className='pastEntryText' value={editedBody} onChange={e => setEditedBody(e.target.value)} /> : <p className='pastEntryText'>{body}</p>}
             <div className='pastEntryButtons'>
               <input className='delete' type='submit' onClick={handleDelete} value='Delete' />
-              <input className='edit' type='submit' onClick={handleEdit} value='Edit' />
+              {isEditing ? <input className='edit' type='submit' onClick={handleEdit} value='Save' /> : <input className='edit' type='submit' onClick={() => setIsEditing(true)} value='Edit' />}
             </div>
           </div>
         )}
