@@ -1,16 +1,17 @@
+// Sidebar.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../scss/sidebar.scss';
 
-const SideBar = props => {
-  const sidebarClass = props.isOpen ? 'sidebar open' : 'sidebar';
+const Sidebar = ({ isOpen }) => {
+  const sidebarClass = isOpen ? 'sidebar open' : 'sidebar';
   return (
     <div className={sidebarClass}>
-      <div> I slide into view </div>
-      <div> Me Too! </div>
-      <div> Me Three! </div>
+      <div className='sidebar-content'>
+        <Link to='/about'>About</Link>
+      </div>
     </div>
   );
 };
-export default SideBar;
 
-
+export default Sidebar;

@@ -1,23 +1,31 @@
+$shadow-color: rgb(172, 172, 172);
+
+@mixin box-shadow($offset-x, $offset-y, $blur, $color) {
+  box-shadow: $offset-x $offset-y $blur $color;
+}
+
 /* Sidebar Container Styles */
 .sidebar {
-  width: 15%;
-  height: 100vh;
   position: fixed;
-  left: -15%;
-  transition: left 0.3s ease;
-  background-color: #811010;
+  top: 0;
+  left: -28vw;
+  height: 100vh;
+  width: 15vw;
+  transition: left 0.3s ease-in-out;
+  background-color: white;
+  border: 0.5px solid lightgray;
   color: #1c1c1c;
-  z-index: 2; /* Set z-index higher than the main content */
+  @include box-shadow(0, 2px, 8px, $shadow-color);
+  z-index: 98; /* Set z-index higher than the main content */
+}
+
+.sidebar-content {
+  padding: 8em 0 0 2em;
 }
 
 /* Opened Sidebar Styles */
 .sidebar.open {
   left: 0;
-}
-
-/* Sidebar Content Styles */
-.sidebar-content {
-  padding: 20px;
 }
 
 /* Main Content Styles (Shifted when sidebar is open) */
@@ -26,5 +34,5 @@
 }
 
 .main-content.open {
-  margin-left: 250px;
+  margin-left: 15vw; /* Adjusted value to match the sidebar width */
 }
