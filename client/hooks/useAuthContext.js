@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 
 export const useAuthContext = () => {
   const authContext = useContext(AuthContext);
-  console.log('AuthContext user:', authContext.user);
 
   // Add the userId to the returned object
   const contextWithUserId = {
