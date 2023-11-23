@@ -14,7 +14,7 @@ function Login() {
   };
 
   return (
-    <div className='App'>
+    <div className='login-signup-container'>
       <div className='login-signup'>
         <div className='box'>
           <form onSubmit={handleSubmit}>

@@ -8,30 +8,28 @@ $shadow-color: rgb(172, 172, 172);
 .sidebar {
   position: fixed;
   top: 0;
-  left: -28vw;
-  height: 100%;
-  width: 15vw;
+  left: -20em;
+  height: 100vh;
+  width: 10em;
   transition: left 0.3s ease-in-out;
   background-color: white;
   border: 0.5px solid lightgray;
   color: #1c1c1c;
   @include box-shadow(0, 2px, 8px, $shadow-color);
   z-index: 98; /* Set z-index higher than the main content */
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-content {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  padding: 8em 0 0 2em;
-  height: 100vh;
+  flex-grow: 1; /* Allow the content to take remaining space */
+  padding: 2em;
 }
 
 /* Opened Sidebar Styles */
 .sidebar.open {
-  position: fixed;
-  top: 0;
-  bottom: 0;
+  display: flex;
+  flex-direction: column;
   left: 0;
 }
 
@@ -41,5 +39,17 @@ $shadow-color: rgb(172, 172, 172);
 }
 
 .main-content.open {
-  margin-left: 15vw; /* Adjusted value to match the sidebar width */
+  margin-left: 20vw;
+}
+
+.close-button {
+  align-self: flex-end; /* Position the close button to the right */
+  padding: 0.5em;
+}
+
+@media (max-width: 400px) {
+  .sidebar {
+    width: 100%;
+    left: -100%;
+  }
 }

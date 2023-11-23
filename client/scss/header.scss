@@ -34,7 +34,7 @@ $font-family: Pacifico, sans-serif;
   font-size: 1.2em;
   padding: 0.5em;
   @include box-shadow(0, 2px, 8px, $shadow-color);
-  position: sticky;
+  position: fixed;
   top: 0;
   width: 100%;
   background-image: linear-gradient(to bottom right, $primary-color, $secondary-color);
@@ -43,7 +43,6 @@ $font-family: Pacifico, sans-serif;
 
   // Header Container Styles
   .header-container {
-    display: grid;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     width: 90%;
