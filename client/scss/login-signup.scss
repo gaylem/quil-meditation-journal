@@ -2,6 +2,10 @@ $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
 
+.login-signup-container {
+  padding-top: 8em;
+}
+
 .login-signup {
   display: flex;
   justify-content: center;
