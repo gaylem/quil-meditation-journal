@@ -30,6 +30,7 @@ $shadow-color: rgb(172, 172, 172);
   /* Main form */
   form {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     input {
