@@ -41,7 +41,7 @@ function NewEntry() {
 
   // State and function to manage the entry body content, errors, and empty fields
   const [body, setBody] = useState('');
-  // TODO: What should error and emptyFields be used for?
+  // TODO: Use to display error messaging on the frontend, requires UI changes
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
