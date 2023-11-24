@@ -1,4 +1,4 @@
-// React and hooks build the Header component and manage state 
+// React and hooks build the Header component and manage state
 import React, { useState } from 'react';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -57,7 +57,7 @@ function Header() {
         <div className='logout'>{user && <button onClick={handleClick}>Log Out</button>}</div>
       </div>
       {/* Sidebar component for internal navigation links to other pages. */}
-      <Sidebar className='mainContent' isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
     </div>
   );
 }

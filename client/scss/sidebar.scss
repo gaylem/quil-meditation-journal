@@ -21,7 +21,7 @@ $shadow-color: rgb(172, 172, 172);
   flex-direction: column;
 }
 
-.sidebar-content {
+.sidebarContent{
   flex-grow: 1; /* Allow the content to take remaining space */
   padding: 2em;
 }
@@ -33,16 +33,7 @@ $shadow-color: rgb(172, 172, 172);
   left: 0;
 }
 
-/* Main Content Styles (Shifted when sidebar is open) */
-.main-content {
-  transition: margin-left 0.3s ease;
-}
-
-.mainContent.open {
-  margin-left: 20vw;
-}
-
-.close-button {
+.closeBtn {
   align-self: flex-end; /* Position the close button to the right */
   padding: 0.5em;
 }
