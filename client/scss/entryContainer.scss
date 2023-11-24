@@ -4,11 +4,6 @@ $shadow-color: rgba(211, 211, 211, 0.8);
 $quote-background-gradient: linear-gradient(#fbeaeb, white);
 $font-family: Pacifico, sans-serif;
 
-// Mixins
-@mixin box-shadow($offset-x, $offset-y, $blur, $color) {
-  box-shadow: $offset-x $offset-y $blur $color;
-}
-
 /* Container that holds all new and past entries */
 .EntryContainer {
   display: flex;
