@@ -2,16 +2,12 @@ $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
 
-.login-signup-container {
-  padding-top: 8em;
-}
-
-.login-signup {
+.loginSignupContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1em;
+  padding: 8em 1em 1em 1em;
   font-family: Helvetica, sans-serif;
 }
 
@@ -47,7 +43,7 @@ form {
   }
 }
 
-.login-signup-btn {
+.loginSignupBtn {
   margin: 0.2em;
   width: 94%;
   font-size: medium;
