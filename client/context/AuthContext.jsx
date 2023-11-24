@@ -126,7 +126,7 @@ export const AuthContextProvider = ({ children }) => {
   return <AuthContext.Provider value={{ ...state, dispatch, updateTokens, refreshToken }}>{children}</AuthContext.Provider>;
 };
 
-//PropTypes for the AuthContext component
+//PropTypes for the AuthContextProvider
 AuthContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
