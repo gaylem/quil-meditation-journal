@@ -38,11 +38,17 @@ function Header() {
     setSidebarOpen(!sidebarOpen);
   };
 
-  // Main header component containing the hamburger menu, title, and logout button.
+  /**
+   * Main header component containing the hamburger menu, title, and logout button.
+   *
+   * This component contains a button that toggles the sidebar open and closed, the app h1 title, and a logout button that logs users out of their account
+   *
+   * @returns {JSX.Element} The rendered Header component.
+   */
   return (
     <div className='header'>
       {/* Header container for hamburger menu, title, and logout button. */}
-      <div className='header-container'>
+      <div className='headerContainer'>
         {/* Hamburger menu icon toggles the sidebar open and closed when clicked. */}
         <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='hamburger-menu' />
         {/* Application title */}
@@ -51,7 +57,7 @@ function Header() {
         <div className='logout'>{user && <button onClick={handleClick}>Log Out</button>}</div>
       </div>
       {/* Sidebar component for internal navigation links to other pages. */}
-      <Sidebar className='main-content' isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar className='mainContent' isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
     </div>
   );
 }
