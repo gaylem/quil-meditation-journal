@@ -22,8 +22,8 @@ function EntryContainer() {
     <div className='EntryContainer'>
       {/* Quote block with an inspirational quote and its author */}
       <div className='quoteBlock'>
-        <p id='quote'>Listening to and understanding our inner sufferings will resolve most of the problems we encounter.</p>
-        <p id='author'>Thich Nhat Hanh</p>
+        <p className='quote'>Listening to and understanding our inner sufferings will resolve most of the problems we encounter.</p>
+        <p className='author'>Thich Nhat Hanh</p>
       </div>
       {/* NewEntry component for creating new journal entries */}
       <NewEntry />
