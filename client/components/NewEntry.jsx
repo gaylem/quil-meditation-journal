@@ -58,11 +58,14 @@ function NewEntry() {
       setError('You must be logged in');
       return;
     }
+
     // Extract the userId from the user object
     const userId = user.userId;
+
     // Store the body and the userId in an entry variable for sending to the database
     const entry = { body, userId };
 
+    console.log(userId);
     // Try/catch block to send POST request to the database and store the new entry
     try {
       const response = await axios.post('/api/entries', entry, {
@@ -108,7 +111,7 @@ function NewEntry() {
             <form method='post' onSubmit={handleSubmit}>
               <textarea className='entryText' id='body' name='body' rows={10} cols={30} onChange={e => setBody(e.target.value)} value={body} />
               <div className='newEntryButtons'>
-                <input className='cancel' type='submit' onClick={toggle} value='Cancel'></input>
+                <input className='cancel' type='button' onClick={toggle} value='Cancel'></input>
                 <input className='save' type='submit' value='Save'></input>
               </div>
             </form>
