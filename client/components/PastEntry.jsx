@@ -8,7 +8,6 @@ import axios from '../axiosConfig';
 
 const PastEntry = ({ entry }) => {
   const { _id, createdAt, body } = entry;
-  console.log(entry);
 
   const { dispatch } = useEntriesContext();
   const { user } = useAuthContext();
@@ -59,10 +58,9 @@ const PastEntry = ({ entry }) => {
       console.error('Error editing entry:', error);
     }
   };
-  console.log(`/api/entries/${_id}`);
+
   const updateEntryWithPatch = async () => {
     try {
-      console.log('Before PATCH request');
       await axios.patch(
         `/api/entries/${_id}`,
         { body: editedBody, userId: user.userId },
@@ -72,7 +70,6 @@ const PastEntry = ({ entry }) => {
           },
         },
       );
-      console.log('After PATCH request');
     } catch (error) {
       console.error('Error updating entry with PATCH request:', error);
       throw error; // Re-throw the error to be caught by the outer try-catch block
@@ -86,7 +83,6 @@ const PastEntry = ({ entry }) => {
           Authorization: `Bearer ${user.token.accessToken}`,
         },
       });
-      console.log('response.data', updatedResponse.data);
       dispatch({ type: 'SET_ENTRIES', payload: updatedResponse.data });
     } catch (error) {
       console.error('Error fetching updated entries:', error);
