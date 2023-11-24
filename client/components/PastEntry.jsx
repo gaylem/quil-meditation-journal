@@ -12,6 +12,7 @@ import moment from 'moment';
 // Import axios to handle server requests for entries data
 import axios from '../axiosConfig';
 
+// Import props validation
 import PropTypes from 'prop-types';
 
 /**
