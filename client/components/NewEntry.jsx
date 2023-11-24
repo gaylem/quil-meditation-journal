@@ -64,8 +64,7 @@ function NewEntry() {
 
     // Store the body and the userId in an entry variable for sending to the database
     const entry = { body, userId };
-
-    console.log(userId);
+    
     // Try/catch block to send POST request to the database and store the new entry
     try {
       const response = await axios.post('/api/entries', entry, {
