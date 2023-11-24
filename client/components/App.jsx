@@ -1,7 +1,5 @@
-// Import React for building the componenet
+// Import React and React Router
 import React from 'react';
-
-// Import React Router
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Import the useAuthContext hook to access authentication-related data and methods
