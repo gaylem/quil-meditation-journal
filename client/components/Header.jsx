@@ -1,4 +1,4 @@
-// React and hooks build the Header component and manage state for sidebar, user logouts, and user authentication.
+// React and hooks build the Header component and manage state 
 import React, { useState } from 'react';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';

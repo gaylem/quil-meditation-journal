@@ -1,4 +1,4 @@
-// React and hooks build the NewEntry component and manage state for entries, authentication context, toggle functionality, and the 'New Meditation' text
+// Import React, useState, and contexts
 import React, { useState } from 'react';
 import { useEntriesContext } from '../hooks/useEntriesContext';
 import { useAuthContext } from '../hooks/useAuthContext';
