@@ -1,4 +1,4 @@
-// Import useContext and EntriesContext for managin entries state
+// Import useContext and EntriesContext for managing entries state
 import { useContext } from 'react';
 import { EntriesContext } from '../context/EntryContext';
 
