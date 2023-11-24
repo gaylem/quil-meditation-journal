@@ -1,9 +1,20 @@
+$quote-color: rgb(55, 54, 54);
+$author-color: rgb(110, 110, 110);
+$shadow-color: rgba(211, 211, 211, 0.8);
+$quote-background-gradient: linear-gradient(#fbeaeb, white);
+$font-family: Pacifico, sans-serif;
+
+// Mixins
+@mixin box-shadow($offset-x, $offset-y, $blur, $color) {
+  box-shadow: $offset-x $offset-y $blur $color;
+}
+
 /* Container that holds all new and past entries */
 .EntryContainer {
   display: flex;
   box-shadow:
-    8px 0 20px -12px rgba(211, 211, 211, 0.8),
-    -8px 0 13px -12px rgba(211, 211, 211, 0.8);
+    8px 0 20px -12px $shadow-color,
+    -8px 0 13px -12px $shadow-color;
   flex-direction: column;
   top: 0;
   margin: 0 auto;
@@ -17,11 +28,11 @@
 /* Main quote container on homepage */
 .quoteBlock {
   font-family: Neucha, Tahoma, san-serif;
-  padding: 7em 2em 2em 2em;
   font-size: 1.3em;
   line-height: 1.5;
-  background-image: linear-gradient(#fbeaeb, white);
-  color: rgb(55, 54, 54);
+  padding: 7em 2em 2em 2em;
+  background-image: $quote-background-gradient;
+  color: $quote-color;
 }
 
 /* Quote fades in when page loads */
@@ -42,7 +53,7 @@
 
 .author {
   font-weight: bold;
-  color: rgb(110, 110, 110);
+  color: $author-color;
   padding-top: 1em;
 }
 
