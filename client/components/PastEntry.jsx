@@ -123,7 +123,7 @@ const PastEntry = ({ entry }) => {
   return (
     <div key={_id} className='PastEntry'>
       {/* Header with button and formatted date */}
-      <div className='buttonHeaderPast'>
+      <div className='pastEntryTitle'>
         <button onClick={toggle}>+</button>
         <p>{formattedDate}</p>
       </div>
