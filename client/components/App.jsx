@@ -23,7 +23,7 @@ function App() {
   // Retrieve user information from the authentication context
   const { user } = useAuthContext();
 
-  //TODO: Routes return 'Cannot GET /route' when visited
+  //TODO: Routes return 'Cannot GET /route' when visited directly, but on-page links work
   return (
     // Main container for the application
     <div className='App'>
