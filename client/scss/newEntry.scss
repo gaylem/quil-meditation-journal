@@ -12,76 +12,84 @@ $shadow-color: rgb(172, 172, 172);
 }
 
 .NewEntry {
+  /* Styles for the main container */
   padding: 0 3em 3em 2em;
   color: rgb(68, 68, 68);
-}
 
-.newEntryHeader {
-  display: flex;
-  align-items: center;
-  margin: 0.5em;
-  font-family: Helvetica, sans-serif;
-  font-size: larger;
-  font-weight: 550;
-  button {
-    border-radius: 50%;
-    font-size: 1em;
-    padding: 0.25em 0.5em 0.25em 0.5em;
-    border: 0;
-    color: white;
-    background-color: $secondary-color;
-    margin-right: 0.5em;
-  }
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 1em;
-}
-
-.entryText {
-  width: 98%;
-  height: 15em;
-  border: 1px solid lightgray;
-  border-radius: 0.25em;
-  line-height: 1em;
-  padding: 5px;
-  font-family: Helvetica, san-serif;
-}
-
-.newEntryButtons {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  margin-top: 0.5em;
-  .cancel {
-    @include new-entry-input-styles;
-    border: 1px solid $secondary-color;
-    background-color: $tertiary-color;
-    color: $secondary-color;
+  /* Toggles between 'New Meditation' and the current date */
+  .newEntryHeader {
+    display: flex;
+    align-items: center;
+    margin: 0.5em;
+    font-family: Helvetica, sans-serif;
+    font-size: larger;
+    font-weight: 550;
+    button {
+      border-radius: 50%;
+      font-size: 1em;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+      border: 0;
+      color: white;
+      background-color: $secondary-color;
+      margin-right: 0.5em;
+    }
   }
 
-  .cancel:hover {
-    background-color: $primary-color;
-    color: $tertiary-color;
-    border: 1px solid $primary-color;
-    opacity: 50%;
-    cursor: pointer;
+  /* The form under 'New Meditation' */
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1em;
+
+    /* The text that the user enters into the textarea */
+    .entryText {
+      width: 98%;
+      height: 15em;
+      border: 1px solid lightgray;
+      border-radius: 0.25em;
+      line-height: 1em;
+      padding: 5px;
+      font-family: Helvetica, san-serif;
+    }
   }
 
-  .save {
-    @include new-entry-input-styles;
-    border: 1px solid $secondary-color;
-    background-color: $secondary-color;
-    color: $tertiary-color;
-  }
+  /* Buttons to either save the new entry or cancel and toggle the form closed */
+  .newEntryButtons {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 0.5em;
 
-  .save:hover {
-    background-color: $primary-color;
-    color: $tertiary-color;
-    border: 1px solid $primary-color;
-    cursor: pointer;
+    /* Cancel button styles */
+    .cancel {
+      @include new-entry-input-styles;
+      border: 1px solid $secondary-color;
+      background-color: $tertiary-color;
+      color: $secondary-color;
+    }
+
+    .cancel:hover {
+      background-color: $primary-color;
+      color: $tertiary-color;
+      border: 1px solid $primary-color;
+      opacity: 50%;
+      cursor: pointer;
+    }
+
+    /* Save button styles */
+    .save {
+      @include new-entry-input-styles;
+      border: 1px solid $secondary-color;
+      background-color: $secondary-color;
+      color: $tertiary-color;
+    }
+
+    .save:hover {
+      background-color: $primary-color;
+      color: $tertiary-color;
+      border: 1px solid $primary-color;
+      cursor: pointer;
+    }
   }
 }
