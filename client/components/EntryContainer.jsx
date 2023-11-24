@@ -16,7 +16,6 @@ import '../scss/entryContainer.scss';
  *
  * @returns {JSX.Element} The rendered EntryContainer component.
  */
-
 function EntryContainer() {
   return (
     // Main EntryContainer component
