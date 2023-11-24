@@ -1,10 +1,6 @@
+/* Reset default margin and padding for all elements */
 * {
   padding: 0;
   margin: 0;
 }
 
-hr {
-  border: 0.5px solid lightgray;
-  width: 95%;
-  margin: 0 auto;
-}

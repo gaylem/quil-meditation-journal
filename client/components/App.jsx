@@ -14,6 +14,8 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import About from '../pages/About';
 
+import '../scss/app.scss';
+
 /**
  * Main application component that handles routing and rendering of pages.
  *

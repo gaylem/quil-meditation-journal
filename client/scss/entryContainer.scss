@@ -37,6 +37,12 @@
   padding-top: 1em;
 }
 
+hr {
+  border: 0.5px solid lightgray;
+  width: 95%;
+  margin: 0 auto;
+}
+
 @keyframes fadeInAnimation {
   0% {
     opacity: 0;
