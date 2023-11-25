@@ -44,7 +44,6 @@ export const useSignup = () => {
 
       // Parse the response data
       const json = response.data;
-      // TODO: The response isnt returning the userId; need to retrieve when user is created and add to user object in AuthContext
 
       // Check if the signup was successful (status code 200)
       if (response.status !== 200) {

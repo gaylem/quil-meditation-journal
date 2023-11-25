@@ -136,10 +136,14 @@ userController.createUser = async (req, res) => {
   try {
     const user = await User.signup(username, email, password);
     console.log(user);
+
+    const userId = user.id;
+    console.log('userId: ', userId);
+
     // create a token
     const token = User.createToken(user);
     console.log('token: ', token);
-    return res.status(200).json({ username, token });
+    return res.status(200).json({ username, userId, token });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
