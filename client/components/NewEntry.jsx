@@ -61,9 +61,6 @@ function NewEntry() {
 
     // Extract the userId from the user object
     const userId = user.userId;
-    
-    // TODO: Delete when signup userId issues are resolved 
-    console.log('userId: ', userId);
 
     // Store the body and the userId in an entry variable for sending to the database
     const entry = { body, userId };
