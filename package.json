@@ -1,8 +1,8 @@
 {
-  "name": "meditation-journal",
+  "name": "quil",
   "version": "1.0.0",
   "proxy": "http://localhost:4000",
-  "description": "Solo project for Codesmith Bootcamp",
+  "description": "Meditation journal",
   "main": "./index.js",
   "scripts": {
     "start": "NODE_ENV=production nodemon server/server.js",
