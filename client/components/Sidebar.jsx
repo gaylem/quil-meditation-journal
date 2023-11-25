@@ -28,9 +28,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     <div className={sidebarClass}>
       {/* Close button to toggle the sidebar closed */}
       <FontAwesomeIcon onClick={toggleSidebar} className='closeBtn' icon={faCircleXmark} style={{ color: '#acacac' }} size='2xl' />
-      {/* Link to the 'About' page */}
-      <Link to='/about'>About</Link>
-      {/* Add additional navigation links as needed */}
+      <div className='sidebarContent'>
+        {/* Link to the 'About' page */}
+        <Link to='/about'>About</Link>
+      </div>
     </div>
   );
 };
