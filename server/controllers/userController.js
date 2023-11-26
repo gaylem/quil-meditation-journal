@@ -168,6 +168,7 @@ userController.createUser = async (req, res) => {
  *   - password: String
  * @returns {Object} - JSON with updated user information
  */
+ // TODO: Split into three controllers for username, email, password changes from account page
 userController.updateUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
@@ -207,25 +208,21 @@ userController.updateUser = async (req, res, next) => {
  *   - userId: Integer
  * @returns {Number} - Status 204 on success
  */
-// TODO: Remove Sessions
 userController.deleteUser = async (req, res, next) => {
   try {
-    // const { userId } = req.params;
+    const { userId } = req.params;
 
-    // const userDeleteResult = await User.findOneAndDelete({ _id: userId });
+    const userDeleteResult = await User.findOneAndDelete({ _id: userId });
+    res.locals.deletedUser = userDeleteResult;
 
-    // const sessionsDeleteResult = await Session.deleteMany({ userId: userId });
-
-    // if (userDeleteResult === null || sessionsDeleteResult.deletedCount === 0) {
-    //   return next({
-    //     log: 'User or sessions could not be deleted.',
-    //     status: 404,
-    //     message: { error: 'An error occurred' },
-    //   });
-    // }
-
-    console.log('user deleted');
-    return res.status(204).redirect('/signup');
+    if (userDeleteResult === null) {
+      return next({
+        log: 'User could not be deleted.',
+        status: 404,
+        message: { error: 'An error occurred' },
+      });
+    }
+    return res.status(200).json(res.locals.deletedUser);
   } catch (err) {
     console.error('userController.deleteUser Error:', err);
     return next({
