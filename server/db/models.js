@@ -135,7 +135,7 @@ userSchema.statics.login = async function (username, password) {
     const user = await this.findOne({ username });
 
     if (!user) {
-      throw new Error('Incorrect username');
+      throw new Error('Incorrect username or password');
     }
 
     const match = await bcrypt.compare(password, user.password);
