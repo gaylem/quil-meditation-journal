@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { verifyUser, refreshTokens, logoutUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { verifyUser, logoutUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { verifyAccessToken, refreshTokens } = require('../middleware/authController');
 
 /**
  * @route POST /api/users/login
@@ -18,6 +19,7 @@ router.post('/login', verifyUser);
  * Expected Body:
  *   - refreshToken: String
  */
+// TODO: Add verifyAccessToken?
 router.post('/token', refreshTokens);
 
 /**
@@ -41,14 +43,18 @@ router.post('/signup', createUser);
  * @route PUT /api/users/update/:userId
  * @description Update user by ID
  * @param userId
+ * @access Private (requires access token)
  */
-router.put('/update/:userId', updateUser);
+// TODO: Make sure this works with verifyAccessToken
+router.put('/update/:userId', verifyAccessToken, updateUser);
 
 /**
  * @route DELETE /api/users/delete/:userId
  * @description Delete user by ID
  * @param userId
+ * @access Private (requires access token)
  */
-router.delete('/delete/:userId', deleteUser);
+// TODO: Make sure this works with verifyAccessToken
+router.delete('/delete/:userId', verifyAccessToken, deleteUser);
 
 module.exports = router;
