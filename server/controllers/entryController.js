@@ -1,4 +1,4 @@
-const model = require('../db/models');
+const { Entry } = require('../db/models');
 const entryController = {};
 
 /**
@@ -10,11 +10,11 @@ const entryController = {};
 entryController.getAllEntries = async (_, res) => {
   try {
     // Store userId in variable
-    const userId = res.locals.decoded.id;
+    const userId = res.locals.decoded.userId;
     // Call database to request all entries from user
-    const allEntries = await model.Entry.find({ userId });
+    const allEntries = await Entry.find({ userId });
     // If nothing is returned, log an error
-    if (!allEntries || allEntries.length === 0) {
+    if (!allEntries) {
       return res.status(404).json({
         log: 'entryController.getAllEntries: No entries found for the user',
         status: 404,
@@ -45,7 +45,8 @@ entryController.addEntry = async (req, res) => {
     // Extract the entry body and userId from the request body
     const { body, userId } = req.body;
     // Create new entry in database and store response in a variable
-    const newEntry = await model.Entry.create({ body, userId });
+    const newEntry = await Entry.create({ body, userId });
+    // Handle errors
     if (!newEntry || newEntry.length === 0) {
       return res.status(404).json({
         log: 'entryController.addEntry: newEntry not found.',
@@ -76,7 +77,7 @@ entryController.addEntry = async (req, res) => {
 entryController.findEntry = async (req, res) => {
   try {
     const entryId = req.params.id;
-    const foundEntry = await model.Entry.findOne({ _id: entryId });
+    const foundEntry = await Entry.findOne({ _id: entryId });
 
     if (!foundEntry || foundEntry.length === 0) {
       return res.status(404).json({
@@ -109,7 +110,7 @@ entryController.updateEntry = async (req, res) => {
     // Extract the entry body and userId from the request body
     const { body, userId } = req.body;
     // Find and update entry in database and store updated entry in a variable
-    const updatedEntry = await model.Entry.findOneAndUpdate({ _id }, { body, userId }, { new: true });
+    const updatedEntry = await Entry.findOneAndUpdate({ _id }, { body, userId }, { new: true });
     if (!updatedEntry || updatedEntry.length === 0) {
       return res.status(404).json({
         log: 'entryController.updatedEntry: updatedEntry not found.',
@@ -141,7 +142,7 @@ entryController.deleteEntry = async (req, res) => {
     // Store parameter as a variable
     const entryId = req.params.id;
     // Find and delete entry and store response in a variable
-    const deletedEntry = await model.Entry.findOneAndDelete({ _id: entryId });
+    const deletedEntry = await Entry.findOneAndDelete({ _id: entryId });
     // If response returns false, throw an error
     if (!deletedEntry || deletedEntry.length === 0) {
       return res.status(404).json({
