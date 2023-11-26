@@ -1,60 +1,60 @@
 const express = require('express');
 const router = express.Router();
-const { verifyUser, refreshTokens, logoutUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { verifyUser, logoutUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { verifyAccessToken, refreshTokens } = require('../controllers/authController');
 
 /**
- * Login user
- *
- * @param {Object} req.body
- * @param {String} req.body.username
- * @param {String} req.body.password
- *
+ * @route POST /api/users/login
+ * @description Login user
+ * @access Private (creates access token)
+ * Expected Body:
+ *   - username: String
+ *   - password: String
  */
-//
 router.post('/login', verifyUser);
 
 /**
- * Logout user
- *
- * @param {String} refreshTokens
- *
+ * @route POST /api/users/token
+ * @description Refresh access tokens
+ * Expected Body:
+ *   - refreshToken: String
  */
-//
+// TODO: Add verifyAccessToken?
 router.post('/token', refreshTokens);
 
 /**
- * Logout user
- *
- * @param {String} refreshToken
- *
+ * @route POST /api/users/logout
+ * @description Logout user
+ * Expected Body:
+ *   - refreshToken: String
  */
-//
 router.post('/logout', logoutUser);
 
 /**
- * Signup user
- *
- * @param {Object} req.body
- * @param {String} req.body.username
- * @param {String} req.body.password
- *
+ * @route POST /api/users/signup
+ * @description Signup user
+ * Expected Body:
+ *   - username: String
+ *   - password: String
  */
 router.post('/signup', createUser);
 
 /**
- * Update user
- *
- * @param {Int} req.params.userId
- *
+ * @route PUT /api/users/update/:userId
+ * @description Update user by ID
+ * @param userId
+ * @access Private (requires access token)
  */
-router.put('/update/:userId', updateUser);
+// TODO: Make sure this works with verifyAccessToken
+router.put('/update/:userId', verifyAccessToken, updateUser);
 
 /**
- * Delete user
- *
- * @param {Int} req.params.userId
- *
+ * @route DELETE /api/users/delete/:userId
+ * @description Delete user by ID
+ * @param userId
+ * @access Private (requires access token)
  */
-router.delete('/delete/:userId', deleteUser);
+// TODO: Make sure this works with verifyAccessToken
+router.delete('/delete/:userId', verifyAccessToken, deleteUser);
 
 module.exports = router;

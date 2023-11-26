@@ -1,8 +1,15 @@
+$quote-color: rgb(55, 54, 54);
+$author-color: rgb(110, 110, 110);
+$shadow-color: rgba(211, 211, 211, 0.8);
+$quote-background-gradient: linear-gradient(#fbeaeb, white);
+$font-family: Pacifico, sans-serif;
+
+/* Container that holds all new and past entries */
 .EntryContainer {
   display: flex;
   box-shadow:
-    8px 0 20px -12px rgba(211, 211, 211, 0.8),
-    -8px 0 13px -12px rgba(211, 211, 211, 0.8);
+    8px 0 20px -12px $shadow-color,
+    -8px 0 13px -12px $shadow-color;
   flex-direction: column;
   top: 0;
   margin: 0 auto;
@@ -13,30 +20,17 @@
   padding-bottom: 5em;
 }
 
-.quote-block {
+/* Main quote container on homepage */
+.quoteBlock {
   font-family: Neucha, Tahoma, san-serif;
-  padding: 7em 2em 2em 2em;
   font-size: 1.3em;
   line-height: 1.5;
-  background-image: linear-gradient(#fbeaeb, white);
+  padding: 7em 2em 2em 2em;
+  background-image: $quote-background-gradient;
+  color: $quote-color;
 }
 
-#quote {
-  color: rgb(55, 54, 54);
-}
-
-#quote,
-#author {
-  animation: fadeInAnimation ease 3s;
-  animation-iteration-count: 1;
-}
-
-#author {
-  font-weight: bold;
-  color: rgb(110, 110, 110);
-  padding-top: 1em;
-}
-
+/* Quote fades in when page loads */
 @keyframes fadeInAnimation {
   0% {
     opacity: 0;
@@ -44,4 +38,23 @@
   100% {
     opacity: 1;
   }
+}
+
+.quote,
+.author {
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+}
+
+.author {
+  font-weight: bold;
+  color: $author-color;
+  padding-top: 1em;
+}
+
+/* Line that separates New Meditation section from Past Meditatio Sessions */
+hr {
+  border: 0.5px solid lightgray;
+  width: 95%;
+  margin: 0 auto;
 }

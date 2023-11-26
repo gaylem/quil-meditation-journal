@@ -1,10 +1,9 @@
-// Colors
 $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
 $font-family: Pacifico, sans-serif;
 
-// Mixins
+/* Mixins */
 @mixin box-shadow($offset-x, $offset-y, $blur, $color) {
   box-shadow: $offset-x $offset-y $blur $color;
 }
@@ -20,14 +19,14 @@ $font-family: Pacifico, sans-serif;
   border: 0px;
 }
 
-// Utility Classes
+/* Utility class */
 .flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-// Header Styles
+/* Header styles */
 .header {
   @extend .flex-center;
   font-family: $font-family;
@@ -41,21 +40,21 @@ $font-family: Pacifico, sans-serif;
   color: white;
   z-index: 99;
 
-  // Header Container Styles
-  .header-container {
+  /* Container that holds hamburger menu, title, and logout button */
+  .headerContainer {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     width: 90%;
     @extend .flex-center;
 
-    // Hamburger Styles
+    /* Hamburger menu styles */
     .hamburger {
       width: 2em;
       height: auto;
       cursor: pointer;
     }
 
-    // Title Styles
+    /* Title styles */
     h1 {
       flex: 1;
       text-align: center;
@@ -63,12 +62,12 @@ $font-family: Pacifico, sans-serif;
       padding: 0 0.5em 0 0.5em;
     }
 
-    // Logout Container Styles
+    /* Logout Container Styles */
     .logout {
       display: flex;
       justify-content: flex-end;
 
-      // Button Styles
+      /* Logout button styles*/
       button {
         @include button-styles;
         @media (max-width: 600px) {

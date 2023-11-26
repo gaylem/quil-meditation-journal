@@ -1,167 +1,154 @@
+// Load environment variables .env file
 require('dotenv').config();
+
+// Import required modules
 const { User } = require('../db/models');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-//* USER CONTROLLER
+// userController object that contains the methods below
 const userController = {};
 
-userController.verifyAccessToken = (req, res, next) => {
-  const accessToken = req.headers.authorization?.split(' ')[1];
-  console.log('req.headers.authorization', req.headers.authorization);
-  console.log('accessToken', accessToken);
-
-  if (!accessToken) {
-    return res.status(401).json({ error: 'Access token missing' });
-  }
-
-  try {
-    const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET, { algorithms: ['HS256'] });
-
-    console.log('decoded: ', decoded);
-    res.locals.decoded = decoded;
-    next();
-  } catch (error) {
-    return res.status(403).json({ error: 'Invalid access token' });
-  }
-};
-
 /**
- * Verify user in the database
- *
- * @param {Str} req.body.username
- * @param {Str} req.body.password
- *
- * @returns username, token
+ * @route POST /api/users/login
+ * @description Authenticates a user and returns a token.
+ * Expected Body:
+ *   - username: String
+ *   - password: String
+ * @returns {Object} - JSON with username, token, and userId
  */
-
 userController.verifyUser = async (req, res) => {
+  // Extract username and password from request body
   const { username, password } = req.body;
   try {
+    // Call login method on the userSchema object and store response in a variable
     const user = await User.login(username, password);
-    console.log('user: ', user);
-
+    // Handle error if user not found
+    if (!user) {
+      return res.status(404).json({
+        log: 'userController.verifyUser: No user found',
+        status: 404,
+        message: 'Username or password are incorrect.',
+      });
+    }
+    // Store userId and username in object for token generation
     const obj = {
-      id: user._id.toString(),
+      userId: user._id.toString(),
       username: user.username,
     };
-
+    // Create token by calling the createToken method on the userSchema object
     const token = User.createToken(obj);
-    // Add token to database
+    // Add token to accessTokens array in user document in database
     const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.accessToken } }, { new: true });
-
+    // Handle error if updated user not returned
+    if (!updatedUser) {
+      return res.status(404).json({
+        log: 'userController.verifyUser: Issue with updatedUser',
+        status: 404,
+        message: 'Username or password are incorrect.',
+      });
+    }
+    // store updatedUser's id in a variable
     const userId = updatedUser._id;
-    console.log('updatedUser._id: ', updatedUser._id);
-
+    // Send the username, token, and userId to the frontend for authentication state management
     return res.status(200).json({ username, token, userId });
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(500).json({
+      log: `userController.verifyUser: ERROR ${error}`,
+      status: 500,
+      message: 'Something went wrong. Please try again later.',
+    });
   }
 };
 
 /**
- * Token refresh
- *
- *  @param {Str} req.body.token
- *
- * @returns newAccessToken
+ * @route POST /api/users/logout
+ * @description Logs a user out by removing the provided refresh token.
+ * Expected Body:
+ *   - refreshToken: String
+ * @returns {Number} - Status 204 on success
  */
-userController.refreshTokens = async (req, res) => {
-  const { refreshToken } = req.body;
-
-  try {
-    if (!process.env.REFRESH_SECRET) {
-      throw Error('Refresh secret key is missing');
-    }
-
-    // Verify the refresh token
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
-
-    // TODO: Where is refreshTokens coming from?
-    // Check if the refresh token is in the stored tokens
-    if (!refreshTokens.includes(refreshToken)) {
-      throw Error('Invalid refresh token');
-    }
-
-    // Call createToken to generate a new set of tokens
-    const newTokenData = { _id: decoded._id }; // Customize this based on your user object
-    const { accessToken, refreshToken: newRefreshToken } = User.createToken(newTokenData);
-
-    // Update the user's refreshTokens array with the new refresh token
-    await User.findOneAndUpdate({ _id: decoded._id }, { $push: { refreshTokens: newRefreshToken } }, { new: true });
-
-    return res.status(200).json({ accessToken, refreshToken: newRefreshToken });
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
-  }
-};
-
-/**
- * Logout and clear refresh token
- *
- *  @param {Str} req.body.token
- *
- * @returns status 204
- */
-
+// TODO: This appears to be working but the login method in the User schema is a dupe
 userController.logoutUser = async (req, res) => {
+  // Extract refreshToken from the request body
   const { refreshToken } = req.body;
-  console.log('refreshToken: ', refreshToken);
-
+  // Log error if no refresh token
+  if (!refreshToken) {
+    console.error('No refreshToken: ', refreshToken);
+  }
   try {
     // Find the user by refresh token and remove it
     const user = await User.findOneAndUpdate({ refreshTokens: refreshToken }, { $pull: { refreshTokens: refreshToken } }, { new: true });
-
+    // If there is no user, throw an error
     if (!user) {
       throw Error('Invalid refresh token');
     }
-
     return res.sendStatus(204);
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(500).json({
+      log: `userController.logoutUser: ERROR ${error}`,
+      status: 500,
+      message: 'Something went wrong. Please try again later.',
+    });
   }
 };
 
 /**
- * Create user in the database
- *
- * @param {Int} req.body
- * @param {Int} res.locals.userId
- *
- * @returns username, token
+ * @route POST /api/users/signup
+ * @description Creates a new user account.
+ * Expected Body:
+ *   - username: String
+ *   - email: String
+ *   - password: String
+ * @returns {Object} - JSON with username, userId, and token
  */
 userController.createUser = async (req, res) => {
+  // Extract the username, email, and password
   const { username, email, password } = req.body;
-
   try {
+    // Sign up a new user with the provided information
     const user = await User.signup(username, email, password);
-    console.log(user);
-    // create a token
+    // Store the userId in a new variable and on the locals object
+    if (!user) {
+      return res.status(404).json({
+        log: 'userController.createUser: Issue creating user',
+        status: 404,
+        message: 'Something went wrong. Please try again later.',
+      });
+    }
+    const userId = user.id;
+    res.locals.userId = userId;
+    // Create a token
     const token = User.createToken(user);
-    console.log('token: ', token);
-    return res.status(200).json({ username, token });
+    // Return the username, userId, and token as an object
+    return res.status(200).json({ username, userId, token });
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(500).json({
+      log: `userController.createUser: ERROR ${error}`,
+      status: 500,
+      message: 'Something went wrong. Please try again later.',
+    });
   }
 };
-/**
- * Update user in the database
- *
- * @param {Str} req.body.username
- * @param {Str} req.body.password
- * @param {Int} req.params.userId
- *
- * @returns res.locals.user
+
+/** // TODO: Split into three controllers for username, email, password changes from account page
+ * @route PUT /api/users/update/:userId
+ * @description Updates user information.
+ * @param userId
+ * Expected Body:
+ *   - username: String
+ *   - password: String
+ * @returns {Object} - JSON with updated user information
  */
 userController.updateUser = async (req, res, next) => {
   try {
+    // Extract the userId, username, and password from params and body
     const { userId } = req.params;
     const { username, password } = req.body;
-
+    // Encrypt the password before updating the user
     const encryptedPassword = await bcrypt.hash(password, process.env.SALT_WORK_FACTOR);
-
+    // Update the user data
     const result = await User.findOneAndUpdate({ _id: userId }, { $set: { username, password: encryptedPassword } });
-
+    // If nothing is returned, throw an error
     if (result.matchedCount === 0) {
       return next({
         log: 'User not found.',
@@ -169,9 +156,7 @@ userController.updateUser = async (req, res, next) => {
         message: { error: 'User not found' },
       });
     }
-
     res.locals.user = userId;
-
     console.log('user updated');
     return res.status(200).json(res.locals.user);
   } catch (err) {
@@ -184,33 +169,27 @@ userController.updateUser = async (req, res, next) => {
   }
 };
 
-/**
- * Delete user from the database
- *
- * @param {Int} req.params.userId
- *
- * @returns to login page
+ 
+/** // TODO: Won't be used until account page is built
+ * @route DELETE /api/users/delete/:userId
+ * @description Deletes a user from the database.
+ * Expected Parameters:
+ *   - userId: Integer
+ * @returns {Number} - Status 204 on success
  */
-
-// TODO: Remove sessions
 userController.deleteUser = async (req, res, next) => {
   try {
-    // const { userId } = req.params;
-
-    // const userDeleteResult = await User.findOneAndDelete({ _id: userId });
-
-    // const sessionsDeleteResult = await Session.deleteMany({ userId: userId });
-
-    // if (userDeleteResult === null || sessionsDeleteResult.deletedCount === 0) {
-    //   return next({
-    //     log: 'User or sessions could not be deleted.',
-    //     status: 404,
-    //     message: { error: 'An error occurred' },
-    //   });
-    // }
-
-    console.log('user deleted');
-    return res.status(204).redirect('/signup');
+    const { userId } = req.params;
+    const userDeleteResult = await User.findOneAndDelete({ _id: userId });
+    res.locals.deletedUser = userDeleteResult;
+    if (userDeleteResult === null) {
+      return next({
+        log: 'User could not be deleted.',
+        status: 404,
+        message: { error: 'An error occurred' },
+      });
+    }
+    return res.status(200).json(res.locals.deletedUser);
   } catch (err) {
     console.error('userController.deleteUser Error:', err);
     return next({
@@ -220,7 +199,5 @@ userController.deleteUser = async (req, res, next) => {
     });
   }
 };
-
-//* Find user by username
 
 module.exports = userController;

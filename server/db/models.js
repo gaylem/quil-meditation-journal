@@ -23,6 +23,15 @@ connectToDatabase();
 //* Create Schema
 const Schema = mongoose.Schema;
 
+//* Entry Schema
+const entrySchema = new Schema(
+  {
+    body: { type: String, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  },
+  { timestamps: true },
+);
+
 //* User Schema
 const userSchema = new Schema(
   {
@@ -30,15 +39,6 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     email: { type: String, required: true },
     refreshTokens: [{ type: String }],
-  },
-  { timestamps: true },
-);
-
-//* Entry Schema
-const entrySchema = new Schema(
-  {
-    body: { type: String, required: true },
-    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
   { timestamps: true },
 );
@@ -62,6 +62,18 @@ userSchema.statics.createToken = obj => {
     const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, { algorithm: 'HS256' });
 
     const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, { algorithm: 'HS256' });
+    // const accessTokenOptions = {
+    //   algorithm: 'HS256',
+    //   expiresIn: '15m',
+    // };
+
+    // const refreshTokenOptions = {
+    //   algorithm: 'HS256',
+    //   expiresIn: '7d',
+    // };
+
+    // const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, accessTokenOptions);
+    // const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, refreshTokenOptions);
 
     return { accessToken, refreshToken };
   } catch (error) {
@@ -151,11 +163,12 @@ userSchema.statics.login = async function (username, password) {
 };
 
 //* Logout Method
-userSchema.statics.logout = async (req, res, next) => {
+userSchema.statics.logout = async (req, res) => {
   const { refreshToken } = req.body;
 
   try {
     // Find the user by refresh token and remove it
+    // eslint-disable-next-line no-undef
     const user = await User.findOneAndUpdate({ refreshTokens: refreshToken }, { $pull: { refreshTokens: refreshToken } }, { new: true });
 
     if (!user) {
