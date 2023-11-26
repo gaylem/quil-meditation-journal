@@ -1,17 +1,19 @@
+// Load environment variables from a .env file
 require('dotenv').config();
 
+// Import required modules
 const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+// Middleware setup
+app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+app.use(cors()); // Enable Cross-Origin Resource Sharing
 
-// Log route requests
-app.use((req, res, next) => {
+// Log route requests for debugging purposes
+app.use((req, _, next) => {
   console.log(req.path, req.method);
   next();
 });
@@ -23,35 +25,45 @@ app.use(express.static(path.join(__dirname, 'public')));
 const entryRouter = require('./routers/entryRouter');
 const userRouter = require('./routers/userRouter');
 
-// Routers
+// Define routes for entries and users
 app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
 
-// Catch-all route handler for any requests to an unknown route
-app.use((req, res) => res.status(404).send("This is not the page you're looking for..."));
+// Catch-all route handler for unknown routes
+app.use((_, res) => res.status(404).send("This is not the page you're looking for..."));
 
 // Express error handler
-app.use((err, req, res, next) => {
+app.use((err, _, res) => {
+  // Define a default error object
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
     message: { err: 'An error occurred' },
   };
+
+  // Merge the default error object with the provided error, if any
   const errorObj = Object.assign({}, defaultErr, err);
+
+  // Log the error
   console.log(errorObj.log);
+
+  // Send a JSON response with the error status and message
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-// Environments
+// Serve static files in production
 if (process.env.NODE_ENV === 'production') {
-  // statically serve everything in the build folder on the route '/build'
+  // Statically serve everything in the build folder on the route '/build'
   app.use('/build', express.static(path.join(__dirname, '../build')));
 }
+
+// Log the current environment
 console.log('NODE_ENV: ', process.env.NODE_ENV);
 
-// Start Server
+// Start the server
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
 });
 
+// Export the Express app for external use (e.g., in tests)
 module.exports = app;
