@@ -6,7 +6,7 @@ const { User } = require('../db/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-// userController object -- contains methods below
+// userController object that contains the methods below
 const userController = {};
 
 /**
@@ -16,16 +16,16 @@ const userController = {};
  * @param {Function} next - Express next function
  */
 userController.verifyAccessToken = (req, res, next) => {
-  // Store access token in a variabls
+  // Store access token in a variables
   const accessToken = req.headers.authorization?.split(' ')[1];
   console.log('req.headers.authorization', req.headers.authorization);
   console.log('accessToken', accessToken);
   // If there is no access token, throw an error
   if (!accessToken) {
     return res.status(401).json({
-      log: 'entryController.verifyAccessToken: No access token retrieved from req.headers.authorization',
+      log: 'entryController.verifyAccessToken: No access token received.',
       status: 404,
-      message: { error: 'Access token missing' },
+      message: 'Something went wrong. Please try again later.',
     });
   }
 
@@ -40,100 +40,126 @@ userController.verifyAccessToken = (req, res, next) => {
   } catch (error) {
     return res.status(403).json({
       log: 'userController.verifyAccessToken: Invalid access token',
-      status: 404,
-      message: { error: 'Invalid access token' },
+      status: 403,
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
 
 /**
- * Route: POST /api/users/login
- * Description: Authenticates a user and returns a token.
+ * @route POST /api/users/login
+ * @description Authenticates a user and returns a token.
  * Expected Body:
  *   - username: String
  *   - password: String
  * @returns {Object} - JSON with username, token, and userId
  */
 userController.verifyUser = async (req, res) => {
+  // Extract username and password from request body
   const { username, password } = req.body;
   try {
+    // Call login method on the userSchema object and store response in a variable
     const user = await User.login(username, password);
-    console.log('user: ', user);
-
+    // Handle error if user not found
+    if (!user) {
+      return res.status(404).json({
+        log: 'userController.verifyUser: No user found',
+        status: 404,
+        message: 'Username or password are incorrect.',
+      });
+    }
+    // Store userId and username in object for token generation
     const obj = {
-      id: user._id.toString(),
+      userId: user._id.toString(),
       username: user.username,
     };
-
+    // Create token by calling the createToken method on the userSchema object
     const token = User.createToken(obj);
-    // Add token to database
+    // Add token to accessTokens array in user document in database
     const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.accessToken } }, { new: true });
-
+    // Handle error if updated user not returned
+    if (!updatedUser) {
+      return res.status(404).json({
+        log: 'userController.verifyUser: Issue with updatedUser',
+        status: 404,
+        message: 'Username or password are incorrect.',
+      });
+    }
+    // store updatedUser's id in a variable
     const userId = updatedUser._id;
     console.log('updatedUser._id: ', updatedUser._id);
-
+    // Send the username, token, and userId to the frontend for authentication state management
     return res.status(200).json({ username, token, userId });
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(500).json({
+      log: `userController.verifyUser: ERROR ${error}`,
+      status: 500,
+      message: 'Something went wrong. Please try again later.',
+    });
   }
 };
 
 /**
- * Route: POST /api/users/token
- * Description: Refreshes access tokens.
+ * @route POST /api/users/token
+ * @description Refreshes access tokens.
  * Expected Body:
  *   - refreshToken: String
  * @returns {Object} - JSON with new accessToken and refreshToken
  */
+// TODO: Refresh tokens are null -- where am I calling the /token route?
 userController.refreshTokens = async (req, res) => {
+  // Extract the refreshToken from the request body
   const { refreshToken } = req.body;
-
   try {
     if (!process.env.REFRESH_SECRET) {
       throw Error('Refresh secret key is missing');
     }
-
     // Verify the refresh token
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
-
-    // TODO: Where is refreshTokens coming from?
+    // Logging temporarily to confirm if this is the right keyword
+    console.log('this from refreshTokens: ', this);
     // Check if the refresh token is in the stored tokens
-    if (!refreshTokens.includes(refreshToken)) {
+    if (!this.refreshTokens.includes(refreshToken)) {
       throw Error('Invalid refresh token');
     }
-
     // Call createToken to generate a new set of tokens
     const newTokenData = { _id: decoded._id };
     const { accessToken, refreshToken: newRefreshToken } = User.createToken(newTokenData);
-
     // Update the user's refreshTokens array with the new refresh token
     await User.findOneAndUpdate({ _id: decoded._id }, { $push: { refreshTokens: newRefreshToken } }, { new: true });
-
+    // Return the accessToken and the newRefreshToken
     return res.status(200).json({ accessToken, refreshToken: newRefreshToken });
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(500).json({
+      log: `userController.refreshTokens: ERROR ${error}`,
+      status: 500,
+      message: 'Something went wrong. Please try again later.',
+    });
   }
 };
 
 /**
- * Route: POST /api/users/logout
- * Description: Logs a user out by removing the provided refresh token.
+ * @route POST /api/users/logout
+ * @description Logs a user out by removing the provided refresh token.
  * Expected Body:
  *   - refreshToken: String
  * @returns {Number} - Status 204 on success
  */
+ // TODO: What is this even doing? 
 userController.logoutUser = async (req, res) => {
+  // Extract refreshToken from the request body
   const { refreshToken } = req.body;
-  console.log('refreshToken: ', refreshToken);
-
+  // Log error if no refresh token
+    if (!refreshToken) {
+      console.error('No refreshToken: ', refreshToken);
+    }
   try {
     // Find the user by refresh token and remove it
     const user = await User.findOneAndUpdate({ refreshTokens: refreshToken }, { $pull: { refreshTokens: refreshToken } }, { new: true });
-
+    // If there is no user, throw an error
     if (!user) {
       throw Error('Invalid refresh token');
     }
-
     return res.sendStatus(204);
   } catch (error) {
     return res.status(400).json({ error: error.message });
