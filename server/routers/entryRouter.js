@@ -1,31 +1,50 @@
 const express = require('express');
-const entryController = require('../controllers/entryController');
-const userController = require('../controllers/userController');
 const router = express.Router();
 
-// Route for getting all entries data
-router.get('/', userController.verifyAccessToken, entryController.getAllEntries, (req, res) => {
-  return res.status(200).json(res.locals.allEntries);
-});
+// Entry controllers
+const { getAllEntries, addEntry, findEntry, updateEntry, deleteEntry } = require('../controllers/entryController');
 
-// Route for getting specific entries data
-router.get('/:id', (req, res) => {
-  return res.status(200).json(res.locals.entry);
-});
+// Verify access token controller
+const { verifyAccessToken } = require('../controllers/userController');
 
-// Route for deleting specific entries
-router.delete('/:id', entryController.deleteEntry, (req, res) => {
-  return res.status(200).json(res.locals.deleteEntry);
-});
+/**
+ * @route GET /entries
+ * @description Get all entries
+ * @access Private (requires access token)
+ */
+router.get('/', verifyAccessToken, getAllEntries);
 
-// Route for creating new entries
-router.post('/', entryController.addEntry, (req, res) => {
-  return res.status(201).json(res.locals.newEntry);
-});
+/**
+ * @route GET /entries/:id
+ * @description Get a specific entry by ID
+ * @access // TODO: make Private (requires access token)
+ * @param entryId
+ */
+ // TODO: Add verifyAccessToken
+router.get('/:id', findEntry);
 
-// Route for updating specific entries
-router.patch('/:id', userController.verifyAccessToken, entryController.updateEntry, (req, res) => {
-  return res.status(200).json(res.locals.updatedEntry);
-});
+/**
+ * @route DELETE /entries/:id
+ * @description Delete a specific entry by ID
+ * @access // TODO: make Private (requires access token)
+ * @param entryId
+ */
+ // TODO: Add verifyAccessToken
+router.delete('/:id', deleteEntry);
+
+/**
+ * @route POST /entries
+ * @description Create a new entry
+ * @access // TODO: make Private (requires access token)
+ */
+ // TODO: Add verifyAccessToken
+router.post('/', addEntry);
+
+/**
+ * @route PATCH /entries/:id
+ * @description Update a specific entry by ID
+ * @access Private (requires access token)
+ */
+router.patch('/:id', verifyAccessToken, updateEntry);
 
 module.exports = router;
