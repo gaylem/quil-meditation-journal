@@ -6,7 +6,7 @@ const { User } = require('../db/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-//* USER CONTROLLER OBJECT
+// userController object -- contains methods below
 const userController = {};
 
 /**
