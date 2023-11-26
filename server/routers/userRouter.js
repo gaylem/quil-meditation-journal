@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { verifyUser, logoutUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
-const { verifyAccessToken, refreshTokens } = require('../middleware/authController');
+const { verifyAccessToken, refreshTokens } = require('../controllers/authController');
 
 /**
  * @route POST /api/users/login

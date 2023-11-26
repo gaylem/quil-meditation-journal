@@ -5,7 +5,7 @@ const router = express.Router();
 const { getAllEntries, addEntry, findEntry, updateEntry, deleteEntry } = require('../controllers/entryController');
 
 // Verify access token controller
-const { verifyAccessToken } = require('../middleware/authController');
+const { verifyAccessToken } = require('../controllers/authController');
 
 /**
  * @route GET /entries
