@@ -16,22 +16,33 @@ const userController = {};
  * @param {Function} next - Express next function
  */
 userController.verifyAccessToken = (req, res, next) => {
+  // Store access token in a variabls
   const accessToken = req.headers.authorization?.split(' ')[1];
   console.log('req.headers.authorization', req.headers.authorization);
   console.log('accessToken', accessToken);
-
+  // If there is no access token, throw an error
   if (!accessToken) {
-    return res.status(401).json({ error: 'Access token missing' });
+    return res.status(401).json({
+      log: 'entryController.verifyAccessToken: No access token retrieved from req.headers.authorization',
+      status: 404,
+      message: { error: 'Access token missing' },
+    });
   }
 
   try {
+    // Decode the access token
     const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET, { algorithms: ['HS256'] });
-
     console.log('decoded: ', decoded);
+    // Store the decoded result in the locals object
     res.locals.decoded = decoded;
+    // Send result to the frontend
     next();
   } catch (error) {
-    return res.status(403).json({ error: 'Invalid access token' });
+    return res.status(403).json({
+      log: 'userController.verifyAccessToken: Invalid access token',
+      status: 404,
+      message: { error: 'Invalid access token' },
+    });
   }
 };
 
@@ -168,7 +179,7 @@ userController.createUser = async (req, res) => {
  *   - password: String
  * @returns {Object} - JSON with updated user information
  */
- // TODO: Split into three controllers for username, email, password changes from account page
+// TODO: Split into three controllers for username, email, password changes from account page
 userController.updateUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
