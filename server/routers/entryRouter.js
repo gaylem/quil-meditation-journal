@@ -5,7 +5,7 @@ const router = express.Router();
 const { getAllEntries, addEntry, findEntry, updateEntry, deleteEntry } = require('../controllers/entryController');
 
 // Verify access token controller
-const { verifyAccessToken } = require('../controllers/userController');
+const { verifyAccessToken } = require('../middleware/authController');
 
 /**
  * @route GET /entries
@@ -20,7 +20,7 @@ router.get('/', verifyAccessToken, getAllEntries);
  * @access // TODO: make Private (requires access token)
  * @param entryId
  */
- // TODO: Add verifyAccessToken
+// TODO: Add verifyAccessToken
 router.get('/:id', findEntry);
 
 /**
@@ -29,7 +29,7 @@ router.get('/:id', findEntry);
  * @access // TODO: make Private (requires access token)
  * @param entryId
  */
- // TODO: Add verifyAccessToken
+// TODO: Add verifyAccessToken
 router.delete('/:id', deleteEntry);
 
 /**
@@ -37,14 +37,15 @@ router.delete('/:id', deleteEntry);
  * @description Create a new entry
  * @access // TODO: make Private (requires access token)
  */
- // TODO: Add verifyAccessToken
+// TODO: Add verifyAccessToken
 router.post('/', addEntry);
 
 /**
  * @route PATCH /entries/:id
  * @description Update a specific entry by ID
- * @access Private (requires access token)
+ * @access // TODO: make Private (requires access token)
  */
-router.patch('/:id', verifyAccessToken, updateEntry);
+// TODO: Add verifyAccessToken
+router.patch('/:id', updateEntry);
 
 module.exports = router;
