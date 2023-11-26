@@ -3,57 +3,52 @@ const router = express.Router();
 const { verifyUser, refreshTokens, logoutUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
 
 /**
- * Login user
- *
- * @param {Object} req.body
- * @param {String} req.body.username
- * @param {String} req.body.password
- *
+ * Route: POST /api/users/login
+ * Description: Login user
+ * Expected Body:
+ *   - username: String
+ *   - password: String
  */
-//
 router.post('/login', verifyUser);
 
 /**
- * Logout user
- *
- * @param {String} refreshTokens
- *
+ * Route: POST /api/users/token
+ * Description: Refresh access tokens
+ * Expected Body:
+ *   - refreshToken: String
  */
-//
 router.post('/token', refreshTokens);
 
 /**
- * Logout user
- *
- * @param {String} refreshToken
- *
+ * Route: POST /api/users/logout
+ * Description: Logout user
+ * Expected Body:
+ *   - refreshToken: String
  */
-//
 router.post('/logout', logoutUser);
 
 /**
- * Signup user
- *
- * @param {Object} req.body
- * @param {String} req.body.username
- * @param {String} req.body.password
- *
+ * Route: POST /api/users/signup
+ * Description: Signup user
+ * Expected Body:
+ *   - username: String
+ *   - password: String
  */
 router.post('/signup', createUser);
 
 /**
- * Update user
- *
- * @param {Int} req.params.userId
- *
+ * Route: PUT /api/users/update/:userId
+ * Description: Update user by ID
+ * Expected Parameters:
+ *   - userId: Integer
  */
 router.put('/update/:userId', updateUser);
 
 /**
- * Delete user
- *
- * @param {Int} req.params.userId
- *
+ * Route: DELETE /api/users/delete/:userId
+ * Description: Delete user by ID
+ * Expected Parameters:
+ *   - userId: Integer
  */
 router.delete('/delete/:userId', deleteUser);
 
