@@ -18,7 +18,7 @@ entryController.getAllEntries = async (_, res) => {
       return res.status(404).json({
         log: 'entryController.getAllEntries: No entries found for the user',
         status: 404,
-        message: { error: 'Entries not found' },
+        message: 'Your entries could not be found.',
       });
     }
     // If result is returned, store in locals object
@@ -29,7 +29,7 @@ entryController.getAllEntries = async (_, res) => {
     return res.status(500).json({
       log: `entryController.getAllEntries: ERROR ${error}`,
       status: 500,
-      message: { error: 'Internal Server Error' },
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
@@ -48,9 +48,9 @@ entryController.addEntry = async (req, res) => {
     const newEntry = await model.Entry.create({ body, userId });
     if (!newEntry || newEntry.length === 0) {
       return res.status(404).json({
-        log: 'entryController.addEntry: New entry not found',
+        log: 'entryController.addEntry: newEntry not found.',
         status: 404,
-        message: { error: 'Entry not found' },
+        message: 'There was an issue adding your entry.',
       });
     }
     // Store response on locals object
@@ -61,7 +61,7 @@ entryController.addEntry = async (req, res) => {
     return res.status(500).json({
       log: `entryController.addEntry: ERROR ${error}`,
       status: 500,
-      message: { error: 'Internal Server Error' },
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
@@ -80,9 +80,9 @@ entryController.findEntry = async (req, res) => {
 
     if (!foundEntry || foundEntry.length === 0) {
       return res.status(404).json({
-        log: 'entryController.findEntry: Entry not found',
+        log: 'entryController.findEntry: foundEntry not found.',
         status: 404,
-        message: { error: 'Entry not found' },
+        message: 'Your entry could not found.',
       });
     }
     res.locals.entry = foundEntry;
@@ -91,7 +91,7 @@ entryController.findEntry = async (req, res) => {
     return res.status(500).json({
       log: `entryController.findEntry: ERROR ${error}`,
       status: 500,
-      message: { error: 'Internal Server Error' },
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
@@ -112,9 +112,9 @@ entryController.updateEntry = async (req, res) => {
     const updatedEntry = await model.Entry.findOneAndUpdate({ _id }, { body, userId }, { new: true });
     if (!updatedEntry || updatedEntry.length === 0) {
       return res.status(404).json({
-        log: 'entryController.updatedEntry: Entry not found for update',
+        log: 'entryController.updatedEntry: updatedEntry not found.',
         status: 404,
-        message: { error: 'An error occurred' },
+        message: 'Your entry could not be updated.',
       });
     }
     // Store updated entry in locals object
@@ -125,7 +125,7 @@ entryController.updateEntry = async (req, res) => {
     return res.status(500).json({
       log: `entryController.updateEntry: ERROR ${error}`,
       status: 500,
-      message: { error: 'Internal Server Error' },
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
@@ -145,9 +145,9 @@ entryController.deleteEntry = async (req, res) => {
     // If response returns false, throw an error
     if (!deletedEntry || deletedEntry.length === 0) {
       return res.status(404).json({
-        log: 'entryController.deleteEntry: Entry not found for deletion',
+        log: 'entryController.deleteEntry: deletedEntry not found.',
         status: 404,
-        message: { error: 'Entry not found' },
+        message: 'Your entry could not be deleted.',
       });
     }
     // If response returns true, store in locals object
@@ -158,7 +158,7 @@ entryController.deleteEntry = async (req, res) => {
     return res.status(500).json({
       log: `entryController.deleteEntry: ERROR ${error}`,
       status: 500,
-      message: { error: 'Internal Server Error' },
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
