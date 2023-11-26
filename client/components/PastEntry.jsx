@@ -43,52 +43,8 @@ const PastEntry = ({ entry }) => {
   // Format the date of the past entry
   const formattedDate = moment(createdAt).format('dddd, LL');
 
-  // Function to handle deleting an entry
-  const handleDelete = async () => {
-    try {
-      // Send DELETE request to the server to delete the entry
-      await axios.delete(`/api/entries/${_id}`, {
-        headers: {
-          Authorization: `Bearer ${user.token.accessToken}`,
-        },
-      });
-
-      // Fetch updated entries after deletion
-      const response = await axios.get(`/api/entries`, {
-        headers: {
-          Authorization: `Bearer ${user.token.accessToken}`,
-        },
-      });
-
-      // Update entries in the context
-      dispatch({ type: 'SET_ENTRIES', payload: response.data });
-      toggle();
-    } catch (error) {
-      console.error('Error deleting entry:', error);
-    }
-  };
-
-  // Helper function to update the entry with a PATCH request when user saves an edit
-  const updateEntryWithPatch = async () => {
-    try {
-      await axios.patch(
-        `/api/entries/${_id}`,
-        { body: editedBody, userId: user.userId },
-        {
-          headers: {
-            Authorization: `Bearer ${user.token.accessToken}`,
-          },
-        },
-      );
-    } catch (error) {
-      console.error('Error updating entry with PATCH request:', error);
-      // Re-throw the error to be caught by the outer try-catch block
-      throw error;
-    }
-  };
-
   // Helper function to fetch updated entries after editing
-  const fetchUpdatedEntries = async () => {
+  const fetchEntries = async () => {
     try {
       // Fetch updated entries from the server
       const updatedResponse = await axios.get(`/api/entries`, {
@@ -96,8 +52,14 @@ const PastEntry = ({ entry }) => {
           Authorization: `Bearer ${user.token.accessToken}`,
         },
       });
+      // Sort the entries by createdAt date in descending order
+      const sortedEntries = updatedResponse.data.sort((a, b) => {
+        const dateA = a.createdAt ? new Date(a.createdAt) : 0;
+        const dateB = b.createdAt ? new Date(b.createdAt) : 0;
+        return dateB - dateA;
+      });
       // Update entries in the context
-      dispatch({ type: 'SET_ENTRIES', payload: updatedResponse.data });
+      dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
     } catch (error) {
       console.error('Error fetching updated entries:', error);
       // Re-throw the error to be caught by the outer try-catch block
@@ -108,14 +70,37 @@ const PastEntry = ({ entry }) => {
   // Function to handle editing an entry
   const handleEdit = async () => {
     try {
-      // Update the entry with a PATCH request
-      await updateEntryWithPatch();
+      await axios.patch(
+        `/api/entries/${_id}`,
+        { body: editedBody, userId: user.userId },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token.accessToken}`,
+          },
+        },
+      );
       // Fetch updated entries after editing
-      await fetchUpdatedEntries();
+      await fetchEntries();
       // Toggle the entry closed
       toggle();
     } catch (error) {
       console.error('Error editing entry:', error);
+    }
+  };
+
+  // Function to handle deleting an entry
+  const handleDelete = async () => {
+    try {
+      // Send DELETE request to the server to delete the entry
+      await axios.delete(`/api/entries/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token.accessToken}`,
+        },
+      });
+
+      await fetchEntries();
+    } catch (error) {
+      console.error('Error deleting entry:', error);
     }
   };
 
