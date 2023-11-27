@@ -16,10 +16,12 @@ const entryController = {};
  * @param {Object} res - The response object (Array of objects)
  * @returns {Object} - JSON response containing all entries for the user or an error response
  */
-entryController.getAllEntries = async (_, res) => {
+entryController.getAllEntries = async (req, res) => {
   try {
     // Store userId in variable
-    const userId = res.locals.decoded.userId;
+    const userId = req.params.id;
+    console.log(typeof userId);
+    console.log('userId: ', userId);
     // Call database to request all entries from user
     const allEntries = await Entry.find({ userId });
     // If nothing is returned, log an error
