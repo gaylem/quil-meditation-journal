@@ -21,10 +21,12 @@ app.use((req, _, next) => {
 // Import Routes
 const entryRouter = require('./routers/entryRouter');
 const userRouter = require('./routers/userRouter');
+const accountRouter = require('./routers/accountRouter');
 
 // Define routes for entries and users
 app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
+app.use('/api/account', accountRouter);
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
