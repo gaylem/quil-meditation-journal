@@ -17,7 +17,7 @@ const userController = {};
  * @route POST /api/users/login
  * @description Authenticates a user and returns a token
  *   - Can be used to verify a user outside of login process
- * @param {Object} req - The request object
+ * @param {Object} req - The request object containing:
  *   - username: String
  *   - password: String
  * @param {Object} res - The response object
@@ -70,12 +70,11 @@ userController.verifyUser = async (req, res) => {
 /**
  * @route POST /api/users/logout
  * @description Logs a user out by removing the provided refresh token from the database
- * @param {Object} req - The request object
+ * @param {Object} req - The request object containing:
  *   - refreshToken: String
  * @param {Object} res - The response object
  * @returns {Number} - Status 204 on success.
  */
-// TODO: This appears to be working but the logout method in the User schema is a dupe
 userController.logoutUser = async (req, res) => {
   // Extract refreshToken from the request body
   const { refreshToken } = req.body;
@@ -103,7 +102,7 @@ userController.logoutUser = async (req, res) => {
 /**
  * @route POST /api/users/signup
  * @description Creates a new user in the database.
- * @param {Object} req - The request object
+ * @param {Object} req - The request object containing:
  *   - username: String
  *   - email: String
  *   - password: String
