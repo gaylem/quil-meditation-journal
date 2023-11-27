@@ -12,7 +12,7 @@
 const express = require('express');
 const router = express.Router();
 const { updateAccount, deleteAccount } = require('../controllers/accountController');
-const { verifyAccessToken } = require('../controllers/authController');
+const { verifyAccessToken } = require('../utils/token.utils');
 
 /**
  * @route PUT /api/users/update/:userId
