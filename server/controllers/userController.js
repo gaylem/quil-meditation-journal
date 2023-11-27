@@ -1,9 +1,10 @@
 //** USER CONTROLLER */
 
 /* Includes: 
-    1. verifyUser (POST /login) - Authenticates a user and returns a token.
-    2. logoutUser (POST /logout) - Logs a user out by removing the provided refresh token from the database.
-    3. createUser (POST /signup) - Creates a new user in the database.
+    1. verifyUser (POST /api/users/login) - Authenticates a user and returns a token. 
+        - Can be used to verify a user outside of login process.
+    2. logoutUser (POST /api/users/logout) - Logs a user out by removing the provided refresh token from the database.
+    3. createUser (POST /api/users/signup) - Creates a new user in the database.
 */
 
 // Imports
@@ -14,10 +15,12 @@ const userController = {};
 
 /**
  * @route POST /api/users/login
- * @description Authenticates a user and returns a token.
- * @requestBody
+ * @description Authenticates a user and returns a token
+ *   - Can be used to verify a user outside of login process
+ * @param {Object} req - The request object
  *   - username: String
  *   - password: String
+ * @param {Object} res - The response object
  * @returns {Object} - JSON with username, token, and userId
  */
 userController.verifyUser = async (req, res) => {
@@ -66,10 +69,11 @@ userController.verifyUser = async (req, res) => {
 
 /**
  * @route POST /api/users/logout
- * @description Logs a user out by removing the provided refresh token from the database.
- * @requestBody
+ * @description Logs a user out by removing the provided refresh token from the database
+ * @param {Object} req - The request object
  *   - refreshToken: String
- * @returns {Number} - Status 204 on success
+ * @param {Object} res - The response object
+ * @returns {Number} - Status 204 on success.
  */
 // TODO: This appears to be working but the logout method in the User schema is a dupe
 userController.logoutUser = async (req, res) => {
@@ -99,10 +103,11 @@ userController.logoutUser = async (req, res) => {
 /**
  * @route POST /api/users/signup
  * @description Creates a new user in the database.
- * @requestBody
+ * @param {Object} req - The request object
  *   - username: String
  *   - email: String
  *   - password: String
+ * @param {Object} res - The response object
  * @returns {Object} - JSON with username, userId, and token
  */
 userController.createUser = async (req, res) => {

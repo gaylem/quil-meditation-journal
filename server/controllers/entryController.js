@@ -1,11 +1,20 @@
+//** ENTRY CONTROLLER */
+
+/* Includes: 
+    1. getAllEntries (GET /users) - Retrieves all entries for a user
+    2. logoutUser (POST /logout) - Logs a user out by removing the provided refresh token from the database
+    3. createUser (POST /signup) - Creates a new user in the database
+*/
+
+// Imports
 const { Entry } = require('../db/models');
 const entryController = {};
 
 /**
- * Retrieves all entries for a user.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} - JSON response containing all entries for the user or an error response.
+ * @route GET /api/entries
+ * @description Retrieves all entries for a user
+ * @param {Object} res - The response object (Array of objects)
+ * @returns {Object} - JSON response containing all entries for the user or an error response
  */
 entryController.getAllEntries = async (_, res) => {
   try {
@@ -35,9 +44,12 @@ entryController.getAllEntries = async (_, res) => {
 };
 
 /**
- * Adds a new entry.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @route POST /api/entries/
+ * @description Adds a new entry to the database
+ * @param {Object} req - The request object
+ *  - body (content of meditation journal entry): String
+ *  - userId: Integer
+ * @param {Object} res - The response object
  * @returns {Object} - JSON response containing the new entry or an error response.
  */
 entryController.addEntry = async (req, res) => {
@@ -68,10 +80,12 @@ entryController.addEntry = async (req, res) => {
 };
 
 /**
- * Finds one entry by ID.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} - JSON response containing the found entry or an error response.
+ * @route GET /api/entries/:id
+ * @description Finds one entry by ID
+ * @param req.params _id of the entry to be found
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @returns {Object} - JSON response containing the found entry or an error response
  */
 // TODO: Find one entry by id (is this even needed?)
 entryController.findEntry = async (req, res) => {
@@ -98,10 +112,14 @@ entryController.findEntry = async (req, res) => {
 };
 
 /**
- * Updates an entry by ID.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} - JSON response containing the updated entry or an error response.
+ * @route PATCH /api/entries/:id
+ * @description Updates an entry by ID
+ * @param req.params _id of the entry to be updated
+ * @param {Object} req - The request object
+ *  - body (content of meditation journal entry): String
+ *  - userID: Integer
+ * @param {Object} res - The response object
+ * @returns {Object} - JSON response containing the updated entry or an error response
  */
 entryController.updateEntry = async (req, res) => {
   try {
@@ -132,10 +150,11 @@ entryController.updateEntry = async (req, res) => {
 };
 
 /**
- * Deletes an entry by ID.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} - JSON response containing the deleted entry or an error response.
+ * @route /api/entries/:id
+ * @description Deletes an entry by ID.
+ * @param req.params - _id of the entry to be deleted
+ * @param {Object} res - The response object
+ * @returns {Object} - JSON response containing the deleted entry or an error response
  */
 entryController.deleteEntry = async (req, res) => {
   try {

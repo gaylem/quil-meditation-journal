@@ -35,6 +35,7 @@ router.post('/logout', logoutUser);
  * @description Signup user
  * Expected Body:
  *   - username: String
+ *   - email: String
  *   - password: String
  */
 router.post('/signup', createUser);
