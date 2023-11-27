@@ -30,21 +30,23 @@ const createToken = obj => {
       throw Error('Secret keys are missing');
     }
     // Sign tokens using HS256 algorithm and set expiration
-    const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, { algorithm: 'HS256' });
-    const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, { algorithm: 'HS256' });
-    // TODO: Commenting out lines with expirations to see if that fixes my issues
-    // const accessTokenOptions = {
-    //   algorithm: 'HS256',
-    //   expiresIn: '15m',
-    // };
 
-    // const refreshTokenOptions = {
-    //   algorithm: 'HS256',
-    //   expiresIn: '7d',
-    // };
+    // // TODO: Commenting out lines with expirations to see if that fixes my issues
+    // const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, { algorithm: 'HS256' });
+    // const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, { algorithm: 'HS256' });
 
-    // const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, accessTokenOptions);
-    // const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, refreshTokenOptions);
+    const accessTokenOptions = {
+      algorithm: 'HS256',
+      expiresIn: '15m',
+    };
+
+    const refreshTokenOptions = {
+      algorithm: 'HS256',
+      expiresIn: '24h',
+    };
+
+    const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, accessTokenOptions);
+    const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, refreshTokenOptions);
 
     // Return tokens
     return { accessToken, refreshToken };
