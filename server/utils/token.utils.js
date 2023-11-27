@@ -1,10 +1,8 @@
-//** AUTHENTICATION CONTROLLER */
+//** JWT TOKEN UTILITY FUNCTIONS */
 
 /* Includes: 
-    1. verifyUser (POST /api/users/login) - Authenticates a user and returns a token. 
-        - Can be used to verify a user outside of login process.
-    2. logoutUser (POST /api/users/logout) - Logs a user out by removing the provided refresh token from the database.
-    3. createUser (POST /api/users/signup) - Creates a new user in the database.
+    1. verifyAccessTokens - Middleware to verify the access token in the request headers.
+    2. refreshTokens - Refreshes access tokens.
 */
 
 // Import required modules
@@ -12,16 +10,14 @@ require('dotenv').config();
 const { User } = require('../db/models');
 const jwt = require('jsonwebtoken');
 
-// authController object that contains the methods below
-const authController = {};
-
 /**
- * Middleware to verify the access token in the request headers.
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
+ * @description Middleware to verify the access token in the request headers.
+ * @param {Object} req - The request body that contains:
+ *  - accessToken: String
+ * @param {Object} res - The response object
  * @param {Function} next - Express next function
  */
-authController.verifyAccessToken = (req, res, next) => {
+const verifyAccessToken = (req, res, next) => {
   // Store access token in a variables
   const accessToken = req.headers.authorization?.split(' ')[1];
   console.log('req.headers.authorization', req.headers.authorization);
@@ -53,14 +49,13 @@ authController.verifyAccessToken = (req, res, next) => {
 };
 
 /**
- * @route POST /api/users/token
  * @description Refreshes access tokens.
- * Expected Body:
+ * @param {Object} req - The request body that contains:
  *   - refreshToken: String
  * @returns {Object} - JSON with new accessToken and refreshToken
  */
 // TODO: Refresh tokens are null -- where am I calling the /token route?
-authController.refreshTokens = async (req, res) => {
+const refreshTokens = async (req, res) => {
   // Extract the refreshToken from the request body
   const { refreshToken } = req.body;
   try {
@@ -91,4 +86,4 @@ authController.refreshTokens = async (req, res) => {
   }
 };
 
-module.exports = authController;
+module.exports = { verifyAccessToken, refreshTokens };
