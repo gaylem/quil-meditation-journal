@@ -12,7 +12,6 @@
 const express = require('express');
 const router = express.Router();
 const { updateAccount, deleteAccount } = require('../controllers/accountController');
-const { verifyAccessToken } = require('../utils/token.utils');
 
 /**
  * @route PUT /api/users/update/:userId
@@ -20,8 +19,7 @@ const { verifyAccessToken } = require('../utils/token.utils');
  * @param userId
  * @access Private (requires access token)
  */
-// TODO: Make sure this works with verifyAccessToken
-router.put('/update/:userId', verifyAccessToken, updateAccount);
+router.put('/update/:userId', updateAccount);
 
 /**
  * @route DELETE /api/users/delete/:userId
@@ -29,7 +27,6 @@ router.put('/update/:userId', verifyAccessToken, updateAccount);
  * @param userId
  * @access Private (requires access token)
  */
-// TODO: Make sure this works with verifyAccessToken
-router.delete('/delete/:userId', verifyAccessToken, deleteAccount);
+router.delete('/delete/:userId', deleteAccount);
 
 module.exports = router;
