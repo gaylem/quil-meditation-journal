@@ -47,7 +47,7 @@ const PastEntry = ({ entry }) => {
   const fetchEntries = async () => {
     try {
       // Fetch updated entries from the server
-      const updatedResponse = await axios.get(`/api/entries`, {
+      const updatedResponse = await axios.get(`/api/entries/${user.userId}`, {
         headers: {
           Authorization: `Bearer ${user.token.accessToken}`,
         },
