@@ -9,13 +9,12 @@
     4. Delete user
 */
 
-// Load environment variables .env file
+// Imports
 require('dotenv').config();
-
-// Import required modules
 const { User } = require('../db/models');
 const bcrypt = require('bcryptjs');
 
+// accountController object that contains the methods below
 const accountController = {};
 
 /** // TODO: Split into three controllers for username, email, password changes from account page
@@ -27,7 +26,7 @@ const accountController = {};
  *   - password: String
  * @returns {Object} - JSON with updated user information
  */
-accountController.updateUser = async (req, res, next) => {
+accountController.updateAccount = async (req, res, next) => {
   try {
     // Extract the userId, username, and password from params and body
     const { userId } = req.params;
@@ -57,7 +56,7 @@ accountController.updateUser = async (req, res, next) => {
   }
 };
 
-/** // TODO: Won't be used until account page is built
+/** 
  * @route DELETE /api/users/delete/:userId
  * @description Deletes a user from the database.
  * Expected Parameters:
