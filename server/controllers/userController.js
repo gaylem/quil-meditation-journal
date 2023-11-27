@@ -67,7 +67,7 @@ userController.verifyUser = async (req, res) => {
  *   - refreshToken: String
  * @returns {Number} - Status 204 on success
  */
-// TODO: This appears to be working but the login method in the User schema is a dupe
+// TODO: This appears to be working but the logout method in the User schema is a dupe
 userController.logoutUser = async (req, res) => {
   // Extract refreshToken from the request body
   const { refreshToken } = req.body;
