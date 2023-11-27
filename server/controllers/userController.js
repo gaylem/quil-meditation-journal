@@ -45,7 +45,7 @@ userController.verifyUser = async (req, res) => {
     // Create token by calling the createToken method on the userSchema object
     const token = User.createToken(obj);
     // Add token to accessTokens array in user document in database
-    const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.accessToken } }, { new: true });
+    const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.refreshToken } }, { new: true });
     // Handle error if updated user not returned
     if (!updatedUser) {
       return res.status(404).json({
