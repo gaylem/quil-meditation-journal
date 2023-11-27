@@ -18,9 +18,6 @@ app.use((req, _, next) => {
   next();
 });
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Import Routes
 const entryRouter = require('./routers/entryRouter');
 const userRouter = require('./routers/userRouter');
@@ -28,6 +25,18 @@ const userRouter = require('./routers/userRouter');
 // Define routes for entries and users
 app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Handle requests to any route by serving the appropriate 'index.html' file
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'), function (err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
 
 // Catch-all route handler for unknown routes
 app.use((_, res) => res.status(404).send("This is not the page you're looking for..."));
