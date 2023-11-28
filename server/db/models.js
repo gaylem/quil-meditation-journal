@@ -1,7 +1,6 @@
 // Imports 
 require('dotenv').config();
 const mongoose = require('mongoose');
-const { createToken, signup, login, logout } = require('../utils/user.methods');
 
 // Connect to MongoDB database
 async function connectToDatabase() {
@@ -43,12 +42,6 @@ const userSchema = new Schema(
   },
   { timestamps: true }, // Automatically generate "createdAt" and "updatedAt" timestamps
 );
-
-// Attatch token.utils.js methods to User object
-userSchema.statics.createToken = createToken;
-userSchema.statics.signup = signup;
-userSchema.statics.login = login;
-userSchema.statics.logout = logout;
 
 // Exports
 module.exports = {
