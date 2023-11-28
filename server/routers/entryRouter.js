@@ -1,31 +1,45 @@
 const express = require('express');
-const entryController = require('../controllers/entryController');
-const userController = require('../controllers/userController');
 const router = express.Router();
 
-// Route for getting all entries data
-router.get('/', userController.verifyAccessToken, entryController.getAllEntries, (req, res) => {
-  return res.status(200).json(res.locals.allEntries);
-});
+// Entry controllers
+const { getAllEntries, addEntry, findEntry, updateEntry, deleteEntry } = require('../controllers/entryController');
 
-// Route for getting specific entries data
-router.get('/:id', (req, res) => {
-  return res.status(200).json(res.locals.entry);
-});
+/**
+ * @route GET /entries
+ * @description Get all entries for a specific user
+ * @param req.params userId: String
+ */
+router.get('/:id', getAllEntries);
 
-// Route for deleting specific entries
-router.delete('/:id', entryController.deleteEntry, (req, res) => {
-  return res.status(200).json(res.locals.deleteEntry);
-});
+// TODO: findEntry might not be needed
+/**
+ * @route GET /entries/:id
+ * @description Get a specific entry by ID
+ * @param req.params entry ID: String
+ */
+router.get('/:id', findEntry);
 
-// Route for creating new entries
-router.post('/', entryController.addEntry, (req, res) => {
-  return res.status(201).json(res.locals.newEntry);
-});
+/**
+ * @route DELETE /entries/:id
+ * @description Delete a specific entry by ID
+ * @param req.params entry ID: String
+ */
+router.delete('/:id', deleteEntry);
 
-// Route for updating specific entries
-router.patch('/:id', entryController.updateEntry, (req, res) => {
-  return res.status(200).json(res.locals.updatedEntry);
-});
+/**
+ * @route POST /entries
+ * @description Create a new entry
+ * @param {Object} req - The requst object containing:
+ *  - body: String
+ *  - userId: String
+ */
+router.post('/', addEntry);
+
+/**
+ * @route PATCH /entries/:id
+ * @description Update a specific entry by ID
+ * @param req.params entry ID: String
+ */
+router.patch('/:id', updateEntry);
 
 module.exports = router;

@@ -1,0 +1,48 @@
+/* Variable and mixin for drop shadow */
+$shadow-color: rgb(172, 172, 172);
+
+@mixin box-shadow($offset-x, $offset-y, $blur, $color) {
+  box-shadow: $offset-x $offset-y $blur $color;
+}
+
+/* Sidebar Container Styles */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: -50em;
+  height: 100vh;
+  width: 8em;
+  background-color: white;
+  border: 0.5px solid lightgray;
+  color: #1c1c1c;
+  z-index: 98; /* Set z-index higher than the main content */
+  transition: left 0.3s ease-in-out;
+  @include box-shadow(0, 2px, 8px, $shadow-color);
+}
+
+.sidebarContent {
+  padding: 1.5em;
+}
+
+/* Opened Sidebar Styles */
+.sidebar.open {
+  display: flex;
+  flex-direction: column;
+  left: 0;
+}
+
+/* Styling for close button icon */
+.closeBtn {
+  align-self: flex-end; /* Position the close button to the right */
+  padding: 0.5em;
+}
+
+/* Expand width of sidebar on mobile devices to take up entire screen */
+@media (max-width: 400px) {
+  .sidebar {
+    width: 100%;
+    left: -100%;
+  }
+}

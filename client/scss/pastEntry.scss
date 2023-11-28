@@ -11,6 +11,7 @@ $shadow-color: rgb(172, 172, 172);
   font-size: $font-size;
 }
 
+/* Container for each past entry */
 .PastEntry {
   margin: 1em;
   font-family: Helvetica, sans-serif;
@@ -23,7 +24,8 @@ $shadow-color: rgb(172, 172, 172);
   }
 }
 
-.buttonHeaderPast {
+/* The title of each past entry that toggles open and closed */
+.pastEntryTitle {
   display: flex;
   align-items: center;
   margin: 0.5em;
@@ -38,13 +40,7 @@ $shadow-color: rgb(172, 172, 172);
   }
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 1em;
-}
-
+/* The container that holds the entry content and delete/edit buttons  */
 .toggle-container {
   display: flex;
   flex-direction: column;
@@ -57,39 +53,43 @@ form {
     word-break: break-word;
     white-space: pre-wrap;
   }
+
+  /* Styles common to both delete and edit buttons */
   .pastEntryButtons {
     display: flex;
     justify-content: flex-end;
     width: 100%;
     margin-top: 0.5em;
   }
-}
 
-.delete {
-  @include input-styles;
-  border: 1px solid $secondary-color;
-  background-color: $tertiary-color;
-  color: $secondary-color;
-}
+  /* Delete button styles */
+  .delete {
+    @include input-styles;
+    border: 1px solid $secondary-color;
+    background-color: $tertiary-color;
+    color: $secondary-color;
+  }
 
-.delete:hover {
-  background-color: $primary-color;
-  color: $tertiary-color;
-  border: 1px solid $primary-color;
-  opacity: 50%;
-  cursor: pointer;
-}
+  .delete:hover {
+    background-color: $primary-color;
+    color: $tertiary-color;
+    border: 1px solid $primary-color;
+    opacity: 50%;
+    cursor: pointer;
+  }
 
-.edit {
-  @include input-styles;
-  border: 1px solid $secondary-color;
-  background-color: $secondary-color;
-  color: $tertiary-color;
-}
+  /* Edit button styles */
+  .edit {
+    @include input-styles;
+    border: 1px solid $secondary-color;
+    background-color: $secondary-color;
+    color: $tertiary-color;
+  }
 
-.edit:hover {
-  background-color: $primary-color;
-  color: $tertiary-color;
-  border: 1px solid $primary-color;
-  cursor: pointer;
+  .edit:hover {
+    background-color: $primary-color;
+    color: $tertiary-color;
+    border: 1px solid $primary-color;
+    cursor: pointer;
+  }
 }

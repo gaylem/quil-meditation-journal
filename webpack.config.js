@@ -1,5 +1,6 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -7,6 +8,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
 
   module: {
@@ -49,13 +51,16 @@ module.exports = {
       '/api': 'http://localhost:4000/',
       '/assets': 'http://localhost:4000/',
     },
+    historyApiFallback: true,
   },
 
   devtool: 'eval-source-map',
 
   plugins: [
     new HTMLWebpackPlugin({
-      template: './index.html',
+      template: path.resolve(__dirname, 'index.html'),
+      publicPath: '/',
     }),
+    new Dotenv(),
   ],
 };

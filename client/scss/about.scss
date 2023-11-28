@@ -1,0 +1,81 @@
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
+$shadow-color: rgb(172, 172, 172);
+
+.aboutContainer {
+  display: flex;
+  margin: 6em 0 6em 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.aboutContent {
+  padding-top: 3em;
+  max-width: 50%;
+  font-family: Helvetica, sans-serif;
+  font-size: large;
+  line-height: 2em;
+  color: rgb(46, 46, 46);
+  @media (max-width: 1300px) {
+    max-width: 70%;
+  }
+  @media (max-width: 500px) {
+    max-width: 90%;
+  }
+  h2 {
+    font-family: Pacifico, sans-serif;
+    font-size: xx-large;
+    padding: 1em 0 1em 0;
+    color: $secondary-color;
+    text-shadow: 1px 1px 5px lightgray;
+  }
+  .purple {
+    color: $primary-color;
+    font-weight: bold;
+  }
+}
+
+.contactFormContainer {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+
+  form {
+    width: 80%;
+    max-width: 400px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px $shadow-color;
+
+    .name,
+    .email,
+    .message {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      font-family: Helvetica, sans-serif;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      background-color: $primary-color;
+      color: #fff; /* White text color */
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}

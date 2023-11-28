@@ -1,60 +1,41 @@
+//** USER ROUTER */
+
+/* Includes: 
+    1. POST /api/users/login => verifyUser controller
+    2. POST /api/users/logout => logoutUser controller
+    3. POST /api/users/signup => createUser controller
+*/
+
 const express = require('express');
 const router = express.Router();
-const { verifyUser, refreshTokens, logoutUser, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { loginUser, logoutUser, signupUser } = require('../controllers/userController');
 
 /**
- * Login user
- *
- * @param {Object} req.body
- * @param {String} req.body.username
- * @param {String} req.body.password
- *
+ * @route POST /api/users/login
+ * @description Login user and generate access tokens
+ * @access Private (requires username and password)
+ * @param {Object} req - The request object containing:
+ *   - req.body.username: String
+ *   - req.body.password: String
  */
-//
-router.post('/login', verifyUser);
+router.post('/login', loginUser);
 
 /**
- * Logout user
- *
- * @param {String} refreshTokens
- *
+ * @route POST /api/users/logout
+ * @description Logout user and remove refresh token
+ * @param {Object} req - The request object containing:
+ *   - refreshToken: String
  */
-//
-router.post('/token', refreshTokens);
-
-/**
- * Logout user
- *
- * @param {String} refreshToken
- *
- */
-//
 router.post('/logout', logoutUser);
 
 /**
- * Signup user
- *
- * @param {Object} req.body
- * @param {String} req.body.username
- * @param {String} req.body.password
- *
+ * @route POST /api/users/signup
+ * @description Signup user (creates access token)
+ * @param {Object} req - The request object containing:
+ *   - username: String
+ *   - email: String
+ *   - password: String
  */
-router.post('/signup', createUser);
-
-/**
- * Update user
- *
- * @param {Int} req.params.userId
- *
- */
-router.put('/update/:userId', updateUser);
-
-/**
- * Delete user
- *
- * @param {Int} req.params.userId
- *
- */
-router.delete('/delete/:userId', deleteUser);
+router.post('/signup', signupUser);
 
 module.exports = router;

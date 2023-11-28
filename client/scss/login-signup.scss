@@ -2,20 +2,17 @@ $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
 
-.login-signup {
+/* Container for login and signup page components */
+.loginSignupContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1em;
+  padding: 8em 1em 1em 1em;
   font-family: Helvetica, sans-serif;
 }
 
-.title {
-  font-size: larger;
-  padding-bottom: 1em;
-}
-
+/* Box that contains the login and signup form */
 .box {
   border: 1px solid lightgray;
   justify-content: center;
@@ -23,37 +20,50 @@ $shadow-color: rgb(172, 172, 172);
   min-width: 20em;
   min-height: 18em;
   border-radius: 0.3em;
+
+  /* Welcome Back / Tranquility Awaits... */
+  .title {
+    font-size: larger;
+    padding-bottom: 1em;
+  }
+
+  /* Main form */
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    input {
+      max-width: 90%;
+      min-width: 90%;
+      font-size: medium;
+      margin: 0.2em;
+      padding: 0.2em;
+      border: 1px solid darkgray;
+      border-radius: 3px;
+    }
+  }
+
+  /* Submit button*/
+  .loginSignupBtn {
+    margin: 0.2em;
+    width: 94%;
+    font-size: medium;
+    background-color: $primary-color;
+    color: white;
+    padding: 0.4em;
+    border-radius: 3px;
+    border: 0px;
+  }
+
+  /* Already have account? Sign in! */
+  /* Don't have an account? Sign up! */
   p {
     padding-top: 1em;
   }
 }
 
-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  input {
-    max-width: 90%;
-    min-width: 90%;
-    font-size: medium;
-    margin: 0.2em;
-    padding: 0.2em;
-    border: 1px solid darkgray;
-    border-radius: 3px;
-  }
-}
-
-.login-signup-btn {
-  margin: 0.2em;
-  width: 94%;
-  font-size: medium;
-  background-color: $primary-color;
-  color: white;
-  padding: 0.4em;
-  border-radius: 3px;
-  border: 0px;
-}
-
+/* About copy on right-hand side of login/signup form */
 .about {
   color: rgb(42, 42, 42);
   max-width: 20em;
