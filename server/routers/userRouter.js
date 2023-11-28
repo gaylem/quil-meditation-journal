@@ -8,7 +8,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { verifyUser, logoutUser, createUser } = require('../controllers/userController');
+const { loginUser, logoutUser, signupUser } = require('../controllers/userController');
 
 /**
  * @route POST /api/users/login
@@ -18,7 +18,7 @@ const { verifyUser, logoutUser, createUser } = require('../controllers/userContr
  *   - req.body.username: String
  *   - req.body.password: String
  */
-router.post('/login', verifyUser);
+router.post('/login', loginUser);
 
 /**
  * @route POST /api/users/logout
@@ -36,6 +36,6 @@ router.post('/logout', logoutUser);
  *   - email: String
  *   - password: String
  */
-router.post('/signup', createUser);
+router.post('/signup', signupUser);
 
 module.exports = router;
