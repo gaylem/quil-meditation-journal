@@ -53,7 +53,7 @@ const About = () => {
         <br />
         <h2>Contact Us!</h2>
         <div className='contactFormContainer'>
-          <form action='https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a' method='POST' className='form'>
+          <form action={process.env.REACT_APP_FORM_ENDPOINT} method='POST' className='form'>
             <input type='text' name='name' placeholder='Name' className='name' />
             <input type='hidden' name='_gotcha' style={{ display: 'none !important' }} />
             <input type='text' name='email' placeholder='Email' className='email' />
