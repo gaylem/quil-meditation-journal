@@ -1,47 +1,77 @@
-//** JWT TOKEN UTILITY FUNCTIONS */
-
-/* Includes: 
-    1. verifyAccessTokens - Middleware to verify the access token in the request headers.
-    2. refreshTokens - Refreshes access tokens.
-*/
-
 // Import required modules
 require('dotenv').config();
 const { User } = require('../db/models');
 const jwt = require('jsonwebtoken');
 
 /**
+ * @description Create access and refresh tokens using the provided object.
+ * @param {Object} obj - The object to be used for token creation.
+ * @returns {Object} - An object containing access and refresh tokens.
+ * @throws {Error} - Throws an error if input is not an object or secret keys are missing.
+ */
+const createTokens = obj => {
+  try {
+    // Validate input
+    if (typeof obj !== 'object') {
+      throw new Error('Input must be an object');
+    }
+    // Check for secret keys
+    if (!process.env.ACCESS_SECRET || !process.env.REFRESH_SECRET) {
+      throw Error('Secret keys are missing');
+    }
+    // Sign tokens using HS256 algorithm and set expiration
+    const accessTokenOptions = {
+      algorithm: 'HS256',
+      expiresIn: '15m',
+    };
+
+    const refreshTokenOptions = {
+      algorithm: 'HS256',
+      expiresIn: '24h',
+    };
+
+    const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, accessTokenOptions);
+    const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, refreshTokenOptions);
+
+    // Return tokens
+    return { accessToken, refreshToken };
+  } catch (error) {
+    console.error('Error creating token:', error);
+    throw Error('Failed to create token');
+  }
+};
+
+/**
  * @description Middleware to verify the access token in the request headers.
- * @param {Object} req - The request body that contains:
- *  - accessToken: String
+ * @param {Object} req - The request object
  * @param {Object} res - The response object
  * @param {Function} next - Express next function
  */
-const verifyAccessToken = (req, res, next) => {
-  // Store access token in a variables
+const authenticateToken = async (req, res, next) => {
   const accessToken = req.headers.authorization?.split(' ')[1];
-  console.log('req.headers.authorization', req.headers.authorization);
-  console.log('accessToken', accessToken);
-  // If there is no access token, throw an error
+
   if (!accessToken) {
     return res.status(401).json({
-      log: 'entryController.verifyAccessToken: No access token received.',
+      log: 'authenticateToken: No access token received.',
       status: 404,
       message: 'Something went wrong. Please try again later.',
     });
   }
-
   try {
-    // Decode the access token
     const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET, { algorithms: ['HS256'] });
-    console.log('decoded: ', decoded);
-    // Store the decoded result in the locals object
-    res.locals.decoded = decoded;
-    // Send result to the frontend
-    next();
+
+    if (decoded.exp - Date.now() / 1000 < 60 * 5) {
+      const response = await refreshToken(req.body.refreshToken);
+      req.headers.authorization = `Bearer ${response.accessToken}`;
+      res.locals.decoded = jwt.verify(response.accessToken, process.env.ACCESS_SECRET, { algorithms: ['HS256'] });
+      return next();
+    } else {
+      res.locals.decoded = decoded;
+      return res.status(200).json(res.locals.decoded);
+    }
   } catch (error) {
     return res.status(403).json({
-      log: 'userController.verifyAccessToken: Invalid access token',
+      log: 'authenticateToken: Invalid access token',
       status: 403,
       message: 'Something went wrong. Please try again later.',
     });
@@ -50,40 +80,27 @@ const verifyAccessToken = (req, res, next) => {
 
 /**
  * @description Refreshes access tokens.
- * @param {Object} req - The request body that contains:
- *   - refreshToken: String
+ * @param {String} refreshToken - The refresh token
  * @returns {Object} - JSON with new accessToken and refreshToken
  */
-// TODO: Refresh tokens are null -- where am I calling the /token route?
-const refreshTokens = async (req, res) => {
-  // Extract the refreshToken from the request body
-  const { refreshToken } = req.body;
+const refreshToken = async refreshToken => {
   try {
     if (!process.env.REFRESH_SECRET) {
       throw Error('Refresh secret key is missing');
     }
-    // Verify the refresh token
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
-    // Logging temporarily to confirm if this is the right keyword
-    console.log('this from refreshTokens: ', this);
-    // Check if the refresh token is in the stored tokens
-    if (!this.refreshTokens.includes(refreshToken)) {
-      throw Error('Invalid refresh token');
-    }
-    // Call createToken to generate a new set of tokens
-    const newTokenData = { _id: decoded._id };
-    const { accessToken, refreshToken: newRefreshToken } = User.createToken(newTokenData);
-    // Update the user's refreshTokens array with the new refresh token
+    // Add your logic to check if the refresh token is valid and stored
+
+    const { accessToken, refreshToken: newRefreshToken } = createTokens(decoded); // Generate new tokens
     await User.findOneAndUpdate({ _id: decoded._id }, { $push: { refreshTokens: newRefreshToken } }, { new: true });
-    // Return the accessToken and the newRefreshToken
-    return res.status(200).json({ accessToken, refreshToken: newRefreshToken });
+    return { accessToken, refreshToken: newRefreshToken };
   } catch (error) {
-    return res.status(500).json({
+    return {
       log: `userController.refreshTokens: ERROR ${error}`,
       status: 500,
       message: 'Something went wrong. Please try again later.',
-    });
+    };
   }
 };
 
-module.exports = { verifyAccessToken, refreshTokens };
+module.exports = { createTokens, authenticateToken, refreshToken };
