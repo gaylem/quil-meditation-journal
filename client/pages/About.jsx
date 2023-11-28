@@ -11,14 +11,14 @@ const About = () => {
           <span className='purple'>quil</span> is your distraction-free space for chronicling your meditation journey.
         </p>
         <br />
-        <p>Sure, you could use any other digital note taking app instead, but the last thing you need when you&apos;re about to meditate is to glance at your to do list.</p>
+        <p>Sure, you could use any other digital note-taking app instead, but the last thing you need when you&apos;re about to meditate is to glance at your to do list.</p>
         <br />
         <p>
           That&apos;s also why quil also steers clear of social sharing features and alerts. We know that true success in meditation lies in your ability to <span className='purple'>dedicate time and space</span> to your practice.
         </p>
         <br />
         <p>
-          And with quil, your meditation journal is with you wherever you go, right on your phone or tablet. No need to remember to grab a notebook — you <span className='purple'>capture and reflect on your mindfulness moments at any time.</span>
+          And with quil, your meditation journal is with you wherever you go, right on your phone or tablet. No need to remember to grab a notebook — you can <span className='purple'>capture and reflect on your mindfulness moments at any time.</span>
         </p>
         <br />
         <h2>Safe & Secure</h2>
@@ -53,7 +53,7 @@ const About = () => {
         <br />
         <h2>Contact Us!</h2>
         <div className='contactFormContainer'>
-          <form action='https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a' method='POST' className='form'>
+          <form action={process.env.REACT_APP_FORM_ENDPOINT} method='POST' className='form'>
             <input type='text' name='name' placeholder='Name' className='name' />
             <input type='hidden' name='_gotcha' style={{ display: 'none !important' }} />
             <input type='text' name='email' placeholder='Email' className='email' />
