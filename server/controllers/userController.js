@@ -1,31 +1,64 @@
-// Load environment variables .env file
-require('dotenv').config();
+//** USER CONTROLLER */
 
-// Import required modules
+/* Includes: 
+    1. loginUser (POST /api/users/login) - Authenticates a user and returns a token. 
+        - Can be used to verify a user outside of login process.
+    2. logoutUser (POST /api/users/logout) - Logs a user out by removing the provided refresh token from the database.
+    3. signupUser (POST /api/users/signup) - Creates a new user in the database.
+*/
+
+// Imports
+require('dotenv').config();
 const { User } = require('../db/models');
+const { createTokens } = require('../utils/token.utils');
 const bcrypt = require('bcryptjs');
+const validator = require('validator');
 
 // userController object that contains the methods below
 const userController = {};
 
 /**
  * @route POST /api/users/login
- * @description Authenticates a user and returns a token.
- * Expected Body:
+ * @description Authenticates a user and returns a token
+ *   - Can be used to verify a user outside of login process
+ * @param {Object} req - The request object containing:
  *   - username: String
  *   - password: String
+ * @param {Object} res - The response object
  * @returns {Object} - JSON with username, token, and userId
  */
-userController.verifyUser = async (req, res) => {
+/**
+ * @description Log in a user with the provided username and password.
+ * @param {String} username - User's username.
+ * @param {String} password - User's password.
+ * @returns {Object} - The user object.
+ * @throws {Error} - Throws an error if fields are missing, username is incorrect, or password is incorrect.
+ */
+userController.loginUser = async (req, res) => {
   // Extract username and password from request body
   const { username, password } = req.body;
   try {
-    // Call login method on the userSchema object and store response in a variable
-    const user = await User.login(username, password);
-    // Handle error if user not found
+    // Validate input
+    if (!username || !password) {
+      throw new Error('All fields must be filled');
+    }
+    // Find user by username
+    const user = await User.findOne({ username });
+    // Throw error if username is incorrect
     if (!user) {
       return res.status(404).json({
-        log: 'userController.verifyUser: No user found',
+        log: 'userController.loginUser: No user found',
+        status: 404,
+        message: 'Username or password are incorrect.',
+      });
+    }
+    // Compare passwords
+    const match = await bcrypt.compare(password, user.password);
+
+    // Throw error if password is incorrect
+    if (!match) {
+      return res.status(404).json({
+        log: 'userController.loginUser: Incorrect password',
         status: 404,
         message: 'Username or password are incorrect.',
       });
@@ -36,24 +69,29 @@ userController.verifyUser = async (req, res) => {
       username: user.username,
     };
     // Create token by calling the createToken method on the userSchema object
-    const token = User.createToken(obj);
-    // Add token to accessTokens array in user document in database
-    const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.accessToken } }, { new: true });
+    const token = createTokens(obj);
+    // Set HttpOnly Cookies
+    res.cookie('accessToken', token.accessToken, { httpOnly: true });
+    res.cookie('refreshToken', token.refreshToken, { httpOnly: true });
+    // Add token to accessTokens array in user document in the database
+    const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.refreshToken } }, { new: true });
+    console.log('updatedUser: ', updatedUser);
     // Handle error if updated user not returned
     if (!updatedUser) {
       return res.status(404).json({
-        log: 'userController.verifyUser: Issue with updatedUser',
+        log: 'userController.loginUser: Issue with updatedUser',
         status: 404,
         message: 'Username or password are incorrect.',
       });
     }
-    // store updatedUser's id in a variable
+    // Store updatedUser's id in a variable
     const userId = updatedUser._id;
     // Send the username, token, and userId to the frontend for authentication state management
     return res.status(200).json({ username, token, userId });
   } catch (error) {
+    console.error('Login error:', error);
     return res.status(500).json({
-      log: `userController.verifyUser: ERROR ${error}`,
+      log: `userController.loginUser: ERROR ${error}`,
       status: 500,
       message: 'Something went wrong. Please try again later.',
     });
@@ -61,16 +99,16 @@ userController.verifyUser = async (req, res) => {
 };
 
 /**
- * @route POST /api/users/logout
- * @description Logs a user out by removing the provided refresh token.
- * Expected Body:
- *   - refreshToken: String
- * @returns {Number} - Status 204 on success
+ * @description Log in a user with the provided username and password.
+ * @param {String} username - User's username.
+ * @param {String} password - User's password.
+ * @returns {Object} - The user object.
+ * @throws {Error} - Throws an error if fields are missing, username is incorrect, or password is incorrect.
  */
-// TODO: This appears to be working but the login method in the User schema is a dupe
 userController.logoutUser = async (req, res) => {
   // Extract refreshToken from the request body
   const { refreshToken } = req.body;
+  console.log('refreshToken userController.logoutUser: ', refreshToken);
   // Log error if no refresh token
   if (!refreshToken) {
     console.error('No refreshToken: ', refreshToken);
@@ -93,109 +131,65 @@ userController.logoutUser = async (req, res) => {
 };
 
 /**
- * @route POST /api/users/signup
- * @description Creates a new user account.
- * Expected Body:
- *   - username: String
- *   - email: String
- *   - password: String
- * @returns {Object} - JSON with username, userId, and token
+ * @description Sign up a new user with the provided username, email, and password.
+ * @param {String} username - User's username.
+ * @param {String} email - User's email address.
+ * @param {String} password - User's password.
+ * @returns {Object} - An object containing the user's ID and username.
+ * @throws {Error} - Throws an error if fields are missing, email is invalid, password is not strong, or email is already in use.
  */
-userController.createUser = async (req, res) => {
+userController.signupUser = async (req, res) => {
   // Extract the username, email, and password
   const { username, email, password } = req.body;
+  console.log('req.body: ', req.body);
   try {
-    // Sign up a new user with the provided information
-    const user = await User.signup(username, email, password);
-    // Store the userId in a new variable and on the locals object
-    if (!user) {
-      return res.status(404).json({
-        log: 'userController.createUser: Issue creating user',
-        status: 404,
-        message: 'Something went wrong. Please try again later.',
-      });
+    // Validate input
+    if (!username || !email || !password) {
+      throw Error('All fields must be filled');
     }
-    const userId = user.id;
+    if (!validator.isEmail(email)) {
+      throw Error('Email not valid');
+    }
+    // Check if the password is strong enough
+    if (!validator.isStrongPassword(password)) {
+      throw Error('Password not strong enough');
+    }
+    // Check if email is already in use
+    const emailExists = await User.findOne({ email });
+    console.log('emailExists: ', emailExists);
+    if (emailExists) {
+      throw Error('Email already in use');
+    }
+    // Check if username is already in use
+    const usernameExists = await User.findOne({ username });
+    if (usernameExists) {
+      throw Error('Username already in use');
+    }
+    // Generate salt and hash for password
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    console.log('hash: ', hash);
+    // Create and save new user
+    const user = new User({ username, email, password: hash });
+    user.save();
+    // Extract userId and username from new user
+    const userId = user._id.toString();
+    // Store the userId in a new object for the createTokens function
+    const userObj = {
+      userId,
+      username: user.username,
+    };
+    // Store the userId in a new variable and on the locals object
     res.locals.userId = userId;
     // Create a token
-    const token = User.createToken(user);
+    const token = createTokens(userObj);
     // Return the username, userId, and token as an object
     return res.status(200).json({ username, userId, token });
   } catch (error) {
     return res.status(500).json({
-      log: `userController.createUser: ERROR ${error}`,
+      log: `userController.signupUser: ERROR ${error.message}`,
       status: 500,
       message: 'Something went wrong. Please try again later.',
-    });
-  }
-};
-
-/** // TODO: Split into three controllers for username, email, password changes from account page
- * @route PUT /api/users/update/:userId
- * @description Updates user information.
- * @param userId
- * Expected Body:
- *   - username: String
- *   - password: String
- * @returns {Object} - JSON with updated user information
- */
-userController.updateUser = async (req, res, next) => {
-  try {
-    // Extract the userId, username, and password from params and body
-    const { userId } = req.params;
-    const { username, password } = req.body;
-    // Encrypt the password before updating the user
-    const encryptedPassword = await bcrypt.hash(password, process.env.SALT_WORK_FACTOR);
-    // Update the user data
-    const result = await User.findOneAndUpdate({ _id: userId }, { $set: { username, password: encryptedPassword } });
-    // If nothing is returned, throw an error
-    if (result.matchedCount === 0) {
-      return next({
-        log: 'User not found.',
-        status: 404,
-        message: { error: 'User not found' },
-      });
-    }
-    res.locals.user = userId;
-    console.log('user updated');
-    return res.status(200).json(res.locals.user);
-  } catch (err) {
-    console.error('userController.updateUser Error:', err);
-    return next({
-      log: 'userController.updateUser Error',
-      message: { error: 'An error occurred' },
-      status: 500,
-    });
-  }
-};
-
- 
-/** // TODO: Won't be used until account page is built
- * @route DELETE /api/users/delete/:userId
- * @description Deletes a user from the database.
- * Expected Parameters:
- *   - userId: Integer
- * @returns {Number} - Status 204 on success
- */
-userController.deleteUser = async (req, res, next) => {
-  try {
-    const { userId } = req.params;
-    const userDeleteResult = await User.findOneAndDelete({ _id: userId });
-    res.locals.deletedUser = userDeleteResult;
-    if (userDeleteResult === null) {
-      return next({
-        log: 'User could not be deleted.',
-        status: 404,
-        message: { error: 'An error occurred' },
-      });
-    }
-    return res.status(200).json(res.locals.deletedUser);
-  } catch (err) {
-    console.error('userController.deleteUser Error:', err);
-    return next({
-      log: 'userController.deleteUser Error',
-      message: { error: 'An error occurred' },
-      status: 500,
     });
   }
 };

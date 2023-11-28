@@ -7,6 +7,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
 
   module: {
@@ -49,13 +50,15 @@ module.exports = {
       '/api': 'http://localhost:4000/',
       '/assets': 'http://localhost:4000/',
     },
+    historyApiFallback: true,
   },
 
   devtool: 'eval-source-map',
 
   plugins: [
     new HTMLWebpackPlugin({
-      template: './index.html',
+      template: path.resolve(__dirname, 'index.html'),
+      publicPath: '/',
     }),
   ],
 };

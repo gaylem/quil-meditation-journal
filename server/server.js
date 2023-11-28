@@ -6,11 +6,28 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const { refreshToken } = require('./utils/token.utils');
+
+const allowedOrigins = ['http://localhost:8080', 'https://quil.space'];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+  }),
+);
 
 // Middleware setup
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
-app.use(cors()); // Enable Cross-Origin Resource Sharing
+app.use(cookieParser());
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
@@ -18,16 +35,30 @@ app.use((req, _, next) => {
   next();
 });
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Import Routes
 const entryRouter = require('./routers/entryRouter');
 const userRouter = require('./routers/userRouter');
+const accountRouter = require('./routers/accountRouter');
 
 // Define routes for entries and users
 app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
+app.use('/api/accounts', accountRouter);
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Refresh tokens route
+app.post('/api/refresh', refreshToken);
+
+// Handle requests to any route by serving the appropriate 'index.html' file
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'), function (err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
 
 // Catch-all route handler for unknown routes
 app.use((_, res) => res.status(404).send("This is not the page you're looking for..."));
@@ -58,7 +89,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Log the current environment
-console.log('NODE_ENV: ', process.env.NODE_ENV);
+console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
 
 // Start the server
 app.listen(process.env.PORT, () => {

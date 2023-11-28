@@ -26,16 +26,16 @@ const PastEntriesFeed = () => {
 
   // Retrieve user information from useAuthContext
   const { user } = useAuthContext();
+  console.log('user: ', user);
 
   useEffect(() => {
     // Function to fetch past entries from the server
     const fetchEntries = async () => {
       try {
         // Make a GET request to the server to fetch past entries
-        const response = await axios.get('/api/entries', {
+        const response = await axios.get(`/api/entries/${user.userId}`, {
           headers: { Authorization: `Bearer ${user.token.accessToken}` },
         });
-
         // Sort the entries by createdAt date in descending order
         const sortedEntries = response.data.sort((a, b) => {
           const dateA = a.createdAt ? new Date(a.createdAt) : 0;

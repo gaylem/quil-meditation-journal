@@ -6,5 +6,8 @@ const instance = axios.create({
   baseURL: 'http://localhost:4000',
 });
 
+// Set withCredentials for the instance
+instance.defaults.withCredentials = true;
+
 // Export the configured instance for use in other parts of the application
 export default instance;
