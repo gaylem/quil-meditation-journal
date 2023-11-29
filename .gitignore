@@ -4,3 +4,6 @@ build
 bundle
 public
 .env
+coverage
+private-key-script.js
+.nyc_output

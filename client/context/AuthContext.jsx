@@ -53,7 +53,7 @@ export const authReducer = (state, action) => {
     case 'LOGOUT':
       return { user: null, accessToken: null, refreshToken: null };
     case 'REFRESH_TOKENS':
-      return { ...state, accessToken: action.payload.accessToken, refreshToken: action.payload.refreshToken };
+      return { ...state, accessToken: action.payload.accessToken};
     default:
       return state;
   }
@@ -72,7 +72,6 @@ export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
     accessToken: null,
-    refreshToken: null,
   });
 
   /**
@@ -80,6 +79,7 @@ export const AuthContextProvider = ({ children }) => {
    */
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
+    console.log('user: ', user);
     if (user) {
       dispatch({ type: 'LOGIN', payload: user });
     }
@@ -90,8 +90,8 @@ export const AuthContextProvider = ({ children }) => {
    * Log updated tokens whenever they change.
    */
   useEffect(() => {
-    console.log('Updated Tokens:', state.accessToken, state.refreshToken);
-  }, [state.accessToken, state.refreshToken]);
+    console.log('Updated Token:', state.accessToken);
+  }, [state.accessToken]);
 
   /**
    * Function to update tokens in the context.

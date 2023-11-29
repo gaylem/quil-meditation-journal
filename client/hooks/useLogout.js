@@ -9,7 +9,7 @@ import { useEntriesContext } from './useEntriesContext';
  */
 export const useLogout = () => {
   // Get the dispatch functions from the authentication and entries contexts
-  const { dispatch } = useAuthContext();
+  const { dispatch, user } = useAuthContext();
   const { dispatch: dispatchEntries } = useEntriesContext();
 
   /**
@@ -17,15 +17,16 @@ export const useLogout = () => {
    *
    * @param {string} refreshToken - User's refresh token for server-side logout.
    */
-  const logout = async refreshToken => {
+
+  const logout = async (userId) => {
     try {
       // Send a request to the server to logout and invalidate the refresh token
-      const response = await fetch('/api/users/logout', {
+      const response = await fetch(`/api/users/logout/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ refreshToken }),
+        body: JSON.stringify({user}),
       });
 
       // Check if the server responds with a successful logout status (204)

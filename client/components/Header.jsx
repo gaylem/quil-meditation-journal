@@ -26,9 +26,7 @@ function Header() {
 
   // handleClick function manages logout button clicks and refresh tokens in local storage.
   const handleClick = () => {
-    const refreshToken = localStorage.getItem('refreshToken');
-    console.log('refreshToken header: ', refreshToken);
-    logout(refreshToken);
+    logout(user.userId);
   };
 
   // State and function to manage sidebar open/closed behavior.

@@ -1,4 +1,4 @@
-//** ACCOUNT CONTROLLER */
+//** ACCOUNT ROUTER */
 
 //! None of these work right now and will need to be refactored when the account page is created
 

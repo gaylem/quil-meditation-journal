@@ -26,7 +26,7 @@ router.post('/login', loginUser);
  * @param {Object} req - The request object containing:
  *   - refreshToken: String
  */
-router.post('/logout', logoutUser);
+router.post('/logout/:id', logoutUser);
 
 /**
  * @route POST /api/users/signup
