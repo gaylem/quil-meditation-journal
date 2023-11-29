@@ -69,13 +69,19 @@ userController.loginUser = async (req, res) => {
       username: user.username,
     };
     // Create token by calling the createToken method on the userSchema object
-    const token = createTokens(obj);
+    const tokens = createTokens(obj);
+    // Store user data on locals
+    res.locals.user = {
+      userId: user._id,
+      username: user.username,
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+    };
     // Set HttpOnly Cookies
-    res.cookie('accessToken', token.accessToken, { httpOnly: true });
-    res.cookie('refreshToken', token.refreshToken, { httpOnly: true });
-    // Add token to accessTokens array in user document in the database
-    const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: token.refreshToken } }, { new: true });
-    console.log('updatedUser: ', updatedUser);
+    res.cookie('accessToken', tokens.accessToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
+    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
+    // Add token to refreshTokens array in user document in the database
+    const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: tokens.refreshToken } }, { new: true });
     // Handle error if updated user not returned
     if (!updatedUser) {
       return res.status(404).json({
@@ -87,7 +93,7 @@ userController.loginUser = async (req, res) => {
     // Store updatedUser's id in a variable
     const userId = updatedUser._id;
     // Send the username, token, and userId to the frontend for authentication state management
-    return res.status(200).json({ username, token, userId });
+    return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
     console.error('Login error:', error);
     return res.status(500).json({
@@ -99,27 +105,26 @@ userController.loginUser = async (req, res) => {
 };
 
 /**
- * @description Log in a user with the provided username and password.
- * @param {String} username - User's username.
- * @param {String} password - User's password.
+ * @description Logs user out, revokes refreshToken, and clears cookies
+ // TODO: Do I even need a refresh token if I'm clearing cookies?
  * @returns {Object} - The user object.
  * @throws {Error} - Throws an error if fields are missing, username is incorrect, or password is incorrect.
  */
 userController.logoutUser = async (req, res) => {
-  // Extract refreshToken from the request body
-  const { refreshToken } = req.body;
-  console.log('refreshToken userController.logoutUser: ', refreshToken);
-  // Log error if no refresh token
-  if (!refreshToken) {
-    console.error('No refreshToken: ', refreshToken);
-  }
+  const refreshToken = req.cookies.refreshToken;
+  console.log('refreshToken: ', refreshToken);
+  const { id } = req.params;
+  console.log('id: ', id);
+
   try {
     // Find the user by refresh token and remove it
-    const user = await User.findOneAndUpdate({ refreshTokens: refreshToken }, { $pull: { refreshTokens: refreshToken } }, { new: true });
+    const user = await User.findOneAndUpdate({ _id: id }, { $pull: { refreshTokens: refreshToken } }, { new: true });
     // If there is no user, throw an error
     if (!user) {
       throw Error('Invalid refresh token');
     }
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
     return res.sendStatus(204);
   } catch (error) {
     return res.status(500).json({
@@ -141,50 +146,76 @@ userController.logoutUser = async (req, res) => {
 userController.signupUser = async (req, res) => {
   // Extract the username, email, and password
   const { username, email, password } = req.body;
-  console.log('req.body: ', req.body);
-  try {
-    // Validate input
+  // Validate signup input
+  const isValidSignup = async () => {
+    // Did the user input data into all three fields?
     if (!username || !email || !password) {
       throw Error('All fields must be filled');
     }
+    // Is the email a real email?
     if (!validator.isEmail(email)) {
       throw Error('Email not valid');
     }
-    // Check if the password is strong enough
+    // Is the password strong enough?
+    /* Default options: { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1, returnScore: false, pointsPerUnique: 1, pointsPerRepeat: 0.5, pointsForContainingLower: 10, pointsForContainingUpper: 10, pointsForContainingNumber: 10, pointsForContainingSymbol: 10 } */
     if (!validator.isStrongPassword(password)) {
       throw Error('Password not strong enough');
     }
-    // Check if email is already in use
+    // Is the email already being used?
     const emailExists = await User.findOne({ email });
-    console.log('emailExists: ', emailExists);
+
     if (emailExists) {
       throw Error('Email already in use');
     }
-    // Check if username is already in use
+    // Is the username already being used?
     const usernameExists = await User.findOne({ username });
     if (usernameExists) {
       throw Error('Username already in use');
     }
+  };
+
+  try {
+    // Invoke isValidSignup to confirm input is valid
+    isValidSignup();
     // Generate salt and hash for password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    console.log('hash: ', hash);
     // Create and save new user
     const user = new User({ username, email, password: hash });
     user.save();
-    // Extract userId and username from new user
+    // Store the userId in a new variable and on the locals object
+    res.locals.user = user;
+    // Extract userId from new user
     const userId = user._id.toString();
     // Store the userId in a new object for the createTokens function
     const userObj = {
       userId,
       username: user.username,
     };
-    // Store the userId in a new variable and on the locals object
-    res.locals.userId = userId;
-    // Create a token
-    const token = createTokens(userObj);
-    // Return the username, userId, and token as an object
-    return res.status(200).json({ username, userId, token });
+    // Create an object that contains the accesstoken and refreshToken
+    const tokens = createTokens(userObj);
+    // Store user on res.locals.tokens
+    res.locals.user = {
+      userId: user._id,
+      username: user.username,
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+    };
+    // Set HttpOnly Cookies
+    res.cookie('accessToken', tokens.accessToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
+    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
+
+    // Add token to accessTokens array in user document in the database
+    const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $push: { refreshTokens: tokens.refreshToken } }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({
+        log: 'userController.loginUser: Issue with updatedUser',
+        status: 404,
+        message: 'Username or password are incorrect.',
+      });
+    }
+    // Return 200 status
+    return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
     return res.status(500).json({
       log: `userController.signupUser: ERROR ${error.message}`,

@@ -47,6 +47,7 @@ export const useLogin = () => {
 
       // Extract JSON data from the response
       const json = response.data;
+      console.log('json: ', json);
 
       // Check for non-successful response status
       if (response.status !== 200) {
