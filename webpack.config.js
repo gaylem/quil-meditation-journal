@@ -15,7 +15,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: /(?:node_modules|__tests?__|\.test\.js)$/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -47,6 +47,7 @@ module.exports = {
       directory: path.resolve(__dirname, 'public'),
       publicPath: '/',
     },
+    port: 8080,
     proxy: {
       '/api': 'http://localhost:4000/',
       '/assets': 'http://localhost:4000/',
