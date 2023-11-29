@@ -9,15 +9,18 @@ const jwt = require('jsonwebtoken');
  * @returns {Object} - An object containing access and refresh tokens.
  * @throws {Error} - Throws an error if input is not an object or secret keys are missing.
  */
-const createTokens = obj => {
+const createTokens = payload => {
+  // Assign private key to variable
+  const secretKey = process.env.SECRET_KEY;
+
   try {
     // Validate input
-    if (typeof obj !== 'object') {
+    if (typeof payload !== 'object') {
       throw new Error('Input must be an object');
     }
     // Check for secret keys
-    if (!process.env.ACCESS_SECRET || !process.env.REFRESH_SECRET) {
-      throw Error('Secret keys are missing');
+    if (!secretKey) {
+      throw Error('Private key is missing');
     }
     // Sign tokens using HS256 algorithm and set expiration
     const accessTokenOptions = {
@@ -30,16 +33,20 @@ const createTokens = obj => {
       expiresIn: '24h',
     };
 
-    const accessToken = jwt.sign(obj, process.env.ACCESS_SECRET, accessTokenOptions);
-    const refreshToken = jwt.sign(obj, process.env.REFRESH_SECRET, refreshTokenOptions);
+    // Sign the tokens
+    const accessToken = jwt.sign(payload, secretKey, accessTokenOptions);
+    const refreshToken = jwt.sign(payload, secretKey, refreshTokenOptions);
 
-    // Return tokens
+    // Return tokens and key
     return { accessToken, refreshToken };
   } catch (error) {
     console.error('Error creating token:', error);
     throw Error('Failed to create token');
   }
 };
+
+//! The functions below probably aren't needed since my logoutUser controller clears cookies and my loginUser controller creates them. I would only need them if I want to let the user remain logged in until their tokens expire
+
 
 /**
  * @description Middleware to verify the access token in the request headers.
@@ -48,7 +55,14 @@ const createTokens = obj => {
  * @param {Function} next - Express next function
  */
 const authenticateToken = async (req, res, next) => {
+  // Assign private and private to variables
+  const secretKey = process.env.SECRET_KEY;
+  // Check for existance of access token
+  if (!res.accessToken) {
+    throw Error('Access token does not exist');
+  }
   const accessToken = req.headers.authorization?.split(' ')[1];
+  console.log('accessToken: ', accessToken);
 
   if (!accessToken) {
     return res.status(401).json({
@@ -58,12 +72,13 @@ const authenticateToken = async (req, res, next) => {
     });
   }
   try {
-    const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET, { algorithms: ['HS256'] });
+    // Decode tokens using HS256 algorithm
+    const decoded = jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
 
     if (decoded.exp - Date.now() / 1000 < 60 * 5) {
       const response = await refreshToken(req.body.refreshToken);
       req.headers.authorization = `Bearer ${response.accessToken}`;
-      res.locals.decoded = jwt.verify(response.accessToken, process.env.ACCESS_SECRET, { algorithms: ['HS256'] });
+      res.locals.decoded = jwt.verify(response.accessToken, secretKey, { algorithms: ['HS256'] });
       return next();
     } else {
       res.locals.decoded = decoded;
@@ -84,21 +99,29 @@ const authenticateToken = async (req, res, next) => {
  * @returns {Object} - JSON with new accessToken and refreshToken
  */
 const refreshToken = async refreshToken => {
+  // Assign private key to variable
+  const secretKey = process.env.SECRET_KEY;
   try {
-    if (!process.env.REFRESH_SECRET) {
-      throw Error('Refresh secret key is missing');
+    if (!secretKey) {
+      throw Error('Private key is missing');
     }
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
-    // Add your logic to check if the refresh token is valid and stored
+    const decoded = jwt.verify(refreshToken, secretKey, { algorithms: ['HS256'] });
 
-    const { accessToken, refreshToken: newRefreshToken } = createTokens(decoded); // Generate new tokens
-    await User.findOneAndUpdate({ _id: decoded._id }, { $push: { refreshTokens: newRefreshToken } }, { new: true });
+    const user = await User.findOne({ _id: decoded.userId });
+
+    if (!user || !user.refreshTokens.includes(refreshToken)) {
+      throw Error('Invalid refresh token or not stored');
+    }
+
+    const { accessToken, refreshToken: newRefreshToken } = createTokens(decoded);
+    await User.findOneAndUpdate({ _id: decoded.userId }, { $push: { refreshTokens: newRefreshToken } }, { new: true });
+
     return { accessToken, refreshToken: newRefreshToken };
   } catch (error) {
     return {
       log: `userController.refreshTokens: ERROR ${error}`,
       status: 500,
-      message: 'Something went wrong. Please try again later.',
+      message: 'Internal Server Error: Something went wrong. Please try again later.',
     };
   }
 };

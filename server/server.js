@@ -7,9 +7,10 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const { refreshToken } = require('./utils/token.utils');
 
-const allowedOrigins = ['http://localhost:8080', 'https://quil.space'];
+const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil.space'];
 
 app.use(
   cors({
@@ -28,6 +29,7 @@ app.use(
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cookieParser());
+app.use(bodyParser.json());
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
