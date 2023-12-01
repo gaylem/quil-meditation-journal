@@ -48,7 +48,6 @@ userController.signupUser = async (req, res) => {
     }
     // Is the email already being used?
     const emailExists = await User.findOne({ email });
-
     if (emailExists) {
       throw Error('Email already in use');
     }
@@ -72,17 +71,18 @@ userController.signupUser = async (req, res) => {
     res.locals.user = user;
     // Extract userId from new user
     const userId = user._id.toString();
-    // Store the userId in a new object for the createTokens function
+    // Store the userId and username in a new object for the createTokens function
     const userObj = {
       userId,
       username: user.username,
     };
-    // Create an object that contains the accesstoken and refreshToken
+    // Create tokens
     const tokens = createTokens(userObj);
     // Set HttpOnly Cookies
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
     // Add token to accessTokens array in user document in the database
     const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $push: { refreshTokens: tokens.refreshToken } }, { new: true });
+    // If updatedUser returns false, log an error
     if (!updatedUser) {
       return res.status(404).json({
         log: 'userController.loginUser: Issue with updatedUser',
@@ -128,7 +128,6 @@ userController.loginUser = async (req, res) => {
     }
     // Compare passwords
     const match = await bcrypt.compare(password, user.password);
-
     // Throw error if password is incorrect
     if (!match) {
       return res.status(404).json({
@@ -184,7 +183,7 @@ userController.authUser = async (req, res) => {
   // Assign private and private to variables
   const secretKey = process.env.SECRET_KEY;
   const accessToken = req.headers.authorization?.split(' ')[1];
-
+  // If the accessToken returns false, throw an error
   if (!accessToken) {
     return res.status(401).json({
       log: 'authUser: No access token received.',
@@ -196,11 +195,12 @@ userController.authUser = async (req, res) => {
     // Decode tokens using HS256 algorithm
     const decoded = jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
     const { username, userId } = decoded;
-
+    // Check if expiration is within 10 minutes of current time
     if (decoded.exp - Date.now() / 1000 < 60 * 10) {
+      // If it is, retrieve the refresh token from the database
       const user = await User.findOneAndUpdate({ _id: decoded.userId }, { $pop: { refreshTokens: -1 } }, { new: true });
-
       const refreshToken = user.refreshTokens.slice(-1)[0];
+      // Refresh the tokens
       const response = await refreshTokens(refreshToken);
       const newAccessToken = response.accessToken;
       const newRefreshToken = response.refreshToken;
@@ -240,6 +240,7 @@ userController.logoutUser = async (req, res) => {
     if (!user) {
       throw Error('Invalid refresh token');
     }
+    // Clear cookies
     res.clearCookie('refreshToken');
     return res.sendStatus(204);
   } catch (error) {
