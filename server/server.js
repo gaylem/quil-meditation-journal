@@ -1,3 +1,5 @@
+//** SERVER */
+
 // Load environment variables from a .env file
 require('dotenv').config();
 
