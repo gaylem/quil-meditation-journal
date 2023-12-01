@@ -1,3 +1,12 @@
+//** TOKEN UTILITY FUNCTIONS */
+
+/* Includes:
+    1. createTokens - generates unique access and refresh tokens for user authentication
+    2. refreshTokens - refreshes the access token
+
+    Both functions are called by the userController
+*/
+
 // Import required modules
 require('dotenv').config();
 const { User } = require('../db/models');
@@ -25,12 +34,12 @@ const createTokens = payload => {
     // Sign tokens using HS256 algorithm and set expiration
     const accessTokenOptions = {
       algorithm: 'HS256',
-      expiresIn: '15m',
+      expiresIn: '1h',
     };
 
     const refreshTokenOptions = {
       algorithm: 'HS256',
-      expiresIn: '24h',
+      expiresIn: '48h',
     };
 
     // Sign the tokens
@@ -45,60 +54,12 @@ const createTokens = payload => {
   }
 };
 
-//! The functions below probably aren't needed since my logoutUser controller clears cookies and my loginUser controller creates them. I would only need them if I want to let the user remain logged in until their tokens expire
-
-
-/**
- * @description Middleware to verify the access token in the request headers.
- * @param {Object} req - The request object
- * @param {Object} res - The response object
- * @param {Function} next - Express next function
- */
-const authenticateToken = async (req, res, next) => {
-  // Assign private and private to variables
-  const secretKey = process.env.SECRET_KEY;
-  // Check for existance of access token
-  if (!res.accessToken) {
-    throw Error('Access token does not exist');
-  }
-  const accessToken = req.headers.authorization?.split(' ')[1];
-  console.log('accessToken: ', accessToken);
-
-  if (!accessToken) {
-    return res.status(401).json({
-      log: 'authenticateToken: No access token received.',
-      status: 404,
-      message: 'Something went wrong. Please try again later.',
-    });
-  }
-  try {
-    // Decode tokens using HS256 algorithm
-    const decoded = jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
-
-    if (decoded.exp - Date.now() / 1000 < 60 * 5) {
-      const response = await refreshToken(req.body.refreshToken);
-      req.headers.authorization = `Bearer ${response.accessToken}`;
-      res.locals.decoded = jwt.verify(response.accessToken, secretKey, { algorithms: ['HS256'] });
-      return next();
-    } else {
-      res.locals.decoded = decoded;
-      return res.status(200).json(res.locals.decoded);
-    }
-  } catch (error) {
-    return res.status(403).json({
-      log: 'authenticateToken: Invalid access token',
-      status: 403,
-      message: 'Something went wrong. Please try again later.',
-    });
-  }
-};
-
 /**
  * @description Refreshes access tokens.
  * @param {String} refreshToken - The refresh token
  * @returns {Object} - JSON with new accessToken and refreshToken
  */
-const refreshToken = async refreshToken => {
+const refreshTokens = async refreshToken => {
   // Assign private key to variable
   const secretKey = process.env.SECRET_KEY;
   try {
@@ -107,23 +68,29 @@ const refreshToken = async refreshToken => {
     }
     const decoded = jwt.verify(refreshToken, secretKey, { algorithms: ['HS256'] });
 
-    const user = await User.findOne({ _id: decoded.userId });
+    const payload = {
+      userId: decoded.userId,
+      username: decoded.username,
+    };
+
+    const user = await User.findOneAndUpdate({ _id: decoded.userId }, { $pull: { refreshTokens: refreshToken } });
 
     if (!user || !user.refreshTokens.includes(refreshToken)) {
       throw Error('Invalid refresh token or not stored');
     }
 
-    const { accessToken, refreshToken: newRefreshToken } = createTokens(decoded);
+    const { accessToken: newAccessToken, refreshToken: newRefreshToken } = createTokens(payload);
+
     await User.findOneAndUpdate({ _id: decoded.userId }, { $push: { refreshTokens: newRefreshToken } }, { new: true });
 
-    return { accessToken, refreshToken: newRefreshToken };
+    return { accessToken: newAccessToken, refreshToken: newRefreshToken };
   } catch (error) {
     return {
-      log: `userController.refreshTokens: ERROR ${error}`,
+      log: `refreshTokens: ERROR ${error}`,
       status: 500,
       message: 'Internal Server Error: Something went wrong. Please try again later.',
     };
   }
 };
 
-module.exports = { createTokens, authenticateToken, refreshToken };
+module.exports = { createTokens, refreshTokens };
