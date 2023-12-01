@@ -1,14 +1,26 @@
 //** USER ROUTER */
 
 /* Includes: 
-    1. POST /api/users/login => verifyUser controller
-    2. POST /api/users/logout => logoutUser controller
-    3. POST /api/users/signup => createUser controller
+    1. POST /api/users/signup => createUser controller
+    2. POST /api/users/login => verifyUser controller
+    3. POST /api/users/token => authUser controller
+    4. POST /api/users/logout => logoutUser controller
 */
 
+// Imports
 const express = require('express');
 const router = express.Router();
-const { loginUser, logoutUser, signupUser } = require('../controllers/userController');
+const { signupUser, loginUser, authUser, logoutUser } = require('../controllers/userController');
+
+/**
+ * @route POST /api/users/signup
+ * @description Signup user (creates access token)
+ * @param {Object} req - The request object containing:
+ *   - username: String
+ *   - email: String
+ *   - password: String
+ */
+router.post('/signup', signupUser);
 
 /**
  * @route POST /api/users/login
@@ -21,21 +33,18 @@ const { loginUser, logoutUser, signupUser } = require('../controllers/userContro
 router.post('/login', loginUser);
 
 /**
- * @route POST /api/users/logout
- * @description Logout user and remove refresh token
- * @param {Object} req - The request object containing:
- *   - refreshToken: String
+ * @route POST /api/users/token
+ * @description Authenticates the access token in the request headers
+ * @access Private (requires valid refresh token)
+ * @param {Object} req - The request object containing the accessToken (String)
  */
-router.post('/logout/:id', logoutUser);
+router.post('/token', authUser);
 
 /**
- * @route POST /api/users/signup
- * @description Signup user (creates access token)
- * @param {Object} req - The request object containing:
- *   - username: String
- *   - email: String
- *   - password: String
+ * @route POST /api/users/logout
+ * @description Logout user and remove refresh token
+ * @param {Object} req - The request object containing the refreshToken in cookies
  */
-router.post('/signup', signupUser);
+router.post('/logout/:id', logoutUser);
 
 module.exports = router;

@@ -49,7 +49,7 @@ const PastEntry = ({ entry }) => {
       // Fetch updated entries from the server
       const updatedResponse = await axios.get(`/api/entries/${user.userId}`, {
         headers: {
-          Authorization: `Bearer ${user.token.accessToken}`,
+          Authorization: `Bearer ${user.accessToken}`,
         },
       });
       // Sort the entries by createdAt date in descending order
@@ -75,7 +75,7 @@ const PastEntry = ({ entry }) => {
         { body: editedBody, userId: user.userId },
         {
           headers: {
-            Authorization: `Bearer ${user.token.accessToken}`,
+            Authorization: `Bearer ${user.accessToken}`,
           },
         },
       );
@@ -94,7 +94,7 @@ const PastEntry = ({ entry }) => {
       // Send DELETE request to the server to delete the entry
       await axios.delete(`/api/entries/${_id}`, {
         headers: {
-          Authorization: `Bearer ${user.token.accessToken}`,
+          Authorization: `Bearer ${user.accessToken}`,
         },
       });
 

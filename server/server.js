@@ -1,3 +1,5 @@
+//** SERVER */
+
 // Load environment variables from a .env file
 require('dotenv').config();
 
@@ -8,8 +10,8 @@ const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const { refreshToken } = require('./utils/token.utils');
 
+// Handle CORS
 const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil.space'];
 
 app.use(
@@ -50,9 +52,6 @@ app.use('/api/accounts', accountRouter);
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Refresh tokens route
-app.post('/api/refresh', refreshToken);
-
 // Handle requests to any route by serving the appropriate 'index.html' file
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public', 'index.html'), function (err) {
@@ -73,13 +72,10 @@ app.use((err, _, res) => {
     status: 500,
     message: { err: 'An error occurred' },
   };
-
   // Merge the default error object with the provided error, if any
   const errorObj = Object.assign({}, defaultErr, err);
-
   // Log the error
   console.log(errorObj.log);
-
   // Send a JSON response with the error status and message
   return res.status(errorObj.status).json(errorObj.message);
 });
@@ -98,5 +94,5 @@ app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
 });
 
-// Export the Express app for external use (e.g., in tests)
+// Export the app
 module.exports = app;
