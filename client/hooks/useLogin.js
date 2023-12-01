@@ -46,22 +46,21 @@ export const useLogin = () => {
       );
 
       // Extract JSON data from the response
-      const json = response.data;
-      console.log('json: ', json);
+      const user = response.data;
 
       // Check for non-successful response status
       if (response.status !== 200) {
         setIsLoading(false);
-        setError(json.error);
+        setError(user.error);
       }
 
       // Process successful login
       if (response.status === 200) {
         // Save the user data to local storage
-        localStorage.setItem('user', JSON.stringify(json));
+        localStorage.setItem('user', JSON.stringify(user));
 
         // Update the authentication context with user data
-        dispatch({ type: 'LOGIN', payload: json });
+        dispatch({ type: 'LOGIN', payload: user });
 
         // Update loading state to indicate completion
         setIsLoading(false);

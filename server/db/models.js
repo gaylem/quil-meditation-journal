@@ -1,3 +1,5 @@
+//** DATABASE MODELS */
+
 // Imports 
 require('dotenv').config();
 const mongoose = require('mongoose');
