@@ -24,11 +24,13 @@ function EntryContainer() {
         <Timer />
       </div>
       {/* NewEntry component for creating new journal entries */}
-      <NewEntry />
-      {/* Horizontal rule to visually separate new entries from past entries */}
-      <hr />
-      {/* PastEntriesFeed component for displaying previous journal entries */}
-      <PastEntriesFeed />
+      <div className='entries'>
+        <NewEntry />
+        {/* Horizontal rule to visually separate new entries from past entries */}
+        <hr />
+        {/* PastEntriesFeed component for displaying previous journal entries */}
+        <PastEntriesFeed />
+      </div>
     </div>
   );
 }

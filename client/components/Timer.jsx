@@ -47,7 +47,7 @@ const Timer = () => {
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
     }
-    
+
     return () => clearInterval(interval);
   }, [isActive, seconds, timerFinished, play]);
 
@@ -61,18 +61,29 @@ const Timer = () => {
       <p className='quote'>Let&apos;s begin.</p>
       <div className='row'>
         <div className='duration-container'>
-          <input className='duration-input'list='options' placeholder="Custom" name='duration' />
+          <input className='duration-input' list='options' placeholder='Set Time' name='duration' />
           <datalist id='options'>
-            <option value='1min' />
-            <option value='5min' />
-            <option value='10min' />
-            <option value='15min' />
-            <option value='20min' />
-            <option value='30min' />
-            <option value='45min' />
-            <option value='1hr' />
+            <option value='1m' />
+            <option value='5m' />
+            <option value='10m' />
+            <option value='15m' />
+            <option value='20m' />
+            <option value='25m' />
+            <option value='30m' />
+            <option value='35m' />
+            <option value='40m' />
+            <option value='45m' />
+            <option value='60m' />
+            <option value='90m' />
+            <option value='120m' />
           </datalist>
         </div>
+        <button className='circle-button button-primary-inactive' onClick={() => setSeconds(s => Math.max(0, s + 60))}>
+          +1m
+        </button>
+        <button className='circle-button button-primary-inactive' onClick={() => setSeconds(s => Math.max(0.0, s - 60))}>
+          -1m
+        </button>
         <button
           className={`circle-button button-primary-${isActive ? 'active' : 'inactive'}`}
           onClick={() => {
@@ -85,12 +96,6 @@ const Timer = () => {
         <button className='circle-button button-primary-inactive' onClick={reset}>
           <FaUndo />
           {/* reset */}
-        </button>
-        <button className='circle-button button-primary-inactive' onClick={() => setSeconds(s => Math.max(0, s + 300))}>
-          +5min
-        </button>
-        <button className='circle-button button-primary-inactive' onClick={() => setSeconds(s => Math.max(0.0, s - 60))}>
-          -1min
         </button>
         <div />
       </div>
