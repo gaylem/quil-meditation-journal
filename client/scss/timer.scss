@@ -1,0 +1,243 @@
+$button-color-active: #eee8fa;
+$button-text-color: #152d4a;
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
+$quote-color: rgb(55, 54, 54);
+$shadow-color: rgb(172, 172, 172);
+$button-color: #c8d6f1;
+$circle-param: 225px;
+$circle-button-param: 55px;
+
+.Timer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-align: center;
+  font-family: Tahoma, san-serif;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.quote {
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  color: $quote-color;
+  font-family: Neucha, Tahoma, san-serif;
+}
+
+.time {
+  font-size: 3rem;
+  padding: 1rem;
+}
+
+.duration-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  input {
+    max-width: 4rem;
+    height: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid lightgray;
+  }
+}
+
+.duration-text {
+  color: $quote-color;
+  font-size: 1.5rem;
+  padding-right: 1rem;
+}
+
+.duration-box {
+  width: 2rem;
+  height: 1.5rem;
+}
+
+.timer-circle {
+  height: $circle-param;
+  width: $circle-param;
+  background-color: $primary-color;
+  border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
+  line-height: $circle-param;
+  display: inline-block;
+  text-align: center;
+  font-size: larger;
+  vertical-align: middle;
+  color: white;
+  animation: wobble 7s linear infinite;
+}
+
+.timer-circle-grow {
+  animation:
+    grow 7s ease infinite,
+    wobble 7s linear infinite;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.circle-button {
+  font-family: Tahoma, san-serif;
+  font-size: medium;
+  height: $circle-button-param;
+  width: $circle-button-param;
+  background-color: $button-color;
+  border-radius: 50%;
+  line-height: $circle-button-param;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  color: $button-text-color;
+  margin: 0.2em;
+}
+
+.circle-button:hover {
+  background-color: lighten($primary-color, 50%);
+  border: 1px solid lighten($primary-color, 50%);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap');
+
+.button {
+  padding: 0.6rem 1.5rem;
+  margin: 0.4rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.8rem;
+  border-style: groove;
+  width: 7em;
+}
+
+.button:focus {
+  outline-width: 0;
+}
+
+.button-primary:hover {
+  background-color: $button-color;
+  border: 1px solid $button-color;
+  width: $circle-button-param;
+}
+
+.button-primary:active {
+  background-color: $button-color;
+  border: 1px solid $button-color;
+  width: $circle-button-param;
+}
+
+.button-primary-active {
+  background-color: $button-color;
+  border: 1px solid $button-color;
+  color: $button-text-color;
+  width: $circle-button-param;
+}
+
+.button-primary-inactive {
+  background-color: $button-color;
+  border: 1px solid $button-color;
+  color: $button-text-color;
+  width: $circle-button-param;
+}
+
+@keyframes wobble {
+  0% {
+    border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
+  }
+  16% {
+    border-radius: 34% 66% 63% 37% / 63% 46% 54% 37%;
+  }
+  33% {
+    border-radius: 58% 42% 36% 64% / 52% 70% 30% 48%;
+  }
+  50% {
+    border-radius: 64% 36% 63% 37% / 68% 46% 54% 32%;
+  }
+  67% {
+    border-radius: 41% 59% 36% 64% / 52% 33% 67% 48%;
+  }
+  83% {
+    border-radius: 58% 42% 49% 51% / 70% 67% 33% 30%;
+  }
+  100% {
+    border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
+  }
+}
+
+@keyframes grow {
+  0% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+
+  48% {
+    -webkit-transform: scale(1.7);
+    -moz-transform: scale(1.7);
+    -o-transform: scale(1.7);
+    -ms-transform: scale(1.7);
+    transform: scale(1.7);
+  }
+
+  52% {
+    -webkit-transform: scale(1.7);
+    -moz-transform: scale(1.7);
+    -o-transform: scale(1.7);
+    -ms-transform: scale(1.7);
+    transform: scale(1.7);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+.Timer-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Timer-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.Timer-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Timer-link {
+  color: #61dafb;
+}
+
+@keyframes Timer-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
