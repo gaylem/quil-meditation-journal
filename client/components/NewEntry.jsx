@@ -108,7 +108,7 @@ function NewEntry() {
           <div className='toggle'>
             {/* Form for submitting a new entry */}
             <form method='post' onSubmit={handleSubmit}>
-              <textarea className='entryText' id='body' name='body' rows={10} cols={30} onChange={e => setBody(e.target.value)} value={body} />
+              <textarea className='entryText' id='body' name='body' rows={10} cols={70} onChange={e => setBody(e.target.value)} value={body} />
               <div className='newEntryButtons'>
                 <input className='cancel' type='button' onClick={toggle} value='Cancel'></input>
                 <input className='save' type='submit' value='Save'></input>
