@@ -7,6 +7,8 @@ $quote-color: rgb(74, 74, 74);
 $shadow-color: rgb(172, 172, 172);
 $circle-param: 200px;
 $circle-button-param: 55px;
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+$header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
 .Timer {
   display: flex;
@@ -15,7 +17,8 @@ $circle-button-param: 55px;
   align-items: center;
   text-align: center;
   text-align: center;
-  font-family: Helvetica, san-serif;
+  font-family: $header-font;
+  letter-spacing: 0.2em;
   font-size: calc(10px + 2vmin);
   color: white;
   animation: fadeInAnimation ease 3s;
@@ -23,7 +26,8 @@ $circle-button-param: 55px;
 }
 
 .quote {
-  font-family: Helvetica, san-serif;
+  font-family: $header-font;
+  letter-spacing: normal;
   color: $quote-color;
   padding-top: 1rem;
   font-size: 2rem;
@@ -48,12 +52,17 @@ $circle-button-param: 55px;
     border: 1px solid lightgray;
     color: $quote-color;
     font-size: large;
+    @media (max-width: 480px) {
+      font-size: medium;
+      height: 1em;
+    }
   }
 }
 
 .timer-circle {
   height: $circle-param;
   width: $circle-param;
+  margin: 0.2em;
   background-color: $primary-color;
   border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
   line-height: $circle-param;
@@ -84,7 +93,7 @@ $circle-button-param: 55px;
 }
 
 .circle-button {
-  font-family: Tahoma, san-serif;
+  font-family: $paragraph-font;
   font-size: medium;
   height: $circle-button-param;
   width: $circle-button-param;

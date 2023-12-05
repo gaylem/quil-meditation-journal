@@ -78,26 +78,28 @@ const Timer = () => {
             <option value='120m' />
           </datalist>
         </div>
-        <button className='circle-button button-primary-inactive' onClick={() => setSeconds(s => Math.max(0, s + 60))}>
-          +1m
-        </button>
-        <button className='circle-button button-primary-inactive' onClick={() => setSeconds(s => Math.max(0.0, s - 60))}>
-          -1m
-        </button>
-        <button
-          className={`circle-button button-primary-${isActive ? 'active' : 'inactive'}`}
-          onClick={() => {
-            toggle();
-            play();
-          }}>
-          {isActive ? <FaPause /> : <FaPlay />}
-          {/* // 'pause' : 'start'} */}
-        </button>
-        <button className='circle-button button-primary-inactive' onClick={reset}>
-          <FaUndo />
-          {/* reset */}
-        </button>
-        <div />
+        <div className='circle-button-container'>
+          <button className='circle-button button-primary-inactive' onClick={() => setSeconds(s => Math.max(0, s + 60))}>
+            +1m
+          </button>
+          <button className='circle-button button-primary-inactive' onClick={() => setSeconds(s => Math.max(0.0, s - 60))}>
+            -1m
+          </button>
+          <button
+            className={`circle-button button-primary-${isActive ? 'active' : 'inactive'}`}
+            onClick={() => {
+              toggle();
+              play();
+            }}>
+            {isActive ? <FaPause /> : <FaPlay />}
+            {/* // 'pause' : 'start'} */}
+          </button>
+          <button className='circle-button button-primary-inactive' onClick={reset}>
+            <FaUndo />
+            {/* reset */}
+          </button>
+          <div />
+        </div>
       </div>
     </div>
   );

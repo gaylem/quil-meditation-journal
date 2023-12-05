@@ -1,5 +1,6 @@
 /* Variable and mixin for drop shadow */
 $shadow-color: rgb(172, 172, 172);
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
 @mixin box-shadow($offset-x, $offset-y, $blur, $color) {
   box-shadow: $offset-x $offset-y $blur $color;
@@ -25,7 +26,15 @@ $shadow-color: rgb(172, 172, 172);
 .sidebarContent {
   padding: 1em 1em 1em 2em;
   font-size: x-large;
-  font-family: Helvetica, sans-serif;
+  font-weight: 600;
+  font-family: $paragraph-font;
+
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
 }
 
 /* Opened Sidebar Styles */

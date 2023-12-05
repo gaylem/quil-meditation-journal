@@ -26,13 +26,13 @@ function NewEntry() {
   const now = moment();
 
   // State and function to manage 'New Meditation' text and NewEntry toggle functionality
-  const [date, setDate] = useState('New Meditation');
+  const [date, setDate] = useState('New Journal Entry');
   const [open, setOpen] = useState(false);
 
   // Function to toggle new meditation section open and closed
   const toggle = () => {
     setOpen(!open);
-    setDate(open ? 'New Meditation' : now.format('dddd, LL'));
+    setDate(open ? 'New Journal Entry' : now.format('dddd, LL'));
   };
 
   // Retrieve dispatch functionality from useEntriesContext and user data from useAuthContext
@@ -95,28 +95,23 @@ function NewEntry() {
   return (
     <div className='NewEntry'>
       {/* Button next to 'New Meditation' that toggles the NewEntry section open/closed */}
+      {/* Form container for the textarea and buttons */}
       <div className='newEntryHeader'>
         <button onClick={toggle}>+</button>
         {/* Displays either the date or 'New Meditation' based on the toggle state */}
         <p>{date}</p>
       </div>
-      {/* Form container for the textarea and buttons */}
-      <div className='form'>
-        {/* Render the following content only if the 'open' state is true */}
-        {open && (
-          // Toggle container for the NewEntry form
-          <div className='toggle'>
-            {/* Form for submitting a new entry */}
-            <form method='post' onSubmit={handleSubmit}>
-              <textarea className='entryText' id='body' name='body' rows={10} cols={70} onChange={e => setBody(e.target.value)} value={body} />
-              <div className='newEntryButtons'>
-                <input className='cancel' type='button' onClick={toggle} value='Cancel'></input>
-                <input className='save' type='submit' value='Save'></input>
-              </div>
-            </form>
+      {/* Render the following content only if the 'open' state is true */}
+      {open && (
+        // Form for submitting a new entry
+        <form method='post' onSubmit={handleSubmit}>
+          <textarea className='entryText' id='body' name='body' rows={5} cols={25} onChange={e => setBody(e.target.value)} value={body} />
+          <div className='newEntryButtons'>
+            <input className='cancel' type='button' onClick={toggle} value='Cancel'></input>
+            <input className='save' type='submit' value='Save'></input>
           </div>
-        )}
-      </div>
+        </form>
+      )}
     </div>
   );
 }

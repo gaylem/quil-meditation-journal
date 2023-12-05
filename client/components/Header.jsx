@@ -31,6 +31,7 @@ function Header() {
   // handleClick function manages logout button clicks and refresh tokens in local storage.
   const handleLogoutBtnClick = () => {
     logout(user.userId);
+    navigate('/login');
   };
 
   // State and function to manage sidebar open/closed behavior.
@@ -68,7 +69,17 @@ function Header() {
         {/* Application title */}
         <h1 onClick={handleTitleClick}>quil</h1>
         {/* Logout button is displayed if a user is logged in and logs the user out when clicked. */}
-        <div className='logout'>{user && <button onClick={handleLogoutBtnClick}>Log Out</button>}</div>
+
+        {user && (
+          <div className='auth-box'>
+            <div className='user'>
+              <p> Hey, {user.username}!</p>
+            </div>
+            <div className='logout'>
+              <button onClick={handleLogoutBtnClick}>Log Out</button>
+            </div>
+          </div>
+        )}
       </div>
       {/* Sidebar component for internal navigation links to other pages. */}
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
