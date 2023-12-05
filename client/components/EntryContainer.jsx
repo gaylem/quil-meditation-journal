@@ -1,9 +1,8 @@
-// Import React for building the component
+// Imports
 import React from 'react';
-
-// Import internal components
 import NewEntry from './NewEntry';
 import PastEntriesFeed from './PastEntriesFeed';
+import Timer from './Timer';
 
 // Import the styles for the EntryContainer
 import '../scss/entryContainer.scss';
@@ -22,15 +21,16 @@ function EntryContainer() {
     <div className='EntryContainer'>
       {/* Quote block with an inspirational quote and its author */}
       <div className='quoteBlock'>
-        <p className='quote'>Listening to and understanding our inner sufferings will resolve most of the problems we encounter.</p>
-        <p className='author'>Thich Nhat Hanh</p>
+        <Timer />
       </div>
       {/* NewEntry component for creating new journal entries */}
-      <NewEntry />
-      {/* Horizontal rule to visually separate new entries from past entries */}
-      <hr />
-      {/* PastEntriesFeed component for displaying previous journal entries */}
-      <PastEntriesFeed />
+      <div className='entries'>
+        <NewEntry />
+        {/* Horizontal rule to visually separate new entries from past entries */}
+        <hr />
+        {/* PastEntriesFeed component for displaying previous journal entries */}
+        <PastEntriesFeed />
+      </div>
     </div>
   );
 }

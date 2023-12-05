@@ -1,0 +1,181 @@
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
+$button-color: lighten($secondary-color, 50%);
+$button-color-active: lighten($primary-color, 50%);
+$button-text-color: darken($secondary-color, 10%);
+$quote-color: rgb(55, 54, 54);
+$shadow-color: rgb(172, 172, 172);
+$circle-param: 200px;
+$circle-button-param: 55px;
+
+.Timer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-align: center;
+  font-family: Tahoma, san-serif;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+}
+
+.quote {
+  font-family: Neucha, Tahoma, san-serif;
+  color: $quote-color;
+  padding-top: 1rem;
+  font-size: 2rem;
+}
+
+.time {
+  font-size: 3rem;
+  padding: 1rem;
+}
+
+.duration-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  input {
+    height: 1.5rem;
+    width: 6rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid lightgray;
+    color: $quote-color;
+    font-size: large;
+  }
+}
+
+.timer-circle {
+  height: $circle-param;
+  width: $circle-param;
+  background-color: $primary-color;
+  border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
+  line-height: $circle-param;
+  display: inline-block;
+  text-align: center;
+  font-size: larger;
+  vertical-align: middle;
+  color: white;
+  animation: wobble 7s linear infinite;
+}
+
+.timer-circle-grow {
+  animation:
+    grow 7s ease infinite,
+    wobble 7s linear infinite;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.circle-button {
+  font-family: Tahoma, san-serif;
+  font-size: medium;
+  height: $circle-button-param;
+  width: $circle-button-param;
+  background-color: $button-color;
+  border-radius: 50%;
+  line-height: $circle-button-param;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  color: $button-text-color;
+  margin: 0.5em;
+  cursor: pointer;
+}
+
+.circle-button:hover {
+  background-color: lighten($primary-color, 50%);
+  border: 1px solid lighten($primary-color, 50%);
+  width: $circle-button-param;
+  height: $circle-button-param;
+  box-shadow:
+    0 8px 16px 0 rgba(0, 0, 0, 0.1),
+    0 6px 20px 0 rgba(0, 0, 0, 0.15);
+}
+
+.button-primary-active {
+  background-color: $button-color-active;
+  border: 1px solid $button-color-active;
+  color: $button-text-color;
+  width: $circle-button-param;
+  height: $circle-button-param;
+}
+
+.button-primary-inactive {
+  background-color: $button-color;
+  border: 1px solid $button-color;
+  color: $button-text-color;
+  width: $circle-button-param;
+  height: $circle-button-param;
+}
+
+@keyframes wobble {
+  0% {
+    border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
+  }
+  16% {
+    border-radius: 38% 62% 53% 47% / 50% 54% 46% 50%;
+  }
+  33% {
+    border-radius: 52% 48% 40% 60% / 49% 66% 34% 51%;
+  }
+  50% {
+    border-radius: 57% 43% 53% 47% / 59% 54% 46% 48%;
+  }
+  67% {
+    border-radius: 44% 56% 40% 60% / 51% 44% 56% 49%;
+  }
+  83% {
+    border-radius: 52% 48% 51% 49% / 60% 51% 49% 50%;
+  }
+  100% {
+    border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
+  }
+}
+
+@keyframes grow {
+  0% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+
+  48% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+
+  52% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
