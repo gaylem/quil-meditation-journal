@@ -1,7 +1,8 @@
 $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
-$font-family: Pacifico, sans-serif;
+$title-font: Pacifico, sans-serif;
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
 /* Mixins */
 @mixin box-shadow($offset-x, $offset-y, $blur, $color) {
@@ -12,10 +13,11 @@ $font-family: Pacifico, sans-serif;
   max-width: 8em;
   min-width: 5px;
   font-size: $font-size;
+  font-family: $paragraph-font;
   background-color: $bg-color;
   color: white;
   padding: 1em;
-  border-radius: 3px;
+  border-radius: 5px;
   border: 0px;
 }
 
@@ -29,9 +31,8 @@ $font-family: Pacifico, sans-serif;
 /* Header styles */
 .header {
   @extend .flex-center;
-  font-family: $font-family;
-  font-size: 1.2em;
-  padding: 0.5em;
+  font-family: $title-font;
+  font-size: 1.3em;
   @include box-shadow(0, 2px, 8px, $shadow-color);
   position: fixed;
   top: 0;
@@ -47,11 +48,19 @@ $font-family: Pacifico, sans-serif;
     width: 90%;
     @extend .flex-center;
 
+    @media (max-width: 300px) {
+      width: 100%;
+    }
+
     /* Hamburger menu styles */
     .hamburger {
       width: 2em;
       height: auto;
-      cursor: pointer;
+      padding-left: 1em;
+      img {
+        padding: 0;
+        cursor: pointer;
+      }
     }
 
     /* Title styles */
@@ -59,27 +68,56 @@ $font-family: Pacifico, sans-serif;
       flex: 1;
       text-align: center;
       margin: 0; // Remove default margin
-      padding: 0 0.5em 0 0.5em;
+      padding: 0.2em 0 0.2em 0;
+      cursor: pointer;
     }
 
-    /* Logout Container Styles */
-    .logout {
+    .auth-box {
       display: flex;
-      justify-content: flex-end;
+      justify-content: right;
+      align-items: center;
+      font-family: $paragraph-font;
+      font-size: medium;
 
-      /* Logout button styles*/
-      button {
-        @include button-styles;
-        @media (max-width: 600px) {
-          font-size: small;
-        }
-        @media (max-width: 300px) {
-          font-size: x-small;
+      .user {
+        padding-right: 1em;
+        @media (max-width: 700px) {
+          display: none;
         }
       }
-      button:hover {
-        border: 0.5px solid white;
-        cursor: pointer;
+
+      /* Logout Container Styles */
+      .logout {
+        display: flex;
+        justify-content: flex-end;
+
+        /* Logout button styles*/
+        button {
+          @include button-styles;
+
+          @media (max-width: 600px) {
+            font-size: small;
+          }
+
+          @media (max-width: 300px) {
+            font-size: x-small;
+            padding: 1.5em 1em 1.5em 1em;
+          }
+        }
+
+        @media (max-width: 300px) {
+          margin-right: 1em;
+        }
+
+        button:hover {
+          border: 0.5px solid rgba(255, 255, 255, 0.5);
+          box-shadow:
+            0 0 3px 2px rgb(255, 255, 255, 0.1),
+            0 0 3px 2px rgb(255, 255, 255, 0.1);
+          cursor: pointer;
+          transition: border 0.2s ease;
+          transition: box-shadow 0.2s ease;
+        }
       }
     }
   }

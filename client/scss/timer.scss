@@ -3,10 +3,12 @@ $secondary-color: #2f3c7e;
 $button-color: lighten($secondary-color, 50%);
 $button-color-active: lighten($primary-color, 50%);
 $button-text-color: darken($secondary-color, 10%);
-$quote-color: rgb(55, 54, 54);
+$quote-color: rgb(74, 74, 74);
 $shadow-color: rgb(172, 172, 172);
 $circle-param: 200px;
 $circle-button-param: 55px;
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+$header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
 .Timer {
   display: flex;
@@ -15,7 +17,8 @@ $circle-button-param: 55px;
   align-items: center;
   text-align: center;
   text-align: center;
-  font-family: Tahoma, san-serif;
+  font-family: $header-font;
+  letter-spacing: 0.2em;
   font-size: calc(10px + 2vmin);
   color: white;
   animation: fadeInAnimation ease 3s;
@@ -23,7 +26,8 @@ $circle-button-param: 55px;
 }
 
 .quote {
-  font-family: Neucha, Tahoma, san-serif;
+  font-family: $header-font;
+  letter-spacing: normal;
   color: $quote-color;
   padding-top: 1rem;
   font-size: 2rem;
@@ -39,7 +43,7 @@ $circle-button-param: 55px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem;
+  margin: 0.5em;
   input {
     height: 1.5rem;
     width: 6rem;
@@ -48,12 +52,17 @@ $circle-button-param: 55px;
     border: 1px solid lightgray;
     color: $quote-color;
     font-size: large;
+    @media (max-width: 480px) {
+      font-size: medium;
+      height: 1em;
+    }
   }
 }
 
 .timer-circle {
   height: $circle-param;
   width: $circle-param;
+  margin: 0.2em;
   background-color: $primary-color;
   border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
   line-height: $circle-param;
@@ -63,6 +72,9 @@ $circle-button-param: 55px;
   vertical-align: middle;
   color: white;
   animation: wobble 7s linear infinite;
+  box-shadow:
+    0 0 16px 7px rgba(91, 91, 91, 0.1),
+    0 0 16px 7px rgba(91, 91, 91, 0.1);
 }
 
 .timer-circle-grow {
@@ -81,7 +93,7 @@ $circle-button-param: 55px;
 }
 
 .circle-button {
-  font-family: Tahoma, san-serif;
+  font-family: $paragraph-font;
   font-size: medium;
   height: $circle-button-param;
   width: $circle-button-param;
@@ -101,9 +113,7 @@ $circle-button-param: 55px;
   border: 1px solid lighten($primary-color, 50%);
   width: $circle-button-param;
   height: $circle-button-param;
-  box-shadow:
-    0 8px 16px 0 rgba(0, 0, 0, 0.1),
-    0 6px 20px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
 }
 
 .button-primary-active {

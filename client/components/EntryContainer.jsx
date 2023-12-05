@@ -20,17 +20,17 @@ function EntryContainer() {
     // Main EntryContainer component
     <div className='EntryContainer'>
       {/* Quote block with an inspirational quote and its author */}
-      <div className='quoteBlock'>
+      <div className='TimerBox'>
         <Timer />
       </div>
       {/* NewEntry component for creating new journal entries */}
-      <div className='entries'>
+      <div className='NewEntryBox'>
         <NewEntry />
-        {/* Horizontal rule to visually separate new entries from past entries */}
-        <hr />
-        {/* PastEntriesFeed component for displaying previous journal entries */}
-        <PastEntriesFeed />
       </div>
+      {/* Horizontal rule to visually separate new entries from past entries */}
+      <hr />
+      {/* PastEntriesFeed component for displaying previous journal entries */}
+      <PastEntriesFeed />
     </div>
   );
 }

@@ -2,6 +2,7 @@ $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $tertiary-color: white;
 $shadow-color: rgb(172, 172, 172);
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
 @mixin input-styles($bg-color: $secondary-color, $font-size: medium) {
   padding: 0.5em 0 0.5em 0;
@@ -13,8 +14,9 @@ $shadow-color: rgb(172, 172, 172);
 
 /* Container for each past entry */
 .PastEntry {
-  margin: 0.5rem 1rem 0.5rem 1rem;
-  font-family: Helvetica, sans-serif;
+  margin: 1rem 2rem 1rem 2rem;
+  font-family: $paragraph-font;
+  font-size: larger;
   color: rgb(68, 68, 68);
   background-color: rgb(246, 246, 246);
   border-radius: 4px;
@@ -22,13 +24,20 @@ $shadow-color: rgb(172, 172, 172);
     padding: 1em;
     color: rgb(68, 68, 68);
   }
+
+  @media (max-width: 480px) {
+    max-width: 90%;
+    margin: 10px;
+    padding: 0.5em;
+    font-size: medium;
+  }
 }
 
 /* The title of each past entry that toggles open and closed */
 .pastEntryTitle {
   display: flex;
   align-items: center;
-  margin: 0.5em;
+  padding: 1em;
   color: rgb(68, 68, 68);
   button {
     border-radius: 10%;
@@ -38,12 +47,27 @@ $shadow-color: rgb(172, 172, 172);
     color: rgb(254, 252, 252);
     background-color: rgb(118, 117, 117);
   }
+  button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+    background-color: darken(rgb(118, 117, 117), 10%);
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* The container that holds the entry content and delete/edit buttons  */
 .toggle-container {
   display: flex;
   flex-direction: column;
+  animation-name: fadeInAnimation;
+  animation-duration: 1s;
   .pastEntryText {
     color: rgb(68, 68, 68);
     width: 90%;
@@ -60,6 +84,9 @@ $shadow-color: rgb(172, 172, 172);
     justify-content: flex-end;
     width: 100%;
     margin-top: 0.5em;
+    @media (max-width: 300px) {
+      justify-content: center;
+    }
   }
 
   /* Delete button styles */
@@ -75,6 +102,7 @@ $shadow-color: rgb(172, 172, 172);
     color: $tertiary-color;
     border: 1px solid $primary-color;
     opacity: 50%;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
 
@@ -90,6 +118,7 @@ $shadow-color: rgb(172, 172, 172);
     background-color: $primary-color;
     color: $tertiary-color;
     border: 1px solid $primary-color;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
 }
