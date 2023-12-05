@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 // Import header styles
 import '../scss/header.scss';
@@ -24,9 +25,13 @@ function Header() {
   // useAuthContext hook is used to retrieve user information for authentication.
   const { user } = useAuthContext();
 
+  // useHistory hook is used to redirect the user to either the homepage or login page when they click the title
+  const navigate = useNavigate();
+
   // handleClick function manages logout button clicks and refresh tokens in local storage.
-  const handleClick = () => {
+  const handleLogoutBtnClick = () => {
     logout(user.userId);
+    navigate('/login');
   };
 
   // State and function to manage sidebar open/closed behavior.
@@ -35,6 +40,17 @@ function Header() {
   // toggleSidebar function toggles the sidebar open and closed.
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
+  };
+
+  //
+  const handleTitleClick = () => {
+    if (user) {
+      // Redirect to the homepage if the user is logged in
+      navigate('/');
+    } else {
+      // Redirect to the login page if the user is not logged in
+      navigate('/login');
+    }
   };
 
   /**
@@ -51,9 +67,19 @@ function Header() {
         {/* Hamburger menu icon toggles the sidebar open and closed when clicked. */}
         <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='hamburger-menu' />
         {/* Application title */}
-        <h1>quil</h1>
+        <h1 onClick={handleTitleClick}>quil</h1>
         {/* Logout button is displayed if a user is logged in and logs the user out when clicked. */}
-        <div className='logout'>{user && <button onClick={handleClick}>Log Out</button>}</div>
+
+        {user && (
+          <div className='auth-box'>
+            <div className='user'>
+              <p> Hey, {user.username}!</p>
+            </div>
+            <div className='logout'>
+              <button onClick={handleLogoutBtnClick}>Log Out</button>
+            </div>
+          </div>
+        )}
       </div>
       {/* Sidebar component for internal navigation links to other pages. */}
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />

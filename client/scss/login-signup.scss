@@ -1,6 +1,8 @@
 $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+$header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
 /* Container for login and signup page components */
 .loginSignupContainer {
@@ -9,21 +11,36 @@ $shadow-color: rgb(172, 172, 172);
   align-items: center;
   flex-wrap: wrap;
   padding: 8em 1em 1em 1em;
-  font-family: Helvetica, sans-serif;
+  font-family: $paragraph-font;
 }
 
 /* Box that contains the login and signup form */
 .box {
   border: 1px solid lightgray;
   justify-content: center;
-  padding: 3em 1em 3em 1em;
+  padding: 5em 2em 7em 2em;
   min-width: 20em;
-  min-height: 18em;
+  max-width: 24em;
+  min-height: 20em;
   border-radius: 0.3em;
+  box-shadow: 0 0 5px $shadow-color;
+  background-color: #f5f5f5;
+
+  @media (max-width: 430px) {
+    background-color: white;
+    box-shadow: none;
+    border: 0px;
+    padding: 2em;
+  }
+
+  @media (max-width: 300px) {
+    min-width: 15px;
+    padding: 0.5em 0.5em 2em 0.5em;
+  }
 
   /* Welcome Back / Tranquility Awaits... */
   .title {
-    font-size: larger;
+    font-size: 1.5em;
     padding-bottom: 1em;
   }
 
@@ -33,27 +50,36 @@ $shadow-color: rgb(172, 172, 172);
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     input {
-      max-width: 90%;
-      min-width: 90%;
-      font-size: medium;
-      margin: 0.2em;
-      padding: 0.2em;
-      border: 1px solid darkgray;
-      border-radius: 3px;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      font-family: $paragraph-font;
     }
   }
 
   /* Submit button*/
   .loginSignupBtn {
-    margin: 0.2em;
-    width: 94%;
-    font-size: medium;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
     background-color: $primary-color;
-    color: white;
-    padding: 0.4em;
-    border-radius: 3px;
-    border: 0px;
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
   }
 
   /* Already have account? Sign in! */
@@ -66,10 +92,22 @@ $shadow-color: rgb(172, 172, 172);
 /* About copy on right-hand side of login/signup form */
 .about {
   color: rgb(42, 42, 42);
-  max-width: 20em;
-  line-height: 1.5em;
+  max-width: 24em;
+  line-height: 1.7em;
+  margin-top: 1.5em;
   padding: 3em;
+
   p {
     margin-bottom: 1.5em;
+  }
+
+  @media (max-width: 835px) {
+    margin-top: 0em;
+    padding: 1em;
+  }
+
+  @media (max-width: 300px) {
+    min-width: 15px;
+    padding: 0.5em;
   }
 }
