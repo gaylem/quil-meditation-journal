@@ -15,7 +15,7 @@ $font-family: Pacifico, sans-serif;
   background-color: $bg-color;
   color: white;
   padding: 1em;
-  border-radius: 3px;
+  border-radius: 5px;
   border: 0px;
 }
 
@@ -60,6 +60,7 @@ $font-family: Pacifico, sans-serif;
       text-align: center;
       margin: 0; // Remove default margin
       padding: 0 0.5em 0 0.5em;
+      cursor: pointer;
     }
 
     /* Logout Container Styles */
@@ -78,7 +79,10 @@ $font-family: Pacifico, sans-serif;
         }
       }
       button:hover {
-        border: 0.5px solid white;
+        border: 0.5px solid rgba(255, 255, 255, 0.5);
+        box-shadow:
+          0 0 3px 2px rgb(255, 255, 255, 0.1),
+          0 0 3px 2px rgb(255, 255, 255, 0.1);
         cursor: pointer;
       }
     }

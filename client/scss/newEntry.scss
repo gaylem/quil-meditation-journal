@@ -33,10 +33,24 @@ $shadow-color: rgb(172, 172, 172);
       background-color: $secondary-color;
       margin-right: 0.5em;
     }
+    button:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+      background-color: lighten($secondary-color, 10%);
+    }
   }
 
+  @keyframes fadeInAnimation {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
   /* The form under 'New Meditation' */
   form {
+    animation-name: fadeInAnimation;
+    animation-duration: 1s;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -74,6 +88,7 @@ $shadow-color: rgb(172, 172, 172);
       color: $tertiary-color;
       border: 1px solid $primary-color;
       opacity: 50%;
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
       cursor: pointer;
     }
 
@@ -89,6 +104,7 @@ $shadow-color: rgb(172, 172, 172);
       background-color: $primary-color;
       color: $tertiary-color;
       border: 1px solid $primary-color;
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
       cursor: pointer;
     }
   }

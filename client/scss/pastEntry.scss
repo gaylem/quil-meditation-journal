@@ -38,12 +38,27 @@ $shadow-color: rgb(172, 172, 172);
     color: rgb(254, 252, 252);
     background-color: rgb(118, 117, 117);
   }
+  button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+    background-color: darken(rgb(118, 117, 117), 10%);
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* The container that holds the entry content and delete/edit buttons  */
 .toggle-container {
   display: flex;
   flex-direction: column;
+  animation-name: fadeInAnimation;
+  animation-duration: 1s;
   .pastEntryText {
     color: rgb(68, 68, 68);
     width: 90%;
@@ -75,6 +90,7 @@ $shadow-color: rgb(172, 172, 172);
     color: $tertiary-color;
     border: 1px solid $primary-color;
     opacity: 50%;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
 
@@ -90,6 +106,7 @@ $shadow-color: rgb(172, 172, 172);
     background-color: $primary-color;
     color: $tertiary-color;
     border: 1px solid $primary-color;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
 }
