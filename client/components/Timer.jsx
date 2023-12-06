@@ -65,6 +65,15 @@ const Timer = () => {
   const handleCountdownChange = event => {
     const selectedValue = event.target.value;
     setSelectedCountdown(selectedValue);
+
+    const parseCountdown = durationString => {
+      const value = parseInt(durationString.replace('s', ''), 10);
+      const valueInSeconds = isNaN(value) ? 0 : value;
+      return valueInSeconds;
+    };
+
+    const countdownInSeconds = parseCountdown(selectedValue);
+    setSeconds(countdownInSeconds);
   };
 
   const handleDurationChange = event => {
