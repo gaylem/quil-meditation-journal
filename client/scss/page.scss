@@ -4,14 +4,14 @@ $shadow-color: rgb(172, 172, 172);
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
-.aboutContainer {
+.pageContainer {
   display: flex;
   margin: 3.5em 0 6em 0;
   justify-content: center;
   align-items: center;
 }
 
-.aboutContent {
+.pageContent {
   padding-top: 3em;
   max-width: 50%;
   font-family: $paragraph-font;
@@ -35,6 +35,38 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     color: $primary-color;
     font-weight: bold;
   }
+}
+
+/* Indents lists*/
+ol,
+ul {
+  padding-left: 15px;
+}
+
+/* Styles unordered list bullets */
+ul li {
+  position: relative;
+  padding-left: 20px;
+}
+
+ul li::marker {
+  content: '\2022';
+  font-size: 1.5em;
+}
+
+/* Styles unordered list bullets */
+ol li {
+  position: relative;
+  padding-left: 15px;
+}
+
+a {
+  color: $secondary-color;
+  font-weight: 700;
+}
+
+a:hover {
+  color: $primary-color;
 }
 
 .contactFormContainer {

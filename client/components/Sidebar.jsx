@@ -30,9 +30,16 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       <FontAwesomeIcon onClick={toggleSidebar} className='closeBtn' icon={faCircleXmark} style={{ color: '#acacac' }} size='2xl' />
       <div className='sidebarContent'>
         {/* Link to the 'About' page */}
-        <Link to='/about' onClick={toggleSidebar}>
-          About
-        </Link>
+        <div className='link'>
+          <Link to='/about' onClick={toggleSidebar}>
+            About quil
+          </Link>
+        </div>
+        <div className='link'>
+          <Link to='/meditation' onClick={toggleSidebar}>
+            How to Meditate
+          </Link>
+        </div>
       </div>
     </div>
   );

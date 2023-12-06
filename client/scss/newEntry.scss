@@ -18,8 +18,8 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   justify-content: center;
   flex-direction: column;
   padding: 2em;
+  width: 90%;
   color: rgb(68, 68, 68);
-  min-width: 60%;
 
   @media (max-width: 480px) {
     justify-content: center;
