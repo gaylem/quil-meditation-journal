@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { FaPlay, FaPause, FaUndo, FaMusic } from 'react-icons/fa';
+import { FaPlay, FaPause, FaUndo } from 'react-icons/fa';
 import useSound from 'use-sound';
 import churchbell from '../../public/assets/churchbell.wav';
 import '../scss/timer.scss';
 
-// import churchbell from './static/audio/bells.wav';
-
 const Timer = () => {
   const zeroPad = (num, places) => String(num).padStart(places, '0');
 
-  const startTime = 300;
+  const startTime = 0;
   const [play] = useSound(churchbell);
   const [timerFinished, setTimerFinished] = useState(false);
   const [seconds, setSeconds] = useState(startTime);
   const [isActive, setIsActive] = useState(false);
+  const [selectedDuration, setSelectedDuration] = useState('');
+  const [selectedCountdown, setSelectedCountdown] = useState('');
 
   const toggle = () => {
     setIsActive(!isActive);
     setTimerFinished(false);
   };
+
   const reset = () => {
     setSeconds(startTime);
     setIsActive(false);
@@ -51,6 +52,36 @@ const Timer = () => {
     return () => clearInterval(interval);
   }, [isActive, seconds, timerFinished, play]);
 
+  useEffect(() => {
+    // Handle countdown separately
+    if (isActive && selectedCountdown) {
+      const countdownInSeconds = parseInt(selectedCountdown.replace('s', ''), 10);
+      if (!isNaN(countdownInSeconds)) {
+        setSeconds(countdownInSeconds);
+      }
+    }
+  }, [isActive, selectedCountdown]);
+
+  const handleCountdownChange = event => {
+    const selectedValue = event.target.value;
+    setSelectedCountdown(selectedValue);
+  };
+
+  const handleDurationChange = event => {
+    const selectedValue = event.target.value;
+    setSelectedDuration(selectedValue);
+
+    const parseDuration = durationString => {
+      const valueInMinutes = parseInt(durationString.replace('m', ''), 10);
+      const valueInSeconds = isNaN(valueInMinutes) ? 0 : valueInMinutes * 60;
+      return valueInSeconds;
+    };
+
+    // Convert the selected value (remove 'm') to seconds and set the timer
+    const durationInSeconds = parseDuration(selectedValue);
+    setSeconds(durationInSeconds);
+  };
+
   return (
     <div className='Timer'>
       <div className='time'>
@@ -59,10 +90,23 @@ const Timer = () => {
         </div>
       </div>
       <p className='quote'>Let&apos;s begin.</p>
-      <div className='row'>
+      <div className='time-dropdown'>
+        <div className='countdown-container'>
+          <input className='countdown-input' list='countdown-options' placeholder='Countdown' name='countdown' value={selectedCountdown} onChange={handleCountdownChange} />
+          <datalist id='countdown-options'>
+            <option value='5s' />
+            <option value='10s' />
+            <option value='15s' />
+            <option value='20s' />
+            <option value='25s' />
+            <option value='30s' />
+            <option value='45s' />
+            <option value='60s' />
+          </datalist>
+        </div>
         <div className='duration-container'>
-          <input className='duration-input' list='options' placeholder='Set Time' name='duration' />
-          <datalist id='options'>
+          <input className='duration-input' list='duration-options' placeholder='Duration' name='duration' value={selectedDuration} onChange={handleDurationChange} />
+          <datalist id='duration-options'>
             <option value='1m' />
             <option value='5m' />
             <option value='10m' />
@@ -78,6 +122,8 @@ const Timer = () => {
             <option value='120m' />
           </datalist>
         </div>
+      </div>
+      <div className='row'>
         <div className='circle-button-container'>
           <button className='circle-button button-primary-inactive' onClick={() => setSeconds(s => Math.max(0, s + 60))}>
             +1m
@@ -92,11 +138,9 @@ const Timer = () => {
               play();
             }}>
             {isActive ? <FaPause /> : <FaPlay />}
-            {/* // 'pause' : 'start'} */}
           </button>
           <button className='circle-button button-primary-inactive' onClick={reset}>
             <FaUndo />
-            {/* reset */}
           </button>
           <div />
         </div>
