@@ -1,4 +1,6 @@
-/* Variable and mixin for drop shadow */
+/* Variables and mixin for drop shadow */
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
@@ -17,7 +19,6 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   width: 15em;
   background-color: white;
   border: 0.5px solid lightgray;
-  color: #1c1c1c;
   z-index: 98; /* Set z-index higher than the main content */
   transition: left 0.5s ease-in-out;
   @include box-shadow(0, 2px, 8px, $shadow-color);
@@ -29,10 +30,17 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   font-weight: 600;
   font-family: $paragraph-font;
 
+  .link {
+    padding: 0.5em;
+  }
+
   a {
     text-decoration: none;
+    color: $secondary-color;
   }
+
   a:hover {
+    color: $primary-color;
     text-decoration: underline;
   }
 }

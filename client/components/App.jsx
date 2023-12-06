@@ -11,6 +11,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import About from '../pages/About';
+import Meditation from '../pages/Meditation';
 
 import '../scss/app.scss';
 
@@ -43,6 +44,7 @@ function App() {
             <Route path='/signup' element={!user ? <Signup /> : <Navigate to='/' />} />
             {/* About route - Renders About page */}
             <Route path='/about' element={<About />} /> {/* TODO: Add a route for the About page */}
+            <Route path='/meditation' element={<Meditation />} /> {/* TODO: Add a route for the How to Meditate page */}
           </Routes>
         </div>
       </BrowserRouter>
