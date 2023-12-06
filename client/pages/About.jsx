@@ -1,13 +1,12 @@
 import React from 'react';
-import '../scss/about.scss';
+import '../scss/page.scss';
 
 const About = () => {
   return (
-    <div className='aboutContainer'>
-      <div className='aboutContent'>
+    <div className='pageContainer'>
+      <div className='pageContent'>
         <h2>About quil</h2>
         <p>
-          {' '}
           <span className='purple'>quil</span> is your distraction-free space for chronicling your meditation journey.
         </p>
         <br />
