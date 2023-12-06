@@ -50,8 +50,8 @@ ul li {
 }
 
 ul li::marker {
-  content: '\2022';
-  font-size: 1.5em;
+  content: '\25CF';
+  color: $primary-color;
 }
 
 /* Styles unordered list bullets */
@@ -60,6 +60,11 @@ ol li {
   padding-left: 15px;
 }
 
+ol li::marker {
+  color: $primary-color;
+}
+
+/* Styles links */
 a {
   color: $secondary-color;
   font-weight: 700;
