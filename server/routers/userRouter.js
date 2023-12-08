@@ -8,9 +8,10 @@
 */
 
 // Imports
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { signupUser, loginUser, authUser, logoutUser } = require('../controllers/userController');
+import userController from '../controllers/userController.js';
+const { signupUser, loginUser, authUser, logoutUser } = userController
 
 /**
  * @route POST /api/users/signup
@@ -47,4 +48,4 @@ router.post('/token', authUser);
  */
 router.post('/logout/:id', logoutUser);
 
-module.exports = router;
+export default router;

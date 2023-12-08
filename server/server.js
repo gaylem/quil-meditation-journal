@@ -1,15 +1,21 @@
 //** SERVER */
 
 // Load environment variables from a .env file
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Import required modules
-const path = require('path');
-const express = require('express');
+import { fileURLToPath } from 'url';
+import path from 'path';
+import express from 'express';
 const app = express();
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+
+// Get the directory name of the current module's file path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Handle CORS
 const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil.space'];
@@ -40,9 +46,10 @@ app.use((req, _, next) => {
 });
 
 // Import Routes
-const entryRouter = require('./routers/entryRouter');
-const userRouter = require('./routers/userRouter');
-const accountRouter = require('./routers/accountRouter');
+// Import the routers using ES6 import syntax
+import entryRouter from './routers/entryRouter.js';
+import userRouter from './routers/userRouter.js';
+import accountRouter from './routers/accountRouter.js';
 
 // Define routes for entries and users
 app.use('/api/entries', entryRouter);
@@ -50,11 +57,12 @@ app.use('/api/users', userRouter);
 app.use('/api/accounts', accountRouter);
 
 // Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+const publicPath = path.resolve(__dirname, 'public');
+app.use(express.static(publicPath));
 
 // Handle requests to any route by serving the appropriate 'index.html' file
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'), function (err) {
+  res.sendFile(path.join(publicPath, 'index.html'), function (err) {
     if (err) {
       res.status(500).send(err);
     }
@@ -95,4 +103,4 @@ app.listen(process.env.PORT, () => {
 });
 
 // Export the app
-module.exports = app;
+export default app;
