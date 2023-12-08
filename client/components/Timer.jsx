@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { FaPlay, FaPause, FaUndo } from 'react-icons/fa';
 import useSound from 'use-sound';
 import churchbell from '../../public/assets/churchbell.mp3';
 import '../scss/timer.scss';
+import playImage from '../../public/assets/play-button.png';
+import replayImage from '../../public/assets/replay-button.png';
+import pauseImage from '../../public/assets/pause-button.png';
 
 const Timer = () => {
   const zeroPad = (num, places) => String(num).padStart(places, '0');
@@ -146,10 +148,10 @@ const Timer = () => {
               toggle();
               play();
             }}>
-            {isActive ? <FaPause /> : <FaPlay />}
+            <img src={isActive ? pauseImage : playImage} alt={isActive ? 'Pause' : 'Play'} />
           </button>
           <button className='circle-button button-primary-inactive' onClick={reset}>
-            <FaUndo />
+            <img src={replayImage} alt='Replay' />
           </button>
           <div />
         </div>
