@@ -1,12 +1,10 @@
 // Import React from React and Link from react-router-dom
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Import styles
 import '../scss/sidebar.scss';
-
-// Import icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import circle from '../../public/assets/close-button.png';
 
 // Import props validation
 import PropTypes from 'prop-types';
@@ -20,25 +18,13 @@ import PropTypes from 'prop-types';
  * @returns {JSX.Element} Sidebar component.
  */
 const Sidebar = ({ isOpen, toggleSidebar }) => {
-  // State to store the dynamically loaded icon
-  const [icon, setIcon] = useState(null);
-  // Dynamically import Font Awesome icon when the component mounts
-  useEffect(() => {
-    const loadFontAwesomeIcon = async () => {
-      const { faCircleXmark } = await import('@fortawesome/free-solid-svg-icons');
-      setIcon(faCircleXmark);
-    };
-
-    loadFontAwesomeIcon();
-  }, []);
-
   // Determine the appropriate CSS class based on the sidebar state
   const sidebarClass = isOpen ? 'sidebar open' : 'sidebar';
 
   return (
     <div className={sidebarClass}>
       {/* Close button to toggle the sidebar closed */}
-      <FontAwesomeIcon onClick={toggleSidebar} className='closeBtn' style={{ color: '#acacac', fontDisplay: 'swap' }} size='2xl' icon={icon} />
+      <img src={circle} onClick={toggleSidebar} className='closeBtn' alt='Button that closes sidebar navigation panel' />
       <div className='sidebarContent'>
         {/* Link to the 'About' page */}
         <div className='link'>
