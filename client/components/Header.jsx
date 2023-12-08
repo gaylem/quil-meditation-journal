@@ -65,7 +65,7 @@ function Header() {
       {/* Header container for hamburger menu, title, and logout button. */}
       <div className='headerContainer'>
         {/* Hamburger menu icon toggles the sidebar open and closed when clicked. */}
-        <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='hamburger-menu' />
+        <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='Button that opens sidebar navigation panel' />
         {/* Application title */}
         <h1 onClick={handleTitleClick}>quil</h1>
         {/* Logout button is displayed if a user is logged in and logs the user out when clicked. */}
