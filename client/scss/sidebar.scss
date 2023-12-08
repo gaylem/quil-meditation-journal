@@ -55,7 +55,9 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 /* Styling for close button icon */
 .closeBtn {
   align-self: flex-end; /* Position the close button to the right */
-  padding: 0.5em;
+  padding: 1em;
+  width: 2em;
+  height: 2em;
 }
 
 /* Expand width of sidebar on mobile devices to take up entire screen */
