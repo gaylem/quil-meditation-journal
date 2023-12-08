@@ -1,9 +1,9 @@
 // Import useState and useAuthContext to manage state
 import { useState } from 'react';
-import { useAuthContext } from './useAuthContext';
+import { useAuthContext } from './useAuthContext.js';
 
 // Import axios to handle server requests
-import axios from '../axiosConfig';
+import axios from '../axiosConfig.js';
 
 /**
  * Custom hook for handling user login functionality.

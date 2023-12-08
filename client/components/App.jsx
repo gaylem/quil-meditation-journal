@@ -3,15 +3,15 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Import the useAuthContext hook to access authentication-related data and methods
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
 // Import internal components
-import Header from './Header';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-import About from '../pages/About';
-import Meditation from '../pages/Meditation';
+import Header from './Header.jsx';
+import Home from '../pages/Home.jsx';
+import Login from '../pages/Login.jsx';
+import Signup from '../pages/Signup.jsx';
+import About from '../pages/About.jsx';
+import Meditation from '../pages/Meditation.jsx';
 
 import '../scss/app.scss';
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaPlay, FaPause, FaUndo } from 'react-icons/fa';
 import useSound from 'use-sound';
-import churchbell from '../../public/assets/churchbell.wav';
+import churchbell from '../../public/assets/churchbell.mp3';
 import '../scss/timer.scss';
 
 const Timer = () => {

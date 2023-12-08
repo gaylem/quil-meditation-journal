@@ -2,7 +2,7 @@
 
 // Imports
 import React, { createContext, useReducer, useEffect } from 'react';
-import axios from '../axiosConfig';
+import axios from '../axiosConfig.js';
 import PropTypes from 'prop-types';
 
 /**

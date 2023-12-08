@@ -1,5 +1,5 @@
-import { useAuthContext } from './useAuthContext';
-import { useEntriesContext } from './useEntriesContext';
+import { useAuthContext } from './useAuthContext.js';
+import { useEntriesContext } from './useEntriesContext.js';
 
 /**
  * Custom hook for handling user logout functionality.

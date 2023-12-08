@@ -1,7 +1,7 @@
 // React and hooks build the Header component and manage state
 import React, { useState } from 'react';
-import { useLogout } from '../hooks/useLogout';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useLogout } from '../hooks/useLogout.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 import { useNavigate } from 'react-router-dom';
 
 // Import header styles
@@ -11,7 +11,7 @@ import '../scss/header.scss';
 import hamburger from '../../public/assets/hamburger.png';
 
 // Internal Sidebar component is imported for navigation.
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar.jsx';
 
 /**
  * Header component containing the application title, logout button, and sidebar menu button.

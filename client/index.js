@@ -8,10 +8,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // Import the main App component
-import App from './components/App';
+import App from './components/App.jsx';
 
 // Import context providers for authentication and entries
-import { AuthContextProvider } from './context/AuthContext';
+import { AuthContextProvider } from './context/AuthContext.jsx';
 import { EntriesContextProvider } from './context/EntryContext.jsx';
 
 // Create a root element using ReactDOM.createRoot
