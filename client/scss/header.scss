@@ -59,6 +59,8 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
       padding-left: 1em;
       img {
         padding: 0;
+        width: 2em;
+        height: 2em;
         cursor: pointer;
       }
     }
@@ -89,7 +91,11 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
       /* Logout Container Styles */
       .logout {
         display: flex;
+        justify-content: center;
+        align-items: center;
         justify-content: flex-end;
+        width: 6em;
+        height: 3em;
 
         /* Logout button styles*/
         button {
