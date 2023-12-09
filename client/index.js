@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom/client';
 
 // Import the main App component
 import App from './components/App.jsx';
+import './scss/main.scss'
 
 // Import context providers for authentication and entries
 import { AuthContextProvider } from './context/AuthContext.jsx';
