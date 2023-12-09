@@ -34,7 +34,13 @@ export default {
       {
         test: /\.(png|jpg|gif)$/i,
         use: [
-          'file-loader',
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[contenthash].[ext]',
+              outputPath: 'images', // or your preferred output directory
+            },
+          },
           {
             loader: 'image-webpack-loader',
             options: {
@@ -45,6 +51,7 @@ export default {
           },
         ],
       },
+
       {
         test: /\.(mp3|ogg|wav)$/i,
         loader: 'file-loader',
@@ -74,7 +81,13 @@ export default {
       chunks: 'all',
       minSize: 0,
       minChunks: 1,
-      name: 'vendors',
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
     },
     minimize: true,
     minimizer: [new TerserPlugin()],

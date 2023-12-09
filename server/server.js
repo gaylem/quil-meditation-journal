@@ -12,6 +12,8 @@ const app = express();
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import helmet from 'helmet';
+import etag from 'etag';
 
 // Get the directory name of the current module's file path
 const __filename = fileURLToPath(import.meta.url);
@@ -38,6 +40,7 @@ app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(helmet());
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
@@ -46,7 +49,6 @@ app.use((req, _, next) => {
 });
 
 // Import Routes
-// Import the routers using ES6 import syntax
 import entryRouter from './routers/entryRouter.js';
 import userRouter from './routers/userRouter.js';
 import accountRouter from './routers/accountRouter.js';
@@ -56,9 +58,34 @@ app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
 app.use('/api/accounts', accountRouter);
 
+// Set Cache Control Header and ETag Header
+app.use((req, res, next) => {
+  // Capture the response data using response hook
+  const originalSend = res.send;
+  res.send = function (body) {
+    // Assuming body is a buffer or string
+    const tag = etag(body);
+    console.log('ETag:', tag);
+
+    // Set ETag header
+    res.setHeader('ETag', tag);
+
+    // Conditionally set Cache-Control header
+    if (req.path.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache');
+    } else {
+      res.setHeader('Cache-Control', 'public, max-age=31536000'); // 1 year in seconds
+    }
+
+    // Send the actual response with the updated headers
+    originalSend.call(this, body);
+  };
+  next();
+});
+
 // Serve static files from the 'public' directory
 const publicPath = path.resolve(__dirname, 'public');
-app.use(express.static(publicPath));
+app.use(express.static(publicPath, { maxAge: 31536000 })); // 1 year in seconds
 
 // Handle requests to any route by serving the appropriate 'index.html' file
 app.get('/*', function (req, res) {
