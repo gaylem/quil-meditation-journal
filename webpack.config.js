@@ -1,13 +1,17 @@
-const path = require('path');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+import path from 'path';
+import HTMLWebpackPlugin from 'html-webpack-plugin';
+import CompressionPlugin from 'compression-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 
-module.exports = {
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+export default {
   mode: process.env.NODE_ENV,
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'bundle.js',
+    filename: '[name].[contenthash].js',
     publicPath: '/',
   },
 
@@ -15,7 +19,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /(?:node_modules|__tests?__|\.test\.js)$/,
+        exclude: /(?:node_modules|__tests__|\.test\.js)$/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -32,9 +36,22 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
+            options: {
+              name: '[name].[contenthash].[ext]',
+              outputPath: 'images', // or your preferred output directory
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+              },
+            },
           },
         ],
       },
+
       {
         test: /\.(mp3|ogg|wav)$/i,
         loader: 'file-loader',
@@ -44,10 +61,6 @@ module.exports = {
         },
       },
     ],
-  },
-
-  resolve: {
-    extensions: ['.js', '.jsx', '.css', '.scss', '.sass'],
   },
 
   devServer: {
@@ -63,6 +76,23 @@ module.exports = {
     historyApiFallback: true,
   },
 
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      minSize: 0,
+      minChunks: 1,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
+
   devtool: 'eval-source-map',
 
   plugins: [
@@ -71,5 +101,6 @@ module.exports = {
       publicPath: '/',
     }),
     new Dotenv(),
+    new CompressionPlugin(),
   ],
 };

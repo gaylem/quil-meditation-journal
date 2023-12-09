@@ -10,9 +10,10 @@
 */
 
 // Imports
-require('dotenv').config();
-const { User } = require('../db/models');
-const bcrypt = require('bcryptjs');
+import dotenv from 'dotenv';
+dotenv.config();
+import { User } from '../db/models.js';
+import bcrypt from 'bcryptjs';
 
 // accountController object that contains the methods below
 const accountController = {};
@@ -86,4 +87,4 @@ accountController.deleteAccount = async (req, res, next) => {
   }
 };
 
-module.exports = accountController;
+export default accountController;

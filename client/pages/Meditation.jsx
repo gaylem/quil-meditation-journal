@@ -73,7 +73,9 @@ const About = () => {
             <ul>
               <li>Over time, you will notice your mind wandering more. You may begin to feel frustrated and say things to yourself like, &quot;I just can&apos;t do this right.&quot;</li>
               <li>Remind yourself that noticing your mind wandering and returning to the breath are sufficient, and over time, your mind will wander less and less.</li>
-              <li><span className='purple'>The goal at this phase is to strengthen your observational skills, not to entirely eliminate your thoughts.</span></li>
+              <li>
+                <span className='purple'>The goal at this phase is to strengthen your observational skills, not to entirely eliminate your thoughts.</span>
+              </li>
             </ul>
           </li>
           <br />
@@ -97,7 +99,7 @@ const About = () => {
               <li>You can also include visualizations, such as seeing a warm glowing light expanding from your heart over your entire body and then out into the world.</li>
             </ul>
           </li>
-          <br/>
+          <br />
           <li>
             <span className='purple'>Walking Meditation.</span> For this one, you&apos;re going to want to keep your eyes open!
             <ul>
@@ -115,7 +117,7 @@ const About = () => {
             <span className='purple'>Choose a time during the day when you are least likely to be disturbed.</span> Often meditating first thing in the morning is best because there is usually nothing to distract you.
           </li>
           <li>
-            <span className='purple'>Start with 5 minutes, and then gradually expand to 10 minutes or more.</span> If all you can squeeze in each day is 10 minutes, that&apos;s just fine. If you decide to extend the time to a longer duration, do so gradually so you don&apos;t overwhelm yourself. 
+            <span className='purple'>Start with 5 minutes, and then gradually expand to 10 minutes or more.</span> If all you can squeeze in each day is 10 minutes, that&apos;s just fine. If you decide to extend the time to a longer duration, do so gradually so you don&apos;t overwhelm yourself.
           </li>
         </ul>
         <br />
@@ -134,8 +136,8 @@ const About = () => {
           </li>
         </ul>
         <br />
-        <h2>Have a book you&apos;d like to share?</h2>
-        <p>Let us know, and we&apos;ll add it to the list!</p>
+        <h2>Questions? Book Recommendations?</h2>
+        <p>Feel free to reach out through the form below!</p>
         <br />
         <div className='contactFormContainer'>
           <form action={process.env.REACT_APP_FORM_ENDPOINT} method='POST' className='form'>

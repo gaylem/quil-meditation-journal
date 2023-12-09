@@ -7,11 +7,13 @@
     4. DELETE /api/entries/:id => deleteEntry
 */
 
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-// Entry controllers
-const { getAllEntries, addEntry, updateEntry, deleteEntry } = require('../controllers/entryController');
+import entryController from '../controllers/entryController.js';
+
+// Destructure the functions if needed
+const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
 
 /**
  * @route GET /entries/:id
@@ -43,5 +45,4 @@ router.patch('/:id', updateEntry);
  */
 router.delete('/:id', deleteEntry);
 
-
-module.exports = router;
+export default router;

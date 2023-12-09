@@ -1,6 +1,6 @@
 // Import React and EntryContainer 
 import React from 'react';
-import EntryContainer from '../components/EntryContainer';
+import EntryContainer from '../components/EntryContainer.jsx';
 
 // Import styles
 import '../scss/app.scss';

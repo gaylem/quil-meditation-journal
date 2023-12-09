@@ -1,7 +1,7 @@
 // Import React, useState, and contexts
 import React, { useState } from 'react';
-import { useEntriesContext } from '../hooks/useEntriesContext';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useEntriesContext } from '../hooks/useEntriesContext.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
 // Import styles
 import '../scss/pastEntry.scss';
@@ -10,7 +10,7 @@ import '../scss/pastEntry.scss';
 import moment from 'moment';
 
 // Import axios to handle server requests for entries data
-import axios from '../axiosConfig';
+import axios from '../axiosConfig.js';
 
 // Import props validation
 import PropTypes from 'prop-types';

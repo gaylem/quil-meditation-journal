@@ -10,12 +10,13 @@
 */
 
 // Imports
-require('dotenv').config();
-const { User } = require('../db/models');
-const { createTokens, refreshTokens } = require('../utils/token.utils');
-const bcrypt = require('bcryptjs');
-const validator = require('validator');
-const jwt = require('jsonwebtoken');
+import dotenv from 'dotenv';
+dotenv.config();
+import { User } from '../db/models.js';
+import { createTokens, refreshTokens } from '../utils/token.utils.js';
+import bcrypt from 'bcryptjs';
+import validator from 'validator';
+import jwt from 'jsonwebtoken';
 
 // userController object that contains the methods below
 const userController = {};
@@ -252,4 +253,4 @@ userController.logoutUser = async (req, res) => {
   }
 };
 
-module.exports = userController;
+export default userController;

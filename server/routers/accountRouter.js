@@ -9,9 +9,10 @@
     4. Delete user
 */
 
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { updateAccount, deleteAccount } = require('../controllers/accountController');
+import accountController from '../controllers/accountController.js';
+const { updateAccount, deleteAccount } = accountController;
 
 /**
  * @route PUT /api/users/update/:userId
@@ -29,4 +30,4 @@ router.put('/update/:userId', updateAccount);
  */
 router.delete('/delete/:userId', deleteAccount);
 
-module.exports = router;
+export default router;

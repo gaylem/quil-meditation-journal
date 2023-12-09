@@ -7,7 +7,7 @@
 */
 
 // Imports
-const { Entry } = require('../db/models');
+import { Entry } from '../db/models.js';
 const entryController = {};
 
 /**
@@ -183,4 +183,4 @@ entryController.deleteEntry = async (req, res) => {
   }
 };
 
-module.exports = entryController;
+export default entryController;

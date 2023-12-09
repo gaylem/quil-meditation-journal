@@ -8,9 +8,10 @@
 */
 
 // Import required modules
-require('dotenv').config();
-const { User } = require('../db/models');
-const jwt = require('jsonwebtoken');
+import dotenv from 'dotenv';
+dotenv.config();
+import { User } from '../db/models.js';
+import jwt from 'jsonwebtoken';
 
 /**
  * @description Create access and refresh tokens using the provided object.
@@ -18,7 +19,7 @@ const jwt = require('jsonwebtoken');
  * @returns {Object} - An object containing access and refresh tokens.
  * @throws {Error} - Throws an error if input is not an object or secret keys are missing.
  */
-const createTokens = payload => {
+export const createTokens = payload => {
   // Assign private key to variable
   const secretKey = process.env.SECRET_KEY;
   // Validate input
@@ -57,7 +58,7 @@ const createTokens = payload => {
  * @param {String} refreshToken - The refresh token
  * @returns {Object} - JSON with new accessToken and refreshToken
  */
-const refreshTokens = async refreshToken => {
+export const refreshTokens = async refreshToken => {
   // Assign private key to variable
   const secretKey = process.env.SECRET_KEY;
   try {
@@ -93,4 +94,3 @@ const refreshTokens = async refreshToken => {
   }
 };
 
-module.exports = { createTokens, refreshTokens };

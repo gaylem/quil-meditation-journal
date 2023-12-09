@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSignup } from '../hooks/useSignup';
-import '../../client/scss/login-signup';
+import { useSignup } from '../hooks/useSignup.js';
+import '../../client/scss/login-signup.scss';
 
 /**
  * Signup component represents the signup page of the application.

@@ -1,6 +1,6 @@
 // Import useContext and EntriesContext for managing entries state
 import { useContext } from 'react';
-import { EntriesContext } from '../context/EntryContext';
+import { EntriesContext } from '../context/EntryContext.jsx';
 
 /**
  * Custom hook to access the entries context.
