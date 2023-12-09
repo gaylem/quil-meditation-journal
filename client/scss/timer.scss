@@ -22,92 +22,6 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   color: white;
   animation: fadeInAnimation ease 3s;
   animation-iteration-count: 1;
-
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem;
-    width: 100%;
-
-    .circle-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: $paragraph-font;
-      font-size: medium;
-      height: $circle-button-param;
-      width: $circle-button-param;
-      background-color: $button-color;
-      border-radius: 50%;
-      color: $button-text-color;
-      margin: 0.5em;
-      cursor: pointer;
-      img {
-        width: 1em;
-        height: 1em;
-      }
-
-      &:hover {
-        background-color: lighten($primary-color, 50%);
-        border: 1px solid lighten($primary-color, 50%);
-        width: $circle-button-param;
-        height: $circle-button-param;
-        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-      }
-
-      &.button-primary-active {
-        background-color: $button-color-active;
-        border: 1px solid $button-color-active;
-        color: $button-text-color;
-        width: $circle-button-param;
-        height: $circle-button-param;
-      }
-
-      &.button-primary-inactive {
-        background-color: $button-color;
-        border: 1px solid $button-color;
-        color: $button-text-color;
-        width: $circle-button-param;
-        height: $circle-button-param;
-      }
-    }
-  }
-}
-
-.quote {
-  font-family: $header-font;
-  letter-spacing: normal;
-  color: $quote-color;
-  padding: 1rem;
-  font-size: 2rem;
-}
-
-.time {
-  font-size: 3rem;
-  padding: 1rem;
-}
-
-.time-dropdown {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  input {
-    height: 1.5rem;
-    width: 8rem;
-    padding: 0.5rem;
-    margin: 0.3em;
-    border-radius: 0.5rem;
-    border: 1px solid lightgray;
-    color: $quote-color;
-    font-size: large;
-    @media (max-width: 480px) {
-      font-size: medium;
-      height: 1em;
-    }
-  }
 }
 
 .timer-circle {
@@ -133,25 +47,25 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
 @keyframes wobble {
   0% {
-    border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
   }
   16% {
-    border-radius: 38% 62% 53% 47% / 50% 54% 46% 50%;
+    border-radius: 45% 55% 52% 48% / 48% 52% 50% 50%;
   }
   33% {
-    border-radius: 52% 48% 40% 60% / 49% 66% 34% 51%;
+    border-radius: 55% 45% 48% 52% / 50% 50% 50% 50%;
   }
   50% {
-    border-radius: 57% 43% 53% 47% / 59% 54% 46% 48%;
+    border-radius: 50% 50% 53% 47% / 53% 47% 50% 50%;
   }
   67% {
-    border-radius: 44% 56% 40% 60% / 51% 44% 56% 49%;
+    border-radius: 48% 52% 47% 53% / 50% 50% 50% 50%;
   }
   83% {
-    border-radius: 52% 48% 51% 49% / 60% 51% 49% 50%;
+    border-radius: 52% 48% 50% 50% / 51% 49% 50% 50%;
   }
   100% {
-    border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
   }
 }
 
@@ -187,4 +101,93 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     -ms-transform: scale(1);
     transform: scale(1);
   }
+}
+
+.time {
+  font-size: 3rem;
+  padding: 1rem;
+}
+
+.quote {
+  font-family: $header-font;
+  letter-spacing: normal;
+  color: $quote-color;
+  padding: 1rem;
+  font-size: 2rem;
+}
+
+.time-dropdown {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  input {
+    height: 1.5rem;
+    width: 7.5rem;
+    padding: 0.5rem;
+    margin: 0.3em;
+    border-radius: 0.5rem;
+    border: 1px solid lightgray;
+    color: $quote-color;
+    font-size: large;
+    @media (max-width: 480px) {
+      font-size: medium;
+      height: 1em;
+    }
+  }
+}
+
+.circle-button-container {
+  display: flex;
+  justify-content: center;
+  padding: 0.5em;
+}
+
+.circle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $paragraph-font;
+  font-size: medium;
+  height: $circle-button-param;
+  width: $circle-button-param;
+  background-color: $button-color;
+  border-radius: 50%;
+  color: $button-text-color;
+  margin: 0.3em;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten($primary-color, 50%);
+    border: 1px solid lighten($primary-color, 50%);
+    width: $circle-button-param;
+    height: $circle-button-param;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &.button-primary-active {
+    background-color: $button-color-active;
+    border: 1px solid $button-color-active;
+    color: $button-text-color;
+    width: $circle-button-param;
+    height: $circle-button-param;
+  }
+
+  &.button-primary-inactive {
+    background-color: $button-color;
+    border: 1px solid $button-color;
+    color: $button-text-color;
+    width: $circle-button-param;
+    height: $circle-button-param;
+  }
+}
+
+#play-pause-btn {
+  width: 15px;
+  height: 20px;
+}
+
+#replay-btn {
+  width: 20px;
+  height: 20px;
 }

@@ -17,8 +17,8 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 2em;
-  width: 90%;
+  padding: 1em;
+  width: 70%;
   color: rgb(68, 68, 68);
 
   @media (max-width: 480px) {
@@ -39,6 +39,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
     justify-content: center;
     align-items: center;
     padding: 1em 0em 1.5em 0em;
+    margin-right: 1em;
     font-family: $paragraph-font;
     font-size: x-large;
     font-weight: 550;
