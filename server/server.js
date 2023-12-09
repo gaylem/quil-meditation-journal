@@ -48,6 +48,27 @@ app.use((req, _, next) => {
   next();
 });
 
+// Serve static files from the 'public' directory
+const publicPath = path.resolve(__dirname, 'public');
+
+// Set Cache Control Header and ETag Header
+app.use(
+  '/images',
+  (req, res, next) => {
+    console.log('Custom middleware for images');
+
+    const originalSend = res.send;
+    res.send = function (body) {
+      const tag = etag(body);
+      console.log('ETag:', tag);
+      res.setHeader('ETag', tag);
+      originalSend.call(this, body);
+    };
+    next();
+  },
+  express.static(path.join(publicPath, 'images')),
+);
+
 // Import Routes
 import entryRouter from './routers/entryRouter.js';
 import userRouter from './routers/userRouter.js';
@@ -57,35 +78,6 @@ import accountRouter from './routers/accountRouter.js';
 app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
 app.use('/api/accounts', accountRouter);
-
-// Set Cache Control Header and ETag Header
-app.use((req, res, next) => {
-  // Capture the response data using response hook
-  const originalSend = res.send;
-  res.send = function (body) {
-    // Assuming body is a buffer or string
-    const tag = etag(body);
-    console.log('ETag:', tag);
-
-    // Set ETag header
-    res.setHeader('ETag', tag);
-
-    // Conditionally set Cache-Control header
-    if (req.path.endsWith('.html')) {
-      res.setHeader('Cache-Control', 'no-cache');
-    } else {
-      res.setHeader('Cache-Control', 'public, max-age=31536000'); // 1 year in seconds
-    }
-
-    // Send the actual response with the updated headers
-    originalSend.call(this, body);
-  };
-  next();
-});
-
-// Serve static files from the 'public' directory
-const publicPath = path.resolve(__dirname, 'public');
-app.use(express.static(publicPath, { maxAge: 31536000 })); // 1 year in seconds
 
 // Handle requests to any route by serving the appropriate 'index.html' file
 app.get('/*', function (req, res) {
