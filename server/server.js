@@ -1,15 +1,23 @@
 //** SERVER */
 
 // Load environment variables from a .env file
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Import required modules
-const path = require('path');
-const express = require('express');
+import { fileURLToPath } from 'url';
+import path from 'path';
+import express from 'express';
 const app = express();
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import helmet from 'helmet';
+import etag from 'etag';
+
+// Get the directory name of the current module's file path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Handle CORS
 const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil.space'];
@@ -32,6 +40,7 @@ app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(helmet());
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
@@ -39,22 +48,40 @@ app.use((req, _, next) => {
   next();
 });
 
+// Serve static files from the 'public' directory
+const publicPath = path.resolve(__dirname, 'public');
+
+// Set Cache Control Header and ETag Header
+app.use(
+  '/images',
+  (req, res, next) => {
+    console.log('Custom middleware for images');
+
+    const originalSend = res.send;
+    res.send = function (body) {
+      const tag = etag(body);
+      console.log('ETag:', tag);
+      res.setHeader('ETag', tag);
+      originalSend.call(this, body);
+    };
+    next();
+  },
+  express.static(path.join(publicPath, 'images')),
+);
+
 // Import Routes
-const entryRouter = require('./routers/entryRouter');
-const userRouter = require('./routers/userRouter');
-const accountRouter = require('./routers/accountRouter');
+import entryRouter from './routers/entryRouter.js';
+import userRouter from './routers/userRouter.js';
+import accountRouter from './routers/accountRouter.js';
 
 // Define routes for entries and users
 app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
 app.use('/api/accounts', accountRouter);
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Handle requests to any route by serving the appropriate 'index.html' file
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'), function (err) {
+  res.sendFile(path.join(publicPath, 'index.html'), function (err) {
     if (err) {
       res.status(500).send(err);
     }
@@ -95,4 +122,4 @@ app.listen(process.env.PORT, () => {
 });
 
 // Export the app
-module.exports = app;
+export default app;

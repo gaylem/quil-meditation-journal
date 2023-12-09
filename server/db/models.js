@@ -1,8 +1,9 @@
 //** DATABASE MODELS */
 
-// Imports 
-require('dotenv').config();
-const mongoose = require('mongoose');
+// Imports
+import dotenv from 'dotenv';
+dotenv.config();
+import mongoose from 'mongoose';
 
 // Connect to MongoDB database
 async function connectToDatabase() {
@@ -33,20 +34,17 @@ const entrySchema = new Schema(
   { timestamps: true }, // Automatically generate "createdAt" and "updatedAt" timestamps
 );
 
-
 //* User Schema */
 const userSchema = new Schema(
   {
-    username: { type: String, required: true }, 
-    password: { type: String, required: true }, 
-    email: { type: String, required: true }, 
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true },
     refreshTokens: [{ type: String }], // Refresh tokens for authentication
   },
   { timestamps: true }, // Automatically generate "createdAt" and "updatedAt" timestamps
 );
 
 // Exports
-module.exports = {
-  Entry: mongoose.model('Entry', entrySchema),
-  User: mongoose.model('User', userSchema),
-};
+export const Entry = mongoose.model('Entry', entrySchema);
+export const User = mongoose.model('User', userSchema);

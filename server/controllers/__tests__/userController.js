@@ -1,11 +1,12 @@
 //** USER CONTROLLER TESTS */
 
 // Import necessary modules and dependencies
-const userController = require('../userController');
-const bcrypt = require('bcrypt');
-const validator = require('validator');
-const { createTokens } = require('../tokenUtils');
-const User = require('../models/User'); // Import your User model
+// Importing using ES6 import syntax
+import userController from '../userController';
+import bcrypt from 'bcrypt';
+import validator from 'validator';
+import { createTokens } from '../tokenUtils';
+import User from '../models/User';
 
 // Mock the necessary modules and dependencies
 jest.mock('bcrypt');

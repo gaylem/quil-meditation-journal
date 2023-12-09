@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom';
 
 // Import styles
 import '../scss/sidebar.scss';
-
-// Import icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import circle from '../../public/assets/close-button.png';
 
 // Import props validation
 import PropTypes from 'prop-types';
@@ -27,7 +24,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <div className={sidebarClass}>
       {/* Close button to toggle the sidebar closed */}
-      <FontAwesomeIcon onClick={toggleSidebar} className='closeBtn' icon={faCircleXmark} style={{ color: '#acacac' }} size='2xl' />
+      <img src={circle} onClick={toggleSidebar} className='closeBtn' alt='Button that closes sidebar navigation panel' />
       <div className='sidebarContent'>
         {/* Link to the 'About' page */}
         <div className='link'>

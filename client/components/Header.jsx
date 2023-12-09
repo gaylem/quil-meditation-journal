@@ -1,7 +1,7 @@
 // React and hooks build the Header component and manage state
 import React, { useState } from 'react';
-import { useLogout } from '../hooks/useLogout';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useLogout } from '../hooks/useLogout.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 import { useNavigate } from 'react-router-dom';
 
 // Import header styles
@@ -11,7 +11,7 @@ import '../scss/header.scss';
 import hamburger from '../../public/assets/hamburger.png';
 
 // Internal Sidebar component is imported for navigation.
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar.jsx';
 
 /**
  * Header component containing the application title, logout button, and sidebar menu button.
@@ -65,7 +65,7 @@ function Header() {
       {/* Header container for hamburger menu, title, and logout button. */}
       <div className='headerContainer'>
         {/* Hamburger menu icon toggles the sidebar open and closed when clicked. */}
-        <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='hamburger-menu' />
+        <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='Button that opens sidebar navigation panel' />
         {/* Application title */}
         <h1 onClick={handleTitleClick}>quil</h1>
         {/* Logout button is displayed if a user is logged in and logs the user out when clicked. */}

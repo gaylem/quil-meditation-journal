@@ -2,14 +2,14 @@
 import React, { useEffect } from 'react';
 
 // Import useEntriesContext and useAuthContext to manage state
-import { useEntriesContext } from '../hooks/useEntriesContext';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useEntriesContext } from '../hooks/useEntriesContext.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
 // Import axios for handling server requests
-import axios from '../axiosConfig';
+import axios from '../axiosConfig.js';
 
 // Import PastEntry component for rendering individual past entries
-import PastEntry from './PastEntry';
+import PastEntry from './PastEntry.jsx';
 
 // Import styles for PastEntriesFeed
 import '../scss/pastEntriesFeed.scss';

@@ -1,8 +1,8 @@
 // Imports
 import React from 'react';
-import NewEntry from './NewEntry';
-import PastEntriesFeed from './PastEntriesFeed';
-import Timer from './Timer';
+import NewEntry from './NewEntry.jsx';
+import PastEntriesFeed from './PastEntriesFeed.jsx';
+import Timer from './Timer.jsx';
 
 // Import the styles for the EntryContainer
 import '../scss/entryContainer.scss';

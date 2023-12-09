@@ -1,13 +1,13 @@
 // Import React, useState, and contexts
 import React, { useState } from 'react';
-import { useEntriesContext } from '../hooks/useEntriesContext';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useEntriesContext } from '../hooks/useEntriesContext.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
 // Import styles
 import '../scss/newEntry.scss';
 
 // Import axios to handle server requests for entries data
-import axios from '../axiosConfig';
+import axios from '../axiosConfig.js';
 
 // Import moment to format entry dates
 import moment from 'moment';
