@@ -1,9 +1,12 @@
-/* Variables and mixin for drop shadow */
+/* Color Variables */
 $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
+
+/* Font Family */ 
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
+/* Mixon for box shadow */
 @mixin box-shadow($offset-x, $offset-y, $blur, $color) {
   box-shadow: $offset-x $offset-y $blur $color;
 }
@@ -24,6 +27,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   @include box-shadow(0, 2px, 8px, $shadow-color);
 }
 
+/* Styles for sidebar content container and links */
 .sidebarContent {
   padding: 1em 1em 1em 2em;
   font-size: x-large;
@@ -58,6 +62,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   padding: 1em;
   width: 2em;
   height: 2em;
+  cursor: pointer;
 }
 
 /* Expand width of sidebar on mobile devices to take up entire screen */

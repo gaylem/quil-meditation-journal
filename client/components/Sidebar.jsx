@@ -1,9 +1,9 @@
-// Import React from React and Link from react-router-dom
+//** SIDEBAR COMPONENT */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Import styles
-import '../scss/sidebar.scss';
+// Import close button icon
 import circle from '../../public/assets/close-button.png';
 
 // Import props validation
