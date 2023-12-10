@@ -1,3 +1,5 @@
+//** TIMER COMPONENT */
+
 import React, { useState, useEffect } from 'react';
 
 // Import sound hook and audio file
@@ -8,9 +10,6 @@ import singingBowl from '../../public/assets/singing-bowl.mp3';
 import playImage from '../../public/assets/play-button.png';
 import resetImage from '../../public/assets/reset-button.png';
 import pauseImage from '../../public/assets/pause-button.png';
-
-// Import styles
-import '../scss/timer.scss';
 
 /**
  * Timer component for meditation sessions.
@@ -163,7 +162,7 @@ const Timer = () => {
   /**
    * Parses the duration input from the datalist to be compatible with the timer.
    *
-   * @param {string} durationString - The string representing the duration.
+   * @param {string} durationString - The string representing the duration of the meditation.
    * @returns {number} The parsed duration in seconds.
    */
   const parseDuration = durationString => {
@@ -183,7 +182,11 @@ const Timer = () => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
-  // Return the component
+  /**
+   * Main timer component
+   *
+   * @returns {JSX.Element} The rendered Timer component.
+   */
   return (
     <div className='Timer'>
       {/* Timer Display */}
@@ -240,7 +243,7 @@ const Timer = () => {
           <img src={isActive ? pauseImage : playImage} id='play-pause-btn' alt={isActive ? 'Pause' : 'Play'} />
         </button>
         {/* Reset Button */}
-        <button className='circle-button button-primary-inactive' onClick={reset}>
+        <button className='circle-button' onClick={reset}>
           <img src={resetImage} alt='Reset' id='reset-btn' />
         </button>
       </div>
