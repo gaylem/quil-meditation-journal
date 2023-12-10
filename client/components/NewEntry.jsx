@@ -1,10 +1,12 @@
-// Import React, useState, and contexts
-import React, { useState } from 'react';
-import { useEntriesContext } from '../hooks/useEntriesContext.js';
-import { useAuthContext } from '../hooks/useAuthContext.js';
+//** NEW ENTRY COMPONENT */
 
-// Import styles
-import '../scss/newEntry.scss';
+import React, { useState } from 'react';
+
+// Import useEntriesContext hook for new journal entries
+import { useEntriesContext } from '../hooks/useEntriesContext.js';
+
+// Import useAuthContext hook for authentication
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
 // Import axios to handle server requests for entries data
 import axios from '../axiosConfig.js';
@@ -41,9 +43,6 @@ function NewEntry() {
 
   // State and function to manage the entry body content, errors, and empty fields
   const [body, setBody] = useState('');
-  // TODO: Use to display error messaging on the frontend, requires UI changes
-  const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
 
   /**
    * Handles the submission of a new entry.
@@ -52,12 +51,6 @@ function NewEntry() {
    */
   const handleSubmit = async e => {
     e.preventDefault();
-    // If a user is not logged in, they will receive an error message that says "You must be logged in"
-    // TODO: Does this display anywhere on the frontend? The user also shouldn't be able to even see the newEntry field if they aren't logged in, so will this redirect them?
-    if (!user) {
-      setError('You must be logged in');
-      return;
-    }
 
     // Extract the userId from the user object
     const userId = user.userId;
@@ -75,18 +68,11 @@ function NewEntry() {
 
       // Reset the state
       setBody('');
-      setError(null);
-      setEmptyFields([]);
       // Dispatch the new entry with response.data as the payload
       dispatch({ type: 'CREATE_ENTRY', payload: response.data });
       // Catch errors
     } catch (error) {
-      if (error.response) {
-        setError(error.response.data.error);
-        setEmptyFields(error.response.data.emptyFields);
-      } else {
-        setError('An error occurred while processing your request');
-      }
+      console.error('Error adding entry:', error);
     }
     // When the try/catch block completes, toggle the NewEntry section closed
     toggle();
@@ -94,20 +80,22 @@ function NewEntry() {
 
   return (
     <div className='NewEntry'>
-      {/* Button next to 'New Meditation' that toggles the NewEntry section open/closed */}
-      {/* Form container for the textarea and buttons */}
+      {/* Contains the toggle button and new entry header */}
       <div className='newEntryHeader'>
+        {/* Button next to 'New Meditation' that toggles the NewEntry section open/closed */}
         <button onClick={toggle}>+</button>
         {/* Displays either the date or 'New Meditation' based on the toggle state */}
         <p>{date}</p>
       </div>
       {/* Render the following content only if the 'open' state is true */}
       {open && (
-        // Form for submitting a new entry
+        // Form for submitting a new entry, contains cancel and save buttons
         <form method='post' onSubmit={handleSubmit}>
           <textarea className='entryText' id='body' name='body' rows={5} cols={25} onChange={e => setBody(e.target.value)} value={body} />
+          {/* Cancel toggles the new entry section closed */}
           <div className='newEntryButtons'>
             <input className='cancel' type='button' onClick={toggle} value='Cancel'></input>
+            {/* Save toggles the new entry section closed and saves data to database */}
             <input className='save' type='submit' value='Save'></input>
           </div>
         </form>

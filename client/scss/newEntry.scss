@@ -1,16 +1,11 @@
+/* Color Variables*/
 $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $tertiary-color: white;
 $shadow-color: rgb(172, 172, 172);
-$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
-@mixin new-entry-input-styles($bg-color: $primary-color, $font-size: medium) {
-  padding: 0.5em 0 0.5em 0;
-  margin: 0 0.5em 0.5em 0.5em;
-  min-width: 80px;
-  border-radius: 3px;
-  font-size: $font-size;
-}
+/* Font Family */
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
 .NewEntry {
   /* Styles for the main container */
@@ -100,7 +95,16 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
     }
   }
 
-  /* Buttons to either save the new entry or cancel and toggle the form closed */
+  /* Mixin for button styles */
+  @mixin new-entry-btn-styles($bg-color: $primary-color, $font-size: medium) {
+    padding: 0.5em 0 0.5em 0;
+    margin: 0 0.5em 0.5em 0.5em;
+    min-width: 80px;
+    border-radius: 3px;
+    font-size: $font-size;
+  }
+
+  /* Button container styles */
   .newEntryButtons {
     display: flex;
     justify-content: flex-end;
@@ -109,7 +113,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
     /* Cancel button styles */
     .cancel {
-      @include new-entry-input-styles;
+      @include new-entry-btn-styles;
       border: 1px solid $secondary-color;
       background-color: $tertiary-color;
       color: $secondary-color;
@@ -126,7 +130,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
     /* Save button styles */
     .save {
-      @include new-entry-input-styles;
+      @include new-entry-btn-styles;
       border: 1px solid $secondary-color;
       background-color: $secondary-color;
       color: $tertiary-color;
