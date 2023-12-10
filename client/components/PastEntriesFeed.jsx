@@ -1,4 +1,5 @@
-// Import React for building the component and useEffect for rendering pastEntries
+//** PAST ENTRIES FEED COMPONENT */
+
 import React, { useEffect } from 'react';
 
 // Import useEntriesContext and useAuthContext to manage state
@@ -10,9 +11,6 @@ import axios from '../axiosConfig.js';
 
 // Import PastEntry component for rendering individual past entries
 import PastEntry from './PastEntry.jsx';
-
-// Import styles for PastEntriesFeed
-import '../scss/pastEntriesFeed.scss';
 
 /**
  * PastEntriesFeed component renders a feed of past journal entries for the authenticated user.
@@ -60,7 +58,7 @@ const PastEntriesFeed = () => {
 
   // Check if entries is null, display a loading message
   if (entries === null) {
-    return <div>Loading...</div>;
+    return <div className='loading'>Loading...</div>;
   }
 
   // Render the PastEntriesFeed component
@@ -68,13 +66,10 @@ const PastEntriesFeed = () => {
     <div>
       {/* Title for the past meditation sessions */}
       <p className='pastMeditationTitle'>Past Meditation Sessions</p>
-      {/* Container for rendering individual past entries */}
-      <div className='entries'>
-        {/* Map through the entries and render each PastEntry component */}
-        {entries.map((entry, index) => (
-          <PastEntry key={entry._id || index} entry={entry} />
-        ))}
-      </div>
+      {/* Map through the entries and render each PastEntry component */}
+      {entries.map((entry, index) => (
+        <PastEntry key={entry._id || index} entry={entry} />
+      ))}
     </div>
   );
 };
