@@ -1,5 +1,9 @@
 import React, { lazy, Suspense } from 'react';
+
+// Import BrowserRouter for managing page routes and navigation 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
+// Import useAuthContext hook for user authentication
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
 // Lazy load internal components
@@ -10,6 +14,7 @@ const LazySignup = lazy(() => import('../pages/Signup.jsx'));
 const LazyAbout = lazy(() => import('../pages/About.jsx'));
 const LazyMeditation = lazy(() => import('../pages/Meditation.jsx'));
 
+// Import styles
 import '../scss/app.scss';
 
 /**
