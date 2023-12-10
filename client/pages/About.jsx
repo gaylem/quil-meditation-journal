@@ -1,6 +1,16 @@
-import React from 'react';
-import '../scss/page.scss';
+//** ABOUT PAGE */
 
+import React from 'react';
+
+/**
+ * React component for the About page.
+ *
+ * This page provides information about the quil meditation journal app.
+ * It includes details about the app's purpose and features.
+ * There is a contact form at the end.
+ *
+ * @returns {JSX.Element} The rendered About page component.
+ */
 const About = () => {
   return (
     <div className='pageContainer'>
