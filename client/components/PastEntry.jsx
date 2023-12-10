@@ -1,10 +1,10 @@
-// Import React, useState, and contexts
+//** PAST ENTRY COMPONENT */
+
 import React, { useState } from 'react';
+
+// Import useEntriesContext and useAuthContext to manage state
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
-
-// Import styles
-import '../scss/pastEntry.scss';
 
 // Import moment to format entry dates
 import moment from 'moment';

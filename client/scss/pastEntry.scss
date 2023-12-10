@@ -1,16 +1,11 @@
+/* Color Variables */
 $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $tertiary-color: white;
 $shadow-color: rgb(172, 172, 172);
-$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
-@mixin input-styles($bg-color: $secondary-color, $font-size: medium) {
-  padding: 0.5em 0 0.5em 0;
-  margin: 0 0.5em 0.5em 0.5em;
-  min-width: 80px;
-  border-radius: 3px;
-  font-size: $font-size;
-}
+/* Font Family */
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
 /* Container for each past entry */
 .PastEntry {
@@ -53,6 +48,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   }
 }
 
+/* Animation that makes past entry content fade in when toggled open */
 @keyframes fadeInAnimation {
   0% {
     opacity: 0;
@@ -62,7 +58,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   }
 }
 
-/* The container that holds the entry content and delete/edit buttons  */
+/* The container that holds the entry content and delete/edit buttons */
 .toggle-container {
   display: flex;
   flex-direction: column;
@@ -78,7 +74,16 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
     white-space: pre-wrap;
   }
 
-  /* Styles common to both delete and edit buttons */
+  /* Mixin for button styles */
+  @mixin past-entry-btn-styles($bg-color: $secondary-color, $font-size: medium) {
+    padding: 0.5em 0 0.5em 0;
+    margin: 0 0.5em 0.5em 0.5em;
+    min-width: 80px;
+    border-radius: 3px;
+    font-size: $font-size;
+  }
+
+  /* Button container styles */
   .pastEntryButtons {
     display: flex;
     justify-content: flex-end;
@@ -91,7 +96,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
   /* Delete button styles */
   .delete {
-    @include input-styles;
+    @include past-entry-btn-styles;
     border: 1px solid $secondary-color;
     background-color: $tertiary-color;
     color: $secondary-color;
@@ -108,7 +113,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
   /* Edit button styles */
   .edit {
-    @include input-styles;
+    @include past-entry-btn-styles;
     border: 1px solid $secondary-color;
     background-color: $secondary-color;
     color: $tertiary-color;
