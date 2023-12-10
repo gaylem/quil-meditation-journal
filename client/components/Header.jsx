@@ -32,6 +32,7 @@ function Header() {
   const handleLogoutBtnClick = () => {
     logout(user.userId);
     navigate('/login');
+    toggleSidebar();
   };
 
   // State and function to manage sidebar open/closed behavior.
@@ -51,6 +52,7 @@ function Header() {
       // If user is not logged in, redirect to the login page
       navigate('/login');
     }
+    toggleSidebar();
   };
 
   /**
