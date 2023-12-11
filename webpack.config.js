@@ -3,14 +3,15 @@ import HTMLWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 export default {
-  mode: process.env.NODE_ENV,
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './client/index.js',
   output: {
-    path: path.join(__dirname, 'public/build'),
+    path: path.join(__dirname, 'public/buiild'),
     filename: '[name].[contenthash].js',
     publicPath: '/',
   },
@@ -102,5 +103,6 @@ export default {
     }),
     new Dotenv(),
     new CompressionPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
 };
