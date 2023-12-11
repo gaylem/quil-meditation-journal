@@ -50,24 +50,19 @@ app.use((req, _, next) => {
 
 // Serve static files from the 'public' directory
 const publicPath = path.resolve(__dirname, 'public');
+app.use(express.static(publicPath));
 
 // Set Cache Control Header and ETag Header
-app.use(
-  '/images',
-  (req, res, next) => {
-    console.log('Custom middleware for images');
-
-    const originalSend = res.send;
-    res.send = function (body) {
-      const tag = etag(body);
-      console.log('ETag:', tag);
-      res.setHeader('ETag', tag);
-      originalSend.call(this, body);
-    };
-    next();
-  },
-  express.static(path.join(publicPath, 'images')),
-);
+app.use((req, res, next) => {
+  const originalSend = res.send;
+  res.send = function (body) {
+    const tag = etag(body);
+    console.log('ETag:', tag);
+    res.setHeader('ETag', tag);
+    originalSend.call(this, body);
+  };
+  next();
+});
 
 // Import Routes
 import entryRouter from './routers/entryRouter.js';
@@ -89,7 +84,7 @@ app.get('/*', function (req, res) {
 });
 
 // Catch-all route handler for unknown routes
-app.use((_, res) => res.status(404).send("A journey of a thousand miles begins with a single step...but not in this direction."));
+app.use((_, res) => res.status(404).send('A journey of a thousand miles begins with a single step...but not in this direction.'));
 
 // Express error handler
 app.use((err, _, res) => {
@@ -111,7 +106,7 @@ app.use((err, _, res) => {
 // TODO: Will I need this in CI/CD? Or is it just not doing anything?
 if (process.env.NODE_ENV === 'production') {
   // Statically serve everything in the build folder on the route '/build'
-  app.use('/public', express.static(path.join(__dirname, '../public')));
+  app.use('/public/build', express.static(path.join(__dirname, '../public/build')));
 }
 
 // Log the current environment
