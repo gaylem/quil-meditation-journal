@@ -3,7 +3,7 @@ $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
 
-/* Font Family */ 
+/* Font Family */
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
 /* Mixon for box shadow */
@@ -17,9 +17,9 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   flex-direction: column;
   position: fixed;
   top: 0;
-  left: -75em;
+  left: -76em;
   height: 100vh;
-  width: 15em;
+  width: 16em;
   background-color: white;
   border: 0.5px solid lightgray;
   z-index: 98; /* Set z-index higher than the main content */
@@ -29,13 +29,26 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
 /* Styles for sidebar content container and links */
 .sidebarContent {
-  padding: 1em 1em 1em 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  padding: 1em 0.75em;
   font-size: x-large;
   font-weight: 600;
   font-family: $paragraph-font;
 
   .link {
+    display: flex;
+    justify-content: left;
+    align-items: center;
     padding: 0.5em;
+    line-height: 1em;
+    .icon {
+      width: 20px;
+      height: 20px;
+      padding: 0.5em;
+    }
   }
 
   a {
@@ -45,7 +58,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
   a:hover {
     color: $primary-color;
-    text-decoration: underline;
+    text-shadow: 1px 1px 5px lightgray;
   }
 }
 
