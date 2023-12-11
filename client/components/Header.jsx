@@ -8,7 +8,8 @@ import { useLogout } from '../hooks/useLogout.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
 // Import hamburger icon
-import hamburger from '../../public/assets/hamburger.png';
+import hamburger from '../../public/assets/icons/hamburger.png';
+import featherHeader from '../../public/assets/icons/feather-header.png';
 
 // Import Sidebar component for navigation
 import Sidebar from './Sidebar.jsx';
@@ -72,7 +73,10 @@ function Header() {
         {/* Hamburger menu icon toggles the sidebar open and closed when clicked. */}
         <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='Button that opens sidebar navigation panel' />
         {/* Application title */}
-        <h1 onClick={handleTitleClick}>quil</h1>
+        <h1 onClick={handleTitleClick}>
+          quil
+          <img src={featherHeader} />
+        </h1>
         {/* Logout button is displayed if a user is logged in, and it logs the user out when clicked. */}
 
         {user && (
