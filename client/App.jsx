@@ -15,6 +15,7 @@ const LazyLogin = lazy(() => import('./pages/Login.jsx'));
 const LazySignup = lazy(() => import('./pages/Signup.jsx'));
 const LazyAbout = lazy(() => import('./pages/About.jsx'));
 const LazyMeditation = lazy(() => import('./pages/Meditation.jsx'));
+const LazyFooter = lazy(() => import('./components/Footer.jsx'));
 
 /**
  * Main application component that handles routing and rendering of pages.
@@ -51,6 +52,7 @@ function App() {
           </div>
         </Suspense>
       </BrowserRouter>
+      <LazyFooter />
     </div>
   );
 }
