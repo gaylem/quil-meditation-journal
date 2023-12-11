@@ -4,12 +4,12 @@ import React, { useState, useEffect } from 'react';
 
 // Import sound hook and audio file
 import useSound from 'use-sound';
-import singingBowl from '../../public/assets/singing-bowl.mp3';
+import singingBowl from '../../public/assets/audio/singing-bowl.mp3';
 
 // Icon Images for play, pause, and reset buttons
-import playImage from '../../public/assets/play-button.png';
-import resetImage from '../../public/assets/reset-button.png';
-import pauseImage from '../../public/assets/pause-button.png';
+import playImage from '../../public/assets/icons/play-button.png';
+import resetImage from '../../public/assets/icons/reset-button.png';
+import pauseImage from '../../public/assets/icons/pause-button.png';
 
 /**
  * Timer component for meditation sessions.
