@@ -7,7 +7,7 @@
 
 // Import React and ReactDOM
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 // Import the main App component
 import App from './App.jsx';
@@ -18,7 +18,7 @@ import { AuthContextProvider } from './context/AuthContext.jsx';
 import { EntriesContextProvider } from './context/EntryContext.jsx';
 
 // Create a root element using ReactDOM.createRoot
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
 
 /**
  * Render the main application within React.StrictMode.
