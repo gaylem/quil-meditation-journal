@@ -1,6 +1,6 @@
 //** LOGIN/SIGNUP PAGE BLURB */
 
-import React, { useState } from 'react';
+import React from 'react';
 
 /**
  * Blurb component provides the same copy on the Login and Signup pages.
