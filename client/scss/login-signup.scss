@@ -11,9 +11,10 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 .loginSignupContainer {
   display: flex;
   justify-content: center;
+  height: 100vh;
+  width: 100vw;
   align-items: center;
   flex-wrap: wrap;
-  padding: 8em 1em 1em 1em;
   font-family: $paragraph-font;
 }
 
