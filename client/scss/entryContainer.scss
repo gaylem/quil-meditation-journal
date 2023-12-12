@@ -1,7 +1,10 @@
+/* Color variables */
 $quote-color: rgb(55, 54, 54);
 $author-color: rgb(110, 110, 110);
 $shadow-color: rgba(211, 211, 211, 0.8);
 $quote-background-gradient: linear-gradient(#fbeaeb, white);
+
+/* Font Families */
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
@@ -21,7 +24,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   padding-bottom: 5em;
 }
 
-/* Main quote container on homepage */
+/* Main timer container on homepage */
 .TimerBox {
   font-family: $paragraph-font;
   font-size: 1.3em;
@@ -37,34 +40,13 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   }
 }
 
+/* Contains the new journal entry functionality */
 .NewEntryBox {
   display: flex;
   justify-content: center;
 }
 
-/* Quote fades in when page loads */
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.quote,
-.author {
-  animation: fadeInAnimation ease 3s;
-  animation-iteration-count: 1;
-}
-
-.author {
-  font-weight: bold;
-  color: $author-color;
-  padding-top: 1em;
-}
-
-/* Line that separates New Meditation section from Past Meditatio Sessions */
+/* Line that separates Timer and New Meditation sections from Past Meditation Sessions */
 hr {
   border: 0.5px solid lightgray;
   width: 95%;

@@ -1,10 +1,10 @@
 //** ENTRY ROUTER */
 
 /* This router handles all entry-related functions for an individual user's account. It includes: 
-    1. GET /api/entries/:id => getAllEntries
-    2. POST /api/entries/:id => addEntry 
-    3. PATCH /api/entries/:id => updateEntry
-    4. DELETE /api/entries/:id => deleteEntry
+    1. GET /api/entries/:id => getAllEntries by userId
+    2. POST /api/entries/:id => addEntry with userId
+    3. PATCH /api/entries/:id => updateEntry by entry _id
+    4. DELETE /api/entries/:id => deleteEntry by entry _id
 */
 
 import express from 'express';
@@ -18,7 +18,7 @@ const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
 /**
  * @route GET /entries/:id
  * @description Get all entries for a specific user
- * @param req.params userId: String
+ * @param req.params userId
  */
 router.get('/:id', getAllEntries);
 
@@ -33,15 +33,15 @@ router.post('/', addEntry);
 
 /**
  * @route PATCH /entries/:id
- * @description Update a specific entry by ID
- * @param req.params entry ID: String
+ * @description Update a specific entry 
+ * @param req.params entry _id
  */
 router.patch('/:id', updateEntry);
 
 /**
  * @route DELETE /entries/:id
- * @description Delete a specific entry by ID
- * @param req.params entry ID: String
+ * @description Delete a specific entry
+ * @param req.params entry _id
  */
 router.delete('/:id', deleteEntry);
 

@@ -1,22 +1,24 @@
+//** INDEX.JS */
+
 /**
  * Entry point of the quil application.
  * Initializes the main App component and provides necessary context providers.
  */
 
-// Import necessary dependencies from React and ReactDOM
+// Import React and ReactDOM
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 // Import the main App component
-import App from './components/App.jsx';
-import './scss/main.scss'
+import App from './App.jsx';
+import './scss/main.scss';
 
 // Import context providers for authentication and entries
 import { AuthContextProvider } from './context/AuthContext.jsx';
 import { EntriesContextProvider } from './context/EntryContext.jsx';
 
 // Create a root element using ReactDOM.createRoot
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
 
 /**
  * Render the main application within React.StrictMode.

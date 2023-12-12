@@ -13,8 +13,8 @@ const entryController = {};
 /**
  * @route GET /api/entries
  * @description Retrieves all entries for a user
- * @param {Object} res - The response object (Array of objects)
- * @returns {Object} - JSON response containing all entries for the user or an error response
+ * @param {Object} req.params - userId
+ * @returns {Object} - JSON response containing an array of all entries objects for the user or an error response
  */
 entryController.getAllEntries = async (req, res) => {
   try {
@@ -45,7 +45,7 @@ entryController.getAllEntries = async (req, res) => {
 
 /**
  * @route POST /api/entries/
- * @description Adds a new entry to the database
+ * @description Adds a user's new entry to the database
  * @param {Object} req - The request object
  *  - body (content of meditation journal entry): String
  *  - userId: Integer
@@ -73,38 +73,6 @@ entryController.addEntry = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       log: `entryController.addEntry: ERROR ${error}`,
-      status: 500,
-      message: 'Something went wrong. Please try again later.',
-    });
-  }
-};
-
-/**
- * @route GET /api/entries/:id
- * @description Finds one entry by ID
- * @param req.params _id of the entry to be found
- * @param {Object} req - The request object
- * @param {Object} res - The response object
- * @returns {Object} - JSON response containing the found entry or an error response
- */
-// TODO: Find one entry by id (is this even needed?)
-entryController.findEntry = async (req, res) => {
-  try {
-    const entryId = req.params.id;
-    const foundEntry = await Entry.findOne({ _id: entryId });
-
-    if (!foundEntry || foundEntry.length === 0) {
-      return res.status(404).json({
-        log: 'entryController.findEntry: foundEntry not found.',
-        status: 404,
-        message: 'Your entry could not found.',
-      });
-    }
-    res.locals.entry = foundEntry;
-    return res.status(200).json(res.locals.entry);
-  } catch (error) {
-    return res.status(500).json({
-      log: `entryController.findEntry: ERROR ${error}`,
       status: 500,
       message: 'Something went wrong. Please try again later.',
     });
@@ -181,6 +149,38 @@ entryController.deleteEntry = async (req, res) => {
       message: 'Something went wrong. Please try again later.',
     });
   }
+
+  // TODO: Find one entry by id (is this even needed?)
+  /**
+   * @route GET /api/entries/:id
+   * @description Finds one entry by ID
+   * @param req.params _id of the entry to be found
+   * @param {Object} req - The request object
+   * @param {Object} res - The response object
+   * @returns {Object} - JSON response containing the found entry or an error response
+   */
+  entryController.findEntry = async (req, res) => {
+    try {
+      const entryId = req.params.id;
+      const foundEntry = await Entry.findOne({ _id: entryId });
+
+      if (!foundEntry || foundEntry.length === 0) {
+        return res.status(404).json({
+          log: 'entryController.findEntry: foundEntry not found.',
+          status: 404,
+          message: 'Your entry could not found.',
+        });
+      }
+      res.locals.entry = foundEntry;
+      return res.status(200).json(res.locals.entry);
+    } catch (error) {
+      return res.status(500).json({
+        log: `entryController.findEntry: ERROR ${error}`,
+        status: 500,
+        message: 'Something went wrong. Please try again later.',
+      });
+    }
+  };
 };
 
 export default entryController;

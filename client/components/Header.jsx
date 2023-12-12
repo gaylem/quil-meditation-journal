@@ -1,16 +1,17 @@
-// React and hooks build the Header component and manage state
+//** HEADER COMPONENT */
+
 import React, { useState } from 'react';
-import { useLogout } from '../hooks/useLogout.js';
-import { useAuthContext } from '../hooks/useAuthContext.js';
 import { useNavigate } from 'react-router-dom';
 
-// Import header styles
-import '../scss/header.scss';
+// Import useLogout hook and useAuthContext to manage logout and authentication.
+import { useLogout } from '../hooks/useLogout.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
-// The hamburger icon is imported from the assets folder.
-import hamburger from '../../public/assets/hamburger.png';
+// Import hamburger icon
+import hamburger from '../../public/assets/icons/hamburger.png';
+import featherHeader from '../../public/assets/icons/feather-header.png';
 
-// Internal Sidebar component is imported for navigation.
+// Import Sidebar component for navigation
 import Sidebar from './Sidebar.jsx';
 
 /**
@@ -25,13 +26,14 @@ function Header() {
   // useAuthContext hook is used to retrieve user information for authentication.
   const { user } = useAuthContext();
 
-  // useHistory hook is used to redirect the user to either the homepage or login page when they click the title
+  // useNavigate hook is used to redirect the user to either the homepage or login page when they click the title.
   const navigate = useNavigate();
 
   // handleClick function manages logout button clicks and refresh tokens in local storage.
   const handleLogoutBtnClick = () => {
     logout(user.userId);
     navigate('/login');
+    if (sidebarOpen) toggleSidebar();
   };
 
   // State and function to manage sidebar open/closed behavior.
@@ -42,21 +44,25 @@ function Header() {
     setSidebarOpen(!sidebarOpen);
   };
 
-  //
+  // Redirects user to either the homepage or login page when title is clicked
   const handleTitleClick = () => {
     if (user) {
-      // Redirect to the homepage if the user is logged in
+      // If user is logged in, redirect to the homepage
       navigate('/');
+      if (sidebarOpen) toggleSidebar();
     } else {
-      // Redirect to the login page if the user is not logged in
+      // If user is not logged in, redirect to the login page
       navigate('/login');
     }
   };
 
   /**
-   * Main header component containing the hamburger menu, title, and logout button.
+   * Main header component, which contains:
    *
-   * This component contains a button that toggles the sidebar open and closed, the app h1 title, and a logout button that logs users out of their account
+   * the hamburger menu icon that toggles the sidebar open and closed,
+   * the app h1 title,
+   * the username,
+   * and a logout button that logs users out of their account
    *
    * @returns {JSX.Element} The rendered Header component.
    */
@@ -67,15 +73,20 @@ function Header() {
         {/* Hamburger menu icon toggles the sidebar open and closed when clicked. */}
         <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='Button that opens sidebar navigation panel' />
         {/* Application title */}
-        <h1 onClick={handleTitleClick}>quil</h1>
-        {/* Logout button is displayed if a user is logged in and logs the user out when clicked. */}
+        <h1 onClick={handleTitleClick}>
+          quil
+          <img src={featherHeader} />
+        </h1>
+        {/* Logout button is displayed if a user is logged in, and it logs the user out when clicked. */}
 
         {user && (
           <div className='auth-box'>
             <div className='user'>
+              {/* Username */}
               <p> Hey, {user.username}!</p>
             </div>
             <div className='logout'>
+              {/* Logout button */}
               <button onClick={handleLogoutBtnClick}>Log Out</button>
             </div>
           </div>

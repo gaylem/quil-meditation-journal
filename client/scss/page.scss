@@ -1,9 +1,13 @@
+/* Color Variables */
 $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
+
+/* Font Families */
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
+/* Main page container */
 .pageContainer {
   display: flex;
   margin: 3.5em 0 6em 0;
@@ -11,6 +15,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   align-items: center;
 }
 
+/* Page content */
 .pageContent {
   padding-top: 3em;
   max-width: 50%;
@@ -18,12 +23,16 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   font-size: large;
   line-height: 2em;
   color: rgb(46, 46, 46);
+
+  // Media queries
   @media (max-width: 1300px) {
     max-width: 70%;
   }
   @media (max-width: 500px) {
     max-width: 90%;
   }
+
+  // Headers
   h2 {
     font-family: $header-font;
     font-size: 2.5rem;
@@ -31,6 +40,8 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     color: $secondary-color;
     text-shadow: 1px 1px 5px lightgray;
   }
+
+  // Bold paragraph text
   .purple {
     color: $primary-color;
     font-weight: bold;
@@ -74,6 +85,7 @@ a:hover {
   color: $primary-color;
 }
 
+/* Contact form styles */
 .contactFormContainer {
   display: flex;
   justify-content: left;

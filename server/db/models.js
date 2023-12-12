@@ -45,6 +45,6 @@ const userSchema = new Schema(
   { timestamps: true }, // Automatically generate "createdAt" and "updatedAt" timestamps
 );
 
-// Exports
+// Export Entry and User schemas
 export const Entry = mongoose.model('Entry', entrySchema);
 export const User = mongoose.model('User', userSchema);

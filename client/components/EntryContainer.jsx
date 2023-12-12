@@ -1,17 +1,17 @@
-// Imports
+//** ENTRY CONTAINER COMPONENT */
+
 import React from 'react';
+
+// Import components
 import NewEntry from './NewEntry.jsx';
 import PastEntriesFeed from './PastEntriesFeed.jsx';
 import Timer from './Timer.jsx';
-
-// Import the styles for the EntryContainer
-import '../scss/entryContainer.scss';
 
 /**
  * EntryContainer - Main journal entry container that organizes new and past entries.
  *
  * This component serves as a container for both creating new journal entries and displaying
- * past entries in a feed. It also includes a quote block with an inspirational quote and its author.
+ * past entries in a feed. It also includes a meditation timer component.
  *
  * @returns {JSX.Element} The rendered EntryContainer component.
  */
@@ -19,7 +19,7 @@ function EntryContainer() {
   return (
     // Main EntryContainer component
     <div className='EntryContainer'>
-      {/* Quote block with an inspirational quote and its author */}
+      {/* TimerBox that contains the meditation Timer component */}
       <div className='TimerBox'>
         <Timer />
       </div>

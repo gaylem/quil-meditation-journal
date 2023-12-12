@@ -1,9 +1,9 @@
-// Import React and EntryContainer 
-import React from 'react';
-import EntryContainer from '../components/EntryContainer.jsx';
+//** HOME PAGE */
 
-// Import styles
-import '../scss/app.scss';
+import React from 'react';
+
+// Import the EntryContainer component
+import EntryContainer from '../components/EntryContainer.jsx';
 
 /**
  * Home component represents the main page of the application.
@@ -21,5 +21,4 @@ function Home() {
   );
 }
 
-// Export the Home component as the default export
 export default Home;

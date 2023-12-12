@@ -1,7 +1,17 @@
-import React from 'react';
-import '../scss/page.scss';
+//** HOW TO MEDITATE PAGE */
 
-const About = () => {
+import React from 'react';
+
+/**
+ * React component for the How to Meditate page.
+ *
+ * This page provides instructions for meditation.
+ * It includes details about the techniques and further reading.
+ * There is a contact form at the end.
+ *
+ * @returns {JSX.Element} The rendered About page component.
+ */
+const Meditate = () => {
   return (
     <div className='pageContainer'>
       <div className='pageContent'>
@@ -155,4 +165,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Meditate;
