@@ -4,14 +4,15 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Import Express
+import express from 'express';
+const app = express();
+
 // Import required modules
 import { fileURLToPath } from 'url';
 import path from 'path';
-import express from 'express';
-const app = express();
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import etag from 'etag';
 
@@ -36,11 +37,10 @@ app.use(
 );
 
 // Middleware setup
-app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(helmet());
+app.use(express.json()); // Parses the JSON data and makes it available in the req.body object.
+app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
+app.use(cookieParser()); // Parses incoming cookie headers, extracts the cookies, and makes them available in the req.cookies object.
+app.use(helmet()); // Applies HTTP headers such as X-Content-Type-Options, Strict-Transport-Security, X-Frame-Options, X-XSS-Protection, and others for enhanced security
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
@@ -50,24 +50,19 @@ app.use((req, _, next) => {
 
 // Serve static files from the 'public' directory
 const publicPath = path.resolve(__dirname, 'public');
+app.use(express.static(publicPath));
 
 // Set Cache Control Header and ETag Header
-app.use(
-  '/images',
-  (req, res, next) => {
-    console.log('Custom middleware for images');
-
-    const originalSend = res.send;
-    res.send = function (body) {
-      const tag = etag(body);
-      console.log('ETag:', tag);
-      res.setHeader('ETag', tag);
-      originalSend.call(this, body);
-    };
-    next();
-  },
-  express.static(path.join(publicPath, 'images')),
-);
+app.use((req, res, next) => {
+  const originalSend = res.send;
+  res.send = function (body) {
+    const tag = etag(body);
+    console.log('ETag:', tag);
+    res.setHeader('ETag', tag);
+    originalSend.call(this, body);
+  };
+  next();
+});
 
 // Import Routes
 import entryRouter from './routers/entryRouter.js';
@@ -89,7 +84,7 @@ app.get('/*', function (req, res) {
 });
 
 // Catch-all route handler for unknown routes
-app.use((_, res) => res.status(404).send("This is not the page you're looking for..."));
+app.use((_, res) => res.status(404).send('A journey of a thousand miles begins with a single step...but not in this direction.'));
 
 // Express error handler
 app.use((err, _, res) => {
@@ -108,9 +103,10 @@ app.use((err, _, res) => {
 });
 
 // Serve static files in production
+// TODO: Will I need this in CI/CD? Or is it just not doing anything?
 if (process.env.NODE_ENV === 'production') {
   // Statically serve everything in the build folder on the route '/build'
-  app.use('/build', express.static(path.join(__dirname, '../build')));
+  app.use('/public/build', express.static(path.join(__dirname, '../public/build')));
 }
 
 // Log the current environment

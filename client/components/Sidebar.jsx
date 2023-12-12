@@ -1,10 +1,15 @@
-// Import React from React and Link from react-router-dom
+//** SIDEBAR COMPONENT */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Import styles
-import '../scss/sidebar.scss';
-import circle from '../../public/assets/close-button.png';
+// Import close button icon
+import circle from '../../public/assets/icons/close-button.png';
+import gear from '../../public/assets/icons/gear.png';
+import brain from '../../public/assets/icons/brain.png';
+import question from '../../public/assets/icons/question.png';
+import feather from '../../public/assets/icons/feather.png';
+import smiley from '../../public/assets/icons/smiley.png';
 
 // Import props validation
 import PropTypes from 'prop-types';
@@ -28,13 +33,33 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       <div className='sidebarContent'>
         {/* Link to the 'About' page */}
         <div className='link'>
+          <img src={feather} className='icon' id='gear' alt='gear icon' />
           <Link to='/about' onClick={toggleSidebar}>
             About quil
           </Link>
         </div>
         <div className='link'>
+          <img src={brain} className='icon' id='gear' alt='gear icon' />
           <Link to='/meditation' onClick={toggleSidebar}>
             How to Meditate
+          </Link>
+        </div>
+        <div className='link'>
+          <img src={question} className='icon' id='gear' alt='gear icon' />
+          <Link to='/help-faqs' onClick={toggleSidebar}>
+            Help & FAQs
+          </Link>
+        </div>
+        <div className='link'>
+          <img src={smiley} className='icon' id='gear' alt='gear icon' />
+          <Link to='/get-involved' onClick={toggleSidebar}>
+            Get Involved
+          </Link>
+        </div>
+        <div className='link'>
+          <img src={gear} className='icon' id='gear' alt='gear icon' />
+          <Link to='/account' onClick={toggleSidebar}>
+            Account
           </Link>
         </div>
       </div>

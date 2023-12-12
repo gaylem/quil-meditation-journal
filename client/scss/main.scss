@@ -1,10 +1,18 @@
+/* Import all scss stylesheets into one main stylesheet for index.js file */
+
+//** GLOBAL */
 @import 'app';
+
+//** COMPONENTS */
 @import 'entryContainer';
 @import 'header';
-@import 'login-signup';
 @import 'newEntry';
-@import 'page';
 @import 'pastEntriesFeed';
 @import 'pastEntry';
 @import 'sidebar';
 @import 'timer';
+@import 'footer';
+
+//** PAGES */
+@import 'login-signup';
+@import 'page';

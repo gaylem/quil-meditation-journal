@@ -1,9 +1,12 @@
-/* Variables and mixin for drop shadow */
+/* Color Variables */
 $primary-color: #721bac;
 $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
+
+/* Font Family */
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
+/* Mixon for box shadow */
 @mixin box-shadow($offset-x, $offset-y, $blur, $color) {
   box-shadow: $offset-x $offset-y $blur $color;
 }
@@ -14,9 +17,9 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   flex-direction: column;
   position: fixed;
   top: 0;
-  left: -75em;
+  left: -76em;
   height: 100vh;
-  width: 15em;
+  width: 16em;
   background-color: white;
   border: 0.5px solid lightgray;
   z-index: 98; /* Set z-index higher than the main content */
@@ -24,14 +27,28 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   @include box-shadow(0, 2px, 8px, $shadow-color);
 }
 
+/* Styles for sidebar content container and links */
 .sidebarContent {
-  padding: 1em 1em 1em 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  padding: 1em 0.75em;
   font-size: x-large;
   font-weight: 600;
   font-family: $paragraph-font;
 
   .link {
+    display: flex;
+    justify-content: left;
+    align-items: center;
     padding: 0.5em;
+    line-height: 1em;
+    .icon {
+      width: 20px;
+      height: 20px;
+      padding: 0.5em;
+    }
   }
 
   a {
@@ -41,7 +58,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
   a:hover {
     color: $primary-color;
-    text-decoration: underline;
+    text-shadow: 1px 1px 5px lightgray;
   }
 }
 
@@ -58,6 +75,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   padding: 1em;
   width: 2em;
   height: 2em;
+  cursor: pointer;
 }
 
 /* Expand width of sidebar on mobile devices to take up entire screen */

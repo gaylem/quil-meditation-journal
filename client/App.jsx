@@ -1,16 +1,21 @@
+//** APP COMPONENT */
+
 import React, { lazy, Suspense } from 'react';
+
+// Import BrowserRouter for managing page routes and navigation
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuthContext } from '../hooks/useAuthContext.js';
+
+// Import useAuthContext hook for user authentication
+import { useAuthContext } from './hooks/useAuthContext.js';
 
 // Lazy load internal components
-const LazyHeader = lazy(() => import('./Header.jsx'));
-const LazyHome = lazy(() => import('../pages/Home.jsx'));
-const LazyLogin = lazy(() => import('../pages/Login.jsx'));
-const LazySignup = lazy(() => import('../pages/Signup.jsx'));
-const LazyAbout = lazy(() => import('../pages/About.jsx'));
-const LazyMeditation = lazy(() => import('../pages/Meditation.jsx'));
-
-import '../scss/app.scss';
+const LazyHeader = lazy(() => import('./components/Header.jsx'));
+const LazyHome = lazy(() => import('./pages/Home.jsx'));
+const LazyLogin = lazy(() => import('./pages/Login.jsx'));
+const LazySignup = lazy(() => import('./pages/Signup.jsx'));
+const LazyAbout = lazy(() => import('./pages/About.jsx'));
+const LazyMeditation = lazy(() => import('./pages/Meditation.jsx'));
+const LazyFooter = lazy(() => import('./components/Footer.jsx'));
 
 /**
  * Main application component that handles routing and rendering of pages.
@@ -47,6 +52,7 @@ function App() {
           </div>
         </Suspense>
       </BrowserRouter>
+      <LazyFooter />
     </div>
   );
 }
