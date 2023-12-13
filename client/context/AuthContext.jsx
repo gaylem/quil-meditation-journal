@@ -47,6 +47,9 @@ export const AuthContextProvider = ({ children }) => {
     accessToken: null,
   });
 
+  /**
+   * Effect to check for a stored user in local storage and update the context with the stored user details.
+   */
   useEffect(() => {
     try {
       // Check if a user is stored in local storage
@@ -62,6 +65,9 @@ export const AuthContextProvider = ({ children }) => {
     }
   }, []);
 
+  /**
+   * Effect to refresh the access token at intervals and update the context with new tokens and user details.
+   */
   useEffect(() => {
     const refreshAccessToken = async () => {
       try {
