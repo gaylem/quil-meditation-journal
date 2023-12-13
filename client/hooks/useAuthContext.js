@@ -1,3 +1,5 @@
+//** USE AUTH CONTEXT HOOK */
+
 // Import AuthContext and useContext
 import { AuthContext } from '../context/AuthContext.jsx';
 import { useContext } from 'react';
