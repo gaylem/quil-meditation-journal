@@ -3,9 +3,9 @@
 /* Includes: 
     1. signupUser (POST /api/users/signup) - Creates a new user in the database
     2. loginUser (POST /api/users/login) - Authenticates a user and returns a token
-        - Can be used to verify a user outside of login proces
+        - Can be used to verify a user outside of login process
     3. authUser (POST /api/users/token) - Authenticates the access token in the request headers
-    4. logoutUser (POST /api/users/logout) - Logs a user out by removing the provided refresh token from the database.
+    4. logoutUser (POST /api/users/logout) - Logs a user out by removing the provided refresh token from the database and cookies.
 
 */
 
@@ -14,8 +14,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { User } from '../db/models.js';
 import { createTokens, refreshTokens } from '../utils/token.utils.js';
+import { isValidSignup } from '../utils/credentials.utils.js';
 import bcrypt from 'bcryptjs';
-import validator from 'validator';
 import jwt from 'jsonwebtoken';
 
 // userController object that contains the methods below
@@ -32,33 +32,6 @@ const userController = {};
 userController.signupUser = async (req, res) => {
   // Extract the username, email, and password
   const { username, email, password } = req.body;
-  // Validate signup input
-  const isValidSignup = async () => {
-    // Did the user input data into all three fields?
-    if (!username || !email || !password) {
-      throw Error('All fields must be filled');
-    }
-    // Is the email a real email?
-    if (!validator.isEmail(email)) {
-      throw Error('Email not valid');
-    }
-    // Is the password strong enough?
-    /* Default options: { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1, returnScore: false, pointsPerUnique: 1, pointsPerRepeat: 0.5, pointsForContainingLower: 10, pointsForContainingUpper: 10, pointsForContainingNumber: 10, pointsForContainingSymbol: 10 } */
-    if (!validator.isStrongPassword(password)) {
-      throw Error('Password not strong enough');
-    }
-    // Is the email already being used?
-    const emailExists = await User.findOne({ email });
-    if (emailExists) {
-      throw Error('Email already in use');
-    }
-    // Is the username already being used?
-    const usernameExists = await User.findOne({ username });
-    if (usernameExists) {
-      throw Error('Username already in use');
-    }
-  };
-
   try {
     // Invoke isValidSignup to confirm input is valid
     isValidSignup();
@@ -181,7 +154,7 @@ userController.loginUser = async (req, res) => {
  * @returns {Function} Next or the response object
  */
 userController.authUser = async (req, res) => {
-  // Assign private and private to variables
+  // Assign secretKey and accessToken to variables
   const secretKey = process.env.SECRET_KEY;
   const accessToken = req.headers.authorization?.split(' ')[1];
   // If the accessToken returns false, throw an error
