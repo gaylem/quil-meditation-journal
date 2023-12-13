@@ -34,7 +34,7 @@ userController.signupUser = async (req, res) => {
   const { username, email, password } = req.body;
   try {
     // Invoke isValidSignup to confirm input is valid
-    isValidSignup();
+    isValidSignup(username, email, password);
     // Generate salt and hash for password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
