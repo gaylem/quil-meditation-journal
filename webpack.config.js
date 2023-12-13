@@ -11,7 +11,7 @@ export default {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './client/index.js',
   output: {
-    path: path.join(__dirname, 'public/buiild'),
+    path: path.join(__dirname, 'public/build'),
     filename: '[name].[contenthash].js',
     publicPath: '/',
   },
@@ -39,7 +39,7 @@ export default {
             loader: 'file-loader',
             options: {
               name: '[name].[contenthash].[ext]',
-              outputPath: 'images', // or your preferred output directory
+              outputPath: 'assets/images', // or your preferred output directory
             },
           },
           {
@@ -58,7 +58,7 @@ export default {
         loader: 'file-loader',
         options: {
           name: '[name].[ext]',
-          outputPath: 'audio',
+          outputPath: 'assets/audio',
         },
       },
     ],
@@ -103,6 +103,6 @@ export default {
     }),
     new Dotenv(),
     new CompressionPlugin(),
-    new BundleAnalyzerPlugin(),
+    process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
   ],
 };

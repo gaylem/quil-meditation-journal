@@ -57,7 +57,6 @@ app.use((req, res, next) => {
   const originalSend = res.send;
   res.send = function (body) {
     const tag = etag(body);
-    console.log('ETag:', tag);
     res.setHeader('ETag', tag);
     originalSend.call(this, body);
   };
@@ -97,7 +96,7 @@ app.use((err, _, res) => {
   // Merge the default error object with the provided error, if any
   const errorObj = Object.assign({}, defaultErr, err);
   // Log the error
-  console.log(errorObj.log);
+  console.error(errorObj.log);
   // Send a JSON response with the error status and message
   return res.status(errorObj.status).json(errorObj.message);
 });

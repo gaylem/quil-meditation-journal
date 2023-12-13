@@ -18,16 +18,22 @@ export const useLogout = () => {
    * @param {string} refreshToken - User's refresh token for server-side logout.
    */
 
-  const logout = async (userId) => {
+  const logout = async userId => {
     try {
       // Send a request to the server to logout and invalidate the refresh token
-      const response = await fetch(`/api/users/logout/${userId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `/api/users/logout/${userId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ user }),
         },
-        body: JSON.stringify({user}),
-      });
+        {
+          withCredentials: true,
+        },
+      );
 
       // Check if the server responds with a successful logout status (204)
       if (response.status === 204) {
