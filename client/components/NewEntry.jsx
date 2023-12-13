@@ -62,7 +62,7 @@ function NewEntry() {
     try {
       const response = await axios.post('/api/entries', entry, {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.accessToken}`,
         },
       });
 
