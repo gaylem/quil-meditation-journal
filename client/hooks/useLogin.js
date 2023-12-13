@@ -34,16 +34,10 @@ export const useLogin = () => {
 
     try {
       // Make a POST request to the login endpoint
-      const response = await axios.post(
-        '/api/users/login',
-        {
-          username,
-          password,
-        },
-        {
-          withCredentials: true,
-        },
-      );
+      const response = await axios.post('/api/users/login', {
+        username,
+        password,
+      });
 
       // Extract JSON data from the response
       const user = response.data;
