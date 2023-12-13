@@ -4,10 +4,14 @@ import { useContext } from 'react';
 
 /**
  * A custom React hook for accessing the authentication context.
- * @returns {Object} The authentication context object.
- * @property {Object} user - The user object from the authentication context.
+ *
+ * @typedef {Object} AuthContextValue
+ * @property {Object} user - The user object from the authentication context. Contains username, accessToken, and userId.
  * @property {string} accessToken - The access token from the authentication context.
  * @property {Function} dispatch - The dispatch function from the authentication context.
+ *
+ * @returns {AuthContextValue} The authentication context object.
+ * @throws {Error} Throws an error if used outside of an AuthContextProvider.
  */
 export const useAuthContext = () => {
   // Get the authentication context using the useContext hook
