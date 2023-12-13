@@ -5,12 +5,15 @@
     2. POST /api/entries/:id => addEntry with userId
     3. PATCH /api/entries/:id => updateEntry by entry _id
     4. DELETE /api/entries/:id => deleteEntry by entry _id
+
+    User is authenticated with authMiddleware when all routers are called before executing the controller.
 */
 
 import express from 'express';
 const router = express.Router();
 
 import entryController from '../controllers/entryController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
 
 // Destructure the functions if needed
 const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
@@ -20,7 +23,7 @@ const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
  * @description Get all entries for a specific user
  * @param req.params userId
  */
-router.get('/:id', getAllEntries);
+router.get('/:id', authMiddleware, getAllEntries);
 
 /**
  * @route POST /entries/:id
@@ -29,20 +32,20 @@ router.get('/:id', getAllEntries);
  *  - body: String
  *  - userId: String
  */
-router.post('/', addEntry);
+router.post('/', authMiddleware, addEntry);
 
 /**
  * @route PATCH /entries/:id
- * @description Update a specific entry 
+ * @description Update a specific entry
  * @param req.params entry _id
  */
-router.patch('/:id', updateEntry);
+router.patch('/:id', authMiddleware, updateEntry);
 
 /**
  * @route DELETE /entries/:id
  * @description Delete a specific entry
  * @param req.params entry _id
  */
-router.delete('/:id', deleteEntry);
+router.delete('/:id', authMiddleware, deleteEntry);
 
 export default router;

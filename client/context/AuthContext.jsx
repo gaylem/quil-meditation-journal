@@ -6,6 +6,19 @@ import axios from '../axiosConfig.js';
 import PropTypes from 'prop-types';
 
 /**
+ * @typedef {Object} User
+ * @property {string} username - Username for the user.
+ * @property {string} accessToken - Access token for the user.
+ * @property {string} userId - Unique identifier for the user.
+ */
+
+/**
+ * @typedef {Object} AuthState
+ * @property {User | null} user - Current authenticated user or null if not authenticated.
+ * @property {string | null} accessToken - Access token for the authenticated user or null.
+ */
+
+/**
  * Context for managing authentication state.
  * @type {React.Context<AuthContextValue>}
  */
@@ -47,12 +60,15 @@ export const AuthContextProvider = ({ children }) => {
     accessToken: null,
   });
 
+  /**
+   * Effect to check for a stored user in local storage and update the context with the stored user details.
+   */
   useEffect(() => {
     try {
       // Check if a user is stored in local storage
       const storedUser = JSON.parse(localStorage.getItem('user'));
-
-      if (storedUser) {
+      
+      if (storedUser && storedUser.accessToken) {
         // If the user is found, update the context with stored user details
         dispatch({ type: 'LOGIN', payload: storedUser });
         dispatch({ type: 'ACCESS_TOKEN', payload: storedUser.accessToken });
@@ -60,8 +76,11 @@ export const AuthContextProvider = ({ children }) => {
     } catch (error) {
       console.error('AuthContextProvider:', error);
     }
-  }, []);
+  }, [state.accessToken]);
 
+  /**
+   * Effect to refresh the access token at intervals and update the context with new tokens and user details.
+   */
   useEffect(() => {
     const refreshAccessToken = async () => {
       try {

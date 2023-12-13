@@ -1,29 +1,29 @@
+//** USE AUTH CONTEXT HOOK */
+
 // Import AuthContext and useContext
 import { AuthContext } from '../context/AuthContext.jsx';
 import { useContext } from 'react';
 
 /**
- * A custom hook for accessing the authentication context.
- * @returns {Object} An object containing the authentication context with an additional userId property.
- * @property {Object} contextWithUserId - The authentication context with an added userId property.
- * @property {string} contextWithUserId.userId - The user ID.
- * @property {Object} contextWithUserId.user - The user object from the authentication context.
- * @property {string} contextWithUserId.accessToken - The access token from the authentication context.
- * @property {string} contextWithUserId.refreshToken - The refresh token from the authentication context.
- * @property {Function} contextWithUserId.dispatch - The dispatch function from the authentication context.
- * @property {Function} contextWithUserId.updateTokens - The function to update access and refresh tokens in the context.
- * @property {Function} contextWithUserId.refreshToken - The function to refresh tokens from the server.
+ * A custom React hook for accessing the authentication context.
+ *
+ * @typedef {Object} AuthContextValue
+ * @property {Object} user - The user object from the authentication context. Contains username, accessToken, and userId.
+ * @property {string} accessToken - The access token from the authentication context.
+ * @property {Function} dispatch - The dispatch function from the authentication context.
+ *
+ * @returns {AuthContextValue} The authentication context object.
+ * @throws {Error} Throws an error if used outside of an AuthContextProvider.
  */
 export const useAuthContext = () => {
   // Get the authentication context using the useContext hook
   const authContext = useContext(AuthContext);
 
-  // Create an object with the authentication context and an added userId property
-  const contextWithUserId = {
-    ...authContext,
-    userId: authContext.user ? authContext.user.id : null,
-  };
+  // Error handling
+  if (!authContext) {
+    throw new Error('useEntriesContext must be used within an AuthContextProvider. Make sure your component is wrapped with the AuthContextProvider.');
+  }
 
-  // Return the modified context object
-  return contextWithUserId;
+  // Return the auth context
+  return authContext;
 };

@@ -8,8 +8,8 @@ import { useLogout } from '../hooks/useLogout.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
 // Import hamburger icon
-import hamburger from '../../public/assets/icons/hamburger.png';
-import featherHeader from '../../public/assets/icons/feather-header.png';
+import hamburger from '../../public/assets/images/hamburger.png';
+import featherHeader from '../../public/assets/images/feather-header.png';
 
 // Import Sidebar component for navigation
 import Sidebar from './Sidebar.jsx';

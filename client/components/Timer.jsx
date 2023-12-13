@@ -7,9 +7,9 @@ import useSound from 'use-sound';
 import singingBowl from '../../public/assets/audio/singing-bowl.mp3';
 
 // Icon Images for play, pause, and reset buttons
-import playImage from '../../public/assets/icons/play-button.png';
-import resetImage from '../../public/assets/icons/reset-button.png';
-import pauseImage from '../../public/assets/icons/pause-button.png';
+import playImage from '../../public/assets/images/play-button.png';
+import resetImage from '../../public/assets/images/reset-button.png';
+import pauseImage from '../../public/assets/images/pause-button.png';
 
 /**
  * Timer component for meditation sessions.

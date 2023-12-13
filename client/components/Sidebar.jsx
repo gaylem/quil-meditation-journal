@@ -4,12 +4,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Import close button icon
-import circle from '../../public/assets/icons/close-button.png';
-import gear from '../../public/assets/icons/gear.png';
-import brain from '../../public/assets/icons/brain.png';
-import question from '../../public/assets/icons/question.png';
-import feather from '../../public/assets/icons/feather.png';
-import smiley from '../../public/assets/icons/smiley.png';
+import circle from '../../public/assets/images/close-button.png';
+import gear from '../../public/assets/images/gear.png';
+import brain from '../../public/assets/images/brain.png';
+import question from '../../public/assets/images/question.png';
+import feather from '../../public/assets/images/feather.png';
+import smiley from '../../public/assets/images/smiley.png';
 
 // Import props validation
 import PropTypes from 'prop-types';
