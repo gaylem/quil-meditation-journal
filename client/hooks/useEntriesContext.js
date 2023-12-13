@@ -10,12 +10,13 @@ import { EntriesContext } from '../context/EntryContext.jsx';
  */
 export const useEntriesContext = () => {
   // Get the entries context using the useContext hook
-  const context = useContext(EntriesContext);
+  const entriesContext = useContext(EntriesContext);
 
-  if (!context) {
+  // Error handling
+  if (!entriesContext) {
     throw new Error('useEntriesContext must be used within an EntriesContextProvider. Make sure your component is wrapped with the EntriesContextProvider.');
   }
 
   // Return the entries context object
-  return context;
+  return entriesContext;
 };

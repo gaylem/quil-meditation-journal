@@ -6,6 +6,19 @@ import axios from '../axiosConfig.js';
 import PropTypes from 'prop-types';
 
 /**
+ * @typedef {Object} User
+ * @property {string} username - Username for the user.
+ * @property {string} accessToken - Access token for the user.
+ * @property {string} userId - Unique identifier for the user.
+ */
+
+/**
+ * @typedef {Object} AuthState
+ * @property {User | null} user - Current authenticated user or null if not authenticated.
+ * @property {string | null} accessToken - Access token for the authenticated user or null.
+ */
+
+/**
  * Context for managing authentication state.
  * @type {React.Context<AuthContextValue>}
  */
@@ -54,6 +67,7 @@ export const AuthContextProvider = ({ children }) => {
     try {
       // Check if a user is stored in local storage
       const storedUser = JSON.parse(localStorage.getItem('user'));
+      console.log('storedUser: ', storedUser);
 
       if (storedUser) {
         // If the user is found, update the context with stored user details

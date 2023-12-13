@@ -13,6 +13,11 @@ export const useAuthContext = () => {
   // Get the authentication context using the useContext hook
   const authContext = useContext(AuthContext);
 
+  // Error handling
+  if (!authContext) {
+    throw new Error('useEntriesContext must be used within an AuthContextProvider. Make sure your component is wrapped with the AuthContextProvider.');
+  }
+
   // Return the auth context
   return authContext;
 };

@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 /**
  * @typedef {Object} Entry
  * @property {string} _id - Unique identifier for the entry.
- * @property {string} title - Title of the entry.
- * @property {string} content - Content of the entry.
+ * @property {string} body - Content of the entry.
  */
 
 /**
