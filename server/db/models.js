@@ -30,6 +30,7 @@ const entrySchema = new Schema(
   {
     body: { type: String, required: true }, // This is the content of the meditation session entry
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // Reference the "User" model for the "userId" field
+    iv: { type: String, required: true },
   },
   { timestamps: true }, // Automatically generate "createdAt" and "updatedAt" timestamps
 );
