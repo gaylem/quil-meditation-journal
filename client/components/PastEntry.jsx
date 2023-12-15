@@ -134,7 +134,6 @@ PastEntry.propTypes = {
   entry: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
   }).isRequired,
 };
 
