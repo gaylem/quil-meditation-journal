@@ -55,11 +55,17 @@ app.use(express.static(publicPath));
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
   const originalSend = res.send;
+
   res.send = function (body) {
-    const tag = etag(body);
-    res.setHeader('ETag', tag);
+    // Check if the body is a string or a Buffer before calculating ETag
+    if (typeof body === 'string' || Buffer.isBuffer(body)) {
+      const tag = etag(body);
+      res.setHeader('ETag', tag);
+    }
+
     originalSend.call(this, body);
   };
+
   next();
 });
 

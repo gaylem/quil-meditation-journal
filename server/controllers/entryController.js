@@ -2,13 +2,15 @@
 
 /* Includes: 
     1. getAllEntries (GET /users) - Retrieves all entries for a user
-    2. logoutUser (POST /logout) - Logs a user out by removing the provided refresh token from the database
-    3. createUser (POST /signup) - Creates a new user in the database
+    2. addEntry (POST /users) - Encrypts and adds an entry to the database, then decrypts the created entry and sends it to the client
+    3. updateEntry (PATCH /users) - Re-encrypts and updates an entry in the database and sends 200 OK status to client
+    4. deleteEntry (DELETE /users) - Deletes an entry from the database and sends 200 OK status to the client
 */
 
 // Imports
 import { Entry } from '../db/models.js';
 const entryController = {};
+import { encrypt, decrypt } from '../utils/encrypt-decrypt-utils.js';
 
 /**
  * @route GET /api/entries
@@ -30,8 +32,27 @@ entryController.getAllEntries = async (req, res) => {
         message: 'Your entries could not be found.',
       });
     }
+    // Decrypt the body of each entry
+    const decryptedEntries = allEntries.map(entry => {
+      const decryptedBody = decrypt(entry.body, entry.iv);
+      if (entry.iv) {
+        return {
+          _id: entry._id,
+          body: decryptedBody,
+          userId: entry.userId,
+          createdAt: entry.createdAt,
+        };
+      } else {
+        return {
+          _id: entry._id,
+          body: entry.body,
+          userId: entry.userId,
+          createdAt: entry.createdAt,
+        };
+      }
+    });
     // If result is returned, store in locals object
-    res.locals.allEntries = allEntries;
+    res.locals.allEntries = decryptedEntries;
     // Return allEntries
     return res.status(200).json(res.locals.allEntries);
   } catch (error) {
@@ -56,20 +77,29 @@ entryController.addEntry = async (req, res) => {
   try {
     // Extract the entry body and userId from the request body
     const { body, userId } = req.body;
-    // Create new entry in database and store response in a variable
-    const newEntry = await Entry.create({ body, userId });
-    // Handle errors
-    if (!newEntry || newEntry.length === 0) {
+    // Encrypt the entry body using the common key and IV
+    const { iv, encryptedData } = encrypt(body);
+    // Store the encrypted entry in the database
+    const encryptedEntry = await Entry.create({ body: encryptedData, userId, iv });
+    // Handle error if no encrypted entry
+    if (!encryptedEntry) {
       return res.status(404).json({
         log: 'entryController.addEntry: newEntry not found.',
         status: 404,
         message: 'There was an issue adding your entry.',
       });
     }
-    // Store response on locals object
-    res.locals.newEntry = newEntry;
-    // Return the newEntry
-    return res.status(201).json(res.locals.newEntry);
+    // Decrypt encrypted body
+    const decryptedBody = decrypt(encryptedEntry.body, iv);
+    // Create newEntry object to send to the client
+    const newEntry = {
+      body: decryptedBody,
+      userId: encryptedEntry.userId,
+      _id: encryptedEntry._id,
+      createdAt: encryptedEntry.createdAt,
+    };
+    // Return the newEntry to the client
+    return res.status(201).json(newEntry);
   } catch (error) {
     return res.status(500).json({
       log: `entryController.addEntry: ERROR ${error}`,
@@ -95,8 +125,10 @@ entryController.updateEntry = async (req, res) => {
     const _id = req.params.id;
     // Extract the entry body and userId from the request body
     const { body, userId } = req.body;
-    // Find and update entry in database and store updated entry in a variable
-    const updatedEntry = await Entry.findOneAndUpdate({ _id }, { body, userId }, { new: true });
+    // Encrypt the entry body using the common key and IV
+    const { iv, encryptedData } = encrypt(body);
+    // Find and update the encrypted entry in database and store updated entry in a variable
+    const updatedEntry = await Entry.findOneAndUpdate({ _id }, { body: encryptedData, iv }, { new: true });
     if (!updatedEntry || updatedEntry.length === 0) {
       return res.status(404).json({
         log: 'entryController.updatedEntry: updatedEntry not found.',
@@ -106,8 +138,8 @@ entryController.updateEntry = async (req, res) => {
     }
     // Store updated entry in locals object
     res.locals.updatedEntry = updatedEntry;
-    // Return the updatedEntry
-    return res.status(200).json(res.locals.updatedEntry);
+    // Return 200 status
+    return res.status(200).send();
   } catch (error) {
     return res.status(500).json({
       log: `entryController.updateEntry: ERROR ${error}`,
@@ -140,8 +172,8 @@ entryController.deleteEntry = async (req, res) => {
     }
     // If response returns true, store in locals object
     res.locals.deletedEntry = deletedEntry;
-    // Return deletedEntry
-    return res.status(200).json(res.locals.deletedEntry);
+    // Return 200 status
+    return res.status(200).send();
   } catch (error) {
     return res.status(500).json({
       log: `entryController.deleteEntry: ERROR ${error}`,
@@ -149,38 +181,6 @@ entryController.deleteEntry = async (req, res) => {
       message: 'Something went wrong. Please try again later.',
     });
   }
-
-  // TODO: Find one entry by id (is this even needed?)
-  /**
-   * @route GET /api/entries/:id
-   * @description Finds one entry by ID
-   * @param req.params _id of the entry to be found
-   * @param {Object} req - The request object
-   * @param {Object} res - The response object
-   * @returns {Object} - JSON response containing the found entry or an error response
-   */
-  entryController.findEntry = async (req, res) => {
-    try {
-      const entryId = req.params.id;
-      const foundEntry = await Entry.findOne({ _id: entryId });
-
-      if (!foundEntry || foundEntry.length === 0) {
-        return res.status(404).json({
-          log: 'entryController.findEntry: foundEntry not found.',
-          status: 404,
-          message: 'Your entry could not found.',
-        });
-      }
-      res.locals.entry = foundEntry;
-      return res.status(200).json(res.locals.entry);
-    } catch (error) {
-      return res.status(500).json({
-        log: `entryController.findEntry: ERROR ${error}`,
-        status: 500,
-        message: 'Something went wrong. Please try again later.',
-      });
-    }
-  };
 };
 
 export default entryController;
