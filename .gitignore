@@ -8,3 +8,4 @@ coverage
 private-key-script.js
 .nyc_output
 secret-script.js
+entry-encryption-script.js
