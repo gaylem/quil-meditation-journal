@@ -103,13 +103,13 @@ a:hover {
     font-size: medium;
   }
 
-  .questionContainer {
+  .itemContainer {
     background-color: rgb(246, 246, 246);
     margin: 0 0 1em 0;
     border-radius: 5px;
   }
 
-  .questionHeader {
+  .itemHeader {
     display: flex;
     align-items: center;
     padding: 1em;
@@ -131,7 +131,7 @@ a:hover {
     }
   }
 
-  /* Animation that makes question content fade in when toggled open */
+  /* Animation that makes item content fade in when toggled open */
   @keyframes fadeInAnimation {
     0% {
       opacity: 0;
@@ -140,15 +140,15 @@ a:hover {
       opacity: 1;
     }
   }
-  /* The container that holds the question content */
-  .toggleQuestionContainer {
+  /* The container that holds the item content */
+  .toggleItemContainer {
     display: flex;
     flex-direction: column;
     animation-name: fadeInAnimation;
     animation-duration: 1s;
     border-radius: 5px;
 
-    .questionText {
+    .itemText {
       color: rgb(68, 68, 68);
       width: 90%;
       padding: 0 1em 1em 1em;
@@ -156,7 +156,7 @@ a:hover {
       margin: 0 auto;
       word-break: break-word;
       white-space: pre-wrap;
-      .questionTextP {
+      .itemTextP {
         padding: 1em 2em 1em 2em;
         color: rgb(68, 68, 68);
       }
@@ -164,6 +164,6 @@ a:hover {
   }
 }
 
-.questionTitle {
+.itemTitle {
   padding-left: 1em;
 }
