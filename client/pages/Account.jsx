@@ -1,116 +1,69 @@
 import React, { useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext.js';
+// Import axios for handling server requests
+import axios from '../axiosConfig.js';
+
+import items from '../../server/db/accountPageData.js'
 
 const Account = () => {
-  const initialQuestionStates = Array(2).fill(false);
-  const [questionStates, setQuestionStates] = useState(initialQuestionStates);
+  const { user } = useAuthContext();
+  const initialItemStates = Array(2).fill(false);
+  const [itemStates, setItemStates] = useState(initialItemStates);
 
   const toggle = index => {
-    const newQuestionStates = [...questionStates];
-    newQuestionStates[index] = !newQuestionStates[index];
-    setQuestionStates(newQuestionStates);
+    const newItemStates = [...itemStates];
+    newItemStates[index] = !newItemStates[index];
+    setItemStates(newItemStates);
   };
 
-  const handleFormSubmit = (index, formData, endpoint) => {
-    fetch(`${process.env.REACT_APP_SERVER_ENDPOINT}/account/${endpoint}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
+const handleFormSubmit = async (index, formData, method, endpoint) => {
+  try {
+    let response;
+
+    if (endpoint === 'download') {
+      // Adjust the method to POST or PUT for file downloads
+      response = await axios.get(`/api/accounts/download/${user.userId}`, {
+        responseType: 'blob', // Set the response type to blob for file downloads
       });
-  };
+    } else {
+      response = await axios.get(`/api/accounts/${endpoint}/${user.userId}`, {
+        method: `${method}`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+    }
 
-  const questions = [
-    {
-      title: 'Download data',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formFields: [],
-      buttonText: 'Download journal entries',
-      // TODO: Update when routes are built
-      endpoint: 'downloadData',
-    },
-    {
-      title: 'Update Username',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formFields: [
-        {
-          name: 'newUsername',
-          placeholder: 'New Username',
-        },
-        {
-          name: 'enterPassword',
-          type: 'password',
-          placeholder: 'Enter Password',
-        },
-      ],
-      buttonText: 'Update Username',
-      // TODO: Update when routes are built
-      endpoint: 'updateUsername',
-    },
-    {
-      title: 'Change Password',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formFields: [
-        {
-          name: 'currentPassword',
-          type: 'password',
-          placeholder: 'Current Password',
-        },
-        {
-          name: 'newPassword',
-          type: 'password',
-          placeholder: 'New Password',
-        },
-        {
-          name: 'confirmNewPassword',
-          type: 'password',
-          placeholder: 'Confirm New Password',
-        },
-      ],
-      buttonText: 'Change Password',
-      // TODO: Update when routes are built
-      endpoint: 'updatePassword',
-    },
-    {
-      title: 'Change Email',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formFields: [
-        {
-          name: 'newEmail',
-          type: 'email',
-          placeholder: 'New Email',
-        },
-        {
-          name: 'enterPassword',
-          type: 'password',
-          placeholder: 'Enter Password',
-        },
-      ],
-      buttonText: 'Change Password',
-      // TODO: Update when routes are built
-      endpoint: 'changeEmail',
-    },
-    {
-      title: 'Delete Account',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formFields: [],
-      buttonText: 'Delete Account',
-      // TODO: Update when routes are built
-      endpoint: 'deleteAccount',
-    },
-  ];
+    // Check if response is undefined or null
+    if (!response) {
+      throw new Error('Response is undefined or null');
+    }
+
+    // Check the HTTP status code directly
+    if (response.status !== 200) {
+      throw new Error(`Network response was not ok. Status: ${response.status}`);
+    }
+
+    // Handle the response based on the endpoint
+    if (endpoint === 'download') {
+      const blob = new Blob([response.data], { type: 'application/octet-stream' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'my_entries.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } else {
+      const data = await response.data; 
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
 
   return (
     <div className='pageContainer'>
@@ -119,33 +72,33 @@ const Account = () => {
         <p>You can manage your account settings below.</p>
         <br />
         <div className='helpContainer'>
-          {questions.map((question, index) => (
-            <div className='questionContainer' key={index}>
-              <div className='questionHeader'>
+          {items.map((item, index) => (
+            <div className='itemContainer' key={index}>
+              <div className='itemHeader'>
                 <button onClick={() => toggle(index)}>+</button>
-                <p className='questionTitle'>{question.title}</p>
+                <p className='itemTitle'>{item.title}</p>
               </div>
-              {questionStates[index] && (
-                <div className='toggleQuestionContainer'>
-                  <div className='questionText'>
-                    <p className='questionTextP'>{question.content}</p>
+              {itemStates[index] && (
+                <div className='toggleItemContainer'>
+                  <div className='itemText'>
+                    <p className='itemTextP'>{item.content}</p>
                   </div>
                   <div className='accountFormContainer'>
                     <form
                       onSubmit={e => {
                         e.preventDefault();
                         const formData = {};
-                        question.formFields.forEach(field => {
+                        item.formFields.forEach(field => {
                           formData[field.name] = e.target[field.name + index].value;
                         });
-                        handleFormSubmit(index, formData, question.endpoint);
+                        handleFormSubmit(index, formData, item.method, item.endpoint);
                       }}
                       className='form'>
-                      {question.formFields.map((field, fieldIndex) => (
+                      {item.formFields.map((field, fieldIndex) => (
                         <input key={fieldIndex} type={field.type || 'text'} name={`${field.name}${index}`} placeholder={field.placeholder} className='formField' />
                       ))}
                       <button type='submit' className='submitBtn'>
-                        {`${question.buttonText}`}
+                        {`${item.buttonText}`}
                       </button>
                     </form>
                   </div>
