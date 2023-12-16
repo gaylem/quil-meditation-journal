@@ -56,7 +56,7 @@ function App() {
               {/* Get Involved route - Renders Get Involved page */}
               <Route path='/get-involved' element={<LazyGetInvolved />} />
               {/* Account route - Renders Account page */}
-              <Route path='/account' element={<LazyAccount />} />
+              <Route path='/account' element={!user ? <LazyLogin /> : <LazyAccount />} />
             </Routes>
           </div>
         </Suspense>
