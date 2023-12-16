@@ -1,10 +1,10 @@
 //** USER ROUTER */
 
 /* Includes: 
-    1. POST /api/users/signup => createUser controller
-    2. POST /api/users/login => verifyUser controller
-    3. POST /api/users/token => authUser controller
-    4. POST /api/users/logout => logoutUser controller
+    1. POST createUser 
+    2. POST verifyUser 
+    3. POST authUser 
+    4. POST logoutUser 
 */
 
 // Imports

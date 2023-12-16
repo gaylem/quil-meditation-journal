@@ -1,10 +1,10 @@
 //** ENTRY ROUTER */
 
 /* This router handles all entry-related functions for an individual user's account. It includes: 
-    1. GET /api/entries/:id => getAllEntries by userId
-    2. POST /api/entries/:id => addEntry with userId
-    3. PATCH /api/entries/:id => updateEntry by entry _id
-    4. DELETE /api/entries/:id => deleteEntry by entry _id
+    1. GET getAllEntries by userId
+    2. POST addEntry byuserId
+    3. PATCH updateEntry by entry _id
+    4. DELETE deleteEntry by entry _id
 
     User is authenticated with authMiddleware when all routers are called before executing the controller.
 */
@@ -25,8 +25,8 @@ const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
  */
 router.get('/:id', authMiddleware, getAllEntries);
 
-/**
- * @route POST /entries/:id
+/** // TODO: Update this to send userId in req.param instead of req.body
+ * @route POST /entries/
  * @description Create a new entry
  * @param {Object} req - The requst object containing:
  *  - body: String
