@@ -11,8 +11,7 @@ footer {
   background-color: rgb(233, 232, 232);
   padding: 2px;
   text-align: center;
-  width: 100vw;
-  height: 12em;
+  margin: 0 auto;
   @include box-shadow(0, 2px, 8px, $shadow-color);
   a {
     text-decoration: none;
@@ -25,7 +24,6 @@ footer {
   justify-content: center;
   align-items: center;
   width: 90%;
-  height: 90%;
   margin: 0 auto;
   font-family: $paragraph-font;
   color: rgb(60, 60, 60);
