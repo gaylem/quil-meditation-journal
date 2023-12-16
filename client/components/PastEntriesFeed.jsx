@@ -53,6 +53,8 @@ const PastEntriesFeed = () => {
     // If the user is authenticated, fetch past entries
     if (user) {
       fetchEntries();
+    } else {
+      window.location.href = '/login';
     }
   }, [dispatch, user]);
 
