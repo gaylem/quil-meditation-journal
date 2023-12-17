@@ -34,32 +34,46 @@ userController.signupUser = async (req, res) => {
   const { username, email, password } = req.body;
   try {
     // Invoke isValidSignup to confirm input is valid
-    isValidSignup(username, email, password);
+    const isValid = isValidSignup(username, email, password);
+
+    if (!isValid) {
+      return res.status(400).json({
+        log: 'userController.signup: Invalid input',
+        status: 400,
+        message: 'Username or password are incorrect.',
+      });
+    }
     // Generate salt and hash for password
-    const salt = await bcrypt.genSalt(10);
+    const saltRounds = Number(process.env.SALT_WORK_FACTOR);
+    const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(password, salt);
     // Create and save new user
     const user = new User({ username, email, password: hash });
-    user.save();
+    
+    await user.save();
     // Store the userId in a new variable and on the locals object
     res.locals.user = user;
     // Extract userId from new user
     const userId = user._id.toString();
+    
     // Store the userId and username in a new object for the createTokens function
     const userObj = {
       userId,
       username: user.username,
     };
+    
     // Create tokens
     const tokens = createTokens(userObj);
+    
     // Set HttpOnly Cookies
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
     // Add token to accessTokens array in user document in the database
     const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $push: { refreshTokens: tokens.refreshToken } }, { new: true });
+    
     // If updatedUser returns false, log an error
     if (!updatedUser) {
       return res.status(404).json({
-        log: 'userController.loginUser: Issue with updatedUser',
+        log: 'userController.signup: Issue with updatedUser',
         status: 404,
         message: 'Username or password are incorrect.',
       });
@@ -134,7 +148,7 @@ userController.loginUser = async (req, res) => {
     // Send 200 status and user object to the client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
-    console.error('Login error:', error);
+    
     return res.status(500).json({
       log: `userController.loginUser: ERROR ${error}`,
       status: 500,
