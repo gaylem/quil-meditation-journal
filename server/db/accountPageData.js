@@ -3,10 +3,13 @@ const items = [
     {
       title: 'Download data',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formFields: [],
+      formFields: [  {
+          name: 'enterPassword',
+          type: 'password',
+          placeholder: 'Enter Password',
+        },],
       buttonText: 'Download journal entries',
       endpoint: `download`,
-      method: 'GET',
     },
     {
       title: 'Update Username',
@@ -23,7 +26,6 @@ const items = [
         },
       ],
       buttonText: 'Update Username',
-      method: 'PATCH',
       endpoint: 'username',
     },
     {
@@ -42,7 +44,6 @@ const items = [
         },
       ],
       buttonText: 'Update Email',
-      method: 'PATCH',
       endpoint: 'email',
     },
     {
@@ -66,16 +67,18 @@ const items = [
         },
       ],
       buttonText: 'Update Password',
-      method: 'PATCH',
       endpoint: 'pswd',
     },
     {
       title: 'Delete Account',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formFields: [],
+      formFields: [     {
+          name: 'enterPassword',
+          type: 'password',
+          placeholder: 'Enter Password',
+        },],
       buttonText: 'Delete Account',
-      method: 'DELETE',
-      endpoint: 'delete-account',
+      endpoint: 'delete',
     },
 ];
 
