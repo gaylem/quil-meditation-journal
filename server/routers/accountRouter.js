@@ -11,7 +11,6 @@
 import express from 'express';
 const router = express.Router();
 import accountController from '../controllers/accountController.js';
-import authMiddleware from '../middlewares/authMiddleware.js';
 
 const { downloadEntries, updateUsername, updateEmail, updatePassword, deleteAccount } = accountController;
 
@@ -21,7 +20,7 @@ const { downloadEntries, updateUsername, updateEmail, updatePassword, deleteAcco
  * @param userId
  * @access Private (requires access token)
  */
-router.get('/download/:userId', downloadEntries);
+router.post('/download/:userId', downloadEntries);
 
 /**
  * @route PATCH /api/accounts/:userId
@@ -29,7 +28,7 @@ router.get('/download/:userId', downloadEntries);
  * @param userId
  * @access Private (requires access token)
  */
-router.patch('/username/:userId', authMiddleware, updateUsername);
+router.patch('/username/:userId', updateUsername);
 
 /**
  * @route PATCH /api/accounts/:userId
@@ -37,7 +36,7 @@ router.patch('/username/:userId', authMiddleware, updateUsername);
  * @param userId
  * @access Private (requires access token)
  */
-router.patch('/email/:userId', authMiddleware, updateEmail);
+router.patch('/email/:userId', updateEmail);
 
 /**
  * @route PATCH /api/accounts/update/:userId
@@ -45,7 +44,7 @@ router.patch('/email/:userId', authMiddleware, updateEmail);
  * @param userId
  * @access Private (requires access token)
  */
-router.patch('/pswd/:userId', authMiddleware, updatePassword);
+router.patch('/pswd/:userId', updatePassword);
 
 /**
  * @route DELETE /api/accounts/delete/:userId
@@ -53,6 +52,6 @@ router.patch('/pswd/:userId', authMiddleware, updatePassword);
  * @param userId
  * @access Private (requires access token)
  */
-router.delete('/delete-account/:userId', authMiddleware, deleteAccount);
+router.delete('/delete/:userId', deleteAccount);
 
 export default router;
