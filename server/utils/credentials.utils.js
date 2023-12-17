@@ -6,6 +6,7 @@
 
 import { User } from '../db/models.js';
 import validator from 'validator';
+import bcrypt from 'bcryptjs'
 
 /**
  * Checks if user inputs at signup are valid.
@@ -18,16 +19,17 @@ import validator from 'validator';
  * @returns {Promise<void>} A promise that resolves if validation is successful.
  * @throws {Error} Throws an error with a specific message if any validation fails.
  */
-export const isValidSignup = async (username, email, password) => {
-  // Did the user input data into all three fields?
+export const isValidSignup = (username, email, password) => {
+  try {
+    // Did the user input data into all three fields?
   if (!username || !email || !password) {
-    throw Error('All fields must be filled');
-  }
+    throw { status: 400, message: 'All fields must be filled' };
+    }
 
   // Is the email a real email?
   if (!validator.isEmail(email)) {
-    throw Error('Email not valid');
-  }
+      throw { status: 400, message: 'Email not valid' };
+    }
 
   // Is the password strong enough?
   /* Default options: {
@@ -45,19 +47,47 @@ export const isValidSignup = async (username, email, password) => {
       pointsForContainingSymbol: 10 } 
   */
 
-  if (!validator.isStrongPassword(password)) {
-    throw Error('Password not strong enough');
-  }
+   if (!validator.isStrongPassword(password)) {
+      throw { status: 400, message: 'Password not strong enough' };
+    }
 
   // Is the email already being used?
-  const emailExists = await User.findOne({ email });
-  if (emailExists) {
-    throw Error('Email already in use');
-  }
+    const emailExists = User.findOne({ email });
+    if (emailExists) {
+      throw { status: 409, message: 'Email already in use' };
+    }
 
   // Is the username already being used?
-  const usernameExists = await User.findOne({ username });
-  if (usernameExists) {
-    throw Error('Username already in use');
+   const usernameExists = User.findOne({ username });
+    if (usernameExists) {
+      throw { status: 409, message: 'Username already in use' };
+    }
+  return true;
+  
+  } catch(error) {
+    console.error(error)
+    throw error;
   }
 };
+
+export const verifyPassword = async (input, userId) => {
+  try {
+  
+  // Find user by userId
+    const user = await User.findOne({ _id: userId });
+    // Throw error if no user
+  if (!user) {
+    throw Error('User does not exist ');
+  }
+    // Confirm old password matches user password
+    const match = await bcrypt.compare(input, user.password);
+    // Throw error if password is incorrect
+    if (!match) {
+    throw Error('Password is incorrect');
+    }
+    return true;
+  }catch(error) {
+    console.error(error)
+    throw error;
+  }
+}
