@@ -6,9 +6,11 @@ import axios from '../axiosConfig.js';
 import items from '../../server/db/accountPageData.js'
 
 const Account = () => {
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
   const initialItemStates = Array(2).fill(false);
   const [itemStates, setItemStates] = useState(initialItemStates);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const toggle = index => {
     const newItemStates = [...itemStates];
@@ -16,30 +18,89 @@ const Account = () => {
     setItemStates(newItemStates);
   };
 
-const handleFormSubmit = async (index, formData, method, endpoint) => {
+  const handleFormSubmit = async (formData, endpoint) => {
+  
   try {
     let response;
+    setError('');
+    setSuccess('');
 
     if (endpoint === 'download') {
-      // Adjust the method to POST or PUT for file downloads
-      response = await axios.get(`/api/accounts/download/${user.userId}`, {
-        responseType: 'blob', // Set the response type to blob for file downloads
+      response = await axios.post(`/api/accounts/download/${user.userId}`, {
+     enterPassword: formData.enterPassword,
+    }, {
+      responseType: 'blob',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       });
-    } else {
-      response = await axios.get(`/api/accounts/${endpoint}/${user.userId}`, {
-        method: `${method}`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      
+      if (response.status === 200) {
+        // Remove user data from local storage
+        localStorage.removeItem('user');
+        setSuccess('Journal entries successfully downloaded.');
+      } else {
+        setError('Download failed. Please try again.');
+      }
+    } else if (endpoint === 'username') {
+      response = await axios.patch(`/api/accounts/username/${user.userId}`, {
+        newUsername: formData.newUsername,
+        password: formData.enterPassword,
       });
+      if (response.status === 200) {
+        // Extract the updated user data from the response
+        const updatedUsername = response.data;
+        const newUserState = {
+          username: updatedUsername,
+          accessToken: user.accessToken,
+          userId: user.userId
+        }
+        // Dispatch the 'LOGIN' action with the updated user data
+        localStorage.setItem('user', JSON.stringify(newUserState));
+        dispatch({ type: 'LOGIN', payload: newUserState });setSuccess('Email successfully updated.');
+      } else {
+        setError('Username update failed. Please try again.');
+      }  
+    } else if (endpoint === 'email') {
+      response = await axios.patch(`/api/accounts/email/${user.userId}`, {
+        newEmail: formData.newEmail,
+        password: formData.enterPassword,
+      });
+      if (response.status === 200) {
+        // Remove user data from local storage
+        localStorage.removeItem('user');
+        setSuccess('Email successfully updated.');
+      } else {
+        setError('Email update failed. Please try again.');
+      }
+    } else if (endpoint === 'pswd') {
+       response = await axios.patch(`/api/accounts/pswd/${user.userId}`, {
+        currentPassword: formData.currentPassword,
+        newPassword: formData.newPassword,
+        confirmNewPassword: formData.confirmNewPassword,
+       });
+      if (response.status === 204) {
+        setSuccess('Password successfully updated.');
+      } else {
+        setError('Account deletion failed. Please try again.');
+      }
+    } else if (endpoint === 'delete') {
+      response = await axios.delete(`/api/accounts/delete/${user.userId}`);
+       if (response.status === 200) {
+        // Remove user data from local storage
+        localStorage.removeItem('user');
+        // Redirect to the signup page or any other desired URL
+        window.location.href = '/signup';
+      } else {
+        // Handle other response statuses as needed
+        
+      }
     }
 
     // Check if response is undefined or null
     if (!response) {
       throw new Error('Response is undefined or null');
     }
-
     // Check the HTTP status code directly
     if (response.status !== 200) {
       throw new Error(`Network response was not ok. Status: ${response.status}`);
@@ -60,10 +121,9 @@ const handleFormSubmit = async (index, formData, method, endpoint) => {
       const data = await response.data; 
     }
   } catch (error) {
-    console.error('Error:', error);
+    
   }
 };
-
 
   return (
     <div className='pageContainer'>
@@ -91,7 +151,7 @@ const handleFormSubmit = async (index, formData, method, endpoint) => {
                         item.formFields.forEach(field => {
                           formData[field.name] = e.target[field.name + index].value;
                         });
-                        handleFormSubmit(index, formData, item.method, item.endpoint);
+                        handleFormSubmit(formData, item.endpoint);
                       }}
                       className='form'>
                       {item.formFields.map((field, fieldIndex) => (
@@ -100,6 +160,8 @@ const handleFormSubmit = async (index, formData, method, endpoint) => {
                       <button type='submit' className='submitBtn'>
                         {`${item.buttonText}`}
                       </button>
+                      {error && <div className="error-message">{error}</div>}
+                      {success && <div className="success-message">{success}</div>}
                     </form>
                   </div>
                 </div>
