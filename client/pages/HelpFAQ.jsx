@@ -1,7 +1,7 @@
 //** HELP & FAQs PAGE */
 
 import React, { useState } from 'react';
-
+import items from '../../server/db/helpFAQPageData';
 /**
  * React component for the Help & FAQs page.
  *
@@ -11,33 +11,14 @@ import React, { useState } from 'react';
  * @returns {JSX.Element} The rendered Help & FAQs page component.
  */
 const HelpFAQ = () => {
-  const initialQuestionStates = Array(4).fill(false); // Assuming you have 4 questions initially
-  const [questionStates, setQuestionStates] = useState(initialQuestionStates);
+  const initialItemStates = Array(4).fill(false); // Assuming you have 4 questions initially
+  const [itemStates, setItemStates] = useState(initialItemStates);
 
   const toggle = index => {
-    const newQuestionStates = [...questionStates];
-    newQuestionStates[index] = !newQuestionStates[index];
-    setQuestionStates(newQuestionStates);
+    const newItemStates = [...itemStates];
+    newItemStates[index] = !newItemStates[index];
+    setItemStates(newItemStates);
   };
-
-  const questions = [
-    {
-      title: 'Question 1',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    },
-    {
-      title: 'Question 2',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    },
-    {
-      title: 'Question 3',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    },
-    {
-      title: 'Question 4',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    },
-  ];
 
   return (
     <div className='pageContainer'>
@@ -46,16 +27,16 @@ const HelpFAQ = () => {
         <p>Here are some questions and answers if you need any help. If you don't find what you're looking for here, scroll down and reach out via the contact form at the bottom of the page.</p>
         <br />
         <div className='helpContainer'>
-          {questions.map((question, index) => (
-            <div className='questionContainer' key={index}>
-              <div className='questionHeader'>
+          {items.map((item, index) => (
+            <div className='itemContainer' key={index}>
+              <div className='itemHeader'>
                 <button onClick={() => toggle(index)}>+</button>
-                <p className='questionTitle'>{question.title}</p>
+                <p className='itemTitle'>{item.title}</p>
               </div>
-              {questionStates[index] && (
-                <div className='toggleQuestionContainer'>
-                  <div className='questionText'>
-                    <p className='questionTextP'>{question.content}</p>
+              {itemStates[index] && (
+                <div className='toggleItemContainer'>
+                  <div className='itemText'>
+                    <p className='itemTextP'>{item.content}</p>
                   </div>
                 </div>
               )}
