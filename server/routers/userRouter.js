@@ -11,7 +11,7 @@
 import express from 'express';
 const router = express.Router();
 import userController from '../controllers/userController.js';
-const { signupUser, loginUser, authUser, logoutUser } = userController
+const { signupUser, loginUser, authUser, logoutUser } = userController;
 
 /**
  * @route POST /api/users/signup

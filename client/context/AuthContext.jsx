@@ -67,7 +67,7 @@ export const AuthContextProvider = ({ children }) => {
     try {
       // Check if a user is stored in local storage
       const storedUser = JSON.parse(localStorage.getItem('user'));
-      
+
       if (storedUser && storedUser.accessToken) {
         // If the user is found, update the context with stored user details
         dispatch({ type: 'LOGIN', payload: storedUser });

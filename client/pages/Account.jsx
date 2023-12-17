@@ -3,7 +3,7 @@ import { useAuthContext } from '../hooks/useAuthContext.js';
 // Import axios for handling server requests
 import axios from '../axiosConfig.js';
 
-import items from '../../server/db/accountPageData.js'
+import items from '../../server/db/accountPageData.js';
 
 const Account = () => {
   const { user, dispatch } = useAuthContext();
@@ -19,111 +19,112 @@ const Account = () => {
   };
 
   const handleFormSubmit = async (formData, endpoint) => {
-  
-  try {
-    let response;
-    setError('');
-    setSuccess('');
+    try {
+      let response;
+      setError('');
+      setSuccess('');
 
-    if (endpoint === 'download') {
-      response = await axios.post(`/api/accounts/download/${user.userId}`, {
-     enterPassword: formData.enterPassword,
-    }, {
-      responseType: 'blob',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      });
-      
-      if (response.status === 200) {
-        // Remove user data from local storage
-        localStorage.removeItem('user');
-        setSuccess('Journal entries successfully downloaded.');
-      } else {
-        setError('Download failed. Please try again.');
-      }
-    } else if (endpoint === 'username') {
-      response = await axios.patch(`/api/accounts/username/${user.userId}`, {
-        newUsername: formData.newUsername,
-        password: formData.enterPassword,
-      });
-      if (response.status === 200) {
-        // Extract the updated user data from the response
-        const updatedUsername = response.data;
-        const newUserState = {
-          username: updatedUsername,
-          accessToken: user.accessToken,
-          userId: user.userId
+      if (endpoint === 'download') {
+        response = await axios.post(
+          `/api/accounts/download/${user.userId}`,
+          {
+            enterPassword: formData.enterPassword,
+          },
+          {
+            responseType: 'blob',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+
+        if (response.status === 200) {
+          // Remove user data from local storage
+          localStorage.removeItem('user');
+          setSuccess('Journal entries successfully downloaded.');
+        } else {
+          setError('Download failed. Please try again.');
         }
-        // Dispatch the 'LOGIN' action with the updated user data
-        localStorage.setItem('user', JSON.stringify(newUserState));
-        dispatch({ type: 'LOGIN', payload: newUserState });setSuccess('Email successfully updated.');
-      } else {
-        setError('Username update failed. Please try again.');
-      }  
-    } else if (endpoint === 'email') {
-      response = await axios.patch(`/api/accounts/email/${user.userId}`, {
-        newEmail: formData.newEmail,
-        password: formData.enterPassword,
-      });
-      if (response.status === 200) {
-        // Remove user data from local storage
-        localStorage.removeItem('user');
-        setSuccess('Email successfully updated.');
-      } else {
-        setError('Email update failed. Please try again.');
+      } else if (endpoint === 'username') {
+        response = await axios.patch(`/api/accounts/username/${user.userId}`, {
+          newUsername: formData.newUsername,
+          password: formData.enterPassword,
+        });
+        if (response.status === 200) {
+          // Extract the updated user data from the response
+          const updatedUsername = response.data;
+          const newUserState = {
+            username: updatedUsername,
+            accessToken: user.accessToken,
+            userId: user.userId,
+          };
+          // Dispatch the 'LOGIN' action with the updated user data
+          localStorage.setItem('user', JSON.stringify(newUserState));
+          dispatch({ type: 'LOGIN', payload: newUserState });
+          setSuccess('Email successfully updated.');
+        } else {
+          setError('Username update failed. Please try again.');
+        }
+      } else if (endpoint === 'email') {
+        response = await axios.patch(`/api/accounts/email/${user.userId}`, {
+          newEmail: formData.newEmail,
+          password: formData.enterPassword,
+        });
+        if (response.status === 200) {
+          // Remove user data from local storage
+          localStorage.removeItem('user');
+          setSuccess('Email successfully updated.');
+        } else {
+          setError('Email update failed. Please try again.');
+        }
+      } else if (endpoint === 'pswd') {
+        response = await axios.patch(`/api/accounts/pswd/${user.userId}`, {
+          currentPassword: formData.currentPassword,
+          newPassword: formData.newPassword,
+          confirmNewPassword: formData.confirmNewPassword,
+        });
+        if (response.status === 204) {
+          setSuccess('Password successfully updated.');
+        } else {
+          setError('Account deletion failed. Please try again.');
+        }
+      } else if (endpoint === 'delete') {
+        response = await axios.delete(`/api/accounts/delete/${user.userId}`);
+        if (response.status === 200) {
+          // Remove user data from local storage
+          localStorage.removeItem('user');
+          // Redirect to the signup page or any other desired URL
+          window.location.href = '/signup';
+        } else {
+          // Handle other response statuses as needed
+        }
       }
-    } else if (endpoint === 'pswd') {
-       response = await axios.patch(`/api/accounts/pswd/${user.userId}`, {
-        currentPassword: formData.currentPassword,
-        newPassword: formData.newPassword,
-        confirmNewPassword: formData.confirmNewPassword,
-       });
-      if (response.status === 204) {
-        setSuccess('Password successfully updated.');
-      } else {
-        setError('Account deletion failed. Please try again.');
-      }
-    } else if (endpoint === 'delete') {
-      response = await axios.delete(`/api/accounts/delete/${user.userId}`);
-       if (response.status === 200) {
-        // Remove user data from local storage
-        localStorage.removeItem('user');
-        // Redirect to the signup page or any other desired URL
-        window.location.href = '/signup';
-      } else {
-        // Handle other response statuses as needed
-        
-      }
-    }
 
-    // Check if response is undefined or null
-    if (!response) {
-      throw new Error('Response is undefined or null');
-    }
-    // Check the HTTP status code directly
-    if (response.status !== 200) {
-      throw new Error(`Network response was not ok. Status: ${response.status}`);
-    }
+      // Check if response is undefined or null
+      if (!response) {
+        throw new Error('Response is undefined or null');
+      }
+      // Check the HTTP status code directly
+      if (response.status !== 200) {
+        throw new Error(`Network response was not ok. Status: ${response.status}`);
+      }
 
-    // Handle the response based on the endpoint
-    if (endpoint === 'download') {
-      const blob = new Blob([response.data], { type: 'application/octet-stream' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'my_entries.csv';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    } else {
-      const data = await response.data; 
-    }
-  } catch (error) {
-    
-  }
-};
+      // Handle the response based on the endpoint
+      if (endpoint === 'download') {
+        const blob = new Blob([response.data], { type: 'application/octet-stream' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'my_entries.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      } else {
+        const data = await response.data;
+      }
+    } catch (error) {}
+  };
 
   return (
     <div className='pageContainer'>
@@ -160,8 +161,8 @@ const Account = () => {
                       <button type='submit' className='submitBtn'>
                         {`${item.buttonText}`}
                       </button>
-                      {error && <div className="error-message">{error}</div>}
-                      {success && <div className="success-message">{success}</div>}
+                      {error && <div className='error-message'>{error}</div>}
+                      {success && <div className='success-message'>{success}</div>}
                     </form>
                   </div>
                 </div>

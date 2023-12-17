@@ -49,27 +49,27 @@ userController.signupUser = async (req, res) => {
     const hash = await bcrypt.hash(password, salt);
     // Create and save new user
     const user = new User({ username, email, password: hash });
-    
+
     await user.save();
     // Store the userId in a new variable and on the locals object
     res.locals.user = user;
     // Extract userId from new user
     const userId = user._id.toString();
-    
+
     // Store the userId and username in a new object for the createTokens function
     const userObj = {
       userId,
       username: user.username,
     };
-    
+
     // Create tokens
     const tokens = createTokens(userObj);
-    
+
     // Set HttpOnly Cookies
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
     // Add token to accessTokens array in user document in the database
     const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $push: { refreshTokens: tokens.refreshToken } }, { new: true });
-    
+
     // If updatedUser returns false, log an error
     if (!updatedUser) {
       return res.status(404).json({
@@ -148,7 +148,6 @@ userController.loginUser = async (req, res) => {
     // Send 200 status and user object to the client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
-    
     return res.status(500).json({
       log: `userController.loginUser: ERROR ${error}`,
       status: 500,

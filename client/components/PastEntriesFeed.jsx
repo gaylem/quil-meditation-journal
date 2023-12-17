@@ -53,7 +53,7 @@ const PastEntriesFeed = () => {
     // If the user is authenticated, fetch past entries
     if (user) {
       fetchEntries();
-    } 
+    }
   }, [dispatch, user]);
 
   // Check if entries is null, display a loading message

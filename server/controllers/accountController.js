@@ -15,9 +15,8 @@ import { User } from '../db/models.js';
 import { Entry } from '../db/models.js';
 import bcrypt from 'bcryptjs';
 import { stringify } from 'csv-stringify';
-import {decrypt } from '../utils/encrypt-decrypt-utils.js'
+import { decrypt } from '../utils/encrypt-decrypt-utils.js';
 import { verifyPassword } from '../utils/credentials.utils.js';
-
 
 // accountController object that contains the methods below
 const accountController = {};
@@ -29,12 +28,12 @@ const accountController = {};
  * @returns {Object} - CSV containing user entry data and 200 status, or error message
  */
 accountController.downloadEntries = async (req, res) => {
-  const userId = req.params.userId
+  const userId = req.params.userId;
   const password = req.body.enterPassword;
   console.log('password: ', password);
   try {
     // Authenticate user
-    const passwordIsValid = await verifyPassword(password, userId)
+    const passwordIsValid = await verifyPassword(password, userId);
     console.log('passwordIsValid: ', passwordIsValid);
     if (!passwordIsValid) {
       return res.status(400).send();
@@ -90,7 +89,7 @@ accountController.downloadEntries = async (req, res) => {
       message: 'An error occurred while processing the request.',
     });
   }
-}
+};
 
 /**
  * @route PUT /api/users/:userId
@@ -100,15 +99,14 @@ accountController.downloadEntries = async (req, res) => {
  * @returns {Object} - JSON with updated username and 200 status, or error message
  */
 accountController.updateUsername = async (req, res) => {
-  
-  console.log("test");
+  console.log('test');
   try {
     // Extract the userId, username, and password from params and body
     const { userId } = req.params;
     console.log('userId: ', userId);
     const { newUsername, password } = req.body;
     // Authenticate user
-    verifyPassword(password, userId)
+    verifyPassword(password, userId);
     // Check if newUsername already exists
     const user = await User.findOne({ _id: userId });
     // Throw error if username already exists
@@ -150,11 +148,11 @@ accountController.updateUsername = async (req, res) => {
  */
 accountController.updateEmail = async (req, res) => {
   try {
-   // Extract the userId, username, and password from params and body
+    // Extract the userId, username, and password from params and body
     const { userId } = req.params;
     const { newEmail, password } = req.body;
     // Authenticate user
-    verifyPassword(password, userId)
+    verifyPassword(password, userId);
     // Check if newUsername already exists
     const user = await User.findOne({ _id: userId });
     // Throw error if username already exists
@@ -255,7 +253,7 @@ accountController.updatePassword = async (req, res) => {
 accountController.deleteAccount = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const deletedUser= await User.findOneAndDelete({ _id: userId });
+    const deletedUser = await User.findOneAndDelete({ _id: userId });
     if (deletedUser === null) {
       return next({
         log: 'User could not be deleted.',
