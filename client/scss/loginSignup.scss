@@ -16,7 +16,8 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   align-items: center;
   flex-wrap: wrap;
   font-family: $paragraph-font;
-  @media (max-width: 860px) {
+  @media (max-width: 930px) {
+    flex-direction: column;
     background-color: white;
     box-shadow: none;
     border: 0px;
@@ -111,8 +112,18 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     margin-bottom: 1.5em;
   }
 
-  @media (max-width: 300px) {
+  // Headers
+  h2 {
+    font-family: $header-font;
+    font-size: 2rem;
+    margin: 0 auto;
+    line-height: 1.5em;
+    padding: 0.5em 0.5em 0.5em 0;
+    color: $secondary-color;
+    text-shadow: 1px 1px 5px lightgray;
+  }
+
+  @media (max-width: 930px) {
     min-width: 15px;
-    padding: 0.5em;
   }
 }

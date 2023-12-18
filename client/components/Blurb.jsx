@@ -11,6 +11,7 @@ function Blurb() {
   return (
     <div className='about'>
       {/* First paragraph of about section */}
+      <h2>Pen your meditation story.</h2>
       <div className='paragraph'>
         <p>quil is inspired by the words &quot;tranquil&quot; and &quot;quill,&quot; as in the classic feather pen. Sign up or log in to discover your own dedicated space, where you can chronicle each step of your meditation journey.</p>
       </div>
