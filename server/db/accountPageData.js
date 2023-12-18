@@ -11,7 +11,9 @@ const items = [
       },
     ],
     buttonText: 'Download journal entries',
-    endpoint: `download`,
+    endpoint: 'download',
+    success: 'Journal entries successfully downloaded.',
+    error: 'Download failed. Please try again.',
   },
   {
     title: 'Update Username',
@@ -29,6 +31,8 @@ const items = [
     ],
     buttonText: 'Update Username',
     endpoint: 'username',
+    success: 'Username successfully updated.',
+    error: 'Username update failed. Please try again.',
   },
   {
     title: 'Update Email',
@@ -47,6 +51,8 @@ const items = [
     ],
     buttonText: 'Update Email',
     endpoint: 'email',
+    success: 'Email successfully updated.',
+    error: 'Email update failed. Please try again.',
   },
   {
     title: 'Update Password',
@@ -70,6 +76,8 @@ const items = [
     ],
     buttonText: 'Update Password',
     endpoint: 'pswd',
+    success: 'Password successfully updated.',
+    error: 'Password update failed. Please try again.',
   },
   {
     title: 'Delete Account',
@@ -83,6 +91,8 @@ const items = [
     ],
     buttonText: 'Delete Account',
     endpoint: 'delete',
+    success: 'User account deleted successfully.',
+    error: 'Account deletion failed. Please try again.',
   },
 ];
 

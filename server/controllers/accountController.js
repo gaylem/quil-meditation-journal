@@ -106,7 +106,11 @@ accountController.updateUsername = async (req, res) => {
     console.log('userId: ', userId);
     const { newUsername, password } = req.body;
     // Authenticate user
-    verifyPassword(password, userId);
+    const passwordIsValid = await verifyPassword(password, userId);
+    console.log('passwordIsValid: ', passwordIsValid);
+    if (!passwordIsValid) {
+      return res.status(400).send();
+    }
     // Check if newUsername already exists
     const user = await User.findOne({ _id: userId });
     // Throw error if username already exists
@@ -118,7 +122,7 @@ accountController.updateUsername = async (req, res) => {
       });
     }
     // Update the user data
-    const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { username: newUsername } });
+    const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { username: newUsername } }, { new: true });
     // If nothing is returned, throw an error
     if (updatedUser.matchedCount === 0) {
       return {
@@ -152,7 +156,11 @@ accountController.updateEmail = async (req, res) => {
     const { userId } = req.params;
     const { newEmail, password } = req.body;
     // Authenticate user
-    verifyPassword(password, userId);
+    const passwordIsValid = await verifyPassword(password, userId);
+    console.log('passwordIsValid: ', passwordIsValid);
+    if (!passwordIsValid) {
+      return res.status(400).send();
+    }
     // Check if newUsername already exists
     const user = await User.findOne({ _id: userId });
     // Throw error if username already exists
@@ -164,7 +172,7 @@ accountController.updateEmail = async (req, res) => {
       });
     }
     // Update the user data
-    const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { email: newEmail } });
+    const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { email: newEmail } }, { new: true });
     // If nothing is returned, throw an error
     if (updatedUser.matchedCount === 0) {
       return {
@@ -216,14 +224,18 @@ accountController.updatePassword = async (req, res) => {
         message: 'Username or password are incorrect.',
       });
     }
-    // Confirm old password matches user password
-    verifyPassword(currentPassword, userId);
+    // Authenticate user
+    const passwordIsValid = await verifyPassword(currentPassword, userId);
+    console.log('passwordIsValid: ', passwordIsValid);
+    if (!passwordIsValid) {
+      return res.status(400).send();
+    }
     // Encrypt the password before updating the user
     const saltRounds = Number(process.env.SALT_WORK_FACTOR);
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(newPassword, salt);
     // Update the user data
-    const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { password: hash } });
+    const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { password: hash } }, { new: true });
     console.log('updatedUser: ', updatedUser);
     // If nothing is returned, throw an error
     if (updatedUser.matchedCount === 0) {
@@ -253,6 +265,15 @@ accountController.updatePassword = async (req, res) => {
 accountController.deleteAccount = async (req, res, next) => {
   try {
     const { userId } = req.params;
+    const { password } = req.body;
+    console.log('req.body: ', req.body);
+    console.log('password: ', password);
+    // Authenticate user
+    const passwordIsValid = await verifyPassword(password, userId);
+    console.log('passwordIsValid: ', passwordIsValid);
+    if (!passwordIsValid) {
+      return res.status(400).send();
+    }
     const deletedUser = await User.findOneAndDelete({ _id: userId });
     if (deletedUser === null) {
       return next({

@@ -61,7 +61,7 @@ const Account = () => {
           // Dispatch the 'LOGIN' action with the updated user data
           localStorage.setItem('user', JSON.stringify(newUserState));
           dispatch({ type: 'LOGIN', payload: newUserState });
-          setSuccess('Email successfully updated.');
+          setSuccess('Username successfully updated.');
         } else {
           setError('Username update failed. Please try again.');
         }
@@ -86,17 +86,24 @@ const Account = () => {
         if (response.status === 204) {
           setSuccess('Password successfully updated.');
         } else {
-          setError('Account deletion failed. Please try again.');
+          setError('Password update failed. Please try again.');
         }
       } else if (endpoint === 'delete') {
-        response = await axios.delete(`/api/accounts/delete/${user.userId}`);
-        if (response.status === 200) {
-          // Remove user data from local storage
-          localStorage.removeItem('user');
-          // Redirect to the signup page or any other desired URL
-          window.location.href = '/signup';
-        } else {
-          // Handle other response statuses as needed
+        try {
+          const response = await axios.delete(`/api/accounts/delete/${user.userId}`, {
+            data: {
+              password: formData.enterPassword,
+            },
+          });
+          if (response.status === 200) {
+            // Remove user data from local storage
+            localStorage.removeItem('user');
+            // Redirect to the signup page or any other desired URL
+            window.location.href = '/signup';
+          }
+        } catch (error) {
+          console.error('Error deleting account:', error);
+          // Handle error as needed
         }
       }
 
