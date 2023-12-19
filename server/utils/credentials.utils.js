@@ -19,7 +19,7 @@ import bcrypt from 'bcryptjs';
  * @returns {Promise<void>} A promise that resolves if validation is successful.
  * @throws {Error} Throws an error with a specific message if any validation fails.
  */
-export const isValidSignup = (username, email, password) => {
+export const isValidSignup = async (username, email, password) => {
   try {
     // Did the user input data into all three fields?
     if (!username || !email || !password) {
@@ -32,33 +32,29 @@ export const isValidSignup = (username, email, password) => {
     }
 
     // Is the password strong enough?
-    /* Default options: {
-      minLength: 8, 
-      minLowercase: 1, 
-      minUppercase: 1, 
-      minNumbers: 1, 
-      minSymbols: 1, 
-      returnScore: false, 
-      pointsPerUnique: 1, 
-      pointsPerRepeat: 0.5, 
-      pointsForContainingLower: 10, 
-      pointsForContainingUpper: 10, 
-      pointsForContainingNumber: 10, 
-      pointsForContainingSymbol: 10 } 
-  */
+    const customOptions = {
+      minLength: 12,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+      returnScore: false,
+    };
 
-    if (!validator.isStrongPassword(password)) {
+    console.log(password);
+    if (!validator.isStrongPassword(password, customOptions)) {
       throw { status: 400, message: 'Password not strong enough' };
     }
 
     // Is the email already being used?
-    const emailExists = User.findOne({ email });
+    const emailExists = await User.findOne({ email });
+    console.log('emailExists: ', emailExists);
     if (emailExists) {
       throw { status: 409, message: 'Email already in use' };
     }
 
     // Is the username already being used?
-    const usernameExists = User.findOne({ username });
+    const usernameExists = await User.findOne({ username });
     if (usernameExists) {
       throw { status: 409, message: 'Username already in use' };
     }

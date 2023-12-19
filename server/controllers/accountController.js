@@ -30,11 +30,9 @@ const accountController = {};
 accountController.downloadEntries = async (req, res) => {
   const userId = req.params.userId;
   const password = req.body.enterPassword;
-  console.log('password: ', password);
   try {
     // Authenticate user
     const passwordIsValid = await verifyPassword(password, userId);
-    console.log('passwordIsValid: ', passwordIsValid);
     if (!passwordIsValid) {
       return res.status(400).send();
     }
@@ -78,7 +76,6 @@ accountController.downloadEntries = async (req, res) => {
     // Set response headers
     res.setHeader('Content-Disposition', 'attachment; filename=my_entries.csv');
     res.setHeader('Content-Type', 'text/csv');
-    console.log(csvString);
     // Send the CSV string as the response
     res.status(200).send(csvString);
   } catch (error) {
@@ -99,15 +96,12 @@ accountController.downloadEntries = async (req, res) => {
  * @returns {Object} - JSON with updated username and 200 status, or error message
  */
 accountController.updateUsername = async (req, res) => {
-  console.log('test');
   try {
     // Extract the userId, username, and password from params and body
     const { userId } = req.params;
-    console.log('userId: ', userId);
     const { newUsername, password } = req.body;
     // Authenticate user
     const passwordIsValid = await verifyPassword(password, userId);
-    console.log('passwordIsValid: ', passwordIsValid);
     if (!passwordIsValid) {
       return res.status(400).send();
     }
@@ -124,22 +118,21 @@ accountController.updateUsername = async (req, res) => {
     // Update the user data
     const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { username: newUsername } }, { new: true });
     // If nothing is returned, throw an error
-    if (updatedUser.matchedCount === 0) {
-      return {
+    if (!updatedUser) {
+      return res.status(404).json({
         log: 'User not found.',
         status: 404,
         message: { error: 'User not found' },
-      };
+      });
     }
-
     return res.status(200).json(newUsername);
   } catch (error) {
     console.error('userController.updateUsername Error:', error);
-    return {
+    return res.status(500).json({
       log: `accountController.updateUsername: Error: ${error}`,
       message: { error: 'An error occurred' },
       status: 500,
-    };
+    });
   }
 };
 
@@ -157,7 +150,6 @@ accountController.updateEmail = async (req, res) => {
     const { newEmail, password } = req.body;
     // Authenticate user
     const passwordIsValid = await verifyPassword(password, userId);
-    console.log('passwordIsValid: ', passwordIsValid);
     if (!passwordIsValid) {
       return res.status(400).send();
     }
@@ -175,21 +167,21 @@ accountController.updateEmail = async (req, res) => {
     const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { email: newEmail } }, { new: true });
     // If nothing is returned, throw an error
     if (updatedUser.matchedCount === 0) {
-      return {
+      return res.status(404).send({
         log: 'User not found.',
         status: 404,
         message: { error: 'User not found' },
-      };
+      });
     }
     res.locals.user = updatedUser;
     return res.status(200).json(res.locals.user);
   } catch (error) {
     console.error('userController.updateEmail Error:', error);
-    return {
+    return res.status(500).json({
       log: `accountController.updateEmail: Error: ${error}`,
       message: { error: 'An error occurred' },
       status: 500,
-    };
+    });
   }
 };
 
@@ -226,7 +218,6 @@ accountController.updatePassword = async (req, res) => {
     }
     // Authenticate user
     const passwordIsValid = await verifyPassword(currentPassword, userId);
-    console.log('passwordIsValid: ', passwordIsValid);
     if (!passwordIsValid) {
       return res.status(400).send();
     }
@@ -236,23 +227,23 @@ accountController.updatePassword = async (req, res) => {
     const hash = await bcrypt.hash(newPassword, salt);
     // Update the user data
     const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { password: hash } }, { new: true });
-    console.log('updatedUser: ', updatedUser);
     // If nothing is returned, throw an error
     if (updatedUser.matchedCount === 0) {
-      return {
+      return res.status(404).json({
         log: 'User not found.',
         status: 404,
         message: { error: 'User not found' },
-      };
+      });
     }
+    res.clearCookie('refreshToken');
     return res.status(204).send();
   } catch (err) {
     console.error('userController.updateUser Error:', err);
-    return {
+    return res.status(500).json({
       log: 'userController.updateUser Error',
       message: { error: 'An error occurred' },
       status: 500,
-    };
+    });
   }
 };
 
@@ -266,11 +257,9 @@ accountController.deleteAccount = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const { password } = req.body;
-    console.log('req.body: ', req.body);
-    console.log('password: ', password);
+
     // Authenticate user
     const passwordIsValid = await verifyPassword(password, userId);
-    console.log('passwordIsValid: ', passwordIsValid);
     if (!passwordIsValid) {
       return res.status(400).send();
     }
