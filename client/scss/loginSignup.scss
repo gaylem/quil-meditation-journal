@@ -98,6 +98,15 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   p {
     padding-top: 1em;
   }
+
+  .account-emails {
+    padding: 1em 0 1em 0;
+    font-size: small;
+  }
+
+  .error-message {
+    padding: 0;
+  }
 }
 
 /* About copy on right-hand side of login/signup form */

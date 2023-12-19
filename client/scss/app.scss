@@ -3,3 +3,16 @@
   padding: 0;
   margin: 0;
 }
+
+.error-message,
+.success-message {
+  padding-top: 1em;
+  font-size: medium;
+}
+.error-message {
+  color: rgb(154, 0, 0);
+}
+
+.success-message {
+  color: rgb(18, 96, 2);
+}
