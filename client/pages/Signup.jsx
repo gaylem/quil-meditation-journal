@@ -65,12 +65,14 @@ function Signup() {
             placeholder='Password'
             value={password}
           />
+
           {/* Signup button */}
           <button className='loginSignupBtn' disabled={isLoading}>
             Sign Up
           </button>
+          <p className='account-emails'> You will only receive essential account-related emails.</p>
           {/* Display error message if there is an error */}
-          {error && <div className='error'>{error}</div>}
+          {error && <div className='error-message'>{error}</div>}
           {/* Link to the signin page */}
           <p>
             Already have an account? <Link to='/'>Sign in!</Link>

@@ -45,7 +45,7 @@ function Login() {
             Log in
           </button>
           {/* Display error message if there is an error */}
-          {error && <div className='error'>{error}</div>}
+          {error && <div className='error-message'>{error}</div>}
           {/* Link to the signup page */}
           <p>
             Don&apos;t have an account? <Link to='/signup'>Sign up!</Link>
