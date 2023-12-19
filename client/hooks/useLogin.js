@@ -62,7 +62,7 @@ export const useLogin = () => {
     } catch (error) {
       // Handle login error, set loading to false, and log the error
       setIsLoading(false);
-      setError('An error occurred during the login process.');
+      setError('Username or password is incorrect.');
       console.error('Login error:', error);
     }
   };
