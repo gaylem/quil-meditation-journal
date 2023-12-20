@@ -206,7 +206,7 @@ const Timer = () => {
         </div>
       </div>
       {/* Quote */}
-      <p className='quote'>Let&apos;s begin.</p>
+      <h2 className='quote'>Let&apos;s begin.</h2>
       {/* Time Dropdowns */}
       <div className='time-dropdown'>
         {/* Countdown Input */}

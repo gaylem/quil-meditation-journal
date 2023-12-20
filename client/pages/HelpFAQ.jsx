@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import items from '../../server/db/helpFAQPageData';
+import ContactForm from '../components/ContactForm.jsx';
 /**
  * React component for the Help & FAQs page.
  *
@@ -46,17 +47,7 @@ const HelpFAQ = () => {
         <br />
         <h2>Still need help?</h2>
         <p>Reach out via the form below.</p>
-        <div className='contactFormContainer'>
-          <form action={process.env.REACT_APP_FORM_ENDPOINT} method='POST' className='form'>
-            <input type='text' name='name' placeholder='Name' className='name' />
-            <input type='hidden' name='_gotcha' style={{ display: 'none !important' }} />
-            <input type='text' name='email' placeholder='Email' className='email' />
-            <textarea type='text' name='message' placeholder='Message' rows='10' className='message' />
-            <button type='submit' className='submitBtn'>
-              Send
-            </button>
-          </form>
-        </div>
+        <ContactForm />
       </div>
     </div>
   );
