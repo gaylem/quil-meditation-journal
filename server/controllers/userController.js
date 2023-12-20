@@ -34,13 +34,14 @@ userController.signupUser = async (req, res) => {
   const { username, email, password } = req.body;
   try {
     // Invoke isValidSignup to confirm input is valid
-    const isValid = isValidSignup(username, email, password);
+    const isValid = await isValidSignup(username, email, password);
 
     if (!isValid) {
-      return res.status(400).json({
-        log: 'userController.signup: Invalid input',
-        status: 400,
-        message: 'Username or password are incorrect.',
+      console.error('test', error);
+      return res.status(error.status || 500).json({
+        log: `userController.signupUser: ERROR ${error}`,
+        status: error.status || 500,
+        message: error,
       });
     }
     // Generate salt and hash for password
@@ -81,10 +82,11 @@ userController.signupUser = async (req, res) => {
     // Return 200 status and user object to client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
-    return res.status(500).json({
-      log: `userController.signupUser: ERROR ${error.message}`,
-      status: 500,
-      message: 'Something went wrong. Please try again later.',
+    console.error(error);
+    return res.status(error.status || 500).json({
+      log: `userController.signupUser: ERROR ${error}`,
+      status: error.status || 500,
+      message: error,
     });
   }
 };
@@ -102,7 +104,7 @@ userController.loginUser = async (req, res) => {
   try {
     // Validate input
     if (!username || !password) {
-      throw new Error('All fields must be filled');
+      throw 'All fields must be filled';
     }
     // Find user by username
     const user = await User.findOne({ username });
@@ -151,7 +153,7 @@ userController.loginUser = async (req, res) => {
     return res.status(500).json({
       log: `userController.loginUser: ERROR ${error}`,
       status: 500,
-      message: 'Something went wrong. Please try again later.',
+      message: error,
     });
   }
 };

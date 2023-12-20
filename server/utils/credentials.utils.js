@@ -33,7 +33,7 @@ export const isValidSignup = async (username, email, password) => {
 
     // Is the password strong enough?
     const customOptions = {
-      minLength: 12,
+      minLength: 8,
       minLowercase: 1,
       minUppercase: 1,
       minNumbers: 1,
@@ -41,23 +41,23 @@ export const isValidSignup = async (username, email, password) => {
       returnScore: false,
     };
 
-    console.log(password);
     if (!validator.isStrongPassword(password, customOptions)) {
       throw { status: 400, message: 'Password not strong enough' };
     }
 
     // Is the email already being used?
     const emailExists = await User.findOne({ email });
-    console.log('emailExists: ', emailExists);
+
     if (emailExists) {
-      throw { status: 409, message: 'Email already in use' };
+      throw { status: 409, message: 'Username or email already exists.' };
     }
 
     // Is the username already being used?
     const usernameExists = await User.findOne({ username });
     if (usernameExists) {
-      throw { status: 409, message: 'Username already in use' };
+      throw { status: 409, message: 'Username or email already exists.' };
     }
+
     return true;
   } catch (error) {
     console.error(error);
