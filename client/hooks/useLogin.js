@@ -42,12 +42,6 @@ export const useLogin = () => {
       // Extract JSON data from the response
       const user = response.data;
 
-      // Check for non-successful response status
-      if (response.status !== 200) {
-        setIsLoading(false);
-        setError(user.error);
-      }
-
       // Process successful login
       if (response.status === 200) {
         // Save the user data to local storage
@@ -62,7 +56,8 @@ export const useLogin = () => {
     } catch (error) {
       // Handle login error, set loading to false, and log the error
       setIsLoading(false);
-      setError('Username or password is incorrect.');
+      setError(error.response.data.message);
+      console.log('error.response.data.message: ', error.response.data.message);
       console.error('Login error:', error);
     }
   };
