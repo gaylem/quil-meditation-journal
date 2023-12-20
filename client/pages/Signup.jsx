@@ -71,12 +71,18 @@ function Signup() {
             Sign Up
           </button>
           <p className='account-emails'> You will only receive essential account-related emails.</p>
-          {/* Display error message if there is an error */}
-          {error && <div className='error-message'>{error}</div>}
-          {/* Link to the signin page */}
-          <p>
-            Already have an account? <Link to='/'>Sign in!</Link>
-          </p>
+          <div className='message-container'>
+            {/* Display error message if there is an error */}
+            {error && (
+              <div className='signup-error-message'>
+                <p>{error.message}</p>
+              </div>
+            )}
+            {/* Link to the signin page */}
+            <p className='signup-signin-message'>
+              Already have an account? <Link to='/'>Sign in!</Link>
+            </p>
+          </div>
         </form>
       </div>
       <Blurb />
