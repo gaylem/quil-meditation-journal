@@ -15,6 +15,9 @@ const LazyLogin = lazy(() => import('./pages/Login.jsx'));
 const LazySignup = lazy(() => import('./pages/Signup.jsx'));
 const LazyAbout = lazy(() => import('./pages/About.jsx'));
 const LazyMeditation = lazy(() => import('./pages/Meditation.jsx'));
+const LazyHelpFAQ = lazy(() => import('./pages/HelpFAQ.jsx'));
+const LazyGetInvolved = lazy(() => import('./pages/GetInvolved.jsx'));
+const LazyAccount = lazy(() => import('./pages/Account.jsx'));
 const LazyFooter = lazy(() => import('./components/Footer.jsx'));
 
 /**
@@ -45,9 +48,15 @@ function App() {
               {/* Signup route - Renders Signup page if the user is not authenticated, otherwise redirects to the home page */}
               <Route path='/signup' element={!user ? <LazySignup /> : <Navigate to='/' />} />
               {/* About route - Renders About page */}
-              <Route path='/about' element={<LazyAbout />} /> {/* About route - renders the about copy */}
+              <Route path='/about-quil' element={<LazyAbout />} />
+              {/* Help route - Renders Help & FAQs page */}
+              <Route path='/help-faqs' element={<LazyHelpFAQ />} />
               {/* Meditation route - Renders How to Meditate page */}
-              <Route path='/meditation' element={<LazyMeditation />} /> {/* Meditation - renders the How to Meditate page */}
+              <Route path='/how-to-meditate' element={<LazyMeditation />} />
+              {/* Get Involved route - Renders Get Involved page */}
+              <Route path='/get-involved' element={<LazyGetInvolved />} />
+              {/* Account route - Renders Account page */}
+              <Route path='/account' element={!user ? <LazyLogin /> : <LazyAccount />} />
             </Routes>
           </div>
         </Suspense>

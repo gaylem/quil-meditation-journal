@@ -65,16 +65,24 @@ function Signup() {
             placeholder='Password'
             value={password}
           />
+
           {/* Signup button */}
           <button className='loginSignupBtn' disabled={isLoading}>
             Sign Up
           </button>
-          {/* Display error message if there is an error */}
-          {error && <div className='error'>{error}</div>}
-          {/* Link to the signin page */}
-          <p>
-            Already have an account? <Link to='/'>Sign in!</Link>
-          </p>
+          <p className='account-emails'> You will only receive essential account-related emails.</p>
+          <div className='message-container'>
+            {/* Display error message if there is an error */}
+            {error && (
+              <div className='signup-error-message'>
+                <p>{error.message}</p>
+              </div>
+            )}
+            {/* Link to the signin page */}
+            <p className='signup-signin-message'>
+              Already have an account? <Link to='/'>Sign in!</Link>
+            </p>
+          </div>
         </form>
       </div>
       <Blurb />

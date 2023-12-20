@@ -10,12 +10,19 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 /* Container for login and signup page components */
 .loginSignupContainer {
   display: flex;
+  margin: 0 auto;
+  min-height: 100vh;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
   align-items: center;
   flex-wrap: wrap;
   font-family: $paragraph-font;
+  @media (max-width: 930px) {
+    flex-direction: column;
+    background-color: white;
+    box-shadow: none;
+    border: 0px;
+    padding-top: 8em;
+  }
 }
 
 /* Box that contains the login and signup form */
@@ -88,8 +95,20 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
   /* Already have account? Sign in! */
   /* Don't have an account? Sign up! */
-  p {
+  .signup-signin-message {
     padding-top: 1em;
+  }
+
+  .account-emails {
+    padding: 1em 0 1em 0;
+    font-size: small;
+  }
+
+  .message-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -105,13 +124,18 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     margin-bottom: 1.5em;
   }
 
-  @media (max-width: 835px) {
-    margin-top: 0em;
-    padding: 1em;
+  // Headers
+  h2 {
+    font-family: $header-font;
+    font-size: 2rem;
+    margin: 0 auto;
+    line-height: 1.5em;
+    padding: 0.5em 0.5em 0.5em 0;
+    color: $secondary-color;
+    text-shadow: 1px 1px 5px lightgray;
   }
 
-  @media (max-width: 300px) {
+  @media (max-width: 930px) {
     min-width: 15px;
-    padding: 0.5em;
   }
 }

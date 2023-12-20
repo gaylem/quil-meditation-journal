@@ -34,32 +34,47 @@ userController.signupUser = async (req, res) => {
   const { username, email, password } = req.body;
   try {
     // Invoke isValidSignup to confirm input is valid
-    isValidSignup(username, email, password);
+    const isValid = await isValidSignup(username, email, password);
+
+    if (!isValid) {
+      console.error('test', error);
+      return res.status(error.status || 500).json({
+        log: `userController.signupUser: ERROR ${error}`,
+        status: error.status || 500,
+        message: error,
+      });
+    }
     // Generate salt and hash for password
-    const salt = await bcrypt.genSalt(10);
+    const saltRounds = Number(process.env.SALT_WORK_FACTOR);
+    const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(password, salt);
     // Create and save new user
     const user = new User({ username, email, password: hash });
-    user.save();
+
+    await user.save();
     // Store the userId in a new variable and on the locals object
     res.locals.user = user;
     // Extract userId from new user
     const userId = user._id.toString();
+
     // Store the userId and username in a new object for the createTokens function
     const userObj = {
       userId,
       username: user.username,
     };
+
     // Create tokens
     const tokens = createTokens(userObj);
+
     // Set HttpOnly Cookies
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
     // Add token to accessTokens array in user document in the database
     const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $push: { refreshTokens: tokens.refreshToken } }, { new: true });
+
     // If updatedUser returns false, log an error
     if (!updatedUser) {
       return res.status(404).json({
-        log: 'userController.loginUser: Issue with updatedUser',
+        log: 'userController.signup: Issue with updatedUser',
         status: 404,
         message: 'Username or password are incorrect.',
       });
@@ -67,10 +82,11 @@ userController.signupUser = async (req, res) => {
     // Return 200 status and user object to client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
-    return res.status(500).json({
-      log: `userController.signupUser: ERROR ${error.message}`,
-      status: 500,
-      message: 'Something went wrong. Please try again later.',
+    console.error(error);
+    return res.status(error.status || 500).json({
+      log: `userController.signupUser: ERROR ${error}`,
+      status: error.status || 500,
+      message: error,
     });
   }
 };
@@ -88,7 +104,7 @@ userController.loginUser = async (req, res) => {
   try {
     // Validate input
     if (!username || !password) {
-      throw new Error('All fields must be filled');
+      throw 'All fields must be filled';
     }
     // Find user by username
     const user = await User.findOne({ username });
@@ -134,11 +150,10 @@ userController.loginUser = async (req, res) => {
     // Send 200 status and user object to the client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
-    console.error('Login error:', error);
     return res.status(500).json({
       log: `userController.loginUser: ERROR ${error}`,
       status: 500,
-      message: 'Something went wrong. Please try again later.',
+      message: error,
     });
   }
 };

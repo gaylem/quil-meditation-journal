@@ -44,12 +44,18 @@ function Login() {
           <button className='loginSignupBtn' type='submit' disabled={isLoading}>
             Log in
           </button>
-          {/* Display error message if there is an error */}
-          {error && <div className='error'>{error}</div>}
-          {/* Link to the signup page */}
-          <p>
-            Don&apos;t have an account? <Link to='/signup'>Sign up!</Link>
-          </p>
+          <div className='message-container'>
+            {/* Display error message if there is an error */}
+            {error && (
+              <div className='error-message'>
+                <p>{error}</p>
+              </div>
+            )}
+            {/* Link to the signup page */}
+            <p className='signup-signin-message'>
+              Don&apos;t have an account? <Link to='/signup'>Sign up!</Link>
+            </p>
+          </div>
         </form>
       </div>
       <Blurb />

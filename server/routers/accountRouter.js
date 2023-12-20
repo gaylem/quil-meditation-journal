@@ -1,30 +1,54 @@
 //** ACCOUNT ROUTER */
 
-//! None of these work right now and will need to be refactored when the account page is created
-
-/* Functionality should include: 
-    1. Update email address
-    2. Update username
-    3. Update password
-    4. Delete user
+/* Includes:  
+    1. GET downloadEntries by userId
+    2. PATCH updateUsername by userId
+    3. PATCH updateEmail by userId
+    4. PATCH updatePassword by userId
+    4. DELETE deleteAccount by userId
 */
 
 import express from 'express';
 const router = express.Router();
 import accountController from '../controllers/accountController.js';
-const { updateAccount, deleteAccount } = accountController;
+
+const { downloadEntries, updateUsername, updateEmail, updatePassword, deleteAccount } = accountController;
 
 /**
- * @route PUT /api/users/update/:userId
- * @description Update user by ID
+ * @route GET /api/accounts/:userId
+ * @description Get all entries by userId and download to CSV
  * @param userId
  * @access Private (requires access token)
  */
-router.put('/update/:userId', updateAccount);
+router.post('/download/:userId', downloadEntries);
 
 /**
- * @route DELETE /api/users/delete/:userId
- * @description Delete user by ID
+ * @route PATCH /api/accounts/:userId
+ * @description Update username by userId
+ * @param userId
+ * @access Private (requires access token)
+ */
+router.patch('/username/:userId', updateUsername);
+
+/**
+ * @route PATCH /api/accounts/:userId
+ * @description Update email
+ * @param userId
+ * @access Private (requires access token)
+ */
+router.patch('/email/:userId', updateEmail);
+
+/**
+ * @route PATCH /api/accounts/update/:userId
+ * @description Update password by userId
+ * @param userId
+ * @access Private (requires access token)
+ */
+router.patch('/pswd/:userId', updatePassword);
+
+/**
+ * @route DELETE /api/accounts/delete/:userId
+ * @description Delete user by userId
  * @param userId
  * @access Private (requires access token)
  */

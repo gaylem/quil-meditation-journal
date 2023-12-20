@@ -34,13 +34,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {/* Link to the 'About' page */}
         <div className='link'>
           <img src={feather} className='icon' id='gear' alt='gear icon' />
-          <Link to='/about' onClick={toggleSidebar}>
+          <Link to='/about-quil' onClick={toggleSidebar}>
             About quil
           </Link>
         </div>
         <div className='link'>
           <img src={brain} className='icon' id='gear' alt='gear icon' />
-          <Link to='/meditation' onClick={toggleSidebar}>
+          <Link to='/how-to-meditate' onClick={toggleSidebar}>
             How to Meditate
           </Link>
         </div>

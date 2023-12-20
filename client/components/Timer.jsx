@@ -1,6 +1,7 @@
 //** TIMER COMPONENT */
 
 import React, { useState, useEffect } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 // Import sound hook and audio file
 import useSound from 'use-sound';
@@ -24,6 +25,14 @@ const Timer = () => {
   const [countdownFinished, setCountdownFinished] = useState(false);
   const [durationFinished, setDurationFinished] = useState(false);
   const [play, { stop }] = useSound(singingBowl);
+
+  // If there is no user, stop the timer audio
+  const { user } = useAuthContext();
+  useEffect(() => {
+    return () => {
+      stop();
+    };
+  }, [user, stop]);
 
   /**
    * Creates a closure to ensure the sound plays only once at the beginning and end.
