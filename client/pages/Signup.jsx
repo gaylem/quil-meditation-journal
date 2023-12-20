@@ -69,7 +69,7 @@ function Signup() {
               onChange={e => {
                 setPassword(e.target.value);
               }}
-              placeholder='ex: sy&jZ9aVj3K!'
+              placeholder='Enter your password'
               value={password}
             />
           </div>

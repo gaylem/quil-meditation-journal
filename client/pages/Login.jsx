@@ -42,7 +42,7 @@ function Login() {
             <input type='username' id='username' onChange={e => setUsername(e.target.value)} placeholder='ex: jane' value={username} />
             {/* Password input */}
             <label for='password'>Password:</label>
-            <input type='password' id='password' onChange={e => setPassword(e.target.value)} placeholder='ex: sy&jZ9aVj3K!' value={password} />
+            <input type='password' id='password' onChange={e => setPassword(e.target.value)} placeholder='Enter your password' value={password} />
             {/* Login button */}
             <button className='loginSignupBtn' type='submit' disabled={isLoading}>
               Log in
