@@ -85,7 +85,7 @@ function NewEntry() {
         {/* Button next to 'New Meditation' that toggles the NewEntry section open/closed */}
         <button onClick={toggle}>+</button>
         {/* Displays either the date or 'New Meditation' based on the toggle state */}
-        <p>{date}</p>
+        <h3>{date}</h3>
       </div>
       {/* Render the following content only if the 'open' state is true */}
       {open && (

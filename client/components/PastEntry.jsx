@@ -110,7 +110,7 @@ const PastEntry = ({ entry }) => {
       {/* Header with button and formatted date */}
       <div className='pastEntryTitle'>
         <button onClick={toggle}>+</button>
-        <p>{formattedDate}</p>
+        <h5>{formattedDate}</h5>
       </div>
       <div>
         {open && (

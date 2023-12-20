@@ -65,7 +65,7 @@ const PastEntriesFeed = () => {
   return (
     <div>
       {/* Title for the past meditation sessions */}
-      <p className='pastMeditationTitle'>Past Meditation Sessions</p>
+      <h4 className='pastMeditationTitle'>Past Meditation Sessions</h4>
       {/* Map through the entries and render each PastEntry component */}
       {entries.map((entry, index) => (
         <PastEntry key={entry._id || index} entry={entry} />
