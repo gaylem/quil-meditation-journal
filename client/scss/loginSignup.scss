@@ -95,7 +95,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
   /* Already have account? Sign in! */
   /* Don't have an account? Sign up! */
-  p {
+  .signup-signin-message {
     padding-top: 1em;
   }
 
@@ -104,8 +104,11 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     font-size: small;
   }
 
-  .error-message {
-    padding: 0;
+  .message-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
 
