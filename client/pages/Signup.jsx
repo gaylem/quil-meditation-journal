@@ -38,34 +38,41 @@ function Signup() {
         <form onSubmit={handleSubmit}>
           {/* Title */}
           <h1 className='title'>Tranquility awaits...</h1>
-          {/* Username input */}
-          <input
-            type='username'
-            onChange={e => {
-              setUsername(e.target.value);
-            }}
-            placeholder='Username'
-            value={username}
-          />
-          {/* Email input */}
-          <input
-            type='email'
-            onChange={e => {
-              setEmail(e.target.value);
-            }}
-            placeholder='Email'
-            value={email}
-          />
-          {/* Password input */}
-          <input
-            type='password'
-            onChange={e => {
-              setPassword(e.target.value);
-            }}
-            placeholder='Password'
-            value={password}
-          />
-
+          <div className='input-box'>
+            {/* Username input */}
+            <label for='username'>Username:</label>
+            <input
+              type='username'
+              id='username'
+              onChange={e => {
+                setUsername(e.target.value);
+              }}
+              placeholder='ex: jane'
+              value={username}
+            />
+            {/* Email input */}
+            <label for='email'>Email:</label>
+            <input
+              type='email'
+              id='email'
+              onChange={e => {
+                setEmail(e.target.value);
+              }}
+              placeholder='ex: jane@example.com'
+              value={email}
+            />
+            {/* Password input */}
+            <label for='password'>Password:</label>
+            <input
+              type='password'
+              id='password'
+              onChange={e => {
+                setPassword(e.target.value);
+              }}
+              placeholder='ex: sy&jZ9aVj3K!'
+              value={password}
+            />
+          </div>
           {/* Signup button */}
           <button className='loginSignupBtn' disabled={isLoading}>
             Sign Up

@@ -36,14 +36,18 @@ function Login() {
         <form onSubmit={handleSubmit}>
           {/* Title */}
           <h1 className='title'>Welcome back!</h1>
-          {/* Username input */}
-          <input type='username' onChange={e => setUsername(e.target.value)} placeholder='Username' value={username} />
-          {/* Password input */}
-          <input type='password' onChange={e => setPassword(e.target.value)} placeholder='Password' value={password} />
-          {/* Login button */}
-          <button className='loginSignupBtn' type='submit' disabled={isLoading}>
-            Log in
-          </button>
+          <div className='input-box'>
+            {/* Username input */}
+            <label for='username'>Username:</label>
+            <input type='username' id='username' onChange={e => setUsername(e.target.value)} placeholder='ex: jane' value={username} />
+            {/* Password input */}
+            <label for='password'>Password:</label>
+            <input type='password' id='password' onChange={e => setPassword(e.target.value)} placeholder='ex: sy&jZ9aVj3K!' value={password} />
+            {/* Login button */}
+            <button className='loginSignupBtn' type='submit' disabled={isLoading}>
+              Log in
+            </button>
+          </div>
           <div className='message-container'>
             {/* Display error message if there is an error */}
             {error && (

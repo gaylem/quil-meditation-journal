@@ -62,6 +62,16 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     justify-content: center;
     align-items: center;
 
+    .input-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+      width: 100%;
+      label {
+        padding-top: 0.5em;
+      }
+    }
+
     input {
       width: 100%;
       margin-bottom: 10px;
