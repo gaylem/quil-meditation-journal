@@ -95,7 +95,7 @@ function NewEntry() {
             <label htmlFor='body' placeholder='How long did you meditate?'>
               Duration:
             </label>
-            <input className='entry-duration' id='entry-duration' name='duration' placeholder='How long did you meditate?'></input>
+            <input className='entry-duration' id='entry-duration' name='duration' placeholder='ex: 10m'></input>
           </div>
           <label htmlFor='body'>New Journal Entry:</label>
           <textarea className='entry-body' id='body' name='body' placeholder='How did it go?' rows={5} cols={15} onChange={e => setBody(e.target.value)} value={body} />
