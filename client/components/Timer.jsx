@@ -207,54 +207,58 @@ const Timer = () => {
       </div>
       {/* Quote */}
       <h2 className='quote'>Let&apos;s begin.</h2>
-      {/* Time Dropdowns */}
-      <div className='time-dropdown'>
-        {/* Countdown Input */}
-        <div className='countdown-container'>
-          <input className='countdown-input' list='countdown-options' placeholder='Countdown' name='countdown' onChange={handleCountdownChange} />
-          {/* Dropdown options for countdown */}
-          <datalist id='countdown-options'>
-            <option value='5s' />
-            <option value='10s' />
-            <option value='15s' />
-            <option value='20s' />
-            <option value='25s' />
-            <option value='30s' />
-            <option value='45s' />
-            <option value='60s' />
-          </datalist>
+      <div className='control-panel'>
+        {/* Time Dropdowns */}
+        <div className='time-dropdown'>
+          {/* Countdown Input */}
+          <div className='countdown-container'>
+            <label htmlFor='countdown'>Countdown:</label>
+            <input className='countdown-input' id='countdown' list='countdown-options' placeholder='Time in seconds' name='countdown' onChange={handleCountdownChange} />
+            {/* Dropdown options for countdown */}
+            <datalist id='countdown-options'>
+              <option value='5s' />
+              <option value='10s' />
+              <option value='15s' />
+              <option value='20s' />
+              <option value='25s' />
+              <option value='30s' />
+              <option value='45s' />
+              <option value='60s' />
+            </datalist>
+          </div>
+          {/* Duration Input */}
+          <div className='duration-container'>
+            <label htmlFor='duration'>Duration:</label>
+            <input className='duration-input' id='duration' list='duration-options' placeholder='Time in minutes' name='duration' onChange={handleDurationChange} />
+            {/* Dropdown options for duration */}
+            <datalist id='duration-options'>
+              <option value='1m' />
+              <option value='5m' />
+              <option value='10m' />
+              <option value='15m' />
+              <option value='20m' />
+              <option value='25m' />
+              <option value='30m' />
+              <option value='35m' />
+              <option value='40m' />
+              <option value='45m' />
+              <option value='60m' />
+              <option value='90m' />
+              <option value='120m' />
+            </datalist>
+          </div>
         </div>
-        {/* Duration Input */}
-        <div className='duration-container'>
-          <input className='duration-input' list='duration-options' placeholder='Duration' name='duration' onChange={handleDurationChange} />
-          {/* Dropdown options for duration */}
-          <datalist id='duration-options'>
-            <option value='1m' />
-            <option value='5m' />
-            <option value='10m' />
-            <option value='15m' />
-            <option value='20m' />
-            <option value='25m' />
-            <option value='30m' />
-            <option value='35m' />
-            <option value='40m' />
-            <option value='45m' />
-            <option value='60m' />
-            <option value='90m' />
-            <option value='120m' />
-          </datalist>
+        {/* Control Buttons */}
+        <div className='circle-button-container'>
+          {/* Play/Pause Button */}
+          <button className={`circle-button button-primary-${isActive ? 'active' : 'inactive'}`} onClick={togglePlayPause}>
+            <img src={isActive ? pauseImage : playImage} id='play-pause-btn' alt={isActive ? 'Pause' : 'Play'} />
+          </button>
+          {/* Reset Button */}
+          <button className='circle-button' onClick={reset}>
+            <img src={resetImage} alt='Reset' id='reset-btn' />
+          </button>
         </div>
-      </div>
-      {/* Control Buttons */}
-      <div className='circle-button-container'>
-        {/* Play/Pause Button */}
-        <button className={`circle-button button-primary-${isActive ? 'active' : 'inactive'}`} onClick={togglePlayPause}>
-          <img src={isActive ? pauseImage : playImage} id='play-pause-btn' alt={isActive ? 'Pause' : 'Play'} />
-        </button>
-        {/* Reset Button */}
-        <button className='circle-button' onClick={reset}>
-          <img src={resetImage} alt='Reset' id='reset-btn' />
-        </button>
       </div>
     </div>
   );
