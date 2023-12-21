@@ -124,7 +124,7 @@ entryController.updateEntry = async (req, res) => {
     // Store request parameter in a variable
     const _id = req.params.id;
     // Extract the entry body and userId from the request body
-    const { body, userId } = req.body;
+    const { body } = req.body;
     // Encrypt the entry body using the common key and IV
     const { iv, encryptedData } = encrypt(body);
     // Find and update the encrypted entry in database and store updated entry in a variable
