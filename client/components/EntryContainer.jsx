@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-// Import componentsgit 
+// Import componentsgit
 import PastEntriesFeed from './PastEntriesFeed.jsx';
 import Timer from './Timer.jsx';
 
@@ -23,7 +23,9 @@ function EntryContainer() {
         <Timer />
       </div>
       {/* PastEntriesFeed component for displaying previous journal entries */}
-      <PastEntriesFeed />
+      <div>
+        <PastEntriesFeed />
+      </div>
     </div>
   );
 }

@@ -29,6 +29,9 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
       font-family: $paragraph-font;
       font-size: x-large;
       font-weight: 550;
+      @media (max-width: 500px) {
+        font-size: large;
+      }
 
       button {
         border-radius: 50%;

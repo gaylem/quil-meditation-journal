@@ -13,6 +13,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  padding-bottom: 1em;
 
   box-shadow:
     8px 0 20px -12px $shadow-color,
@@ -25,6 +26,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
   @media (max-width: 480px) {
     box-shadow: none;
+    width: 100vw;
   }
 
   /* Main timer container on homepage */
