@@ -112,7 +112,7 @@ export const AuthContextProvider = ({ children }) => {
     // Setup interval for subsequent checks
     const intervalId = setInterval(async () => {
       await refreshAccessToken();
-    }, 3600000);
+    }, 1800000);
 
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
