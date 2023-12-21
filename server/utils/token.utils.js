@@ -35,7 +35,7 @@ export const createTokens = payload => {
     // Set access token options
     const accessTokenOptions = {
       algorithm: 'HS256',
-      expiresIn: '1h',
+      expiresIn: '4h',
     };
     // Set refresh token options
     const refreshTokenOptions = {
