@@ -36,6 +36,7 @@ const authMiddleware = async (req, res, next) => {
   try {
     // Verify the access token using the provided secret key
     const decoded = jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
+    console.log('decoded: ', decoded);
     // Extract user ID from the decoded token
     const { userId } = decoded;
     // Find user by ID in the database
@@ -55,10 +56,14 @@ const authMiddleware = async (req, res, next) => {
     // Continue to the next middleware or route
     next();
   } catch (error) {
-    // Clear the user's session by removing cookies
-    res.clearCookie('refreshToken');
-    // Redirect the user to the login page
-    res.redirect('/login');
+    console.error('Token verification failed:', error.message);
+    // TODO: Is the client receiving this? Will it redirect?
+    if (error.name === 'TokenExpiredError') {
+      // Clear the user's session by removing cookies
+      res.clearCookie('refreshToken');
+      // Redirect the user to the login page
+      res.redirect('/login');
+    }
   }
 };
 
