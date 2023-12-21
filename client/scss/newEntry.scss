@@ -66,9 +66,13 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
       font-size: large;
       font-family: $paragraph-font;
       background-color: #f5f5f5;
-      padding: 1em 2em;
+      padding: 1em;
       border-radius: 8px;
       box-shadow: 0 0 5px $shadow-color;
+
+      @media (max-width: 300px) {
+        padding: 0.5em;
+      }
 
       label {
         padding: 1em 0 0.2em 0;
@@ -94,10 +98,10 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
         width: 100%;
         border: 1px solid lightgray;
         border-radius: 0.25em;
-        line-height: 1em;
+        line-height: 1.5em;
         font-family: $paragraph-font;
         font-size: large;
-        padding: 0.5em;
+        padding: 1em;
         box-shadow:
           0 0 7px 10px rgba(227, 227, 227, 0.1),
           0 0 7px 10px rgba(227, 227, 227, 0.1);
@@ -109,7 +113,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
     }
 
     .entry-body {
-      min-height: 20em;
+      min-height: 15em;
     }
 
     /* Mixin for button styles */

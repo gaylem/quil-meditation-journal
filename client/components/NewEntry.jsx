@@ -92,12 +92,15 @@ function NewEntry() {
         // Form for submitting a new entry, contains cancel and save buttons
         <form method='post' onSubmit={handleSubmit}>
           <div>
-            <label htmlFor='body' placeholder='How long did you meditate?'>
+            {/* TODO: Uncomment to add duration field */}
+            {/*<label htmlFor='body' placeholder='How long did you meditate?'>
               Duration:
             </label>
-            <input className='entry-duration' id='entry-duration' name='duration' placeholder='ex: 10m'></input>
+            <input className='entry-duration' id='entry-duration' name='duration' placeholder='ex: 10m'></input>*/}
           </div>
-          <label htmlFor='body'>New Journal Entry:</label>
+          <label className='visually-hidden' htmlFor='body'>
+            New Journal Entry:
+          </label>
           <textarea className='entry-body' id='body' name='body' placeholder='How did it go?' rows={5} cols={15} onChange={e => setBody(e.target.value)} value={body} />
           {/* Cancel toggles the new entry section closed */}
           <div className='newEntryButtons'>
