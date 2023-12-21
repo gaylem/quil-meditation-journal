@@ -7,141 +7,159 @@ $shadow-color: rgb(172, 172, 172);
 /* Font Family */
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
-.NewEntry {
-  /* Styles for the main container */
-  display: flex;
+.NewEntryBox {
+  box-sizing: border-box;
   justify-content: center;
-  flex-direction: column;
-  padding: 1em;
-  width: 70%;
-  color: rgb(68, 68, 68);
+  padding: 2em;
 
-  @media (max-width: 480px) {
-    justify-content: center;
-    max-width: 90%;
-    font-size: large;
-  }
-
-  .NewEntryBox {
+  .NewEntry {
+    /* Styles for the main container */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-  }
+    color: rgb(68, 68, 68);
+    width: 100%;
 
-  /* Toggles between 'New Meditation' and the current date */
-  .newEntryHeader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1em 0em 1.5em 0em;
-    margin-right: 1em;
-    font-family: $paragraph-font;
-    font-size: x-large;
-    font-weight: 550;
-    button {
-      border-radius: 50%;
-      font-size: 1em;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-      border: 0;
-      color: white;
-      background-color: $secondary-color;
-      margin-right: 0.5em;
-    }
-    button:hover {
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-      background-color: lighten($secondary-color, 10%);
-    }
-
-    @media (max-width: 480px) {
-      justify-content: center;
-      max-width: 100%;
-      font-size: large;
-    }
-  }
-
-  @keyframes fadeInAnimation {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  /* The form under 'New Meditation' */
-  form {
-    display: flex;
-    justify-content: right;
-    flex-direction: column;
-    animation-name: fadeInAnimation;
-    animation-duration: 1s;
-    font-family: $paragraph-font;
-
-    /* The text that the user enters into the textarea */
-    .entryText {
-      border: 1px solid lightgray;
-      border-radius: 0.25em;
-      line-height: 2em;
+    /* Toggles between 'New Meditation' and the current date */
+    .newEntryHeader {
+      display: flex;
+      justify-content: left;
+      text-align: left;
+      align-items: center;
+      padding: 1em 0 1em 0;
       font-family: $paragraph-font;
-      font-size: large;
-      padding: 1em;
-      box-shadow:
-        0 0 7px 10px rgba(227, 227, 227, 0.1),
-        0 0 7px 10px rgba(227, 227, 227, 0.1);
+      font-size: x-large;
+      font-weight: 550;
 
-      @media (max-width: 480px) {
-        font-size: medium;
+      button {
+        border-radius: 50%;
+        font-size: 1.2em;
+        padding: 0.25em 0.5em 0.25em 0.5em;
+        border: 0;
+        color: white;
+        background-color: $secondary-color;
+        margin-right: 0.5em;
+      }
+      button:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+        background-color: $primary-color;
       }
     }
-  }
 
-  /* Mixin for button styles */
-  @mixin new-entry-btn-styles($bg-color: $primary-color, $font-size: medium) {
-    padding: 0.5em 0 0.5em 0;
-    margin: 0 0.5em 0.5em 0.5em;
-    min-width: 80px;
-    border-radius: 3px;
-    font-size: $font-size;
-  }
-
-  /* Button container styles */
-  .newEntryButtons {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    margin-top: 0.5em;
-
-    /* Cancel button styles */
-    .cancel {
-      @include new-entry-btn-styles;
-      border: 1px solid $secondary-color;
-      background-color: $tertiary-color;
-      color: $secondary-color;
+    @keyframes fadeInAnimation {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
     }
 
-    .cancel:hover {
-      background-color: $primary-color;
-      color: $tertiary-color;
-      border: 1px solid $primary-color;
-      opacity: 50%;
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-      cursor: pointer;
+    /* The form under 'New Meditation' */
+    form {
+      display: flex;
+      flex-direction: column;
+      animation-name: fadeInAnimation;
+      animation-duration: 1s;
+      font-size: large;
+      font-family: $paragraph-font;
+      background-color: #f5f5f5;
+      padding: 1em 2em;
+      border-radius: 8px;
+      box-shadow: 0 0 5px $shadow-color;
+
+      label {
+        padding: 1em 0 0.2em 0;
+        font-weight: 600;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+
+      /* The text that the user enters into the textarea */
+      .entry-duration,
+      .entry-body {
+        box-sizing: border-box;
+        margin-top: 0.5em;
+        width: 100%;
+        border: 1px solid lightgray;
+        border-radius: 0.25em;
+        line-height: 1em;
+        font-family: $paragraph-font;
+        font-size: large;
+        padding: 0.5em;
+        box-shadow:
+          0 0 7px 10px rgba(227, 227, 227, 0.1),
+          0 0 7px 10px rgba(227, 227, 227, 0.1);
+
+        @media (max-width: 300px) {
+          font-size: small;
+        }
+      }
     }
 
-    /* Save button styles */
-    .save {
-      @include new-entry-btn-styles;
-      border: 1px solid $secondary-color;
-      background-color: $secondary-color;
-      color: $tertiary-color;
+    .entry-body {
+      min-height: 20em;
     }
 
-    .save:hover {
-      background-color: $primary-color;
-      color: $tertiary-color;
-      border: 1px solid $primary-color;
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-      cursor: pointer;
+    /* Mixin for button styles */
+    @mixin new-entry-btn-styles($bg-color: $primary-color, $font-size: medium) {
+      padding: 0.5em 0 0.5em 0;
+      margin: 0 0.5em 0.5em 0.5em;
+      min-width: 80px;
+      border-radius: 3px;
+      font-size: $font-size;
+    }
+
+    /* Button container styles */
+    .newEntryButtons {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      margin-top: 0.5em;
+      @media (max-width: 300px) {
+        justify-content: center;
+      }
+
+      /* Cancel button styles */
+      .cancel {
+        @include new-entry-btn-styles;
+        border: 1px solid $secondary-color;
+        background-color: $tertiary-color;
+        color: $secondary-color;
+      }
+
+      .cancel:hover {
+        background-color: $primary-color;
+        color: $tertiary-color;
+        border: 1px solid $primary-color;
+        opacity: 50%;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+      }
+
+      /* Save button styles */
+      .save {
+        @include new-entry-btn-styles;
+        border: 1px solid $secondary-color;
+        background-color: $secondary-color;
+        color: $tertiary-color;
+      }
+
+      .save:hover {
+        background-color: $primary-color;
+        color: $tertiary-color;
+        border: 1px solid $primary-color;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+      }
     }
   }
 }

@@ -13,6 +13,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   display: flex;
   justify-content: center;
   flex-direction: column;
+
   box-shadow:
     8px 0 20px -12px $shadow-color,
     -8px 0 13px -12px $shadow-color;
@@ -21,22 +22,22 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   max-width: 900px;
   min-height: 100vh;
   color: black;
-  padding-bottom: 5em;
-}
-
-/* Main timer container on homepage */
-.TimerBox {
-  font-family: $paragraph-font;
-  font-size: 1.3em;
-  line-height: 1.5;
-  padding: 6em 2em 0em 2em;
-  background-image: $quote-background-gradient;
-  color: $quote-color;
 
   @media (max-width: 480px) {
-    max-width: 100%;
-    font-size: large;
-    padding: 6em 0.5em 0.5em 0.5em;
+    box-shadow: none;
+  }
+
+  /* Main timer container on homepage */
+  .TimerBox {
+    display: flex;
+    justify-content: center;
+    font-family: $paragraph-font;
+    font-size: 1.3em;
+    width: 100%;
+    line-height: 1.5;
+    background-image: $quote-background-gradient;
+
+    color: $quote-color;
   }
 }
 
@@ -44,11 +45,4 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 .NewEntryBox {
   display: flex;
   justify-content: center;
-}
-
-/* Line that separates Timer and New Meditation sections from Past Meditation Sessions */
-hr {
-  border: 0.5px solid lightgray;
-  width: 95%;
-  margin: 0 auto;
 }

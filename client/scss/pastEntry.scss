@@ -14,8 +14,9 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   font-size: larger;
   color: rgb(68, 68, 68);
   background-color: rgb(246, 246, 246);
-  border-radius: 4px;
-  h5 {
+  border-radius: 8px;
+  box-shadow: 0 0 5px $shadow-color;
+  h4 {
     padding: 1em;
     color: rgb(68, 68, 68);
     font-size: large;
@@ -23,9 +24,6 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   }
 
   @media (max-width: 480px) {
-    max-width: 90%;
-    margin: 10px;
-    padding: 0.5em;
     font-size: medium;
   }
 }
@@ -43,11 +41,11 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
     padding: 0.2em 0.6em 0.2em 0.6em;
     border: 0;
     color: rgb(254, 252, 252);
-    background-color: rgb(118, 117, 117);
+    background-color: rgb(75, 75, 75);
   }
   button:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-    background-color: darken(rgb(118, 117, 117), 10%);
+    background-color: lighten(rgb(75, 75, 75), 10%);
   }
 }
 

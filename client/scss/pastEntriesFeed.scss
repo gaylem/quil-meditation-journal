@@ -17,3 +17,12 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   font-family: $paragraph-font;
   font-size: medium;
 }
+
+.feed-container {
+  padding: 0 2em 3em 2em;
+
+  @media (max-width: 500px) {
+    padding: 0;
+    margin: 0 auto;
+  }
+}

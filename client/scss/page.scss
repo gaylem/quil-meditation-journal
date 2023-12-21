@@ -130,11 +130,11 @@ a:hover {
       padding: 0.2em 0.6em 0.2em 0.6em;
       border: 0;
       color: rgb(254, 252, 252);
-      background-color: rgb(118, 117, 117);
+      background-color: rgb(75, 75, 75);
     }
     button:hover {
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-      background-color: darken(rgb(118, 117, 117), 10%);
+      background-color: lighten(rgb(75, 75, 75), 10%);
     }
   }
 
