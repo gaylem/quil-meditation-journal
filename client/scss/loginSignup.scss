@@ -46,7 +46,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
   @media (max-width: 300px) {
     min-width: 15px;
-    padding: 0.5em 0.5em 2em 0.5em;
+    padding: 0.5em;
   }
 
   /* Welcome Back / Tranquility Awaits... */
@@ -145,7 +145,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     text-shadow: 1px 1px 5px lightgray;
   }
 
-  @media (max-width: 930px) {
-    min-width: 15px;
+  @media (max-width: 600px) {
+    padding: 1em;
   }
 }
