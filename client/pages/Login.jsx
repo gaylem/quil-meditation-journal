@@ -38,10 +38,10 @@ function Login() {
           <h1 className='title'>Welcome back!</h1>
           <div className='input-box'>
             {/* Username input */}
-            <label for='username'>Username:</label>
+            <label htmlFor='username'>Username:</label>
             <input type='username' id='username' onChange={e => setUsername(e.target.value)} placeholder='ex: jane' value={username} />
             {/* Password input */}
-            <label for='password'>Password:</label>
+            <label htmlFor='password'>Password:</label>
             <input type='password' id='password' onChange={e => setPassword(e.target.value)} placeholder='Enter your password' value={password} />
             {/* Login button */}
             <button className='loginSignupBtn' type='submit' disabled={isLoading}>

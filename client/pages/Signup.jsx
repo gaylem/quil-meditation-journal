@@ -40,7 +40,7 @@ function Signup() {
           <h1 className='title'>Tranquility awaits...</h1>
           <div className='input-box'>
             {/* Username input */}
-            <label for='username'>Username:</label>
+            <label htmlFor='username'>Username:</label>
             <input
               type='username'
               id='username'
@@ -51,7 +51,7 @@ function Signup() {
               value={username}
             />
             {/* Email input */}
-            <label for='email'>Email:</label>
+            <label htmlFor='email'>Email:</label>
             <input
               type='email'
               id='email'
@@ -62,7 +62,7 @@ function Signup() {
               value={email}
             />
             {/* Password input */}
-            <label for='password'>Password:</label>
+            <label htmlFor='password'>Password:</label>
             <input
               type='password'
               id='password'
