@@ -10,7 +10,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 .NewEntryBox {
   box-sizing: border-box;
   justify-content: center;
-  padding: 2em;
+  padding: 0.5em;
 
   .NewEntry {
     /* Styles for the main container */
@@ -25,7 +25,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
       justify-content: left;
       text-align: left;
       align-items: center;
-      padding: 1em 0 1em 0;
+      padding: 2em;
       font-family: $paragraph-font;
       font-size: larger;
       font-weight: 550;
