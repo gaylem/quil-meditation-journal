@@ -96,6 +96,13 @@ export default {
 
   devtool: 'eval-source-map',
 
+  resolve: {
+    fallback: {
+      fs: false,
+      path: false,
+    },
+  },
+
   plugins: [
     new HTMLWebpackPlugin({
       template: path.resolve(__dirname, 'index.html'),
