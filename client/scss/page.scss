@@ -10,27 +10,32 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 /* Main page container */
 .pageContainer {
   display: flex;
-  margin: 3.5em 0 6em 0;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-}
-
-/* Page content */
-.pageContent {
+  padding-bottom: 5em;
+  margin: auto;
+  color: black;
+  max-width: 900px;
   margin-top: 5em;
-  max-width: 50%;
   font-family: $paragraph-font;
-  font-size: large;
   line-height: 2em;
+  font-size: large;
   color: rgb(46, 46, 46);
-  width: 100%;
+  padding: 2em;
 
-  // Media queries
-  @media (max-width: 1300px) {
-    max-width: 70%;
+  @media (max-width: 480px) {
+    padding: 0.5em;
   }
-  @media (max-width: 500px) {
-    max-width: 90%;
+  @media (max-width: 800px) {
+    padding: 1em;
+  }
+
+  .page-text {
+    padding: 1em;
+    width: 100%;
+    @media (max-width: 800px) {
+      padding: 0.5em;
+    }
   }
 
   // Headers
@@ -50,181 +55,85 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     color: $primary-color;
     font-weight: bold;
   }
-}
 
-/* Indents lists*/
-ol,
-ul {
-  padding-left: 15px;
-}
-
-/* Styles unordered list bullets */
-ul li {
-  position: relative;
-  padding-left: 20px;
-}
-
-ul li::marker {
-  content: '\25CF';
-  color: $primary-color;
-}
-
-/* Styles unordered list bullets */
-ol li {
-  position: relative;
-  padding-left: 15px;
-}
-
-ol li::marker {
-  color: $primary-color;
-}
-
-/* Styles links */
-a {
-  color: $secondary-color;
-  font-weight: 700;
-}
-
-a:hover {
-  color: $primary-color;
-}
-
-.helpContainer {
-  font-family: $paragraph-font;
-  font-size: large;
-  color: rgb(68, 68, 68);
-  border-radius: 4px;
-  padding: 1rem 0 1rem 0;
-
-  @media (max-width: 480px) {
-    max-width: 90%;
-    margin: 10px;
-    padding: 0.5em;
-    font-size: medium;
+  ol,
+  ul {
+    padding-left: 15px;
   }
 
-  .itemContainer {
-    background-color: rgb(246, 246, 246);
-    margin: 0 0 1em 0;
-    border-radius: 5px;
-    padding: 1em;
-    @media (max-width: 700px) {
-      padding-right: 2em;
-    }
-    @media (max-width: 400px) {
-      padding: 0.5em;
-    }
+  /* Styles unordered list bullets */
+  ul li {
+    position: relative;
+    padding-left: 20px;
   }
 
-  .itemHeader {
-    display: flex;
-    align-items: center;
-    padding: 1em 0 1em 0;
+  ul li::marker {
+    content: '\25CF';
+    color: $primary-color;
+  }
+
+  /* Styles unordered list bullets */
+  ol li {
+    position: relative;
+    padding-left: 15px;
+  }
+
+  ol li::marker {
+    color: $primary-color;
+  }
+
+  /* Styles links */
+  a {
+    color: $secondary-color;
+    font-weight: 700;
+  }
+
+  a:hover {
+    color: $primary-color;
+  }
+  .accountFormContainer {
     color: rgb(68, 68, 68);
-    border-radius: 5px;
-    font-weight: 600;
+    line-height: 1.5em;
+    word-break: break-word;
+    white-space: pre-wrap;
+    padding: 0 0 1em 0;
 
-    button {
-      border-radius: 10%;
-      font-size: larger;
-      padding: 0.2em 0.6em 0.2em 0.6em;
-      border: 0;
-      color: rgb(254, 252, 252);
-      background-color: rgb(75, 75, 75);
-    }
-    button:hover {
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-      background-color: lighten(rgb(75, 75, 75), 10%);
-    }
-  }
+    form {
+      max-width: 400px;
+      background-color: #f5f5f5;
 
-  /* Animation that makes item content fade in when toggled open */
-  @keyframes fadeInAnimation {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  /* The container that holds the item content */
-  .toggleItemContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    animation-name: fadeInAnimation;
-    animation-duration: 1s;
-    border-radius: 5px;
-    padding: 0 0 0 2em;
-    font-size: medium;
-
-    @media (max-width: 700px) {
-      padding: 0;
-    }
-
-    .itemText {
-      color: rgb(68, 68, 68);
-      width: 90%;
-      line-height: 1.5em;
-      margin: 0;
-      word-break: break-word;
-      white-space: pre-wrap;
-      padding-bottom: 1em;
-      .itemTextP {
-        color: rgb(68, 68, 68);
+      label {
+        font-weight: 600;
       }
-    }
 
-    .accountFormContainer {
-      display: flex;
-      justify-content: left;
-      padding-bottom: 2rem;
-      color: rgb(68, 68, 68);
-      line-height: 1.5em;
-      word-break: break-word;
-      white-space: pre-wrap;
+      input {
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        font-family: $paragraph-font;
+      }
 
-      form {
-        max-width: 400px;
-        background-color: #f5f5f5;
+      button {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: $primary-color;
+        color: #fff; /* White text color */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
 
-        label {
-          font-weight: 600;
-        }
-
-        input {
-          width: 100%;
-          margin-top: 5px;
-          margin-bottom: 15px;
-          padding: 10px;
-          box-sizing: border-box;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 16px;
-          font-family: $paragraph-font;
-        }
-
-        button {
-          width: 100%;
-          padding: 10px;
-          box-sizing: border-box;
-          background-color: $primary-color;
-          color: #fff; /* White text color */
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 16px;
-          transition: background-color 0.3s ease;
-
-          &:hover {
-            background-color: darken($primary-color, 10%);
-          }
+        &:hover {
+          background-color: darken($primary-color, 10%);
         }
       }
     }
   }
-}
-
-.itemTitle {
-  padding-left: 1em;
 }

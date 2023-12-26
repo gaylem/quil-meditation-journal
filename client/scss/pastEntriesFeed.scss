@@ -2,28 +2,10 @@
 
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
-.pastMeditationTitle {
-  display: flex;
-  padding: 2em 1em 1em 2em;
-  font-family: $paragraph-font;
-  font-size: large;
-  font-weight: 600;
-  color: rgb(117, 116, 116);
-  align-self: center;
-}
-
 .loading {
   padding: 2em;
   font-family: $paragraph-font;
   font-size: medium;
 }
 
-.feed-container {
-  padding: 0 1em 3em 1em;
 
-  @media (max-width: 500px) {
-    padding: 0;
-    margin: 0 auto;
-    width: 100vw;
-  }
-}

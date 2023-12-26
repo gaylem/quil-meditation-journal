@@ -175,54 +175,48 @@ const Account = () => {
 
   return (
     <div className='pageContainer'>
-      <div className='pageContent'>
+      <p className='page-text'>
         <h2>Account Settings</h2>
-        <p>You can manage your account settings below.</p>
-        <br />
-        <div className='helpContainer'>
-          {data.map((item, index) => (
-            <div className='itemContainer' key={index}>
-              <div className='itemHeader'>
-                <button onClick={() => toggle(index)}>+</button>
-                <p className='itemTitle'>{item.title}</p>
-              </div>
-              {itemStates[index] && (
-                <div className='toggleItemContainer'>
-                  <div className='itemText'>
-                    <p className='itemTextP'>{item.content}</p>
-                  </div>
-                  <div className='accountFormContainer'>
-                    <form
-                      onSubmit={e => {
-                        e.preventDefault();
-                        const formData = {};
-                        item.formFields.forEach(field => {
-                          formData[field.name] = e.target[field.name + index].value;
-                        });
-                        handleFormSubmit(index, formData, item.endpoint);
-                      }}
-                      className='form'>
-                      {item.formFields.map((field, fieldIndex) => (
-                        <div className='input-box'>
-                          <label htmlFor={field.id}>{field.label}</label>
-                          <input key={fieldIndex} id={field.id} type={field.type || 'text'} name={`${field.name}${index}`} placeholder={field.placeholder} className='formField' />
-                        </div>
-                      ))}
-                      <button type='submit' className='submitBtn'>
-                        {`${item.buttonText}`}
-                      </button>
-                      {error[index] && <div className='error-message'>{error[index]}</div>}
-                      {success[index] && <div className='success-message'>{success[index]}</div>}
-                    </form>
-                  </div>
-                </div>
-              )}
+        You can manage your account settings below. If you have any questions, checkout our <a href='/help-faqs'>Help & FAQs page.</a>
+      </p>
+      <div className='feed-container'>
+        {data.map((item, index) => (
+          <div className='toggle-entry' key={index}>
+            <div className='toggle-header'>
+              <button onClick={() => toggle(index)}>+</button>
+              <h3 className='toggle-title'>{item.title}</h3>
             </div>
-          ))}
-        </div>
-        <p>
-          If you have any questions, checkout our <a href='/help-faqs'>Help & FAQs page.</a>
-        </p>
+            {itemStates[index] && (
+              <div className='toggle-container'>
+                <div className='toggle-text'>{item.content}</div>
+                <div className='accountFormContainer'>
+                  <form
+                    onSubmit={e => {
+                      e.preventDefault();
+                      const formData = {};
+                      item.formFields.forEach(field => {
+                        formData[field.name] = e.target[field.name + index].value;
+                      });
+                      handleFormSubmit(index, formData, item.endpoint);
+                    }}
+                    className='form'>
+                    {item.formFields.map((field, fieldIndex) => (
+                      <div className='input-box'>
+                        <label htmlFor={field.id}>{field.label}</label>
+                        <input key={fieldIndex} id={field.id} type={field.type || 'text'} name={`${field.name}${index}`} placeholder={field.placeholder} className='formField' />
+                      </div>
+                    ))}
+                    <button type='submit' className='submitBtn'>
+                      {`${item.buttonText}`}
+                    </button>
+                    {error[index] && <div className='error-message'>{error[index]}</div>}
+                    {success[index] && <div className='success-message'>{success[index]}</div>}
+                  </form>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
