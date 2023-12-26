@@ -28,7 +28,7 @@ const Timer = () => {
   const [play, { stop }] = useSound(singingBowl);
 
   // Wake lock hook
-  const { isSupported, request, release } = useWakeLock({
+  const { request, release } = useWakeLock({
     onRequest: () => console.log('Screen Wake Lock: requested!'),
     onError: () => console.log('An error happened 💥'),
     onRelease: () => console.log('Screen Wake Lock: released!'),
@@ -102,7 +102,6 @@ const Timer = () => {
     stop();
     // Release wake lock
     release();
-    console.log('Wake lock released');
   };
 
   /**
