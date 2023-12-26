@@ -9,28 +9,27 @@ $shadow-color: rgb(172, 172, 172);
 footer {
   position: sticky;
   background-color: rgb(233, 232, 232);
-  padding: 2px;
+  padding: 1em;
   text-align: center;
   margin: 0 auto;
   @include box-shadow(0, 2px, 8px, $shadow-color);
   a {
     text-decoration: none;
   }
-}
+  .footerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    font-family: $paragraph-font;
+    color: rgb(60, 60, 60);
+  }
 
-.footerContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  margin: 0 auto;
-  font-family: $paragraph-font;
-  color: rgb(60, 60, 60);
-}
-
-.credits,
-.copyright {
-  font-size: small;
-  padding: 1em;
+  .credits,
+  .copyright {
+    font-size: small;
+    padding: 1em;
+  }
 }

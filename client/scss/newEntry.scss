@@ -27,7 +27,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
       align-items: center;
       padding: 1em 0 1em 0;
       font-family: $paragraph-font;
-      font-size: x-large;
+      font-size: larger;
       font-weight: 550;
       @media (max-width: 500px) {
         font-size: large;
