@@ -175,10 +175,10 @@ const Account = () => {
 
   return (
     <div className='pageContainer'>
-      <p className='page-text'>
+      <div className='page-text'>
         <h2>Account Settings</h2>
         You can manage your account settings below. If you have any questions, checkout our <a href='/help-faqs'>Help & FAQs page.</a>
-      </p>
+      </div>
       <div className='feed-container'>
         {data.map((item, index) => (
           <div className='toggle-entry' key={index}>
