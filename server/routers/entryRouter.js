@@ -25,25 +25,24 @@ const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
  */
 router.get('/:id', authMiddleware, getAllEntries);
 
-/** // TODO: Update this to send userId in req.param instead of req.body
+/**
  * @route POST /entries/
- * @description Create a new entry
- * @param {Object} req - The requst object containing:
- *  - body: String
- *  - userId: String
+ * @description Add new entry for a specific user
+ * @param req.params userId
+ * @param {Object} req.body New entry content
  */
-router.post('/', authMiddleware, addEntry);
+router.post('/:id', authMiddleware, addEntry);
 
 /**
  * @route PATCH /entries/:id
- * @description Update a specific entry
+ * @description Update entry for a specific user
  * @param req.params entry _id
  */
 router.patch('/:id', authMiddleware, updateEntry);
 
 /**
  * @route DELETE /entries/:id
- * @description Delete a specific entry
+ * @description Delete entry for a specific user
  * @param req.params entry _id
  */
 router.delete('/:id', authMiddleware, deleteEntry);

@@ -76,7 +76,9 @@ entryController.getAllEntries = async (req, res) => {
 entryController.addEntry = async (req, res) => {
   try {
     // Extract the entry body and userId from the request body
-    const { body, userId } = req.body;
+    const { body } = req.body;
+    const { id } = req.params;
+    const userId = id;
     // Encrypt the entry body using the common key and IV
     const { iv, encryptedData } = encrypt(body);
     // Store the encrypted entry in the database
