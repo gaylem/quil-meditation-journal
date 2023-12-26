@@ -20,12 +20,12 @@ $shadow-color: rgb(172, 172, 172);
   justify-content: left;
   padding: 1em;
 
-  @media (max-width: 480px) {
-    padding: 0;
-  }
   @media (max-width: 800px) {
     padding: 0;
-    margin: 0 auto;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0;
   }
 }
 
@@ -42,6 +42,7 @@ $shadow-color: rgb(172, 172, 172);
 
   @media (max-width: 800px) {
     font-size: medium;
+    line-height: 1.5em;
   }
 
   /* The title of each past entry that toggles open and closed */
@@ -77,6 +78,10 @@ $shadow-color: rgb(172, 172, 172);
     margin: 0 auto;
     word-break: break-word;
     white-space: pre-wrap;
+    @media (max-width: 800px) {
+      font-size: medium;
+      line-height: 1.5em;
+    }
   }
 
   .toggle-edit-text {
@@ -86,5 +91,9 @@ $shadow-color: rgb(172, 172, 172);
     font-size: large;
     padding: 1em;
     border: 1px solid lightgray;
+    @media (max-width: 800px) {
+      font-size: medium;
+      line-height: 1.5em;
+    }
   }
 }

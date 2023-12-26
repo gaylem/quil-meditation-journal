@@ -15,7 +15,6 @@ import ContactForm from '../components/ContactForm.jsx';
 const About = () => {
   return (
     <div className='pageContainer'>
-      <div className='pageContent'>
         <h2>About quil</h2>
         <p>
           <span className='purple'>quil</span> is your distraction-free space for chronicling your meditation journey.
@@ -64,7 +63,6 @@ const About = () => {
         <h2>Contact Us!</h2>
         <ContactForm />
       </div>
-    </div>
   );
 };
 

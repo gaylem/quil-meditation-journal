@@ -23,37 +23,35 @@ const HelpFAQ = () => {
 
   return (
     <div className='pageContainer'>
-      <div className='pageContent'>
-        <div className='page-text'>
-          <h2>Help & FAQs</h2>
-          <p>Here are some questions and answers if you need any help. If you don't find what you're looking for here, scroll down and reach out via the contact form at the bottom of the page.</p>
-        </div>
-        <div className='feed-container'>
-          {items.map((item, index) => (
-            <div className='toggle-entry' key={index}>
-              <div className='toggle-header'>
-                <button className='toggle-btn' onClick={() => toggle(index)}>
-                  +
-                </button>
-                <h3 className='toggle-title'>{item.title}</h3>
-              </div>
-              {itemStates[index] && (
-                <div className='toggle-container'>
-                  <div className='toggle-text'>
-                    <p>{item.content}</p>
-                  </div>
-                </div>
-              )}
+      <div className='page-text'>
+        <h2>Help & FAQs</h2>
+        <p>Here are some questions and answers if you need any help. If you don't find what you're looking for here, scroll down and reach out via the contact form at the bottom of the page.</p>
+      </div>
+      <div className='feed-container'>
+        {items.map((item, index) => (
+          <div className='toggle-entry' key={index}>
+            <div className='toggle-header'>
+              <button className='toggle-btn' onClick={() => toggle(index)}>
+                +
+              </button>
+              <h3 className='toggle-title'>{item.title}</h3>
             </div>
-          ))}
-        </div>
-        <div className='page-text'>
-          <h2>Still need help?</h2>
-          <p>Reach out via the form below.</p>
-        </div>
-        <div className='feed-container'>
-          <ContactForm />
-        </div>
+            {itemStates[index] && (
+              <div className='toggle-container'>
+                <div className='toggle-text'>
+                  <p>{item.content}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className='page-text'>
+        <h2>Still need help?</h2>
+        <p>Reach out via the form below.</p>
+      </div>
+      <div className='feed-container'>
+        <ContactForm />
       </div>
     </div>
   );
