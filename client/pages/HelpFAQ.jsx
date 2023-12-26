@@ -32,7 +32,9 @@ const HelpFAQ = () => {
           {items.map((item, index) => (
             <div className='toggle-entry' key={index}>
               <div className='toggle-header'>
-                <button onClick={() => toggle(index)}>+</button>
+                <button className='toggle-btn' onClick={() => toggle(index)}>
+                  +
+                </button>
                 <h3 className='toggle-title'>{item.title}</h3>
               </div>
               {itemStates[index] && (

@@ -4,13 +4,6 @@ $secondary-color: #2f3c7e;
 $tertiary-color: white;
 $shadow-color: rgb(172, 172, 172);
 
-/* Timer button variables */
-$circle-param: 200px;
-$circle-button-param: 55px;
-$button-color: lighten($secondary-color, 50%);
-$button-color-active: lighten($primary-color, 50%);
-$button-text-color: darken($secondary-color, 10%);
-
 /* Font Families */
 $title-font: Pacifico, sans-serif;
 $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
