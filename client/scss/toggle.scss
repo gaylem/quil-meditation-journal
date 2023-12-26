@@ -54,23 +54,10 @@ $shadow-color: rgb(172, 172, 172);
     .toggle-title {
       padding: 0 0 0 1em;
     }
-
-    button {
-      border-radius: 10%;
-      font-size: larger;
-      padding: 0.2em 0.6em 0.2em 0.6em;
-      border: 0;
-      color: rgb(254, 252, 252);
-      background-color: rgb(75, 75, 75);
-    }
-    button:hover {
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-      background-color: lighten(rgb(75, 75, 75), 10%);
-    }
   }
 }
 
-/* The container that holds the entry content and delete/edit buttons */
+/* The container that holds the entry content */
 .toggle-container {
   display: flex;
   flex-direction: column;

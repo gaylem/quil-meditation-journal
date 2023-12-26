@@ -83,7 +83,9 @@ function NewEntry() {
       {/* Contains the toggle button and new entry header */}
       <div className='newEntryHeader'>
         {/* Button next to 'New Meditation' that toggles the NewEntry section open/closed */}
-        <button onClick={toggle}>+</button>
+        <button className='new-entry-btn' onClick={toggle}>
+          +
+        </button>
         {/* Displays either the date or 'New Meditation' based on the toggle state */}
         <h3>{date}</h3>
       </div>
@@ -103,10 +105,10 @@ function NewEntry() {
           </label>
           <textarea className='entry-body' id='body' name='body' placeholder='How did it go?' rows={5} cols={15} onChange={e => setBody(e.target.value)} value={body} />
           {/* Cancel toggles the new entry section closed */}
-          <div className='newEntryButtons'>
-            <input className='cancel' type='button' onClick={toggle} value='Cancel'></input>
+          <div className='entry-btns'>
+            <input className='entry-cancel-delete-btn' type='button' onClick={toggle} value='Cancel'></input>
             {/* Save toggles the new entry section closed and saves data to database */}
-            <input className='save' type='submit' value='Save'></input>
+            <input className='entry-save-edit-btn' type='submit' value='Save'></input>
           </div>
         </form>
       )}

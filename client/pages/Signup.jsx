@@ -74,7 +74,7 @@ function Signup() {
             />
           </div>
           {/* Signup button */}
-          <button className='loginSignupBtn' disabled={isLoading}>
+          <button className='form-btn' disabled={isLoading}>
             Sign Up
           </button>
           <p className='account-emails'> You will only receive essential account-related emails.</p>

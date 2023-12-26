@@ -183,7 +183,9 @@ const Account = () => {
         {data.map((item, index) => (
           <div className='toggle-entry' key={index}>
             <div className='toggle-header'>
-              <button onClick={() => toggle(index)}>+</button>
+              <button className='toggle-btn' onClick={() => toggle(index)}>
+                +
+              </button>
               <h3 className='toggle-title'>{item.title}</h3>
             </div>
             {itemStates[index] && (
@@ -206,7 +208,7 @@ const Account = () => {
                         <input key={fieldIndex} id={field.id} type={field.type || 'text'} name={`${field.name}${index}`} placeholder={field.placeholder} className='formField' />
                       </div>
                     ))}
-                    <button type='submit' className='submitBtn'>
+                    <button type='submit' className='form-btn'>
                       {`${item.buttonText}`}
                     </button>
                     {error[index] && <div className='error-message'>{error[index]}</div>}

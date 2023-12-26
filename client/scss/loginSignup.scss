@@ -84,25 +84,6 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     }
   }
 
-  /* Submit button*/
-  .loginSignupBtn {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    box-sizing: border-box;
-    background-color: $primary-color;
-    color: #fff; /* White text color */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: darken($primary-color, 10%);
-    }
-  }
-
   /* Already have account? Sign in! */
   /* Don't have an account? Sign up! */
   .signup-signin-message {
