@@ -12,19 +12,6 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   box-shadow: $offset-x $offset-y $blur $color;
 }
 
-/* Button Styles Mixin*/
-@mixin button-styles($bg-color: $primary-color, $font-size: medium) {
-  max-width: 8em;
-  min-width: 5px;
-  font-size: $font-size;
-  font-family: $paragraph-font;
-  background-color: $bg-color;
-  color: white;
-  padding: 1em;
-  border-radius: 5px;
-  border: 0px;
-}
-
 /* Utility class */
 .flex-center {
   display: flex;
@@ -112,7 +99,15 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
         /* Logout button styles*/
         button {
-          @include button-styles;
+          max-width: 8em;
+          min-width: 5px;
+          font-size: medium;
+          font-family: $paragraph-font;
+          background-color: $primary-color;
+          color: white;
+          padding: 1em;
+          border-radius: 5px;
+          border: 0px;
 
           // Media queries for logout button
           @media (max-width: 600px) {

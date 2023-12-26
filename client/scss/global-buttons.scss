@@ -1,0 +1,94 @@
+/* Color Variables */
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
+$tertiary-color: white;
+$shadow-color: rgb(172, 172, 172);
+
+/* Font Families */
+$title-font: Pacifico, sans-serif;
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+
+/* Form Submit button*/
+.form-btn {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: $primary-color;
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+/* Styles for button that toggles entries open and closed */
+.toggle-btn {
+  border-radius: 10%;
+  font-size: larger;
+  padding: 0.2em 0.6em 0.2em 0.6em;
+  border: 0;
+  color: rgb(254, 252, 252);
+  background-color: rgb(75, 75, 75);
+  transition: background-color 0.3s ease;
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+    background-color: lighten(rgb(75, 75, 75), 10%);
+  }
+}
+
+/* Save or Cancel new entry, Edit or Delete past entry */
+.entry-btns {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 0.5em;
+  @media (max-width: 300px) {
+    justify-content: center;
+  }
+
+  /* Mixin for entry button styles */
+  @mixin entry-btn-styles($bg-color: $secondary-color, $font-size: medium) {
+    padding: 0.5em 0 0.5em 0;
+    margin: 0 0.5em 0.5em 0.5em;
+    min-width: 80px;
+    border-radius: 3px;
+    font-size: $font-size;
+  }
+
+  .entry-save-edit-btn {
+    /* Save and edit button styles */
+    @include entry-btn-styles;
+    border: 1px solid $secondary-color;
+    background-color: $secondary-color;
+    color: $tertiary-color;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: $primary-color;
+      color: $tertiary-color;
+      border: 1px solid $primary-color;
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+  }
+
+  .entry-cancel-delete-btn {
+    /* Cancel and delete button styles */
+    @include entry-btn-styles;
+    border: 1px solid $secondary-color;
+    background-color: $tertiary-color;
+    color: $secondary-color;
+    &:hover {
+      background-color: $primary-color;
+      color: $tertiary-color;
+      border: 1px solid $primary-color;
+      opacity: 50%;
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+  }
+}

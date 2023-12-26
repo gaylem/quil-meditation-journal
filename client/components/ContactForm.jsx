@@ -21,7 +21,7 @@ function ContactForm() {
         <input type='text' name='email' id='email' placeholder='janedoe@example.com' className='email' />
         <label htmlFor='message'>Message:</label>
         <textarea type='text' name='message' id='message' placeholder="What's on your mind?" rows='10' className='message' />
-        <button type='submit' className='submitBtn'>
+        <button type='submit' className='form-btn'>
           Send
         </button>
       </form>

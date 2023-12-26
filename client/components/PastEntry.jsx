@@ -106,21 +106,23 @@ const PastEntry = ({ entry }) => {
 
   // Render the PastEntry component
   return (
-    <div key={_id} className='PastEntry'>
+    <div key={_id} className='toggle-entry'>
       {/* Header with button and formatted date */}
-      <div className='pastEntryTitle'>
-        <button onClick={toggle}>+</button>
-        <h4>{formattedDate}</h4>
+      <div className='toggle-header'>
+        <button className='toggle-btn' onClick={toggle}>
+          +
+        </button>
+        <h4 className='toggle-title'>{formattedDate}</h4>
       </div>
       <div>
         {open && (
           <div className='toggle-container'>
             {/* Render either a textarea for editing or a paragraph for displaying the entry body */}
-            {isEditing ? <textarea className='pastEntryText' value={editedBody} onChange={e => setEditedBody(e.target.value)} /> : <p className='pastEntryText'>{body}</p>}
+            {isEditing ? <textarea className='toggle-edit-text' value={editedBody} onChange={e => setEditedBody(e.target.value)} /> : <p className='toggle-text'>{body}</p>}
             {/* Buttons for delete and edit actions */}
-            <div className='pastEntryButtons'>
-              <input className='delete' type='submit' onClick={handleDelete} value='Delete' />
-              {isEditing ? <input className='edit' type='submit' onClick={handleEdit} value='Save' /> : <input className='edit' type='submit' onClick={() => setIsEditing(true)} value='Edit' />}
+            <div className='entry-btns'>
+              <input className='entry-cancel-delete-btn' type='submit' onClick={handleDelete} value='Delete' />
+              {isEditing ? <input className='entry-save-edit-btn' type='submit' onClick={handleEdit} value='Save' /> : <input className='entry-save-edit-btn' type='submit' onClick={() => setIsEditing(true)} value='Edit' />}
             </div>
           </div>
         )}

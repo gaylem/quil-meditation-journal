@@ -10,7 +10,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 .NewEntryBox {
   box-sizing: border-box;
   justify-content: center;
-  padding: 2em;
+  padding: 0.5em;
 
   .NewEntry {
     /* Styles for the main container */
@@ -25,24 +25,26 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
       justify-content: left;
       text-align: left;
       align-items: center;
-      padding: 1em 0 1em 0;
+      padding: 2em;
       font-family: $paragraph-font;
-      font-size: x-large;
+      font-size: larger;
       font-weight: 550;
       @media (max-width: 500px) {
         font-size: large;
       }
+    }
 
-      button {
-        border-radius: 50%;
-        font-size: 1.2em;
-        padding: 0.25em 0.5em 0.25em 0.5em;
-        border: 0;
-        color: white;
-        background-color: $secondary-color;
-        margin-right: 0.5em;
-      }
-      button:hover {
+    /* Add new entry button */
+    .new-entry-btn {
+      border-radius: 50%;
+      font-size: 1.2em;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+      border: 0;
+      color: white;
+      background-color: $secondary-color;
+      margin-right: 0.5em;
+      transition: background-color 0.3s ease;
+      &:hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
         background-color: $primary-color;
       }
@@ -114,59 +116,6 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 
     .entry-body {
       min-height: 15em;
-    }
-
-    /* Mixin for button styles */
-    @mixin new-entry-btn-styles($bg-color: $primary-color, $font-size: medium) {
-      padding: 0.5em 0 0.5em 0;
-      margin: 0 0.5em 0.5em 0.5em;
-      min-width: 80px;
-      border-radius: 3px;
-      font-size: $font-size;
-    }
-
-    /* Button container styles */
-    .newEntryButtons {
-      display: flex;
-      justify-content: flex-end;
-      width: 100%;
-      margin-top: 0.5em;
-      @media (max-width: 300px) {
-        justify-content: center;
-      }
-
-      /* Cancel button styles */
-      .cancel {
-        @include new-entry-btn-styles;
-        border: 1px solid $secondary-color;
-        background-color: $tertiary-color;
-        color: $secondary-color;
-      }
-
-      .cancel:hover {
-        background-color: $primary-color;
-        color: $tertiary-color;
-        border: 1px solid $primary-color;
-        opacity: 50%;
-        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-      }
-
-      /* Save button styles */
-      .save {
-        @include new-entry-btn-styles;
-        border: 1px solid $secondary-color;
-        background-color: $secondary-color;
-        color: $tertiary-color;
-      }
-
-      .save:hover {
-        background-color: $primary-color;
-        color: $tertiary-color;
-        border: 1px solid $primary-color;
-        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-      }
     }
   }
 }

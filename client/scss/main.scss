@@ -2,13 +2,15 @@
 
 //** GLOBAL */
 @import 'app';
+@import 'toggle';
+@import 'success-error';
+@import 'global-buttons';
 
 //** COMPONENTS */
 @import 'entryContainer';
 @import 'header';
 @import 'newEntry';
 @import 'pastEntriesFeed';
-@import 'pastEntry';
 @import 'sidebar';
 @import 'timer';
 @import 'footer';
