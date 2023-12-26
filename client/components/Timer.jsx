@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useWakeLock } from 'react-screen-wake-lock';
 
 // Import sound hook and audio file
 import useSound from 'use-sound';
@@ -25,6 +26,13 @@ const Timer = () => {
   const [countdownFinished, setCountdownFinished] = useState(false);
   const [durationFinished, setDurationFinished] = useState(false);
   const [play, { stop }] = useSound(singingBowl);
+
+  // Wake lock hook
+  const { isSupported, request, release } = useWakeLock({
+    onRequest: () => console.log('Screen Wake Lock: requested!'),
+    onError: () => console.log('An error happened 💥'),
+    onRelease: () => console.log('Screen Wake Lock: released!'),
+  });
 
   // If there is no user, stop the timer audio
   const { user } = useAuthContext();
@@ -71,6 +79,9 @@ const Timer = () => {
     if (isActive) {
       // If it was paused, stop the sound
       stop();
+    } else {
+      // If it was not active, request wake lock
+      request();
     }
   };
 
@@ -87,7 +98,11 @@ const Timer = () => {
     const durationInput = document.querySelector('.duration-input');
     if (countdownInput) countdownInput.value = '';
     if (durationInput) durationInput.value = '';
+    // Stop audio
     stop();
+    // Release wake lock
+    release();
+    console.log('Wake lock released');
   };
 
   /**
@@ -123,6 +138,7 @@ const Timer = () => {
     if (isActive && countdown === 0 && duration === 0 && !durationFinished && countdownFinished) {
       setDurationFinished(true);
       playOnceEnd();
+      release(); // Release wake lock
       clearInterval(countdownInterval);
       clearInterval(durationInterval);
       setActive(false);
