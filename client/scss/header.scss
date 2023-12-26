@@ -79,6 +79,9 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
       img {
         width: 30px;
         height: 30px;
+        @media (max-width: 325px) {
+          display: none;
+        }
       }
     }
 

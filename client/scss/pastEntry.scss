@@ -14,16 +14,19 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   font-size: larger;
   color: rgb(68, 68, 68);
   background-color: rgb(246, 246, 246);
-  border-radius: 4px;
-  p {
-    padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 0 5px $shadow-color;
+  padding: 1em;
+
+  h4 {
+    padding: 0 0 0 1em;
     color: rgb(68, 68, 68);
+    font-size: larger;
+    font-weight: 600;
   }
 
-  @media (max-width: 480px) {
-    max-width: 90%;
-    margin: 10px;
-    padding: 0.5em;
+  @media (max-width: 500px) {
+    padding: 0;
     font-size: medium;
   }
 }
@@ -41,11 +44,11 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
     padding: 0.2em 0.6em 0.2em 0.6em;
     border: 0;
     color: rgb(254, 252, 252);
-    background-color: rgb(118, 117, 117);
+    background-color: rgb(75, 75, 75);
   }
   button:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-    background-color: darken(rgb(118, 117, 117), 10%);
+    background-color: lighten(rgb(75, 75, 75), 10%);
   }
 }
 
@@ -65,11 +68,16 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   flex-direction: column;
   animation-name: fadeInAnimation;
   animation-duration: 1s;
+  padding: 0 1em;
   .pastEntryText {
+    box-sizing: border-box;
+    width: 100%;
     color: rgb(68, 68, 68);
-    width: 90%;
-    padding: 1em;
+    border-radius: 0.25em;
     line-height: 1.5em;
+    font-family: $paragraph-font;
+    font-size: large;
+    padding: 1em 0 2em 0;
     margin: 0 auto;
     word-break: break-word;
     white-space: pre-wrap;

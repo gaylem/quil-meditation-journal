@@ -11,6 +11,7 @@ import axios from '../axiosConfig.js';
 
 // Import PastEntry component for rendering individual past entries
 import PastEntry from './PastEntry.jsx';
+import NewEntry from './NewEntry.jsx';
 
 /**
  * PastEntriesFeed component renders a feed of past journal entries for the authenticated user.
@@ -63,9 +64,11 @@ const PastEntriesFeed = () => {
 
   // Render the PastEntriesFeed component
   return (
-    <div>
-      {/* Title for the past meditation sessions */}
-      <p className='pastMeditationTitle'>Past Meditation Sessions</p>
+    <div className='feed-container'>
+      {/* NewEntry component for creating new journal entries */}
+      <div className='NewEntryBox'>
+        <NewEntry />
+      </div>
       {/* Map through the entries and render each PastEntry component */}
       {entries.map((entry, index) => (
         <PastEntry key={entry._id || index} entry={entry} />

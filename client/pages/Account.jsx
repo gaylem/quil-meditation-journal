@@ -203,7 +203,10 @@ const Account = () => {
                       }}
                       className='form'>
                       {item.formFields.map((field, fieldIndex) => (
-                        <input key={fieldIndex} type={field.type || 'text'} name={`${field.name}${index}`} placeholder={field.placeholder} className='formField' />
+                        <div className='input-box'>
+                          <label htmlFor={field.id}>{field.label}</label>
+                          <input key={fieldIndex} id={field.id} type={field.type || 'text'} name={`${field.name}${index}`} placeholder={field.placeholder} className='formField' />
+                        </div>
                       ))}
                       <button type='submit' className='submitBtn'>
                         {`${item.buttonText}`}

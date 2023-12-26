@@ -85,13 +85,23 @@ function NewEntry() {
         {/* Button next to 'New Meditation' that toggles the NewEntry section open/closed */}
         <button onClick={toggle}>+</button>
         {/* Displays either the date or 'New Meditation' based on the toggle state */}
-        <p>{date}</p>
+        <h3>{date}</h3>
       </div>
       {/* Render the following content only if the 'open' state is true */}
       {open && (
         // Form for submitting a new entry, contains cancel and save buttons
         <form method='post' onSubmit={handleSubmit}>
-          <textarea className='entryText' id='body' name='body' rows={5} cols={25} onChange={e => setBody(e.target.value)} value={body} />
+          <div>
+            {/* TODO: Uncomment to add duration field */}
+            {/*<label htmlFor='body' placeholder='How long did you meditate?'>
+              Duration:
+            </label>
+            <input className='entry-duration' id='entry-duration' name='duration' placeholder='ex: 10m'></input>*/}
+          </div>
+          <label className='visually-hidden' htmlFor='body'>
+            New Journal Entry:
+          </label>
+          <textarea className='entry-body' id='body' name='body' placeholder='How did it go?' rows={5} cols={15} onChange={e => setBody(e.target.value)} value={body} />
           {/* Cancel toggles the new entry section closed */}
           <div className='newEntryButtons'>
             <input className='cancel' type='button' onClick={toggle} value='Cancel'></input>

@@ -1,6 +1,7 @@
 //** HOW TO MEDITATE PAGE */
 
 import React from 'react';
+import ContactForm from '../components/ContactForm.jsx';
 
 /**
  * React component for the How to Meditate page.
@@ -149,17 +150,7 @@ const Meditate = () => {
         <h2>Questions? Book Recommendations?</h2>
         <p>Feel free to reach out through the form below!</p>
         <br />
-        <div className='contactFormContainer'>
-          <form action={process.env.REACT_APP_FORM_ENDPOINT} method='POST' className='form'>
-            <input type='text' name='name' placeholder='Name' className='name' />
-            <input type='hidden' name='_gotcha' style={{ display: 'none !important' }} />
-            <input type='text' name='email' placeholder='Email' className='email' />
-            <textarea type='text' name='message' placeholder='Message' rows='10' className='message' />
-            <button type='submit' className='submitBtn'>
-              Send
-            </button>
-          </form>
-        </div>
+        <ContactForm />
       </div>
     </div>
   );

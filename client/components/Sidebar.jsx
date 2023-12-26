@@ -33,25 +33,25 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       <div className='sidebarContent'>
         {/* Link to the 'About' page */}
         <div className='link'>
-          <img src={feather} className='icon' id='gear' alt='gear icon' />
+          <img src={feather} className='icon' id='gear' alt='feather icon' />
           <Link to='/about-quil' onClick={toggleSidebar}>
             About quil
           </Link>
         </div>
         <div className='link'>
-          <img src={brain} className='icon' id='gear' alt='gear icon' />
+          <img src={brain} className='icon' id='gear' alt='brain icon' />
           <Link to='/how-to-meditate' onClick={toggleSidebar}>
             How to Meditate
           </Link>
         </div>
         <div className='link'>
-          <img src={question} className='icon' id='gear' alt='gear icon' />
+          <img src={question} className='icon' id='gear' alt='queation mark icon' />
           <Link to='/help-faqs' onClick={toggleSidebar}>
             Help & FAQs
           </Link>
         </div>
         <div className='link'>
-          <img src={smiley} className='icon' id='gear' alt='gear icon' />
+          <img src={smiley} className='icon' id='gear' alt='smiley face icon' />
           <Link to='/get-involved' onClick={toggleSidebar}>
             Get Involved
           </Link>

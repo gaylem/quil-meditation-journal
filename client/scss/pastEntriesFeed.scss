@@ -6,7 +6,8 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   display: flex;
   padding: 2em 1em 1em 2em;
   font-family: $paragraph-font;
-  font-size: larger;
+  font-size: large;
+  font-weight: 600;
   color: rgb(117, 116, 116);
   align-self: center;
 }
@@ -15,4 +16,14 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   padding: 2em;
   font-family: $paragraph-font;
   font-size: medium;
+}
+
+.feed-container {
+  padding: 0 1em 3em 1em;
+
+  @media (max-width: 500px) {
+    padding: 0;
+    margin: 0 auto;
+    width: 100vw;
+  }
 }

@@ -184,8 +184,8 @@ userController.authUser = async (req, res) => {
     // Decode tokens using HS256 algorithm
     const decoded = jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
     const { username, userId } = decoded;
-    // Check if expiration is within 10 minutes of current time
-    if (decoded.exp - Date.now() / 1000 < 60 * 10) {
+    // Check if expiration is within 40 minutes of current time
+    if (decoded.exp - Date.now() / 1000 < 60 * 40) {
       // If it is, retrieve the refresh token from the database
       const user = await User.findOneAndUpdate({ _id: decoded.userId }, { $pop: { refreshTokens: -1 } }, { new: true });
       const refreshToken = user.refreshTokens.slice(-1)[0];

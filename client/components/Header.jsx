@@ -75,7 +75,7 @@ function Header() {
         {/* Application title */}
         <h1 onClick={handleTitleClick}>
           quil
-          <img src={featherHeader} />
+          <img src={featherHeader} alt='large feather icon' />
         </h1>
         {/* Logout button is displayed if a user is logged in, and it logs the user out when clicked. */}
 

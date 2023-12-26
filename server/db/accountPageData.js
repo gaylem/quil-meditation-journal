@@ -8,9 +8,12 @@ const items = [
     content: 'Enter your password and click "Download Journal Entries", to download a .csv file containing all of your journal entries.',
     formFields: [
       {
+        label: 'Password:',
+        for: 'downloadPassword',
+        id: 'downloadPassword',
         name: 'enterPassword',
         type: 'password',
-        placeholder: 'Enter Password',
+        placeholder: 'Enter your password',
       },
     ],
     buttonText: 'Download journal entries',
@@ -23,13 +26,19 @@ const items = [
     content: 'Enter your new username and current password below to update your username. Make sure to remember your new username. If you use a password manager, update it there immediately.',
     formFields: [
       {
+        label: 'Username',
+        for: 'username',
+        id: 'username',
         name: 'newUsername',
-        placeholder: 'New Username',
+        placeholder: 'ex: jane',
       },
       {
+        label: 'Password:',
+        for: 'usernamePassword',
+        id: 'usernamePassword',
         name: 'enterPassword',
         type: 'password',
-        placeholder: 'Enter Password',
+        placeholder: 'Enter your password',
       },
     ],
     buttonText: 'Update Username',
@@ -42,14 +51,20 @@ const items = [
     content: 'Enter your new email address and current password below to update your email address.',
     formFields: [
       {
+        label: 'New Email',
+        for: 'newEmail',
+        id: 'newEmail',
         name: 'newEmail',
         type: 'email',
-        placeholder: 'New Email',
+        placeholder: 'ex: janedoe@example.com',
       },
       {
+        label: 'Password:',
+        for: 'emailPassword',
+        id: 'emailPassword',
         name: 'enterPassword',
         type: 'password',
-        placeholder: 'Enter Password',
+        placeholder: 'Enter your password',
       },
     ],
     buttonText: 'Update Email',
@@ -64,7 +79,7 @@ const items = [
         <p>Enter your current password and new password below to update your password.</p>
         <br />
         <p>
-          Your new password must be <strong>at least 12 characters long</strong> and contain the following:
+          Your new password must be <strong>at least 8 characters long</strong> and contain the following:
         </p>
         <br />
         <ul>
@@ -86,19 +101,28 @@ const items = [
     ),
     formFields: [
       {
+        label: 'Current Password:',
+        for: 'currentPassword',
+        id: 'currentPassword',
         name: 'currentPassword',
         type: 'password',
-        placeholder: 'Current Password',
+        placeholder: 'Enter your current password',
       },
       {
+        label: 'New Password:',
+        for: 'newPassword',
+        id: 'newPassword',
         name: 'newPassword',
         type: 'password',
-        placeholder: 'New Password',
+        placeholder: 'Enter your new password',
       },
       {
+        label: 'Confirm New Password:',
+        for: 'confirmNewPassword',
+        id: 'confirmNewPassword',
         name: 'confirmNewPassword',
         type: 'password',
-        placeholder: 'Confirm New Password',
+        placeholder: 'Confirm your new password',
       },
     ],
     buttonText: 'Update Password',
@@ -124,9 +148,12 @@ const items = [
     ),
     formFields: [
       {
+        label: 'Password:',
+        for: 'deleteAccountPassword',
+        id: 'deleteAccountPassword',
         name: 'enterPassword',
         type: 'password',
-        placeholder: 'Enter Password',
+        placeholder: 'Enter your password',
       },
     ],
     buttonText: 'Delete Account',

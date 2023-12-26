@@ -2,8 +2,7 @@
 
 import React from 'react';
 
-// Import components
-import NewEntry from './NewEntry.jsx';
+// Import componentsgit
 import PastEntriesFeed from './PastEntriesFeed.jsx';
 import Timer from './Timer.jsx';
 
@@ -23,14 +22,10 @@ function EntryContainer() {
       <div className='TimerBox'>
         <Timer />
       </div>
-      {/* NewEntry component for creating new journal entries */}
-      <div className='NewEntryBox'>
-        <NewEntry />
-      </div>
-      {/* Horizontal rule to visually separate new entries from past entries */}
-      <hr />
       {/* PastEntriesFeed component for displaying previous journal entries */}
-      <PastEntriesFeed />
+      <div>
+        <PastEntriesFeed />
+      </div>
     </div>
   );
 }
