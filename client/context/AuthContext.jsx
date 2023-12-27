@@ -79,6 +79,21 @@ export const AuthContextProvider = ({ children }) => {
   }, [state.accessToken]);
 
   /**
+   * Effect to update local storage when the user context changes
+   */
+  useEffect(() => {
+    try {
+      // Get the current user context
+      const currentUser = state.user;
+
+      // Update local storage with the current user context
+      localStorage.setItem('user', JSON.stringify(currentUser));
+    } catch (error) {
+      console.error('AuthContextProvider:', error);
+    }
+  }, [state.user]);
+
+  /**
    * Effect to refresh the access token at intervals and update the context with new tokens and user details.
    */
   useEffect(() => {
@@ -89,6 +104,7 @@ export const AuthContextProvider = ({ children }) => {
             '/api/users/token',
             {},
             {
+              withCredentials: true,
               headers: {
                 Authorization: `Bearer ${state.accessToken}`,
               },
@@ -96,12 +112,12 @@ export const AuthContextProvider = ({ children }) => {
           );
           // Update tokens and user in the context
           dispatch({ type: 'LOGIN', payload: response.data });
-          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.newAccessToken });
+          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.accessToken });
         } else {
           throw Error('No access token');
         }
       } catch (error) {
-        console.error('Token refresh error:', error);
+        console.error('Token refresh error:', error.stack);
         // Clear token from local storage
         localStorage.removeItem('user');
         // Redirect to the login page
@@ -112,7 +128,8 @@ export const AuthContextProvider = ({ children }) => {
     // Setup interval for subsequent checks
     const intervalId = setInterval(async () => {
       await refreshAccessToken();
-    }, 1800000);
+      console.log('AuthContext refresh access token check');
+    }, 1800000); // 30 minutes = 1800000ms
 
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
