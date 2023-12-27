@@ -73,6 +73,10 @@ function NewEntry() {
       // Catch errors
     } catch (error) {
       console.error('Error adding entry:', error);
+      // Clear token from local storage
+      localStorage.removeItem('user');
+      // Redirect to the login page
+      window.location.href = '/login';
     }
     // When the try/catch block completes, toggle the NewEntry section closed
     toggle();
