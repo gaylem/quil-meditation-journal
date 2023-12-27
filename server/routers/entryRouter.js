@@ -15,7 +15,7 @@ const router = express.Router();
 import entryController from '../controllers/entryController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
-// Destructure the functions if needed
+// Destructure the entryController functions
 const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
 
 /**
