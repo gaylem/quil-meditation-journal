@@ -38,6 +38,9 @@ const Account = () => {
                 'Content-Type': 'application/json',
               },
             },
+            {
+              withCredentials: true,
+            },
           );
           // If download === success
           if (response.status === 200) {
@@ -65,10 +68,16 @@ const Account = () => {
         // Update username
       } else if (endpoint === 'username') {
         try {
-          response = await axios.patch(`/api/accounts/username/${user.userId}`, {
-            newUsername: formData.newUsername,
-            password: formData.enterPassword,
-          });
+          response = await axios.patch(
+            `/api/accounts/username/${user.userId}`,
+            {
+              newUsername: formData.newUsername,
+              password: formData.enterPassword,
+            },
+            {
+              withCredentials: true,
+            },
+          );
           // If username update === success
           if (response.status === 200) {
             // Extract the updated user data from the response
@@ -94,10 +103,16 @@ const Account = () => {
         // Update email
       } else if (endpoint === 'email') {
         try {
-          response = await axios.patch(`/api/accounts/email/${user.userId}`, {
-            newEmail: formData.newEmail,
-            password: formData.enterPassword,
-          });
+          response = await axios.patch(
+            `/api/accounts/email/${user.userId}`,
+            {
+              newEmail: formData.newEmail,
+              password: formData.enterPassword,
+            },
+            {
+              withCredentials: true,
+            },
+          );
           // if update email === success
           if (response.status === 200) {
             // Remove user data from local storage
@@ -117,11 +132,17 @@ const Account = () => {
         // Update password
       } else if (endpoint === 'pswd') {
         try {
-          response = await axios.patch(`/api/accounts/pswd/${user.userId}`, {
-            currentPassword: formData.currentPassword,
-            newPassword: formData.newPassword,
-            confirmNewPassword: formData.confirmNewPassword,
-          });
+          response = await axios.patch(
+            `/api/accounts/pswd/${user.userId}`,
+            {
+              currentPassword: formData.currentPassword,
+              newPassword: formData.newPassword,
+              confirmNewPassword: formData.confirmNewPassword,
+            },
+            {
+              withCredentials: true,
+            },
+          );
           if (response.status === 204) {
             setSuccess(success => {
               return { ...success, [index]: data[index].success };
@@ -139,11 +160,17 @@ const Account = () => {
         }
       } else if (endpoint === 'delete') {
         try {
-          const response = await axios.delete(`/api/accounts/delete/${user.userId}`, {
-            data: {
-              password: formData.enterPassword,
+          const response = await axios.delete(
+            `/api/accounts/delete/${user.userId}`,
+            {
+              data: {
+                password: formData.enterPassword,
+              },
             },
-          });
+            {
+              withCredentials: true,
+            },
+          );
           if (response.status === 200) {
             // Remove user data from local storage
             localStorage.removeItem('user');
