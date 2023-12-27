@@ -61,18 +61,25 @@ function NewEntry() {
     // Try/catch block to send POST request to the database and store the new entry
     try {
       const response = await axios.post(`/api/entries/${userId}`, entry, {
+        withCredentials: true,
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
       });
 
-      // Reset the state
+      // Reset the body state
       setBody('');
-      // Dispatch the new entry with response.data as the payload
-      dispatch({ type: 'CREATE_ENTRY', payload: response.data });
+
+      if (response.status === 201) {
+        // Dispatch the new entry with response.data as the payload
+        dispatch({ type: 'CREATE_ENTRY', payload: response.data.newEntry });
+        // Update tokens and user state
+        dispatch({ type: 'LOGIN', payload: response.data.authData });
+        dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+      }
       // Catch errors
     } catch (error) {
-      console.error('Error adding entry:', error);
+      console.error('Error adding entry:', error.stack);
       // Clear token from local storage
       localStorage.removeItem('user');
       // Redirect to the login page

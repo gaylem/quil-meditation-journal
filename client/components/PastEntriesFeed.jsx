@@ -32,10 +32,11 @@ const PastEntriesFeed = () => {
       try {
         // Make a GET request to the server to fetch past entries
         const response = await axios.get(`/api/entries/${user.userId}`, {
+          withCredentials: true,
           headers: { Authorization: `Bearer ${user.accessToken}` },
         });
         // Sort the entries by createdAt date in descending order
-        const sortedEntries = response.data.sort((a, b) => {
+        const sortedEntries = response.data.allEntries.sort((a, b) => {
           const dateA = a.createdAt ? new Date(a.createdAt) : 0;
           const dateB = b.createdAt ? new Date(b.createdAt) : 0;
           return dateB - dateA;
@@ -46,12 +47,12 @@ const PastEntriesFeed = () => {
           // Update entries state
           dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
           // Update tokens and user state
-          dispatch({ type: 'LOGIN', payload: response.data });
-          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.newAccessToken });
+          dispatch({ type: 'LOGIN', payload: response.data.authData });
+          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
         }
       } catch (error) {
         // Log an error message if there is an issue fetching entries
-        console.error('Error fetching entries:', error);
+        console.error('Error fetching entries:', error.stack);
         // Clear token from local storage
         localStorage.removeItem('user');
         // Redirect to the login page
