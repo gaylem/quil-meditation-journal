@@ -1,10 +1,6 @@
 //** HEADER COMPONENT */
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
-// Import useAuthContext to manage logout and authentication.
-import { useAuthContext } from '../hooks/useAuthContext.js';
 
 /**
  * Footer component
@@ -12,9 +8,7 @@ import { useAuthContext } from '../hooks/useAuthContext.js';
  * @returns {JSX.Element} The rendered footer component.
  */
 function Footer() {
-  // useAuthContext hook is used to retrieve user information for authentication.
-  const { user } = useAuthContext();
-
+  // Current year and copyright text
   const currentYear = new Date().getFullYear();
   const copyrightText = `© ${currentYear} quil meditation journal. All rights reserved.`;
 
