@@ -43,11 +43,19 @@ const PastEntriesFeed = () => {
 
         // If the GET request is successful (status code 200), update the entries in the context
         if (response.status === 200) {
+          // Update entries state
           dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
+          // Update tokens and user state
+          dispatch({ type: 'LOGIN', payload: response.data });
+          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.newAccessToken });
         }
       } catch (error) {
         // Log an error message if there is an issue fetching entries
         console.error('Error fetching entries:', error);
+        // Clear token from local storage
+        localStorage.removeItem('user');
+        // Redirect to the login page
+        window.location.href = '/login';
       }
     };
 
