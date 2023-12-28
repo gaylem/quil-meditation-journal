@@ -39,7 +39,7 @@ export const createTokens = payload => {
     // Set access token options
     const accessTokenOptions = {
       algorithm: 'HS256',
-      expiresIn: '5m',
+      expiresIn: '4h',
     };
     // Set refresh token options
     const refreshTokenOptions = {
@@ -52,7 +52,7 @@ export const createTokens = payload => {
     // Return tokens and key
     return { accessToken, refreshToken };
   } catch (error) {
-    console.error('Error creating token:', error);
+    console.error(error.stack);
     throw Error('Failed to create token');
   }
 };
@@ -69,6 +69,7 @@ export const verifyAccessToken = (accessToken, secretKey) => {
   try {
     return jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
   } catch (error) {
+    console.error(error.stack);
     throw error;
   }
 };
@@ -80,7 +81,7 @@ export const verifyAccessToken = (accessToken, secretKey) => {
  * @returns {boolean} - True if the token has expired, false otherwise.
  */
 export const checkTokenExpiration = decodedToken => {
-  const expirationThreshold = 60 * 3; // 40 minutes
+  const expirationThreshold = 60 * 40; // 40 minutes
   return decodedToken.exp - Date.now() / 1000 < expirationThreshold;
 };
 
@@ -92,11 +93,8 @@ export const checkTokenExpiration = decodedToken => {
  * @returns {Object} - An object containing new access and refresh tokens and the updated user object from the database.
  */
 export const refreshTokensAndDatabase = async (userId, payload) => {
-  console.log('refreshTokensAndDatabase');
   const response = await createTokens(payload);
-  console.log('refreshTokensAndDatabas response: ', response);
   const { accessToken, refreshToken } = response;
-
   // Update database: Push new token and retain only the previous three tokens
   const refreshedUser = await User.findByIdAndUpdate(
     userId,
@@ -110,9 +108,6 @@ export const refreshTokensAndDatabase = async (userId, payload) => {
     },
     { new: true },
   );
-
-  console.log('refreshedUser', refreshedUser);
-
   return { accessToken, refreshToken, refreshedUser };
 };
 
@@ -127,12 +122,9 @@ export const refreshTokensAndDatabase = async (userId, payload) => {
 export const updateAuthorizationHeadersAndCookies = (req, res, newAccessToken, newRefreshToken) => {
   // Update authorization headers
   req.headers.authorization = `Bearer ${newAccessToken}`;
-  console.log('req.headers.authorization: ', req.headers.authorization);
   res.set('Authorization', `Bearer ${newAccessToken}`);
-
   // Set new cookies
   res.cookie('refreshToken', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
-  console.log('end of auth headers and cookies');
 };
 
 /**
