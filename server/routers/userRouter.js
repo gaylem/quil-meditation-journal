@@ -11,6 +11,7 @@
 import express from 'express';
 const router = express.Router();
 import userController from '../controllers/userController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
 const { signupUser, loginUser, authUser, logoutUser } = userController;
 
 /**
@@ -39,7 +40,7 @@ router.post('/login', loginUser);
  * @access Private (requires valid refresh token)
  * @param {Object} req - The request object containing the accessToken (String)
  */
-router.post('/token', authUser);
+router.post('/token', authMiddleware, authUser);
 
 /**
  * @route POST /api/users/logout

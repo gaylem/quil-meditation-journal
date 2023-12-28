@@ -6,8 +6,8 @@ import React, { useState } from 'react';
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
-// Import moment to format entry dates
-import moment from 'moment';
+// Import date-fns to format entry dates
+import format from 'date-fns/format';
 
 // Import axios to handle server requests for entries data
 import axios from '../axiosConfig.js';
@@ -40,51 +40,34 @@ const PastEntry = ({ entry }) => {
     setIsEditing(false);
   };
 
-  // Format the date of the past entry
-  const formattedDate = moment(createdAt).format('dddd, LL');
-
-  // Helper function to fetch updated entries after editing
-  const fetchEntries = async () => {
-    try {
-      // Fetch updated entries from the server
-      const updatedResponse = await axios.get(`/api/entries/${user.userId}`, {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      });
-      // Sort the entries by createdAt date in descending order
-      const sortedEntries = updatedResponse.data.sort((a, b) => {
-        const dateA = a.createdAt ? new Date(a.createdAt) : 0;
-        const dateB = b.createdAt ? new Date(b.createdAt) : 0;
-        return dateB - dateA;
-      });
-      // Update entries in the context
-      dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
-    } catch (error) {
-      console.error('Error fetching updated entries:', error);
-      // Re-throw the error to be caught by the outer try-catch block
-      throw error;
-    }
-  };
+  // Create formatted date
+  const formattedDate = format(new Date(), 'EEEE, MMMM d, yyyy');
 
   // Function to handle editing an entry
   const handleEdit = async () => {
     try {
-      await axios.patch(
+      const response = await axios.patch(
         `/api/entries/${_id}`,
         { body: editedBody, userId: user.userId },
         {
+          withCredentials: true,
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
           },
         },
       );
-      // Fetch updated entries after editing
-      await fetchEntries();
+
+      if (response.status === 200) {
+        // Update the local state immediately
+        dispatch({ type: 'EDIT_ENTRY', payload: { _id, body: response.data.body } });
+        // Update tokens and user state
+        dispatch({ type: 'LOGIN', payload: response.data.authData });
+        dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+      }
       // Toggle the entry closed
       toggle();
     } catch (error) {
-      console.error('Error editing entry:', error);
+      console.error('Error editing entry:', error.stack);
     }
   };
 
@@ -92,15 +75,24 @@ const PastEntry = ({ entry }) => {
   const handleDelete = async () => {
     try {
       // Send DELETE request to the server to delete the entry
-      await axios.delete(`/api/entries/${_id}`, {
+      const response = await axios.delete(`/api/entries/${_id}`, {
+        withCredentials: true,
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
       });
 
-      await fetchEntries();
+      const deletedId = response.data.deletedId;
+
+      if (response.status === 200) {
+        // Optimistic update: Remove the entry from the local state immediately
+        dispatch({ type: 'DELETE_ENTRY', payload: { _id: deletedId } });
+        // Update tokens and user state
+        dispatch({ type: 'LOGIN', payload: response.data.authData });
+        dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+      }
     } catch (error) {
-      console.error('Error deleting entry:', error);
+      console.error('Error deleting entry:', error.stack);
     }
   };
 

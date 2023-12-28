@@ -7,15 +7,16 @@
 @import 'global-buttons';
 
 //** COMPONENTS */
-@import 'entryContainer';
+@import 'entry-container';
 @import 'header';
-@import 'newEntry';
-@import 'pastEntriesFeed';
+@import 'new-entry';
+@import 'past-entries-feed';
 @import 'sidebar';
 @import 'timer';
 @import 'footer';
 
 //** PAGES */
-@import 'loginSignup';
+@import 'login-signup';
 @import 'page';
-@import 'contactForm';
+@import 'contact-form';
+@import 'account-form';

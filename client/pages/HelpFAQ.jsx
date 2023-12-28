@@ -22,7 +22,7 @@ const HelpFAQ = () => {
   };
 
   return (
-    <div className='pageContainer'>
+    <div className='page-container'>
       <div className='page-text'>
         <h2>Help & FAQs</h2>
         <p>Here are some questions and answers if you need any help. If you don't find what you're looking for here, scroll down and reach out via the contact form at the bottom of the page.</p>

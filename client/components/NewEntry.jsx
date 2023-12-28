@@ -11,8 +11,8 @@ import { useAuthContext } from '../hooks/useAuthContext.js';
 // Import axios to handle server requests for entries data
 import axios from '../axiosConfig.js';
 
-// Import moment to format entry dates
-import moment from 'moment';
+// Import date-fns to format entry dates
+import format from 'date-fns/format';
 
 /**
  * NewEntry component handles the creation of new journal entries.
@@ -24,8 +24,8 @@ import moment from 'moment';
  * @returns {JSX.Element} The rendered NewEntry component.
  */
 function NewEntry() {
-  // Invoke moment and store in a variable
-  const now = moment();
+  // Create formatted date
+  const formattedDate = format(new Date(), 'EEEE, MMMM d, yyyy');
 
   // State and function to manage 'New Meditation' text and NewEntry toggle functionality
   const [date, setDate] = useState('New Journal Entry');
@@ -34,7 +34,7 @@ function NewEntry() {
   // Function to toggle new meditation section open and closed
   const toggle = () => {
     setOpen(!open);
-    setDate(open ? 'New Journal Entry' : now.format('dddd, LL'));
+    setDate(open ? 'New Journal Entry' : formattedDate);
   };
 
   // Retrieve dispatch functionality from useEntriesContext and user data from useAuthContext
@@ -56,32 +56,43 @@ function NewEntry() {
     const userId = user.userId;
 
     // Store the body and the userId in an entry variable for sending to the database
-    const entry = { body, userId };
+    const entry = { body };
 
     // Try/catch block to send POST request to the database and store the new entry
     try {
-      const response = await axios.post('/api/entries', entry, {
+      const response = await axios.post(`/api/entries/${userId}`, entry, {
+        withCredentials: true,
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
       });
 
-      // Reset the state
+      // Reset the body state
       setBody('');
-      // Dispatch the new entry with response.data as the payload
-      dispatch({ type: 'CREATE_ENTRY', payload: response.data });
+
+      if (response.status === 201) {
+        // Dispatch the new entry with response.data as the payload
+        dispatch({ type: 'CREATE_ENTRY', payload: response.data.newEntry });
+        // Update tokens and user state
+        dispatch({ type: 'LOGIN', payload: response.data.authData });
+        dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+      }
       // Catch errors
     } catch (error) {
-      console.error('Error adding entry:', error);
+      console.error('Error adding entry:', error.stack);
+      // Clear token from local storage
+      localStorage.removeItem('user');
+      // Redirect to the login page
+      window.location.href = '/login';
     }
     // When the try/catch block completes, toggle the NewEntry section closed
     toggle();
   };
 
   return (
-    <div className='NewEntry'>
+    <div className='new-entry'>
       {/* Contains the toggle button and new entry header */}
-      <div className='newEntryHeader'>
+      <div className='new-entry-header'>
         {/* Button next to 'New Meditation' that toggles the NewEntry section open/closed */}
         <button className='new-entry-btn' onClick={toggle}>
           +

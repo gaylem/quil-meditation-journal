@@ -36,13 +36,18 @@ export const useSignup = () => {
 
     try {
       // Send a POST request to the server to register a new user
-      const response = await axios.post('/api/users/signup', {
-        username,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        '/api/users/signup',
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        },
+      );
 
-      console.log(response);
       // Parse the response data
       const json = response.data;
 
@@ -50,8 +55,17 @@ export const useSignup = () => {
       if (response.status !== 200) {
         // Update loading state to false
         setIsLoading(false);
-        // Clear any previous error messages
-        setError(null);
+        // Set error message based on server response
+        setError(json.error);
+      }
+
+      // If signup is successful
+      if (response.status === 200) {
+        // Save the user information to local storage
+        localStorage.setItem('user', JSON.stringify(json));
+
+        // Update the auth context with the user information
+        dispatch({ type: 'LOGIN', payload: json });
 
         // Update loading state to false
         setIsLoading(false);
@@ -59,8 +73,9 @@ export const useSignup = () => {
     } catch (error) {
       // If an error occurs during signup
       setIsLoading(false);
-      // Set the error message received from the server
-      setError(error.response.data.message);
+      // Set a generic error message
+      setError('An error occurred during the signup process.');
+      // Log the detailed error for debugging
       console.error('Signup error:', error);
     }
   };

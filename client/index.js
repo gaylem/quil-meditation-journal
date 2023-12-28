@@ -7,7 +7,7 @@
 
 // Import React and ReactDOM
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+const { createRoot } = await import('react-dom/client');
 
 // Import the main App component
 import App from './App.jsx';

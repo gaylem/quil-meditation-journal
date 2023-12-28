@@ -26,7 +26,7 @@ const items = [
     content: 'Enter your new username and current password below to update your username. Make sure to remember your new username. If you use a password manager, update it there immediately.',
     formFields: [
       {
-        label: 'Username',
+        label: 'New Username',
         for: 'username',
         id: 'username',
         name: 'newUsername',

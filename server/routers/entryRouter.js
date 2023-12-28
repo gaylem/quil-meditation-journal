@@ -6,7 +6,7 @@
     3. PATCH updateEntry by entry _id
     4. DELETE deleteEntry by entry _id
 
-    User is authenticated with authMiddleware when all routers are called before executing the controller.
+    User is authenticated with authMiddleware before getAllEntries and addEntry routers are called.
 */
 
 import express from 'express';
@@ -15,7 +15,7 @@ const router = express.Router();
 import entryController from '../controllers/entryController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
-// Destructure the functions if needed
+// Destructure the entryController functions
 const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
 
 /**
@@ -25,25 +25,24 @@ const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
  */
 router.get('/:id', authMiddleware, getAllEntries);
 
-/** // TODO: Update this to send userId in req.param instead of req.body
+/**
  * @route POST /entries/
- * @description Create a new entry
- * @param {Object} req - The requst object containing:
- *  - body: String
- *  - userId: String
+ * @description Add new entry for a specific user
+ * @param req.params userId
+ * @param {Object} req.body New entry content
  */
-router.post('/', authMiddleware, addEntry);
+router.post('/:id', authMiddleware, addEntry);
 
 /**
  * @route PATCH /entries/:id
- * @description Update a specific entry
+ * @description Update entry for a specific user
  * @param req.params entry _id
  */
 router.patch('/:id', authMiddleware, updateEntry);
 
 /**
  * @route DELETE /entries/:id
- * @description Delete a specific entry
+ * @description Delete entry for a specific user
  * @param req.params entry _id
  */
 router.delete('/:id', authMiddleware, deleteEntry);

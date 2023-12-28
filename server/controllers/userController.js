@@ -13,10 +13,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import { User } from '../db/models.js';
-import { createTokens, refreshTokens } from '../utils/token.utils.js';
+import { createTokens } from '../utils/token.utils.js';
 import { isValidSignup } from '../utils/credentials.utils.js';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 
 // userController object that contains the methods below
 const userController = {};
@@ -37,11 +36,11 @@ userController.signupUser = async (req, res) => {
     const isValid = await isValidSignup(username, email, password);
 
     if (!isValid) {
-      console.error('test', error);
+      console.error(error.stack);
       return res.status(error.status || 500).json({
         log: `userController.signupUser: ERROR ${error}`,
         status: error.status || 500,
-        message: error,
+        message: 'Something went wrong. Please try again later.'
       });
     }
     // Generate salt and hash for password
@@ -73,8 +72,9 @@ userController.signupUser = async (req, res) => {
 
     // If updatedUser returns false, log an error
     if (!updatedUser) {
+      console.error(error.stack);
       return res.status(404).json({
-        log: 'userController.signup: Issue with updatedUser',
+        log: `userController.signup: ERROR ${error.message}`,
         status: 404,
         message: 'Username or password are incorrect.',
       });
@@ -82,11 +82,11 @@ userController.signupUser = async (req, res) => {
     // Return 200 status and user object to client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
-    console.error(error);
+    console.error(error.stack);
     return res.status(error.status || 500).json({
-      log: `userController.signupUser: ERROR ${error}`,
+      log: `userController.signupUser: ERROR ${error.message}`,
       status: error.status || 500,
-      message: error,
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
@@ -104,12 +104,13 @@ userController.loginUser = async (req, res) => {
   try {
     // Validate input
     if (!username || !password) {
-      throw 'All fields must be filled';
+      throw new Error('All fields must be filled');
     }
     // Find user by username
     const user = await User.findOne({ username });
     // Throw error if username is incorrect
     if (!user) {
+      console.error(error.stack);
       return res.status(404).json({
         log: 'userController.loginUser: No user found',
         status: 404,
@@ -120,8 +121,9 @@ userController.loginUser = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     // Throw error if password is incorrect
     if (!match) {
+      console.error(error.stack);
       return res.status(404).json({
-        log: 'userController.loginUser: Incorrect password',
+        log: `userController.loginUser: ERROR ${error.message}`,
         status: 404,
         message: 'Username or password are incorrect.',
       });
@@ -139,8 +141,9 @@ userController.loginUser = async (req, res) => {
     const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: tokens.refreshToken } }, { new: true });
     // Handle error if updated user not returned
     if (!updatedUser) {
+      console.error(error.stack);
       return res.status(404).json({
-        log: 'userController.loginUser: Issue with updatedUser',
+        log: `userController.loginUser: ERROR ${error.message}`,
         status: 404,
         message: 'Username or password are incorrect.',
       });
@@ -150,64 +153,35 @@ userController.loginUser = async (req, res) => {
     // Send 200 status and user object to the client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
+    console.error(error.stack);
     return res.status(500).json({
-      log: `userController.loginUser: ERROR ${error}`,
+      log: `userController.loginUser: ERROR ${error.message}`,
       status: 500,
-      message: error,
+      message: 'Something went wrong. Please try again later.',
     });
   }
 };
 
 /**
  * @route POST /api/users/token
- * @description Authenticates the access token in the request headers
- * @param {Object} req - The request object containing the access token in the response headers
- * @param {Object} res - The response object containing:
-    - username: String
-    - accessToken: String
-    - userId: String
- * @returns {Function} Next or the response object
+ * @description Returns the payload to the client after validating or refreshing tokens through authMiddleware.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object containing the payload with properties:
+ *    - username: String
+ *    - newAccessToken: String
+ *    - userId: String
+ * @throws {Error} if there is an issue with the authMiddleware or payload
  */
 userController.authUser = async (req, res) => {
-  // Assign secretKey and accessToken to variables
-  const secretKey = process.env.SECRET_KEY;
-  const accessToken = req.headers.authorization?.split(' ')[1];
-  // If the accessToken returns false, throw an error
-  if (!accessToken) {
-    return res.status(401).json({
-      log: 'authUser: No access token received.',
-      status: 404,
-      message: 'Something went wrong. Please try again later.',
-    });
-  }
   try {
-    // Decode tokens using HS256 algorithm
-    const decoded = jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
-    const { username, userId } = decoded;
-    // Check if expiration is within 40 minutes of current time
-    if (decoded.exp - Date.now() / 1000 < 60 * 40) {
-      // If it is, retrieve the refresh token from the database
-      const user = await User.findOneAndUpdate({ _id: decoded.userId }, { $pop: { refreshTokens: -1 } }, { new: true });
-      const refreshToken = user.refreshTokens.slice(-1)[0];
-      // Refresh the tokens
-      const response = await refreshTokens(refreshToken);
-      const newAccessToken = response.accessToken;
-      const newRefreshToken = response.refreshToken;
-      // Update authorization headers
-      req.headers.authorization = `Bearer ${newAccessToken}`;
-      res.set('Authorization', `Bearer ${newAccessToken}`);
-      // Set new cookies
-      res.cookie('refreshToken', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
-      // Return updated user data to client
-      return res.status(200).json({ username, newAccessToken, userId });
-    }
-    return res.status(200).json({
-      message: 'Access token is still valid.',
-      status: 200,
-    });
+    // Return authData to client
+    const payload = res.locals.authData;
+    return res.status(200).json(payload);
   } catch (error) {
+    console.error(error.stack);
     return res.status(403).json({
-      log: 'authenticateToken: Invalid access token',
+      log: `userController.authUser: ERROR ${error.message}`,
       status: 403,
       message: 'Something went wrong. Please try again later.',
     });
@@ -233,8 +207,9 @@ userController.logoutUser = async (req, res) => {
     res.clearCookie('refreshToken');
     return res.sendStatus(204);
   } catch (error) {
+    console.error(error.stack);
     return res.status(500).json({
-      log: `userController.logoutUser: ERROR ${error}`,
+      log: `userController.logoutUser: ERROR ${error.message}`,
       status: 500,
       message: 'Something went wrong. Please try again later.',
     });

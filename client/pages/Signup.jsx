@@ -31,7 +31,7 @@ function Signup() {
   };
 
   return (
-    <div className='loginSignupContainer'>
+    <div className='login-signup-container'>
       {/* Box containing the signup form */}
       <div className='box'>
         {/* Signup form */}

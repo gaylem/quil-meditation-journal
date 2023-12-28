@@ -51,6 +51,11 @@ export const entriesReducer = (state, action) => {
         ...state,
         entries: state.entries.filter(entry => entry._id !== action.payload._id),
       };
+    case 'EDIT_ENTRY':
+      return {
+        ...state,
+        entries: state.entries.map(entry => (entry._id === action.payload._id ? { ...entry, body: action.payload.body } : entry)),
+      };
     default:
       return state;
   }

@@ -9,7 +9,7 @@ import React from 'react';
  */
 function ContactForm() {
   return (
-    <div className='contactFormContainer'>
+    <div className='contact-form-container'>
       <form action={process.env.REACT_APP_FORM_ENDPOINT} method='POST' className='form'>
         <label htmlFor='name'>Your Name:</label>
         <input type='text' name='name' id='name' placeholder='ex: Jane Doe' className='name' />

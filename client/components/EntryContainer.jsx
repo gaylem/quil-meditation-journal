@@ -17,9 +17,9 @@ import Timer from './Timer.jsx';
 function EntryContainer() {
   return (
     // Main EntryContainer component
-    <div className='EntryContainer'>
+    <div className='entry-container'>
       {/* TimerBox that contains the meditation Timer component */}
-      <div className='TimerBox'>
+      <div className='timer-box'>
         <Timer />
       </div>
       {/* PastEntriesFeed component for displaying previous journal entries */}

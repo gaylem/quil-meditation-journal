@@ -32,10 +32,11 @@ const PastEntriesFeed = () => {
       try {
         // Make a GET request to the server to fetch past entries
         const response = await axios.get(`/api/entries/${user.userId}`, {
+          withCredentials: true,
           headers: { Authorization: `Bearer ${user.accessToken}` },
         });
         // Sort the entries by createdAt date in descending order
-        const sortedEntries = response.data.sort((a, b) => {
+        const sortedEntries = response.data.allEntries.sort((a, b) => {
           const dateA = a.createdAt ? new Date(a.createdAt) : 0;
           const dateB = b.createdAt ? new Date(b.createdAt) : 0;
           return dateB - dateA;
@@ -43,11 +44,19 @@ const PastEntriesFeed = () => {
 
         // If the GET request is successful (status code 200), update the entries in the context
         if (response.status === 200) {
+          // Update entries state
           dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
+          // Update tokens and user state
+          dispatch({ type: 'LOGIN', payload: response.data.authData });
+          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
         }
       } catch (error) {
         // Log an error message if there is an issue fetching entries
-        console.error('Error fetching entries:', error);
+        console.error('Error fetching entries:', error.stack);
+        // Clear token from local storage
+        localStorage.removeItem('user');
+        // Redirect to the login page
+        window.location.href = '/login';
       }
     };
 
@@ -66,7 +75,7 @@ const PastEntriesFeed = () => {
   return (
     <div className='feed-container'>
       {/* NewEntry component for creating new journal entries */}
-      <div className='NewEntryBox'>
+      <div className='new-entry-box'>
         <NewEntry />
       </div>
       {/* Map through the entries and render each PastEntry component */}

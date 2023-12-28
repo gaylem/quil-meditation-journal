@@ -67,9 +67,9 @@ function Header() {
    * @returns {JSX.Element} The rendered Header component.
    */
   return (
-    <div className='header'>
+    <header>
       {/* Header container for hamburger menu, title, and logout button. */}
-      <div className='headerContainer'>
+      <div className='header-container'>
         {/* Hamburger menu icon toggles the sidebar open and closed when clicked. */}
         <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='Button that opens sidebar navigation panel' />
         {/* Application title */}
@@ -94,7 +94,7 @@ function Header() {
       </div>
       {/* Sidebar component for internal navigation links to other pages. */}
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-    </div>
+    </header>
   );
 }
 

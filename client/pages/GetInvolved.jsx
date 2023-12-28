@@ -14,7 +14,7 @@ import ContactForm from '../components/ContactForm.jsx';
  */
 const About = () => {
   return (
-    <div className='pageContainer'>
+    <div className='page-container'>
       <h2>Get Involved!</h2>
       <p>
         Because quil is an open-source product, <span className='purple'>we&apos;re contribution friendly!</span> If you&apos;re a software developer, and you&apos;d like to help make quil the best it can be, check out our{' '}
