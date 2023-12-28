@@ -33,7 +33,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
   z-index: 99;
 
   /* Container that holds hamburger menu, title, and logout button */
-  .headerContainer {
+  .header-container {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     width: 90%;

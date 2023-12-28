@@ -212,7 +212,7 @@ const Timer = () => {
    * @returns {JSX.Element} The rendered Timer component.
    */
   return (
-    <div className='Timer'>
+    <div className='timer'>
       {/* Timer Display */}
       <div className='time'>
         <div className={`timer-circle ${isActive ? 'timer-circle-grow' : ''}`}>

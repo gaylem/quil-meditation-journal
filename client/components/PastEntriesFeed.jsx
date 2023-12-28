@@ -75,7 +75,7 @@ const PastEntriesFeed = () => {
   return (
     <div className='feed-container'>
       {/* NewEntry component for creating new journal entries */}
-      <div className='NewEntryBox'>
+      <div className='new-entry-box'>
         <NewEntry />
       </div>
       {/* Map through the entries and render each PastEntry component */}

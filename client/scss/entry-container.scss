@@ -9,18 +9,15 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
 /* Container that holds all new and past entries */
-.EntryContainer {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding-bottom: 1em;
+.entry-container {
+  padding-bottom: 1rem;
   box-shadow:
     8px 0 20px -12px $shadow-color,
     -8px 0 13px -12px $shadow-color;
   top: 0;
   margin: auto;
   max-width: 900px;
-  min-height: 100vh;
+  min-height: 100dvh;
   color: black;
 
   @media (max-width: 480px) {
@@ -29,7 +26,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   }
 
   /* Main timer container on homepage */
-  .TimerBox {
+  .timer-box {
     display: flex;
     justify-content: center;
     font-family: $paragraph-font;
@@ -40,10 +37,4 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
     color: $quote-color;
   }
-}
-
-/* Contains the new journal entry functionality */
-.NewEntryBox {
-  display: flex;
-  justify-content: center;
 }

@@ -14,8 +14,7 @@ import ContactForm from '../components/ContactForm.jsx';
  */
 const Meditate = () => {
   return (
-    <div className='pageContainer'>
-      <div className='pageContent'>
+    <div className='page-container'>
         <h2>How To Meditate</h2>
         <p>
           <span className='purple'>&quot;I&apos;m terrible at meditation!&quot;</span> That&apos;s something many people say when the subject comes up. And the correct response is, &quot;Yes, you are!&quot; But that&apos;s because{' '}
@@ -152,7 +151,6 @@ const Meditate = () => {
         <br />
         <ContactForm />
       </div>
-    </div>
   );
 };
 

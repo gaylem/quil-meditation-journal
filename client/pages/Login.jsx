@@ -29,7 +29,7 @@ function Login() {
 
   return (
     // Main login and signup container
-    <div className='loginSignupContainer'>
+    <div className='login-signup-container'>
       {/* Box containing the login form */}
       <div className='box'>
         {/* Login form */}

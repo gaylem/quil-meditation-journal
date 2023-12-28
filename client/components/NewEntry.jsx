@@ -90,9 +90,9 @@ function NewEntry() {
   };
 
   return (
-    <div className='NewEntry'>
+    <div className='new-entry'>
       {/* Contains the toggle button and new entry header */}
-      <div className='newEntryHeader'>
+      <div className='new-entry-header'>
         {/* Button next to 'New Meditation' that toggles the NewEntry section open/closed */}
         <button className='new-entry-btn' onClick={toggle}>
           +

@@ -19,7 +19,7 @@ function Footer() {
    */
   return (
     <footer>
-      <div className='footerContainer'>
+      <div className='footer-container'>
         <div className='credits'>
           <strong>Credits:&nbsp;&nbsp;</strong>
           <a href='https://pixabay.com/sound-effects/singing-bowl-deep-sound-27532/'>Singing bowl audio</a> by Pixabay, <a href='https://fontawesome.com/icons'>icons</a> by FontAwesome, and <a href='https://fonts.google.com/'>fonts</a> by Google Fonts.

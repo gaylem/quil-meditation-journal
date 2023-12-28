@@ -69,7 +69,7 @@ function Header() {
   return (
     <div className='header'>
       {/* Header container for hamburger menu, title, and logout button. */}
-      <div className='headerContainer'>
+      <div className='header-container'>
         {/* Hamburger menu icon toggles the sidebar open and closed when clicked. */}
         <img className='hamburger' onClick={toggleSidebar} src={hamburger} alt='Button that opens sidebar navigation panel' />
         {/* Application title */}

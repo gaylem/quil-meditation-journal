@@ -30,7 +30,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     <div className={sidebarClass}>
       {/* Close button to toggle the sidebar closed */}
       <img src={circle} onClick={toggleSidebar} className='closeBtn' alt='Button that closes sidebar navigation panel' />
-      <div className='sidebarContent'>
+      <div className='sidebar-content'>
         {/* Link to the 'About' page */}
         <div className='link'>
           <img src={feather} className='icon' id='gear' alt='feather icon' />

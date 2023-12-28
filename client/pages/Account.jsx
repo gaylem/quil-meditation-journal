@@ -201,7 +201,7 @@ const Account = () => {
   };
 
   return (
-    <div className='pageContainer'>
+    <div className='page-container'>
       <div className='page-text'>
         <h2>Account Settings</h2>
         You can manage your account settings below. If you have any questions, checkout our <a href='/help-faqs'>Help & FAQs page.</a>
@@ -218,7 +218,7 @@ const Account = () => {
             {itemStates[index] && (
               <div className='toggle-container'>
                 <div className='toggle-text'>{item.content}</div>
-                <div className='accountFormContainer'>
+                <div className='account-form-container'>
                   <form
                     onSubmit={e => {
                       e.preventDefault();
