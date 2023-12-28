@@ -16,7 +16,6 @@ import { User } from '../db/models.js';
 import { createTokens } from '../utils/token.utils.js';
 import { isValidSignup } from '../utils/credentials.utils.js';
 import bcrypt from 'bcryptjs';
-import authMiddleware from '../middlewares/authMiddleware.js';
 
 // userController object that contains the methods below
 const userController = {};
@@ -37,11 +36,11 @@ userController.signupUser = async (req, res) => {
     const isValid = await isValidSignup(username, email, password);
 
     if (!isValid) {
-      console.error('test', error);
+      console.error(error.stack);
       return res.status(error.status || 500).json({
         log: `userController.signupUser: ERROR ${error}`,
         status: error.status || 500,
-        message: error.message,
+        message: 'Something went wrong. Please try again later.'
       });
     }
     // Generate salt and hash for password
@@ -73,8 +72,9 @@ userController.signupUser = async (req, res) => {
 
     // If updatedUser returns false, log an error
     if (!updatedUser) {
+      console.error(error.stack);
       return res.status(404).json({
-        log: 'userController.signup: Issue with updatedUser',
+        log: `userController.signup: ERROR ${error.message}`,
         status: 404,
         message: 'Username or password are incorrect.',
       });
@@ -82,7 +82,7 @@ userController.signupUser = async (req, res) => {
     // Return 200 status and user object to client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
-    console.error(error);
+    console.error(error.stack);
     return res.status(error.status || 500).json({
       log: `userController.signupUser: ERROR ${error.message}`,
       status: error.status || 500,
@@ -104,12 +104,13 @@ userController.loginUser = async (req, res) => {
   try {
     // Validate input
     if (!username || !password) {
-      throw 'All fields must be filled';
+      throw new Error('All fields must be filled');
     }
     // Find user by username
     const user = await User.findOne({ username });
     // Throw error if username is incorrect
     if (!user) {
+      console.error(error.stack);
       return res.status(404).json({
         log: 'userController.loginUser: No user found',
         status: 404,
@@ -120,8 +121,9 @@ userController.loginUser = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     // Throw error if password is incorrect
     if (!match) {
+      console.error(error.stack);
       return res.status(404).json({
-        log: 'userController.loginUser: Incorrect password',
+        log: `userController.loginUser: ERROR ${error.message}`,
         status: 404,
         message: 'Username or password are incorrect.',
       });
@@ -139,8 +141,9 @@ userController.loginUser = async (req, res) => {
     const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: tokens.refreshToken } }, { new: true });
     // Handle error if updated user not returned
     if (!updatedUser) {
+      console.error(error.stack);
       return res.status(404).json({
-        log: 'userController.loginUser: Issue with updatedUser',
+        log: `userController.loginUser: ERROR ${error.message}`,
         status: 404,
         message: 'Username or password are incorrect.',
       });
@@ -150,6 +153,7 @@ userController.loginUser = async (req, res) => {
     // Send 200 status and user object to the client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
+    console.error(error.stack);
     return res.status(500).json({
       log: `userController.loginUser: ERROR ${error.message}`,
       status: 500,
@@ -171,9 +175,11 @@ userController.loginUser = async (req, res) => {
  */
 userController.authUser = async (req, res) => {
   try {
-    const payload = req.authPayload;
+    // Return authData to client
+    const payload = res.locals.authData;
     return res.status(200).json(payload);
   } catch (error) {
+    console.error(error.stack);
     return res.status(403).json({
       log: `userController.authUser: ERROR ${error.message}`,
       status: 403,
@@ -201,6 +207,7 @@ userController.logoutUser = async (req, res) => {
     res.clearCookie('refreshToken');
     return res.sendStatus(204);
   } catch (error) {
+    console.error(error.stack);
     return res.status(500).json({
       log: `userController.logoutUser: ERROR ${error.message}`,
       status: 500,
