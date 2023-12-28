@@ -20,7 +20,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 }
 
 /* Header styles */
-.header {
+header {
   @extend .flex-center;
   font-family: $title-font;
   font-size: 1.3em;
