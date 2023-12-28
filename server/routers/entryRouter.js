@@ -6,7 +6,7 @@
     3. PATCH updateEntry by entry _id
     4. DELETE deleteEntry by entry _id
 
-    User is authenticated with authMiddleware when all routers are called before executing the controller.
+    User is authenticated with authMiddleware before getAllEntries and addEntry routers are called.
 */
 
 import express from 'express';
