@@ -11,8 +11,8 @@ import { useAuthContext } from '../hooks/useAuthContext.js';
 // Import axios to handle server requests for entries data
 import axios from '../axiosConfig.js';
 
-// Import moment to format entry dates
-import moment from 'moment';
+// Import date-fns to format entry dates
+import format from 'date-fns/format';
 
 /**
  * NewEntry component handles the creation of new journal entries.
@@ -24,8 +24,8 @@ import moment from 'moment';
  * @returns {JSX.Element} The rendered NewEntry component.
  */
 function NewEntry() {
-  // Invoke moment and store in a variable
-  const now = moment();
+  // Create formatted date
+  const formattedDate = format(new Date(), 'EEEE, MMMM d, yyyy');
 
   // State and function to manage 'New Meditation' text and NewEntry toggle functionality
   const [date, setDate] = useState('New Journal Entry');
@@ -34,7 +34,7 @@ function NewEntry() {
   // Function to toggle new meditation section open and closed
   const toggle = () => {
     setOpen(!open);
-    setDate(open ? 'New Journal Entry' : now.format('dddd, LL'));
+    setDate(open ? 'New Journal Entry' : formattedDate);
   };
 
   // Retrieve dispatch functionality from useEntriesContext and user data from useAuthContext

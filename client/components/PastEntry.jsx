@@ -6,8 +6,8 @@ import React, { useState } from 'react';
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
-// Import moment to format entry dates
-import moment from 'moment';
+// Import date-fns to format entry dates
+import format from 'date-fns/format';
 
 // Import axios to handle server requests for entries data
 import axios from '../axiosConfig.js';
@@ -40,8 +40,8 @@ const PastEntry = ({ entry }) => {
     setIsEditing(false);
   };
 
-  // Format the date of the past entry
-  const formattedDate = moment(createdAt).format('dddd, LL');
+  // Create formatted date
+  const formattedDate = format(new Date(), 'EEEE, MMMM d, yyyy');
 
   // Function to handle editing an entry
   const handleEdit = async () => {
