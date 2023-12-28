@@ -1,4 +1,5 @@
 import path from 'path';
+import webpack from 'webpack';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
@@ -83,15 +84,53 @@ export default {
       minSize: 0,
       minChunks: 1,
       cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
+        vendorReactDom: {
+          test: /[\\/]node_modules[\\/](react-dom)[\\/]/,
+          name: 'vendor-react-dom',
+          chunks: 'all',
+        },
+        vendorReactRouterDom: {
+          test: /[\\/]node_modules[\\/](react-router-dom)[\\/]/,
+          name: 'vendor-react-router-dom',
+          chunks: 'all',
+        },
+        vendorRemixRun: {
+          test: /[\\/]node_modules[\\/](@remix-run)[\\/]/,
+          name: 'vendor-remix-run',
+          chunks: 'all',
+        },
+        vendorAxios: {
+          test: /[\\/]node_modules[\\/](axios)[\\/]/,
+          name: 'vendor-axios',
+          chunks: 'all',
+        },
+        vendorHowler: {
+          test: /[\\/]node_modules[\\/](howler)[\\/]/,
+          name: 'vendor-howler',
+          chunks: 'all',
+        },
+        vendorDateFns: {
+          test: /[\\/]node_modules[\\/](date-fns)[\\/]/,
+          name: 'vendor-date-fns',
           chunks: 'all',
         },
       },
     },
     minimize: true,
-    minimizer: [new TerserPlugin()],
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          mangle: true, // Enable to mangle variable names
+          compress: {
+            drop_console: true, // Remove console.log and console.error statements
+          },
+        },
+      }),
+    ],
+  },
+
+  performance: {
+    maxAssetSize: 244 * 1024, // 244 KiB
   },
 
   devtool: 'eval-source-map',
@@ -109,7 +148,15 @@ export default {
       publicPath: '/',
     }),
     new Dotenv(),
-    new CompressionPlugin(),
+    new CompressionPlugin({
+      algorithm: 'gzip',
+      test: /\.(js|css|html|svg)$/,
+      compressionOptions: {
+        level: 9,
+      },
+      filename: '[path][base].gz',
+    }),
     process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
 };
