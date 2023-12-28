@@ -1,6 +1,6 @@
 //** LOGIN PAGE */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+const { Link } = await import('react-router-dom');
 import { useLogin } from '../hooks/useLogin.js';
 import Blurb from '../components/Blurb.jsx';
 
