@@ -53,9 +53,15 @@ entryController.getAllEntries = async (req, res) => {
     });
     // If result is returned, store in locals object
     res.locals.allEntries = decryptedEntries;
-    // Return allEntries
-    return res.status(200).json(res.locals.allEntries);
+    // Create a response object with allEntries and authData
+    const responseObj = {
+      allEntries: res.locals.allEntries,
+      authData: res.locals.authData,
+    };
+    // Return the combined response object
+    return res.status(200).json(responseObj);
   } catch (error) {
+    console.error(error.stack);
     return res.status(500).json({
       log: `entryController.getAllEntries: ERROR ${error}`,
       status: 500,
@@ -85,8 +91,9 @@ entryController.addEntry = async (req, res) => {
     const encryptedEntry = await Entry.create({ body: encryptedData, userId, iv });
     // Handle error if no encrypted entry
     if (!encryptedEntry) {
+      console.error(error.stack);
       return res.status(404).json({
-        log: 'entryController.addEntry: newEntry not found.',
+        log: `entryController.addEntry: ERROR ${error}`,
         status: 404,
         message: 'There was an issue adding your entry.',
       });
@@ -100,9 +107,15 @@ entryController.addEntry = async (req, res) => {
       _id: encryptedEntry._id,
       createdAt: encryptedEntry.createdAt,
     };
-    // Return the newEntry to the client
-    return res.status(201).json(newEntry);
+    // Create response object
+    const responseObj = {
+      newEntry,
+      authData: res.locals.authData,
+    };
+    // Return the newEntry and authData to the client
+    return res.status(201).json(responseObj);
   } catch (error) {
+    console.error(error.stack);
     return res.status(500).json({
       log: `entryController.addEntry: ERROR ${error}`,
       status: 500,
@@ -131,6 +144,7 @@ entryController.updateEntry = async (req, res) => {
     const { iv, encryptedData } = encrypt(body);
     // Find and update the encrypted entry in database and store updated entry in a variable
     const updatedEntry = await Entry.findOneAndUpdate({ _id }, { body: encryptedData, iv }, { new: true });
+    // Determine if updated entry is returned from database
     if (!updatedEntry || updatedEntry.length === 0) {
       return res.status(404).json({
         log: 'entryController.updatedEntry: updatedEntry not found.',
@@ -138,11 +152,15 @@ entryController.updateEntry = async (req, res) => {
         message: 'Your entry could not be updated.',
       });
     }
-    // Store updated entry in locals object
-    res.locals.updatedEntry = updatedEntry;
-    // Return 200 status
-    return res.status(200).send();
+    // Create response object
+    const responseObj = {
+      body,
+      authData: res.locals.authData,
+    };
+    // Return 200 status and response object
+    return res.status(200).json(responseObj);
   } catch (error) {
+    console.error(error.stack);
     return res.status(500).json({
       log: `entryController.updateEntry: ERROR ${error}`,
       status: 500,
@@ -172,11 +190,15 @@ entryController.deleteEntry = async (req, res) => {
         message: 'Your entry could not be deleted.',
       });
     }
-    // If response returns true, store in locals object
-    res.locals.deletedEntry = deletedEntry;
+    // Create response object
+    const responseObj = {
+      deletedId: entryId,
+      authData: res.locals.authData,
+    };
     // Return 200 status
-    return res.status(200).send();
+    return res.status(200).json(responseObj);
   } catch (error) {
+    console.error(error.stack);
     return res.status(500).json({
       log: `entryController.deleteEntry: ERROR ${error}`,
       status: 500,
