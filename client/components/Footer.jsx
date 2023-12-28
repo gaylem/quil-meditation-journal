@@ -1,4 +1,4 @@
-//** HEADER COMPONENT */
+//** FOOTER COMPONENT */
 
 import React from 'react';
 
