@@ -40,7 +40,7 @@ userController.signupUser = async (req, res) => {
       return res.status(error.status || 500).json({
         log: `userController.signupUser: ERROR ${error}`,
         status: error.status || 500,
-        message: 'Something went wrong. Please try again later.'
+        message: 'Something went wrong. Please try again later.',
       });
     }
     // Generate salt and hash for password
@@ -108,6 +108,7 @@ userController.loginUser = async (req, res) => {
     }
     // Find user by username
     const user = await User.findOne({ username });
+    console.log('user login: ', user);
     // Throw error if username is incorrect
     if (!user) {
       console.error(error.stack);
@@ -139,6 +140,7 @@ userController.loginUser = async (req, res) => {
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
     // Add token to refreshTokens array in user document in the database
     const updatedUser = await User.findOneAndUpdate({ _id: user._id }, { $push: { refreshTokens: tokens.refreshToken } }, { new: true });
+    console.log('updatedUser login: ', updatedUser);
     // Handle error if updated user not returned
     if (!updatedUser) {
       console.error(error.stack);
@@ -150,6 +152,7 @@ userController.loginUser = async (req, res) => {
     }
     // Store updatedUser's id in a variable
     const userId = updatedUser._id;
+    console.log('userId login controller: ', userId);
     // Send 200 status and user object to the client for authentication
     return res.status(200).json({ username, accessToken: tokens.accessToken, userId });
   } catch (error) {
@@ -174,9 +177,11 @@ userController.loginUser = async (req, res) => {
  * @throws {Error} if there is an issue with the authMiddleware or payload
  */
 userController.authUser = async (req, res) => {
+  console.log('test');
   try {
     // Return authData to client
     const payload = res.locals.authData;
+    console.log('payload controller: ', payload);
     return res.status(200).json(payload);
   } catch (error) {
     console.error(error.stack);
@@ -205,6 +210,7 @@ userController.logoutUser = async (req, res) => {
     }
     // Clear cookies
     res.clearCookie('refreshToken');
+    res.clearCookie('user');
     return res.sendStatus(204);
   } catch (error) {
     console.error(error.stack);
