@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext.js';
 
-// Import axios to handle server requests
+// Other imports
 import axios from '../axiosConfig.js';
+import Cookies from 'js-cookie';
 
 /**
  * Custom hook for handling user login functionality.
@@ -47,12 +48,19 @@ export const useLogin = () => {
 
       // Extract JSON data from the response
       const user = response.data;
+      console.log('user login: ', user);
 
       // Process successful login
       if (response.status === 200) {
-        // Save the user data to local storage
-        localStorage.setItem('user', JSON.stringify(user));
-
+        // Update cookies with the current user context
+        Cookies.set('user', JSON.stringify(user), {
+          expires: 28 / (24 * 60), // Expires in 28 minutes
+          secure: true, // Secure attribute (requires HTTPS)
+          sameSite: 'Strict', // SameSite attribute set to 'Strict'
+        });
+        // Log the cookie value after setting it
+        const cookieValue = Cookies.get('user');
+        console.log('user cookie:', cookieValue);
         // Update the authentication context with user data
         dispatch({ type: 'LOGIN', payload: user });
 
@@ -60,10 +68,11 @@ export const useLogin = () => {
         setIsLoading(false);
       }
     } catch (error) {
-      // Handle login error, set loading to false, and log the error
+      // Set loading to false
       setIsLoading(false);
-      setError(error.response.data.message);
-      console.log('error.response.data.message: ', error.response.data.message);
+      // Check if 'response' is defined before accessing 'error.response.data.message'
+      const errorMessage = error.response && error.response.data ? error.response.data.message : 'An error occurred';
+      setError(errorMessage);
       console.error('Login error:', error);
     }
   };
