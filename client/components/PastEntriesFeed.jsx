@@ -53,10 +53,12 @@ const PastEntriesFeed = () => {
       } catch (error) {
         // Log an error message if there is an issue fetching entries
         console.error('Error fetching entries:', error.stack);
-        // Clear token from local storage
-        localStorage.removeItem('user');
-        // Redirect to the login page
-        window.location.href = '/login';
+        if (error.response?.data?.redirectToLogin) {
+          // Clear token from cookies
+          Cookies.remove('user');
+          // Redirect to the login page
+          window.location.href = '/login';
+        }
       }
     };
 

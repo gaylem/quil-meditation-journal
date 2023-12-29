@@ -1,18 +1,15 @@
 //** NEW ENTRY COMPONENT */
 
 import React, { useState } from 'react';
+import axios from '../axiosConfig.js';
+import format from 'date-fns/format';
+import Cookies from 'js-cookie';
 
 // Import useEntriesContext hook for new journal entries
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 
 // Import useAuthContext hook for authentication
 import { useAuthContext } from '../hooks/useAuthContext.js';
-
-// Import axios to handle server requests for entries data
-import axios from '../axiosConfig.js';
-
-// Import date-fns to format entry dates
-import format from 'date-fns/format';
 
 /**
  * NewEntry component handles the creation of new journal entries.
@@ -80,10 +77,12 @@ function NewEntry() {
       // Catch errors
     } catch (error) {
       console.error('Error adding entry:', error.stack);
-      // Clear token from local storage
-      localStorage.removeItem('user');
-      // Redirect to the login page
-      window.location.href = '/login';
+      if (error.response?.data?.redirectToLogin) {
+        // Clear token from cookies
+        Cookies.remove('user');
+        // Redirect to the login page
+        window.location.href = '/login';
+      }
     }
     // When the try/catch block completes, toggle the NewEntry section closed
     toggle();

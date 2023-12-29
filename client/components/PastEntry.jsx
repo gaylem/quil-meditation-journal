@@ -41,14 +41,14 @@ const PastEntry = ({ entry }) => {
   };
 
   // Create formatted date
-  const formattedDate = format(new Date(), 'EEEE, MMMM d, yyyy');
+  const formattedDate = format(createdAt, 'EEEE, MMMM d, yyyy');
 
   // Function to handle editing an entry
   const handleEdit = async () => {
     try {
       const response = await axios.patch(
-        `/api/entries/${_id}`,
-        { body: editedBody, userId: user.userId },
+        `/api/entries/${user.userId}`,
+        { body: editedBody, _id },
         {
           withCredentials: true,
           headers: {
@@ -68,6 +68,12 @@ const PastEntry = ({ entry }) => {
       toggle();
     } catch (error) {
       console.error('Error editing entry:', error.stack);
+     if (error.response?.data?.redirectToLogin) {
+       // Clear token from local storage
+       Cookies.remove('user');
+       // Redirect to the login page
+       window.location.href = '/login';
+     }
     }
   };
 
@@ -75,11 +81,12 @@ const PastEntry = ({ entry }) => {
   const handleDelete = async () => {
     try {
       // Send DELETE request to the server to delete the entry
-      const response = await axios.delete(`/api/entries/${_id}`, {
+      const response = await axios.delete(`/api/entries/${user.userId}`, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
+        data: { entryId: _id }, // Pass data as an object
       });
 
       const deletedId = response.data.deletedId;
@@ -93,6 +100,10 @@ const PastEntry = ({ entry }) => {
       }
     } catch (error) {
       console.error('Error deleting entry:', error.stack);
+      // Clear token from local storage
+      Cookies.remove('user');
+      // Redirect to the login page
+      window.location.href = '/login';
     }
   };
 
