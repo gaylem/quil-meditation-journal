@@ -24,7 +24,7 @@ import jwt from 'jsonwebtoken';
  * @throws {Error} - Throws an error if input is not an object or secret keys are missing.
  */
 export const createTokens = payload => {
-  // Assign private key to variable
+  // Assign secret key to variable
   const secretKey = process.env.SECRET_KEY;
   // Validate input
   try {
@@ -32,19 +32,15 @@ export const createTokens = payload => {
     if (typeof payload !== 'object') {
       throw new Error('Input must be an object');
     }
-    // Check for secret keys
-    if (!secretKey) {
-      throw Error('Private key is missing');
-    }
     // Set access token options
     const accessTokenOptions = {
       algorithm: 'HS256',
-      expiresIn: '4h',
+      expiresIn: '30m',
     };
     // Set refresh token options
     const refreshTokenOptions = {
       algorithm: 'HS256',
-      expiresIn: '48h',
+      expiresIn: '12h',
     };
     // Sign the tokens
     const accessToken = jwt.sign(payload, secretKey, accessTokenOptions);
@@ -65,9 +61,45 @@ export const createTokens = payload => {
  * @returns {Object} - The decoded payload of the access token.
  * @throws {Error} - Throws an error if verification fails.
  */
-export const verifyAccessToken = (accessToken, secretKey) => {
+export const verifyAccessToken = accessToken => {
+  // Assign secret key to variable
+  const secretKey = process.env.SECRET_KEY;
   try {
     return jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
+  } catch (error) {
+    console.error(error.stack);
+    throw error;
+  }
+};
+
+// Validate the refresh token stored in the HTTP-only cookie
+export const validateRefreshToken = async (userId, refreshToken) => {
+  console.log('original refreshToken: ', refreshToken);
+  console.log('userId validate refresh token: ', userId);
+  try {
+    // Verify that refreshToken cookie matches the token stored in the database
+    const user = await User.findById(userId);
+    console.log('user utils: ', user);
+
+    // Throw error if tokens do not match
+    if (!user || !user.refreshTokens.includes(refreshToken)) {
+      throw new Error('Invalid refresh token');
+    }
+
+    // Return the user object without the last refreshToken
+    return user;
+  } catch (error) {
+    console.error(error.stack);
+    throw error;
+  }
+};
+
+export const verifyRefreshToken = async refreshToken => {
+  // Assign secret key to variable
+  const secretKey = process.env.SECRET_KEY;
+  try {
+    // Verify JWT token
+    return jwt.verify(refreshToken, secretKey, { algorithms: ['HS256'] });
   } catch (error) {
     console.error(error.stack);
     throw error;
@@ -81,8 +113,8 @@ export const verifyAccessToken = (accessToken, secretKey) => {
  * @returns {boolean} - True if the token has expired, false otherwise.
  */
 export const checkTokenExpiration = decodedToken => {
-  const expirationThreshold = 60 * 40; // 40 minutes
-  return decodedToken.exp - Date.now() / 1000 < expirationThreshold;
+  const expirationThreshold = 60 * 10; // 10 minutes
+  return decodedToken.exp - Date.now() / 1000 <= expirationThreshold;
 };
 
 /**
@@ -93,21 +125,28 @@ export const checkTokenExpiration = decodedToken => {
  * @returns {Object} - An object containing new access and refresh tokens and the updated user object from the database.
  */
 export const refreshTokensAndDatabase = async (userId, payload) => {
+  console.log('userId database: ', userId);
   const response = await createTokens(payload);
+  console.log('response: ', response);
   const { accessToken, refreshToken } = response;
+  console.log('new refreshToken: ', refreshToken);
   // Update database: Push new token and retain only the previous three tokens
   const refreshedUser = await User.findByIdAndUpdate(
-    userId,
+    { _id: userId },
     {
-      $push: {
-        refreshTokens: {
-          $each: [refreshToken],
-          $slice: -3, // Retain only the last two elements
-        },
+      $addToSet: {
+        refreshTokens: refreshToken,
       },
     },
     { new: true },
   );
+
+  // Limit the size of the array to the last 10 elements
+  refreshedUser.refreshTokens = refreshedUser.refreshTokens.slice(-10);
+
+  // Save the updated user
+  await refreshedUser.save();
+  console.log('refreshedUser: ', refreshedUser);
   return { accessToken, refreshToken, refreshedUser };
 };
 
@@ -119,12 +158,20 @@ export const refreshTokensAndDatabase = async (userId, payload) => {
  * @param {string} newAccessToken - The new access token.
  * @param {string} newRefreshToken - The new refresh token.
  */
-export const updateAuthorizationHeadersAndCookies = (req, res, newAccessToken, newRefreshToken) => {
+export const updateAuthorizationHeadersAndCookies = (req, res, newAccessToken, newRefreshToken, payload) => {
+  const { username, userId } = payload;
   // Update authorization headers
   req.headers.authorization = `Bearer ${newAccessToken}`;
   res.set('Authorization', `Bearer ${newAccessToken}`);
+  // Create user object
+  const user = {
+    username,
+    accessToken: newAccessToken,
+    userId,
+  };
   // Set new cookies
   res.cookie('refreshToken', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
+  res.cookie('user', user, { secure: true, sameSite: 'Strict' });
 };
 
 /**
@@ -135,6 +182,8 @@ export const updateAuthorizationHeadersAndCookies = (req, res, newAccessToken, n
 export const handleExpiredToken = res => {
   // Clear the user's session by removing cookies
   res.clearCookie('refreshToken');
-  // Redirect the user to the login page
-  res.redirect('/login');
+  res.status(401).json({
+    redirectToLogin: true,
+    message: 'Token expired, please log in again.',
+  });
 };
