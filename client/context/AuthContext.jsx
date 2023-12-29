@@ -148,10 +148,13 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     // Setup interval for subsequent checks
-    const intervalId = setInterval(async () => {
-      await refreshAccessToken();
-      console.log('AuthContext refresh access token check');
-    }, 900000); // 15 minutes
+    const intervalId = setInterval(
+      async () => {
+        await refreshAccessToken();
+        console.log('AuthContext refresh access token check');
+      },
+      25 * 60 * 1000,
+    ); // 25 minutes
 
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
