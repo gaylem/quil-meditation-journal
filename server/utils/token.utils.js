@@ -158,20 +158,13 @@ export const refreshTokensAndDatabase = async (userId, payload) => {
  * @param {string} newAccessToken - The new access token.
  * @param {string} newRefreshToken - The new refresh token.
  */
-export const updateAuthorizationHeadersAndCookies = (req, res, newAccessToken, newRefreshToken, payload) => {
-  const { username, userId } = payload;
+export const updateAuthorizationHeadersAndCookies = (req, res, newAccessToken, newRefreshToken) => {
   // Update authorization headers
   req.headers.authorization = `Bearer ${newAccessToken}`;
   res.set('Authorization', `Bearer ${newAccessToken}`);
-  // Create user object
-  const user = {
-    username,
-    accessToken: newAccessToken,
-    userId,
-  };
+
   // Set new cookies
   res.cookie('refreshToken', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
-  res.cookie('user', user, { secure: true, sameSite: 'Strict' });
 };
 
 /**

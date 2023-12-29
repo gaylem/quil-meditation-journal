@@ -79,7 +79,7 @@ const authMiddleware = async (req, res, next) => {
       console.log('newAccessToken: ', accessToken);
 
       // Update authorization headers and cookies
-      updateAuthorizationHeadersAndCookies(req, res, accessToken, refreshToken, payload);
+      updateAuthorizationHeadersAndCookies(req, res, accessToken, refreshToken);
 
       // Store additional data in res.locals
       res.locals.authData = { username: user.username, accessToken, userId };
