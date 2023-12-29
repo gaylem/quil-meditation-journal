@@ -6,8 +6,9 @@ import React, { useEffect } from 'react';
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
-// Import axios for handling server requests
+// Other imports
 import axios from '../axiosConfig.js';
+import Cookies from 'js-cookie';
 
 // Import PastEntry component for rendering individual past entries
 import PastEntry from './PastEntry.jsx';
@@ -44,6 +45,12 @@ const PastEntriesFeed = () => {
 
         // If the GET request is successful (status code 200), update the entries in the context
         if (response.status === 200) {
+          // Update the access token in the cookie
+          Cookies.set('user', JSON.stringify(response.data.authData), {
+            expires: 28 / (24 * 60), // Expires in 28 minutes
+            secure: true, // Secure attribute (requires HTTPS)
+            sameSite: 'Strict', // SameSite attribute set to 'Strict'
+          });
           // Update entries state
           dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
           // Update tokens and user state
@@ -53,10 +60,12 @@ const PastEntriesFeed = () => {
       } catch (error) {
         // Log an error message if there is an issue fetching entries
         console.error('Error fetching entries:', error.stack);
-        // Clear token from local storage
-        localStorage.removeItem('user');
-        // Redirect to the login page
-        window.location.href = '/login';
+        if (error.response?.data?.redirectToLogin) {
+          // Clear token from cookies
+          Cookies.remove('user');
+          // Redirect to the login page
+          window.location.href = '/login';
+        }
       }
     };
 

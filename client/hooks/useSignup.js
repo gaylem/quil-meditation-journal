@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext.js';
 
-// Import axios to handle server requests
+// Other imports
 import axios from '../axiosConfig.js';
+import Cookies from 'js-cookie';
 
 /**
  * Custom hook for handling user signup functionality.
@@ -48,9 +49,6 @@ export const useSignup = () => {
         },
       );
 
-      // Parse the response data
-      const json = response.data;
-
       // Check if the signup was successful (status code 200)
       if (response.status !== 200) {
         // Update loading state to false
@@ -62,10 +60,14 @@ export const useSignup = () => {
       // If signup is successful
       if (response.status === 200) {
         // Save the user information to local storage
-        localStorage.setItem('user', JSON.stringify(json));
+        Cookies.set('user', JSON.stringify(response.data), {
+          expires: 28 / (24 * 60), // Expires in 28 minutes
+          secure: true, // Secure attribute (requires HTTPS)
+          sameSite: 'Strict', // SameSite attribute set to 'Strict'
+        });
 
         // Update the auth context with the user information
-        dispatch({ type: 'LOGIN', payload: json });
+        dispatch({ type: 'LOGIN', payload: response.data });
 
         // Update loading state to false
         setIsLoading(false);

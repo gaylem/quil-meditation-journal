@@ -1,5 +1,6 @@
 import { useAuthContext } from './useAuthContext.js';
 import { useEntriesContext } from './useEntriesContext.js';
+import Cookies from 'js-cookie';
 
 /**
  * Custom hook for handling user logout functionality.
@@ -37,8 +38,8 @@ export const useLogout = () => {
 
       // Check if the server responds with a successful logout status (204)
       if (response.status === 204) {
-        // Remove user data from local storage
-        localStorage.removeItem('user');
+        // Clear token from cookies
+        Cookies.remove('user');
 
         // Dispatch logout action to both authentication and entries contexts
         dispatch({ type: 'LOGOUT' });

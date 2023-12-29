@@ -35,12 +35,12 @@ router.post('/signup', signupUser);
 router.post('/login', loginUser);
 
 /**
- * @route POST /api/users/token
+ * @route POST /api/users/token/:id
  * @description Authenticates the access token in the request headers
  * @access Private (requires valid refresh token)
- * @param {Object} req - The request object containing the accessToken (String)
+ * @param req.params userId
  */
-router.post('/token', authMiddleware, authUser);
+router.post('/token/:id', authMiddleware, authUser);
 
 /**
  * @route POST /api/users/logout

@@ -36,7 +36,8 @@ router.post('/:id', authMiddleware, addEntry);
 /**
  * @route PATCH /entries/:id
  * @description Update entry for a specific user
- * @param req.params entry _id
+ * @param req.params userId
+ * @param req.body entry _id
  */
 router.patch('/:id', authMiddleware, updateEntry);
 
