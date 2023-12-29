@@ -137,9 +137,11 @@ entryController.addEntry = async (req, res) => {
 entryController.updateEntry = async (req, res) => {
   try {
     // Store request parameter in a variable
-    const _id = req.params.id;
+    const { _id } = req.body;
+    console.log('_id: ', _id);
     // Extract the entry body and userId from the request body
     const { body } = req.body;
+    console.log('body: ', body);
     // Encrypt the entry body using the common key and IV
     const { iv, encryptedData } = encrypt(body);
     // Find and update the encrypted entry in database and store updated entry in a variable
@@ -179,7 +181,7 @@ entryController.updateEntry = async (req, res) => {
 entryController.deleteEntry = async (req, res) => {
   try {
     // Store parameter as a variable
-    const entryId = req.params.id;
+    const { entryId } = req.body;
     // Find and delete entry and store response in a variable
     const deletedEntry = await Entry.findOneAndDelete({ _id: entryId });
     // If response returns false, throw an error
