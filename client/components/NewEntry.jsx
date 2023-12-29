@@ -68,6 +68,12 @@ function NewEntry() {
       setBody('');
 
       if (response.status === 201) {
+        // Update the access token in the cookie
+        Cookies.set('user', JSON.stringify(response.data.authData), {
+          expires: 28 / (24 * 60), // Expires in 28 minutes
+          secure: true, // Secure attribute (requires HTTPS)
+          sameSite: 'Strict', // SameSite attribute set to 'Strict'
+        });
         // Dispatch the new entry with response.data as the payload
         dispatch({ type: 'CREATE_ENTRY', payload: response.data.newEntry });
         // Update tokens and user state

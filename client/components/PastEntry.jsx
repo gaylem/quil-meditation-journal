@@ -6,13 +6,10 @@ import React, { useState } from 'react';
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
-// Import date-fns to format entry dates
+// Other imports
 import format from 'date-fns/format';
-
-// Import axios to handle server requests for entries data
 import axios from '../axiosConfig.js';
-
-// Import props validation
+import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 
 /**
@@ -58,6 +55,12 @@ const PastEntry = ({ entry }) => {
       );
 
       if (response.status === 200) {
+        // Update the access token in the cookie
+        Cookies.set('user', JSON.stringify(response.data.authData), {
+          expires: 28 / (24 * 60), // Expires in 28 minutes
+          secure: true, // Secure attribute (requires HTTPS)
+          sameSite: 'Strict', // SameSite attribute set to 'Strict'
+        });
         // Update the local state immediately
         dispatch({ type: 'EDIT_ENTRY', payload: { _id, body: response.data.body } });
         // Update tokens and user state

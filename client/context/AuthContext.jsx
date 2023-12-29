@@ -134,6 +134,12 @@ export const AuthContextProvider = ({ children }) => {
           }));
           console.log('Token refresh successful');
         }
+        // Update the access token in the cookie
+        Cookies.set('user', JSON.stringify(response.data), {
+          expires: 28 / (24 * 60), // Expires in 28 minutes
+          secure: true, // Secure attribute (requires HTTPS)
+          sameSite: 'Strict', // SameSite attribute set to 'Strict'
+        });
       } catch (error) {
         console.error('Token refresh error:', error.stack);
         // Check for the redirectToLogin flag in the response
