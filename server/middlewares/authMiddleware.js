@@ -32,7 +32,6 @@ const authMiddleware = async (req, res, next) => {
 
     // Check if access token is missing
     if (!accessToken) {
-      console.error(error.stack);
       return res.status(401).json({
         log: `authMiddleware: ERROR: No accessToken`,
         status: 404,
@@ -42,7 +41,6 @@ const authMiddleware = async (req, res, next) => {
 
     // Check if refresh token is missing
     if (!refreshToken) {
-      console.error(error.stack);
       return res.status(401).json({
         log: `authMiddleware: ERROR: No refreshToken`,
         status: 404,

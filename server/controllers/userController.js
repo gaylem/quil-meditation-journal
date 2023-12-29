@@ -177,12 +177,9 @@ userController.loginUser = async (req, res) => {
  * @throws {Error} if there is an issue with the authMiddleware or payload
  */
 userController.authUser = async (req, res) => {
-  console.log('test');
   try {
-    // Return authData to client
-    const payload = res.locals.authData;
-    console.log('payload controller: ', payload);
-    return res.status(200).json(payload);
+    console.log(res.locals.authData);
+    return res.status(200).json(res.locals.authData);
   } catch (error) {
     console.error(error.stack);
     return res.status(403).json({

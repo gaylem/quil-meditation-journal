@@ -35,7 +35,7 @@ export const createTokens = payload => {
     // Set access token options
     const accessTokenOptions = {
       algorithm: 'HS256',
-      expiresIn: '30m',
+      expiresIn: '15m',
     };
     // Set refresh token options
     const refreshTokenOptions = {
@@ -113,7 +113,7 @@ export const verifyRefreshToken = async refreshToken => {
  * @returns {boolean} - True if the token has expired, false otherwise.
  */
 export const checkTokenExpiration = decodedToken => {
-  const expirationThreshold = 60 * 10; // 10 minutes
+  const expirationThreshold = 60 * 12; // 12 minutes
   return decodedToken.exp - Date.now() / 1000 <= expirationThreshold;
 };
 

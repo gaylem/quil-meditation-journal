@@ -61,28 +61,29 @@ export const AuthContextProvider = ({ children }) => {
     accessToken: null,
   });
 
+  console.log('state', state);
+
   /**
    * Effect to check for a stored user in cookies and update the context with the stored user details.
    */
-  useEffect(() => {
-    try {
-      // Check if a user is stored in cookies
-      const storedUserString = Cookies.get('user');
-      console.log('storedUserString: ', storedUserString);
-      console.log('storedUser: ', storedUserString);
-
-      if (storedUserString) {
-        const storedUser = JSON.parse(storedUserString);
-        if (storedUser && storedUser.accessToken) {
-          // If the user is found, update the context with stored user details
-          dispatch({ type: 'LOGIN', payload: storedUser });
-          dispatch({ type: 'ACCESS_TOKEN', payload: storedUser.accessToken });
-        }
-      }
-    } catch (error) {
-      console.error('AuthContextProvider:', error);
-    }
-  }, [state.accessToken]);
+  // useEffect(() => {
+  //   try {
+  //     // Check if a user is stored in cookies
+  //     const storedUserString = Cookies.get('user');
+  //     console.log('storedUserString: ', storedUserString);
+  //     // Parse string
+  //     const storedUser = JSON.parse(storedUserString);
+  //     console.log('storedUser: ', storedUser);
+  //     // Update state
+  //     if (storedUser && storedUser.accessToken) {
+  //       // If the user is found, update the context with stored user details
+  //       dispatch({ type: 'LOGIN', payload: storedUser });
+  //       dispatch({ type: 'ACCESS_TOKEN', payload: storedUser.accessToken });
+  //     }
+  //   } catch (error) {
+  //     console.error('AuthContextProvider:', error);
+  //   }
+  // }, [state.accessToken]);
 
   /**
    * Effect to update cookies when the user context changes
@@ -100,11 +101,14 @@ export const AuthContextProvider = ({ children }) => {
           secure: true, // Secure attribute (requires HTTPS)
           sameSite: 'Strict', // SameSite attribute set to 'Strict'
         });
+
+        dispatch({ type: 'LOGIN', payload: currentUser });
+        dispatch({ type: 'ACCESS_TOKEN', payload: currentUser.accessToken });
       }
     } catch (error) {
       console.error('AuthContextProvider:', error);
     }
-  }, [state.user]);
+  }, [state.user, state.accesstoken]);
 
   /**
    * Effect to refresh the access token at intervals and update the context with new tokens and user details.
@@ -112,13 +116,20 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const refreshAccessToken = async () => {
       try {
+        console.log(state.accessToken);
         if (state.accessToken) {
-          const response = await axios.post(`/api/users/token/${state.user.userId}`, {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${state.accessToken}`,
+          const response = await axios.post(
+            `/api/users/token/${state.user.userId}`,
+            {}, // Empty request body
+            {
+              withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${state.accessToken}`,
+              },
             },
-          });
+          );
+
+          console.log(response.data);
 
           // Update tokens and user in the context
           dispatch(prevState => ({
@@ -132,14 +143,11 @@ export const AuthContextProvider = ({ children }) => {
             type: 'ACCESS_TOKEN',
             payload: response.data.accessToken,
           }));
+
+          console.log(state);
+
           console.log('Token refresh successful');
         }
-        // Update the access token in the cookie
-        Cookies.set('user', JSON.stringify(response.data), {
-          expires: 28 / (24 * 60), // Expires in 28 minutes
-          secure: true, // Secure attribute (requires HTTPS)
-          sameSite: 'Strict', // SameSite attribute set to 'Strict'
-        });
       } catch (error) {
         console.error('Token refresh error:', error.stack);
         // Check for the redirectToLogin flag in the response
@@ -159,12 +167,24 @@ export const AuthContextProvider = ({ children }) => {
         await refreshAccessToken();
         console.log('AuthContext refresh access token check');
       },
-      25 * 60 * 1000,
-    ); // 25 minutes
+      10 * 60 * 1000,
+    ); // 5 minutes
 
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
-  }, []);
+  }, [state.accessToken]);
+
+  // Update cookies when user state changes
+  useEffect(() => {
+    if (state.user) {
+      // Update cookies with the current user context
+      Cookies.set('user', JSON.stringify(state.user), {
+        expires: 28 / (24 * 60), // Expires in 28 minutes
+        secure: true, // Secure attribute (requires HTTPS)
+        sameSite: 'Strict', // SameSite attribute set to 'Strict'
+      });
+    }
+  }, [state.user]);
 
   return <AuthContext.Provider value={{ ...state, dispatch }}>{children}</AuthContext.Provider>;
 };
