@@ -113,16 +113,12 @@ export const AuthContextProvider = ({ children }) => {
     const refreshAccessToken = async () => {
       try {
         if (state.accessToken) {
-          const response = await axios.post(
-            `/api/users/token/${state.user.userId}`,
-            {},
-            {
-              withCredentials: true,
-              headers: {
-                Authorization: `Bearer ${state.accessToken}`,
-              },
+          const response = await axios.post(`/api/users/token/${state.user.userId}`, {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${state.accessToken}`,
             },
-          );
+          });
 
           // Update tokens and user in the context
           dispatch(prevState => ({
