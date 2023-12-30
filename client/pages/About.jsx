@@ -17,7 +17,7 @@ const About = () => {
     <div className='page-container'>
       <h2>About quil</h2>
       <p>
-        <span className='purple'>quil</span> is a portmanteau of the words "tranquil" and "quil," like the feather pen. It is your distraction-free space for chronicling your meditation journey.{' '}
+        <span className='purple'>quil</span> is a portmanteau of the words "tranquil" and "quill," like the feather pen. It is your distraction-free space for chronicling your meditation journey.{' '}
       </p>
       <br />
       <p>Sure, you could use any other digital note-taking app instead, but the last thing you need when you&apos;re about to meditate is to glance at your to-do list.</p>
