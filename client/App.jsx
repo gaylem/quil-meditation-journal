@@ -16,7 +16,7 @@ const LazySignup = lazy(() => import(/* webpackChunkName: "signup" */ './pages/S
 const LazyAbout = lazy(() => import(/* webpackChunkName: "about" */ './pages/About.jsx'));
 const LazyMeditation = lazy(() => import(/* webpackChunkName: "meditation" */ './pages/Meditation.jsx'));
 const LazyHelpFAQ = lazy(() => import(/* webpackChunkName: "help" */ './pages/HelpFAQ.jsx'));
-const LazyGetInvolved = lazy(() => import(/* webpackChunkName: "getInvolved" */ './pages/GetInvolved.jsx'));
+const LazyCommunity = lazy(() => import(/* webpackChunkName: "community" */ './pages/Community.jsx'));
 const LazyAccount = lazy(() => import(/* webpackChunkName: "account" */ './pages/Account.jsx'));
 const LazyFooter = lazy(() => import(/* webpackChunkName: "footer" */ './components/Footer.jsx'));
 
@@ -51,8 +51,8 @@ function App() {
             <Route path='/help-faqs' element={<LazyHelpFAQ />} />
             {/* Meditation route - Renders How to Meditate page */}
             <Route path='/how-to-meditate' element={<LazyMeditation />} />
-            {/* Get Involved route - Renders Get Involved page */}
-            <Route path='/get-involved' element={<LazyGetInvolved />} />
+            {/* Community route - Renders Community page */}
+            <Route path='/community' element={<LazyCommunity />} />
             {/* Account route - Renders Account page */}
             <Route path='/account' element={!user ? <LazyLogin /> : <LazyAccount />} />
           </Routes>
