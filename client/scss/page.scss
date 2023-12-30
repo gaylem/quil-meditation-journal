@@ -12,7 +12,6 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-bottom: 5em;
   margin: auto;
   color: black;
   max-width: 900px;
@@ -21,7 +20,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   line-height: 2em;
   font-size: large;
   color: rgb(46, 46, 46);
-  padding: 2em;
+  padding: 3em;
 
   @media (max-width: 800px) {
     padding: 2em;
