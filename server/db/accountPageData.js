@@ -5,7 +5,7 @@ import React from 'react';
 const items = [
   {
     title: 'Download your journal entries',
-    content: 'Enter your password and click "Download Journal Entries", to download a .csv file containing all of your journal entries.',
+    content: 'Enter your password and click "Download Journal Entries" to download a .csv file containing all your journal entries.',
     formFields: [
       {
         label: 'Password:',
@@ -23,7 +23,7 @@ const items = [
   },
   {
     title: 'Update your username',
-    content: 'Enter your new username and current password below to update your username. Make sure to remember your new username. If you use a password manager, update it there immediately.',
+    content: 'Enter your new username and current password below to update your username. Make sure to remember your new username. If you use a password manager, update it immediately.',
     formFields: [
       {
         label: 'New Username',
@@ -94,7 +94,7 @@ const items = [
         <p>Once you enter your new password, you will be logged out and prompted to log back in again.</p>
         <br />
         <p>
-          Be sure to remember your new password. We recommend using a password manager, such as <a href='https://passwords.google.com/'>Google Password Manager</a>, <a href='https://support.apple.com/en-us/HT204085'>iCloud Keychain</a> or <a href='https://nordpass.com/'>Nordpass</a>. These tools often provide a password generator, making the process of coming up with a secure, random password much easier.
+          Be sure to remember your new password. We recommend using a password manager such as <a href='https://passwords.google.com/'>Google Password Manager</a>, <a href='https://support.apple.com/en-us/HT204085'>iCloud Keychain</a> or <a href='https://nordpass.com/'>Nordpass</a>. These tools often provide a password generator, which makes strong password creation quick and easy.
         </p>
         <br />
       </div>
@@ -135,13 +135,11 @@ const items = [
     content: (
       <div>
         <p>
-          If you delete your your account, <strong>all of your data will be permenantly erased from our database.</strong> This action cannot be undone. We recommend that if you truly want to delete your account, you <strong>download your journal entries first.</strong>
+          Deleting your account will <strong>permanently erase all of your data from our database.</strong> This action cannot be reversed. If you truly want to delete your account, we recomend that you <strong>download your journal entries first.</strong>
         </p>
         <br />
-        <p>If you have downloaded your data and are still sure you want to delete your account, enter your password below and click "Delete Account."</p>
-        <br />
         <p>
-          When you are done, <strong>you will be redirected to the signup page, and your account will no longer exist.</strong>
+          If you have downloaded your entries and are still sure you want to delete your account, enter your password below and click "Delete Account." We will redirect you to the signup page, and <strong>your account will no longer exist.</strong>
         </p>
         <br />
       </div>

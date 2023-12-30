@@ -1,3 +1,5 @@
+//** ACCOUNT PAGE */
+
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 // Import axios for handling server requests
@@ -204,7 +206,7 @@ const Account = () => {
     <div className='page-container'>
       <div className='page-text'>
         <h2>Account Settings</h2>
-        You can manage your account settings below. If you have any questions, checkout our <a href='/help-faqs'>Help & FAQs page.</a>
+        You can manage your account settings below. If you have any questions, check out our <a href='/help-faqs'>Help & FAQs page.</a>
       </div>
       <div className='feed-container'>
         {data.map((item, index) => (
