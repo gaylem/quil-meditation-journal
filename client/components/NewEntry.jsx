@@ -1,15 +1,15 @@
 //** NEW ENTRY COMPONENT */
 
 import React, { useState } from 'react';
+
+// Import hooks
+import { useEntriesContext } from '../hooks/useEntriesContext.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
+
+// Import libraries
 import axios from '../axiosConfig.js';
 import format from 'date-fns/format';
 import Cookies from 'js-cookie';
-
-// Import useEntriesContext hook for new journal entries
-import { useEntriesContext } from '../hooks/useEntriesContext.js';
-
-// Import useAuthContext hook for authentication
-import { useAuthContext } from '../hooks/useAuthContext.js';
 
 /**
  * NewEntry component handles the creation of new journal entries.
@@ -80,7 +80,6 @@ function NewEntry() {
         dispatch({ type: 'LOGIN', payload: response.data.authData });
         dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
       }
-      // Catch errors
     } catch (error) {
       console.error('Error adding entry:', error.stack);
       if (error.response?.data?.redirectToLogin) {

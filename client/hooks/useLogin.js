@@ -1,3 +1,5 @@
+//** USE LOGIN HOOK */
+
 // Import useState and useAuthContext to manage state
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext.js';
@@ -58,9 +60,11 @@ export const useLogin = () => {
           secure: true, // Secure attribute (requires HTTPS)
           sameSite: 'Strict', // SameSite attribute set to 'Strict'
         });
+
         // Log the cookie value after setting it
         const cookieValue = Cookies.get('user');
         console.log('user cookie:', cookieValue);
+
         // Update the authentication context with user data
         dispatch({ type: 'LOGIN', payload: user });
 
@@ -70,6 +74,7 @@ export const useLogin = () => {
     } catch (error) {
       // Set loading to false
       setIsLoading(false);
+
       // Check if 'response' is defined before accessing 'error.response.data.message'
       const errorMessage = error.response && error.response.data ? error.response.data.message : 'An error occurred';
       setError(errorMessage);

@@ -95,6 +95,7 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
       }
 
       /* The text that the user enters into the textarea */
+      // TODO: Entry duration is not in use currently but may be used if duration field is added to new entry form
       .entry-duration,
       .entry-body {
         box-sizing: border-box;
