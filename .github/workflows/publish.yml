@@ -33,3 +33,17 @@ jobs:
           REACT_APP_FORM_ENDPOINT: ${{ secrets.REACT_APP_FORM_ENDPOINT }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           MESSAGE: "Build: ({sha}) {msg}" # The commit message
+
+      - name: Debug GitHub Secrets
+        run: |
+          echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
+          echo "MONGODB_URI: ${{ secrets.MONGODB_URI }}"
+          # Add other secrets as needed
+
+      - name: Debug Environment Variables
+        run: |
+          echo "REACT_APP_FORM_ENDPOINT: ${{ secrets.REACT_APP_FORM_ENDPOINT }}"
+          echo "SECRET_KEY: ${{ secrets.SECRET_KEY }}"
+          # Add other environment variables as needed
+
+
