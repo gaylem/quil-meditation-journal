@@ -1,18 +1,16 @@
 //** HEADER COMPONENT */
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-// Import useLogout hook and useAuthContext to manage logout and authentication.
+// Import hooks and sidebar
+import { useNavigate } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
+import Sidebar from './Sidebar.jsx';
 
-// Import hamburger icon
+// Import icons
 import hamburger from '../../public/assets/images/hamburger.png';
 import featherHeader from '../../public/assets/images/feather-header.png';
-
-// Import Sidebar component for navigation
-import Sidebar from './Sidebar.jsx';
 
 /**
  * Header component containing the application title, logout button, and sidebar menu button.
@@ -20,13 +18,8 @@ import Sidebar from './Sidebar.jsx';
  * @returns {JSX.Element} The rendered header component.
  */
 function Header() {
-  // useLogout hook is used to retrieve logout functionality.
   const { logout } = useLogout();
-
-  // useAuthContext hook is used to retrieve user information for authentication.
   const { user } = useAuthContext();
-
-  // useNavigate hook is used to redirect the user to either the homepage or login page when they click the title.
   const navigate = useNavigate();
 
   // handleClick function manages logout button clicks and refresh tokens in local storage.
@@ -59,10 +52,10 @@ function Header() {
   /**
    * Main header component, which contains:
    *
-   * the hamburger menu icon that toggles the sidebar open and closed,
-   * the app h1 title,
-   * the username,
-   * and a logout button that logs users out of their account
+   * hamburger menu icon that toggles the sidebar open and closed,
+   * app h1 title,
+   * username,
+   * logout button that logs users out of their account
    *
    * @returns {JSX.Element} The rendered Header component.
    */
@@ -78,7 +71,6 @@ function Header() {
           <img src={featherHeader} alt='large feather icon' />
         </h1>
         {/* Logout button is displayed if a user is logged in, and it logs the user out when clicked. */}
-
         {user && (
           <div className='auth-box'>
             <div className='user'>

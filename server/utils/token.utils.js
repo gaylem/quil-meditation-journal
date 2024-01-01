@@ -113,7 +113,7 @@ export const verifyRefreshToken = async refreshToken => {
  * @returns {boolean} - True if the token has expired, false otherwise.
  */
 export const checkTokenExpiration = decodedToken => {
-  const expirationThreshold = 60 * 12; // 12 minutes
+  const expirationThreshold = 60 * 10; // 10 minutes
   return decodedToken.exp - Date.now() / 1000 <= expirationThreshold;
 };
 

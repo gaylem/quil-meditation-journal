@@ -48,7 +48,7 @@ const HelpFAQ = () => {
       </div>
       <div className='page-text'>
         <h2>Still need help?</h2>
-        <p>Reach out via the form below.</p>
+        <p>If you didn't find the answer to your question, or you have some feedback you'd like to share, reach out through the form below.</p>
       </div>
       <div className='feed-container'>
         <ContactForm />

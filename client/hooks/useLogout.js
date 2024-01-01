@@ -1,3 +1,5 @@
+//** USE LOGOUT HOOK */
+
 import { useAuthContext } from './useAuthContext.js';
 import { useEntriesContext } from './useEntriesContext.js';
 import Cookies from 'js-cookie';

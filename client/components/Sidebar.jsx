@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Import close button icon
+// Import icons
 import circle from '../../public/assets/images/close-button.png';
 import gear from '../../public/assets/images/gear.png';
 import brain from '../../public/assets/images/brain.png';
@@ -52,8 +52,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </div>
         <div className='link'>
           <img src={smiley} className='icon' id='gear' alt='smiley face icon' />
-          <Link to='/get-involved' onClick={toggleSidebar}>
-            Get Involved
+          <Link to='/community' onClick={toggleSidebar}>
+            Community
           </Link>
         </div>
         <div className='link'>
@@ -67,7 +67,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   );
 };
 
-//PropTypes for the Sidebar component
 Sidebar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,

@@ -1,18 +1,16 @@
 //** PAST ENTRIES FEED COMPONENT */
 
 import React, { useEffect } from 'react';
-
-// Import useEntriesContext and useAuthContext to manage state
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
-// Other imports
-import axios from '../axiosConfig.js';
-import Cookies from 'js-cookie';
-
-// Import PastEntry component for rendering individual past entries
+// Import components
 import PastEntry from './PastEntry.jsx';
 import NewEntry from './NewEntry.jsx';
+
+// Import other libraries
+import axios from '../axiosConfig.js';
+import Cookies from 'js-cookie';
 
 /**
  * PastEntriesFeed component renders a feed of past journal entries for the authenticated user.
@@ -58,7 +56,6 @@ const PastEntriesFeed = () => {
           dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
         }
       } catch (error) {
-        // Log an error message if there is an issue fetching entries
         console.error('Error fetching entries:', error.stack);
         if (error.response?.data?.redirectToLogin) {
           // Clear token from cookies

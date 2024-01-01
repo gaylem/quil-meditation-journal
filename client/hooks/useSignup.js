@@ -1,3 +1,5 @@
+//** USE SIGNUP HOOK */
+
 // Import useState and useAuthContext for managing state and authentication
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext.js';

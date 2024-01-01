@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 
-// Import useEntriesContext and useAuthContext to manage state
+// Import hooks
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
-// Other imports
+// Import libraries
 import format from 'date-fns/format';
 import axios from '../axiosConfig.js';
 import Cookies from 'js-cookie';
@@ -95,7 +95,7 @@ const PastEntry = ({ entry }) => {
       const deletedId = response.data.deletedId;
 
       if (response.status === 200) {
-        // Optimistic update: Remove the entry from the local state immediately
+        // Remove the entry from the local state immediately
         dispatch({ type: 'DELETE_ENTRY', payload: { _id: deletedId } });
         // Update tokens and user state
         dispatch({ type: 'LOGIN', payload: response.data.authData });

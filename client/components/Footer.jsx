@@ -8,7 +8,6 @@ import React from 'react';
  * @returns {JSX.Element} The rendered footer component.
  */
 function Footer() {
-  // Current year and copyright text
   const currentYear = new Date().getFullYear();
   const copyrightText = `© ${currentYear} quil meditation journal. All rights reserved.`;
 

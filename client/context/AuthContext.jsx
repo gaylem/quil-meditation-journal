@@ -66,24 +66,24 @@ export const AuthContextProvider = ({ children }) => {
   /**
    * Effect to check for a stored user in cookies and update the context with the stored user details.
    */
-  // useEffect(() => {
-  //   try {
-  //     // Check if a user is stored in cookies
-  //     const storedUserString = Cookies.get('user');
-  //     console.log('storedUserString: ', storedUserString);
-  //     // Parse string
-  //     const storedUser = JSON.parse(storedUserString);
-  //     console.log('storedUser: ', storedUser);
-  //     // Update state
-  //     if (storedUser && storedUser.accessToken) {
-  //       // If the user is found, update the context with stored user details
-  //       dispatch({ type: 'LOGIN', payload: storedUser });
-  //       dispatch({ type: 'ACCESS_TOKEN', payload: storedUser.accessToken });
-  //     }
-  //   } catch (error) {
-  //     console.error('AuthContextProvider:', error);
-  //   }
-  // }, [state.accessToken]);
+  useEffect(() => {
+    try {
+      // Check if a user is stored in cookies
+      const storedUserString = Cookies.get('user');
+      if (storedUserString) {
+        // Parse string
+        const storedUser = JSON.parse(storedUserString);
+        // Update state
+        if (storedUser && storedUser.accessToken) {
+          // If the user is found, update the context with stored user details
+          dispatch({ type: 'LOGIN', payload: storedUser });
+          dispatch({ type: 'ACCESS_TOKEN', payload: storedUser.accessToken });
+        }
+      }
+    } catch (error) {
+      console.error('AuthContextProvider:', error);
+    }
+  }, [state.accessToken]);
 
   /**
    * Effect to update cookies when the user context changes
@@ -92,8 +92,6 @@ export const AuthContextProvider = ({ children }) => {
     try {
       // Get the current user context
       const currentUser = state.user;
-      console.log('currentUser: ', currentUser);
-
       if (currentUser) {
         // Update cookies with the current user context
         Cookies.set('user', JSON.stringify(currentUser), {
@@ -101,88 +99,102 @@ export const AuthContextProvider = ({ children }) => {
           secure: true, // Secure attribute (requires HTTPS)
           sameSite: 'Strict', // SameSite attribute set to 'Strict'
         });
-
-        dispatch({ type: 'LOGIN', payload: currentUser });
-        dispatch({ type: 'ACCESS_TOKEN', payload: currentUser.accessToken });
       }
     } catch (error) {
       console.error('AuthContextProvider:', error);
     }
-  }, [state.user, state.accesstoken]);
+  }, [state.user]);
 
   /**
    * Effect to refresh the access token at intervals and update the context with new tokens and user details.
    */
   useEffect(() => {
     const refreshAccessToken = async () => {
-      try {
-        console.log(state.accessToken);
-        if (state.accessToken) {
-          const response = await axios.post(
-            `/api/users/token/${state.user.userId}`,
-            {}, // Empty request body
-            {
-              withCredentials: true,
-              headers: {
-                Authorization: `Bearer ${state.accessToken}`,
+      const storedUserString = Cookies.get('user');
+      if (storedUserString) {
+        console.log('storedUserString: ', storedUserString);
+        // Parse string
+        const storedUser = JSON.parse(storedUserString);
+        try {
+          console.log(storedUser.accessToken);
+          if (storedUser && storedUser.accessToken) {
+            const response = await axios.post(
+              `/api/users/token/${storedUser.userId}`,
+              {}, // Empty request body
+              {
+                withCredentials: true,
+                headers: {
+                  Authorization: `Bearer ${storedUser.accessToken}`,
+                },
               },
-            },
-          );
+            );
 
-          console.log(response.data);
+            console.log('refreshAccessToken response.data', response.data);
 
-          // Update tokens and user in the context
-          dispatch(prevState => ({
-            ...prevState,
-            type: 'LOGIN',
-            payload: response.data,
-          }));
+            if (response.status === 200) {
+              // Update tokens and user in the context
+              dispatch(prevState => ({
+                ...prevState,
+                type: 'LOGIN',
+                payload: response.data,
+              }));
 
-          dispatch(prevState => ({
-            ...prevState,
-            type: 'ACCESS_TOKEN',
-            payload: response.data.accessToken,
-          }));
+              dispatch(prevState => ({
+                ...prevState,
+                type: 'ACCESS_TOKEN',
+                payload: response.data.accessToken,
+              }));
 
-          console.log(state);
+              console.log(state);
 
-          console.log('Token refresh successful');
+              Cookies.set('user', JSON.stringify(response.data), {
+                expires: 28 / (24 * 60), // Expires in 28 minutes
+                secure: true, // Secure attribute (requires HTTPS)
+                sameSite: 'Strict', // SameSite attribute set to 'Strict'
+              });
+
+              console.log('Token refresh successful');
+            }
+          }
+        } catch (error) {
+          console.error('Token refresh error:', error.stack);
+          // Check for the redirectToLogin flag in the response
+          if (error.response?.data?.redirectToLogin) {
+            console.log('Redirecting user');
+            // Clear token from cookies
+            Cookies.remove('user');
+            // Redirect to the login page
+            window.location.href = '/login';
+          }
         }
-      } catch (error) {
-        console.error('Token refresh error:', error.stack);
-        // Check for the redirectToLogin flag in the response
-        if (error.response?.data?.redirectToLogin) {
-          console.log('Redirecting user');
-          // Clear token from cookies
-          Cookies.remove('user');
-          // Redirect to the login page
-          window.location.href = '/login';
-        }
+      } else {
+        return;
       }
     };
-
     // Setup interval for subsequent checks
     const intervalId = setInterval(
       async () => {
         await refreshAccessToken();
         console.log('AuthContext refresh access token check');
       },
-      10 * 60 * 1000,
+      5 * 60 * 1000,
     ); // 5 minutes
 
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
-  }, [state.accessToken]);
+  }, [dispatch]);
 
   // Update cookies when user state changes
   useEffect(() => {
     if (state.user) {
+      console.log('state.user: ', state.user);
       // Update cookies with the current user context
       Cookies.set('user', JSON.stringify(state.user), {
         expires: 28 / (24 * 60), // Expires in 28 minutes
         secure: true, // Secure attribute (requires HTTPS)
         sameSite: 'Strict', // SameSite attribute set to 'Strict'
       });
+      console.log('Cookies set');
     }
   }, [state.user]);
 

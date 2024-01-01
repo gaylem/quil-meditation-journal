@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext.js';
-// Import axios for handling server requests
-import axios from '../axiosConfig.js';
+//** ACCOUNT PAGE */
 
+import React, { useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext.js';
+
+// Import other libraries
+import axios from '../axiosConfig.js';
+import Cookies from 'js-cookie';
+
+// Import data
 import data from '../../server/db/accountPageData.js';
 
 const Account = () => {
@@ -88,7 +93,7 @@ const Account = () => {
               userId: user.userId,
             };
             // Dispatch the 'LOGIN' action with the updated user data
-            localStorage.setItem('user', JSON.stringify(newUserState));
+            Cookies.set('user', JSON.stringify(newUserState));
             dispatch({ type: 'LOGIN', payload: newUserState });
             setSuccess(success => {
               return { ...success, [index]: data[index].success };
@@ -115,8 +120,6 @@ const Account = () => {
           );
           // if update email === success
           if (response.status === 200) {
-            // Remove user data from local storage
-            localStorage.removeItem('user');
             // set success message
             setSuccess(success => {
               return { ...success, [index]: data[index].success };
@@ -147,9 +150,9 @@ const Account = () => {
             setSuccess(success => {
               return { ...success, [index]: data[index].success };
             });
-            // Remove user data from local storage
-            localStorage.removeItem('user');
-            // Redirect to the signup page or any other desired URL
+            // Clear token from cookies
+            Cookies.remove('user');
+            // Redirect to the login page
             window.location.href = '/login';
           }
         } catch (error) {
@@ -172,9 +175,12 @@ const Account = () => {
             },
           );
           if (response.status === 200) {
-            // Remove user data from local storage
-            localStorage.removeItem('user');
-            // Redirect to the signup page or any other desired URL
+            setSuccess(success => {
+              return { ...success, [index]: data[index].success };
+            });
+            // Clear token from cookies
+            Cookies.remove('user');
+            // Redirect to the signup page
             window.location.href = '/signup';
           }
         } catch (error) {
@@ -183,13 +189,10 @@ const Account = () => {
             return { ...error, [index]: data[index].error };
           });
         }
+      } else {
         // Check if response is undefined or null
         if (!response) {
           throw new Error('Response is undefined or null');
-        }
-        // Check the HTTP status code directly
-        if (response.status !== 200) {
-          throw new Error(`Network response was not ok. Status: ${response.status}`);
         }
       }
     } catch (error) {
@@ -204,11 +207,11 @@ const Account = () => {
     <div className='page-container'>
       <div className='page-text'>
         <h2>Account Settings</h2>
-        You can manage your account settings below. If you have any questions, checkout our <a href='/help-faqs'>Help & FAQs page.</a>
+        You can manage your account settings below. If you have any questions, check out our <a href='/help-faqs'>Help & FAQs page.</a>
       </div>
       <div className='feed-container'>
         {data.map((item, index) => (
-          <div className='toggle-entry' key={index}>
+          <div className='toggle-entry' key={item.id}>
             <div className='toggle-header'>
               <button className='toggle-btn' onClick={() => toggle(index)}>
                 +
@@ -230,7 +233,7 @@ const Account = () => {
                     }}
                     className='form'>
                     {item.formFields.map((field, fieldIndex) => (
-                      <div className='input-box'>
+                      <div className='input-box' key={field.id}>
                         <label htmlFor={field.id}>{field.label}</label>
                         <input key={fieldIndex} id={field.id} type={field.type || 'text'} name={`${field.name}${index}`} placeholder={field.placeholder} className='formField' />
                       </div>

@@ -1,8 +1,6 @@
 //** ENTRY CONTAINER COMPONENT */
 
 import React from 'react';
-
-// Import componentsgit
 import PastEntriesFeed from './PastEntriesFeed.jsx';
 import Timer from './Timer.jsx';
 

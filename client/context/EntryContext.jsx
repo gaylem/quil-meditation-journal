@@ -1,6 +1,4 @@
 import React, { createContext, useReducer } from 'react';
-
-// Import props validation
 import PropTypes from 'prop-types';
 
 /**
@@ -78,7 +76,6 @@ export const EntriesContextProvider = ({ children }) => {
   return <EntriesContext.Provider value={{ ...state, dispatch }}>{children}</EntriesContext.Provider>;
 };
 
-//PropTypes for the EntriesContext component
 EntriesContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

@@ -105,16 +105,9 @@ accountController.updateUsername = async (req, res) => {
     if (!passwordIsValid) {
       return res.status(400).send();
     }
-    // Check if newUsername already exists
-    const user = await User.findOne({ _id: userId });
-    // Throw error if username already exists
-    if (!user) {
-      return res.status(404).json({
-        log: 'userController.updateUsername: User does not exist',
-        status: 404,
-        message: 'Something went wrong, please try again.',
-      });
-    }
+    // Is the username already being used?
+    await User.findOne({ username });
+
     // Update the user data
     const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { username: newUsername } }, { new: true });
     // If nothing is returned, throw an error
@@ -148,6 +141,15 @@ accountController.updateEmail = async (req, res) => {
     // Extract the userId, username, and password from params and body
     const { userId } = req.params;
     const { newEmail, password } = req.body;
+
+    // Is the new email already being used?
+    const newEmailExists = await User.findOne({ email: newEmail });
+    console.log('emailExists: ', newEmailExists);
+
+    if (newEmailExists) {
+      throw new Error('Email already exists');
+    }
+
     // Authenticate user
     const passwordIsValid = await verifyPassword(password, userId);
     if (!passwordIsValid) {
