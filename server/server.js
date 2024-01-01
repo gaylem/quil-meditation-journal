@@ -1,9 +1,5 @@
 //** SERVER */
 
-// Load environment variables from a .env file
-import dotenv from 'dotenv';
-dotenv.config();
-
 // Import Express
 import express from 'express';
 const app = express();
@@ -20,27 +16,10 @@ import etag from 'etag';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Handle CORS
-const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil.space'];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,
-  }),
-);
-
 // Middleware setup
 app.use(express.json()); // Parses the JSON data and makes it available in the req.body object.
 app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
 app.use(cookieParser()); // Parses incoming cookie headers, extracts the cookies, and makes them available in the req.cookies object.
-app.use(helmet()); // Applies HTTP headers such as X-Content-Type-Options, Strict-Transport-Security, X-Frame-Options, X-XSS-Protection, and others for enhanced security
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
@@ -68,16 +47,6 @@ app.use((req, res, next) => {
 
   next();
 });
-
-// Import Routes
-import entryRouter from './routers/entryRouter.js';
-import userRouter from './routers/userRouter.js';
-import accountRouter from './routers/accountRouter.js';
-
-// Define routes for entries and users
-app.use('/api/entries', entryRouter);
-app.use('/api/users', userRouter);
-app.use('/api/accounts', accountRouter);
 
 // Handle requests to any route by serving the appropriate 'index.html' file
 app.get('/*', function (req, res) {

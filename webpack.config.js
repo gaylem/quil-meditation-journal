@@ -1,26 +1,17 @@
-import path from 'path';
-import HTMLWebpackPlugin from 'html-webpack-plugin';
-import CompressionPlugin from 'compression-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
-import Dotenv from 'dotenv-webpack';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-
-export default {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  entry: './client/index.js',
+module.exports = {
+  entry: './src/index.js',
   output: {
-    path: path.join(__dirname, 'public/build'),
-    filename: '[name].[contenthash].js',
-    publicPath: '/',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
   },
-
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /(?:node_modules|__tests__|\.test\.js)$/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -29,80 +20,19 @@ export default {
         },
       },
       {
-        test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.(png|jpg|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[contenthash].[ext]',
-              outputPath: 'assets/images', // or your preferred output directory
-            },
-          },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                progressive: true,
-              },
-            },
-          },
-        ],
-      },
-
-      {
-        test: /\.(mp3|ogg|wav)$/i,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'assets/audio',
-        },
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
-
-  devServer: {
-    static: {
-      directory: path.resolve(__dirname, 'public'),
-      publicPath: '/',
-    },
-    port: 8080,
-    proxy: {
-      '/api': 'http://localhost:4000/',
-      '/assets': 'http://localhost:4000/',
-    },
-    historyApiFallback: true,
-  },
-
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      minSize: 0,
-      minChunks: 1,
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all',
-        },
-      },
-    },
-    minimize: true,
-    minimizer: [new TerserPlugin()],
-  },
-
-  devtool: 'eval-source-map',
-
   plugins: [
-    new HTMLWebpackPlugin({
-      template: path.resolve(__dirname, 'index.html'),
-      publicPath: '/',
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
     }),
-    new Dotenv(),
-    new CompressionPlugin(),
-    process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
   ],
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    port: 3000,
+    open: true,
+  },
 };
