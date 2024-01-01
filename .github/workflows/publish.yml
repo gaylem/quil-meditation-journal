@@ -26,4 +26,10 @@ jobs:
           BRANCH: build # The branch name where you want to push the assets
           FOLDER: public/build # The directory where your assets are generated
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          KEY: ${{ secrets.KEY }}
+          SALT_WORK_FACTOR: ${{ secrets.SALT_WORK_FACTOR }}
+          PORT: ${{ secrets.PORT }}
+          REACT_APP_FORM_ENDPOINT: ${{ secrets.REACT_APP_FORM_ENDPOINT }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
           MESSAGE: "Build: ({sha}) {msg}" # The commit message
