@@ -26,6 +26,13 @@ jobs:
       - name: Install all dependencies
         run: npm install
 
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: public/build
+
+
       - name: Build
         run: npm run build # The build command of your project
 
