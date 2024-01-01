@@ -1,8 +1,6 @@
 node_modules
 package-lock.json
 build
-bundle
-public
 .env
 coverage
 private-key-script.js
