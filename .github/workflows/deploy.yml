@@ -25,6 +25,9 @@ jobs:
 
       - name: Install all dependencies
         run: npm install
+
+      - name: Clean Build Directory
+        run: rm -rf build/*
    
       - name: Build
         run: npm run build # The build command of your project
