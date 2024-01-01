@@ -1,15 +1,17 @@
 import path from 'path';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
-import CompressionPlugin from 'compression-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 export default {
-  mode: 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './client/index.js',
+  output: {
+    path: path.join(__dirname, 'public/build'),
+    filename: 'bundle.js',
+    publicPath: '/',
+  },
 
   module: {
     rules: [
@@ -72,24 +74,12 @@ export default {
     historyApiFallback: true,
   },
 
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      minSize: 0,
-      minChunks: 1,
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all',
-        },
-      },
+  resolve: {
+    fallback: {
+      fs: false,
+      path: false,
     },
-    minimize: true,
-    minimizer: [new TerserPlugin()],
   },
-
-  devtool: 'eval-source-map',
 
   plugins: [
     new HTMLWebpackPlugin({
@@ -97,6 +87,5 @@ export default {
       publicPath: '/',
     }),
     new Dotenv(),
-    new CompressionPlugin(),
   ],
 };

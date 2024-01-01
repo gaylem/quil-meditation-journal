@@ -23,23 +23,6 @@ quil is also an open-source product, which is why we can offer it to the public 
 <br/>
 <br/>
 
-## Preview
-
-### Account Page
-<img width="907" alt="Screenshot 2023-11-20 at 6 55 07 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/4e87a02a-dd88-460c-bbf2-9b9ecd6809db">
-
-### Add New Entry
-<img width="903" alt="Screenshot 2023-11-20 at 6 55 35 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/c4cbde4b-2c7d-4b24-9c81-5cd374c8672f">
-
-### New Entry Added
-<img width="905" alt="Screenshot 2023-11-20 at 6 54 45 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/d8394074-d131-4969-9b97-21e1fcff33c5">
-
-### Login Page
-<img width="905" alt="Screenshot 2023-11-20 at 6 53 45 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/d8e20536-caec-451e-910e-d92ee47af3e8">
-
-### Signup Page
-<img width="908" alt="Screenshot 2023-11-20 at 6 53 56 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/3c89f91a-719b-4c22-be22-7b1a5c93a1ab">
-
 ---
 ## Progress
 

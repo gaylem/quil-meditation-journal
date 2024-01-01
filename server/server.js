@@ -23,7 +23,7 @@ app.use((req, _, next) => {
 });
 
 // Serve static files from the 'public' directory
-const publicPath = path.resolve(__dirname, 'assets');
+const publicPath = path.resolve(__dirname, 'public');
 app.use(express.static(publicPath));
 
 // Handle requests to any route by serving the appropriate 'index.html' file
@@ -52,6 +52,19 @@ app.use((err, _, res) => {
   console.error(errorObj.log);
   // Send a JSON response with the error status and message
   return res.status(errorObj.status).json(errorObj.message);
+});
+
+if (process.env.NODE_ENV === 'production') {
+  // Statically serve everything in the build folder on the route '/build'
+  app.use('/public/build', express.static(path.join(__dirname, '../public/build')));
+}
+
+// Log the current environment
+console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
+
+// Start the server
+app.listen(process.env.PORT, () => {
+  console.log(`Listening on port ${process.env.PORT}`);
 });
 
 // Export the app
