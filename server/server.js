@@ -7,10 +7,6 @@ const app = express();
 // Import required modules
 import { fileURLToPath } from 'url';
 import path from 'path';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import helmet from 'helmet';
-import etag from 'etag';
 
 // Get the directory name of the current module's file path
 const __filename = fileURLToPath(import.meta.url);
@@ -19,7 +15,6 @@ const __dirname = path.dirname(__filename);
 // Middleware setup
 app.use(express.json()); // Parses the JSON data and makes it available in the req.body object.
 app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
-app.use(cookieParser()); // Parses incoming cookie headers, extracts the cookies, and makes them available in the req.cookies object.
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
@@ -28,25 +23,8 @@ app.use((req, _, next) => {
 });
 
 // Serve static files from the 'public' directory
-const publicPath = path.resolve(__dirname, 'public');
+const publicPath = path.resolve(__dirname, 'assets');
 app.use(express.static(publicPath));
-
-// Set Cache Control Header and ETag Header
-app.use((req, res, next) => {
-  const originalSend = res.send;
-
-  res.send = function (body) {
-    // Check if the body is a string or a Buffer before calculating ETag
-    if (typeof body === 'string' || Buffer.isBuffer(body)) {
-      const tag = etag(body);
-      res.setHeader('ETag', tag);
-    }
-
-    originalSend.call(this, body);
-  };
-
-  next();
-});
 
 // Handle requests to any route by serving the appropriate 'index.html' file
 app.get('/*', function (req, res) {
@@ -74,21 +52,6 @@ app.use((err, _, res) => {
   console.error(errorObj.log);
   // Send a JSON response with the error status and message
   return res.status(errorObj.status).json(errorObj.message);
-});
-
-// Serve static files in production
-// TODO: Will I need this in CI/CD? Or is it just not doing anything?
-if (process.env.NODE_ENV === 'production') {
-  // Statically serve everything in the build folder on the route '/build'
-  app.use('/public/build', express.static(path.join(__dirname, '../public/build')));
-}
-
-// Log the current environment
-console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
-
-// Start the server
-app.listen(process.env.PORT, () => {
-  console.log(`Listening on port ${process.env.PORT}`);
 });
 
 // Export the app

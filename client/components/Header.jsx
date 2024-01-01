@@ -1,7 +1,7 @@
 //** HEADER COMPONENT */
 
 import React from 'react';
-import featherHeader from '../../assets/images/feather-header.png';
+import featherHeader from '../../public/assets/images/feather-header.png';
 
 /**
  * Header component containing the application title, logout button, and sidebar menu button.
