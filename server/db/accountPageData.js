@@ -4,6 +4,7 @@ import React from 'react';
 
 const items = [
   {
+    id: '1',
     title: 'Download your journal entries',
     content: 'Enter your password and click "Download Journal Entries" to download a .csv file containing all your journal entries.',
     formFields: [
@@ -22,6 +23,7 @@ const items = [
     error: 'Download failed. Please try again.',
   },
   {
+    id: '2',
     title: 'Update your username',
     content: 'Enter your new username and current password below to update your username. Make sure to remember your new username. If you use a password manager, update it immediately.',
     formFields: [
@@ -44,9 +46,10 @@ const items = [
     buttonText: 'Update Username',
     endpoint: 'username',
     success: 'Username updated successfully.',
-    error: 'Username update failed. Please try again.',
+    error: 'Username update failed. The username you have entered may already exist. Please try again.',
   },
   {
+    id: '3',
     title: 'Update your email',
     content: 'Enter your new email address and current password below to update your email address.',
     formFields: [
@@ -70,9 +73,10 @@ const items = [
     buttonText: 'Update Email',
     endpoint: 'email',
     success: 'Email successfully updated.',
-    error: 'Email update failed. Please try again.',
+    error: 'Email update failed. The email you have entered may already exist. Please try again.',
   },
   {
+    id: '4',
     title: 'Update your password',
     content: (
       <div>
@@ -131,6 +135,7 @@ const items = [
     error: 'Password update failed. Please try again.',
   },
   {
+    id: '5',
     title: 'Delete your account',
     content: (
       <div>

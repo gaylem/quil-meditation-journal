@@ -56,9 +56,9 @@ function App() {
             {/* Account route - Renders Account page */}
             <Route path='/account' element={!user ? <LazyLogin /> : <LazyAccount />} />
           </Routes>
+          <LazyFooter />
         </Suspense>
       </BrowserRouter>
-      <LazyFooter />
     </div>
   );
 }

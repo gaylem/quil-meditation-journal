@@ -72,7 +72,7 @@ const setupSecurityHeaders = () => {
         },
       }),
     );
-    console.log("setupSecurityHeaders in development");
+    console.log('setupSecurityHeaders in development');
   } else {
     // Apply more restrictive CSP for production
     app.use(
