@@ -1,17 +1,18 @@
 //** USER ROUTER */
 
 /* Includes: 
-    1. POST /api/users/signup => createUser controller
-    2. POST /api/users/login => verifyUser controller
-    3. POST /api/users/token => authUser controller
-    4. POST /api/users/logout => logoutUser controller
+    1. POST createUser 
+    2. POST verifyUser 
+    3. POST authUser 
+    4. POST logoutUser 
 */
 
 // Imports
 import express from 'express';
 const router = express.Router();
 import userController from '../controllers/userController.js';
-const { signupUser, loginUser, authUser, logoutUser } = userController
+import authMiddleware from '../middlewares/authMiddleware.js';
+const { signupUser, loginUser, authUser, logoutUser } = userController;
 
 /**
  * @route POST /api/users/signup
@@ -34,12 +35,12 @@ router.post('/signup', signupUser);
 router.post('/login', loginUser);
 
 /**
- * @route POST /api/users/token
+ * @route POST /api/users/token/:id
  * @description Authenticates the access token in the request headers
  * @access Private (requires valid refresh token)
- * @param {Object} req - The request object containing the accessToken (String)
+ * @param req.params userId
  */
-router.post('/token', authUser);
+router.post('/token/:id', authMiddleware, authUser);
 
 /**
  * @route POST /api/users/logout

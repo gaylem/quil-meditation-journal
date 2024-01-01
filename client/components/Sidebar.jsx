@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Import close button icon
+// Import icons
 import circle from '../../public/assets/images/close-button.png';
 import gear from '../../public/assets/images/gear.png';
 import brain from '../../public/assets/images/brain.png';
@@ -30,30 +30,30 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     <div className={sidebarClass}>
       {/* Close button to toggle the sidebar closed */}
       <img src={circle} onClick={toggleSidebar} className='closeBtn' alt='Button that closes sidebar navigation panel' />
-      <div className='sidebarContent'>
+      <div className='sidebar-content'>
         {/* Link to the 'About' page */}
         <div className='link'>
-          <img src={feather} className='icon' id='gear' alt='gear icon' />
-          <Link to='/about' onClick={toggleSidebar}>
+          <img src={feather} className='icon' id='gear' alt='feather icon' />
+          <Link to='/about-quil' onClick={toggleSidebar}>
             About quil
           </Link>
         </div>
         <div className='link'>
-          <img src={brain} className='icon' id='gear' alt='gear icon' />
-          <Link to='/meditation' onClick={toggleSidebar}>
+          <img src={brain} className='icon' id='gear' alt='brain icon' />
+          <Link to='/how-to-meditate' onClick={toggleSidebar}>
             How to Meditate
           </Link>
         </div>
         <div className='link'>
-          <img src={question} className='icon' id='gear' alt='gear icon' />
+          <img src={question} className='icon' id='gear' alt='queation mark icon' />
           <Link to='/help-faqs' onClick={toggleSidebar}>
             Help & FAQs
           </Link>
         </div>
         <div className='link'>
-          <img src={smiley} className='icon' id='gear' alt='gear icon' />
-          <Link to='/get-involved' onClick={toggleSidebar}>
-            Get Involved
+          <img src={smiley} className='icon' id='gear' alt='smiley face icon' />
+          <Link to='/community' onClick={toggleSidebar}>
+            Community
           </Link>
         </div>
         <div className='link'>
@@ -67,7 +67,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   );
 };
 
-//PropTypes for the Sidebar component
 Sidebar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,

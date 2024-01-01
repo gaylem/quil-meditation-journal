@@ -1,16 +1,16 @@
 //** PAST ENTRIES FEED COMPONENT */
 
 import React, { useEffect } from 'react';
-
-// Import useEntriesContext and useAuthContext to manage state
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
-// Import axios for handling server requests
-import axios from '../axiosConfig.js';
-
-// Import PastEntry component for rendering individual past entries
+// Import components
 import PastEntry from './PastEntry.jsx';
+import NewEntry from './NewEntry.jsx';
+
+// Import other libraries
+import axios from '../axiosConfig.js';
+import Cookies from 'js-cookie';
 
 /**
  * PastEntriesFeed component renders a feed of past journal entries for the authenticated user.
@@ -31,10 +31,11 @@ const PastEntriesFeed = () => {
       try {
         // Make a GET request to the server to fetch past entries
         const response = await axios.get(`/api/entries/${user.userId}`, {
+          withCredentials: true,
           headers: { Authorization: `Bearer ${user.accessToken}` },
         });
         // Sort the entries by createdAt date in descending order
-        const sortedEntries = response.data.sort((a, b) => {
+        const sortedEntries = response.data.allEntries.sort((a, b) => {
           const dateA = a.createdAt ? new Date(a.createdAt) : 0;
           const dateB = b.createdAt ? new Date(b.createdAt) : 0;
           return dateB - dateA;
@@ -42,11 +43,26 @@ const PastEntriesFeed = () => {
 
         // If the GET request is successful (status code 200), update the entries in the context
         if (response.status === 200) {
+          // Update the access token in the cookie
+          Cookies.set('user', JSON.stringify(response.data.authData), {
+            expires: 28 / (24 * 60), // Expires in 28 minutes
+            secure: true, // Secure attribute (requires HTTPS)
+            sameSite: 'Strict', // SameSite attribute set to 'Strict'
+          });
+          // Update entries state
           dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
+          // Update tokens and user state
+          dispatch({ type: 'LOGIN', payload: response.data.authData });
+          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
         }
       } catch (error) {
-        // Log an error message if there is an issue fetching entries
-        console.error('Error fetching entries:', error);
+        console.error('Error fetching entries:', error.stack);
+        if (error.response?.data?.redirectToLogin) {
+          // Clear token from cookies
+          Cookies.remove('user');
+          // Redirect to the login page
+          window.location.href = '/login';
+        }
       }
     };
 
@@ -63,9 +79,11 @@ const PastEntriesFeed = () => {
 
   // Render the PastEntriesFeed component
   return (
-    <div>
-      {/* Title for the past meditation sessions */}
-      <p className='pastMeditationTitle'>Past Meditation Sessions</p>
+    <div className='feed-container'>
+      {/* NewEntry component for creating new journal entries */}
+      <div className='new-entry-box'>
+        <NewEntry />
+      </div>
       {/* Map through the entries and render each PastEntry component */}
       {entries.map((entry, index) => (
         <PastEntry key={entry._id || index} entry={entry} />

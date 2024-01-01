@@ -14,7 +14,7 @@ import EntryContainer from '../components/EntryContainer.jsx';
 function Home() {
   return (
     // Main container for the Home component
-    <div className='App'>
+    <div className='main'>
       {/* EntryContainer component renders and manages journal entries */}
       <EntryContainer />
     </div>

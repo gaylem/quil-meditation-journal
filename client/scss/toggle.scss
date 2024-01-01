@@ -1,0 +1,99 @@
+/* Font Family */
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+
+/* Color Variable */
+$shadow-color: rgb(172, 172, 172);
+
+/* Animation that makes past entry content fade in when toggled open */
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.feed-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  padding: 1em;
+
+  @media (max-width: 800px) {
+    padding: 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0;
+  }
+}
+
+/* Container for each past entry */
+.toggle-entry {
+  margin: 0.5em;
+  font-family: $paragraph-font;
+  font-size: large;
+  color: rgb(68, 68, 68);
+  background-color: rgb(246, 246, 246);
+  border-radius: 8px;
+  box-shadow: 0 0 5px $shadow-color;
+  padding: 0.5em;
+
+  @media (max-width: 800px) {
+    font-size: medium;
+    line-height: 1.5em;
+  }
+
+  /* The title of each past entry that toggles open and closed */
+  .toggle-header {
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    color: rgb(68, 68, 68);
+    font-weight: 600;
+    .toggle-title {
+      padding: 0 0 0 1em;
+    }
+  }
+}
+
+/* The container that holds the entry content */
+.toggle-container {
+  display: flex;
+  flex-direction: column;
+  animation-name: fadeInAnimation;
+  animation-duration: 1s;
+  padding: 0 1em;
+
+  .toggle-text {
+    box-sizing: border-box;
+    width: 100%;
+    color: rgb(68, 68, 68);
+    border-radius: 0.25em;
+    line-height: 2em;
+    font-family: $paragraph-font;
+    font-size: large;
+    padding: 1em;
+    margin: 0 auto;
+    word-break: break-word;
+    white-space: pre-wrap;
+    @media (max-width: 800px) {
+      font-size: medium;
+      line-height: 1.5em;
+    }
+  }
+
+  .toggle-edit-text {
+    color: rgb(68, 68, 68);
+    line-height: 2em;
+    font-family: $paragraph-font;
+    font-size: large;
+    padding: 1em;
+    border: 1px solid lightgray;
+    @media (max-width: 800px) {
+      font-size: medium;
+      line-height: 1.5em;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+/* Color variables */
+$quote-color: rgb(55, 54, 54);
+$author-color: rgb(110, 110, 110);
+$shadow-color: rgba(211, 211, 211, 0.8);
+$quote-background-gradient: linear-gradient(#fbeaeb, white);
+
+/* Font Families */
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+$header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
+
+/* Container that holds all new and past entries */
+.entry-container {
+  padding-bottom: 2rem;
+  box-shadow:
+    8px 0 20px -12px $shadow-color,
+    -8px 0 13px -12px $shadow-color;
+  top: 0;
+  margin: auto;
+  max-width: 900px;
+  min-height: 100%;
+  color: black;
+
+  @media (max-width: 480px) {
+    box-shadow: none;
+    width: 100%;
+  }
+
+  /* Main timer container on homepage */
+  .timer-box {
+    display: flex;
+    justify-content: center;
+    font-family: $paragraph-font;
+    font-size: 1.3em;
+    width: 100%;
+    line-height: 1.5;
+    background-image: $quote-background-gradient;
+
+    color: $quote-color;
+  }
+}

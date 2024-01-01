@@ -8,35 +8,44 @@ $paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
 $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
 /* Main page container */
-.pageContainer {
+.page-container {
   display: flex;
-  margin: 3.5em 0 6em 0;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-}
-
-/* Page content */
-.pageContent {
-  padding-top: 3em;
-  max-width: 50%;
+  margin: auto;
+  color: black;
+  max-width: 900px;
+  margin-top: 5em;
   font-family: $paragraph-font;
-  font-size: large;
   line-height: 2em;
+  font-size: large;
   color: rgb(46, 46, 46);
+  padding: 3em;
 
-  // Media queries
-  @media (max-width: 1300px) {
-    max-width: 70%;
+  @media (max-width: 800px) {
+    padding: 2em;
   }
-  @media (max-width: 500px) {
-    max-width: 90%;
+
+  @media (max-width: 480px) {
+    padding: 1em;
+  }
+
+  .page-text {
+    padding: 1em;
+    width: 100%;
+    @media (max-width: 800px) {
+      padding: 0.5em;
+    }
   }
 
   // Headers
   h2 {
     font-family: $header-font;
     font-size: 2.5rem;
-    padding: 1em 0 1em 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 0;
+    padding: 0.5em 0.5em 0.5em 0;
     color: $secondary-color;
     text-shadow: 1px 1px 5px lightgray;
   }
@@ -46,87 +55,40 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     color: $primary-color;
     font-weight: bold;
   }
-}
 
-/* Indents lists*/
-ol,
-ul {
-  padding-left: 15px;
-}
+  ol,
+  ul {
+    padding-left: 15px;
+  }
 
-/* Styles unordered list bullets */
-ul li {
-  position: relative;
-  padding-left: 20px;
-}
+  /* Styles unordered list bullets */
+  ul li {
+    position: relative;
+    padding-left: 20px;
+  }
 
-ul li::marker {
-  content: '\25CF';
-  color: $primary-color;
-}
+  ul li::marker {
+    content: '\25CF';
+    color: $primary-color;
+  }
 
-/* Styles unordered list bullets */
-ol li {
-  position: relative;
-  padding-left: 15px;
-}
+  /* Styles unordered list bullets */
+  ol li {
+    position: relative;
+    padding-left: 15px;
+  }
 
-ol li::marker {
-  color: $primary-color;
-}
+  ol li::marker {
+    color: $primary-color;
+  }
 
-/* Styles links */
-a {
-  color: $secondary-color;
-  font-weight: 700;
-}
+  /* Styles links */
+  a {
+    color: $secondary-color;
+    font-weight: 700;
+  }
 
-a:hover {
-  color: $primary-color;
-}
-
-/* Contact form styles */
-.contactFormContainer {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-
-  form {
-    width: 80%;
-    max-width: 400px;
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px $shadow-color;
-
-    .name,
-    .email,
-    .message {
-      width: 100%;
-      margin-bottom: 15px;
-      padding: 10px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-      font-family: $paragraph-font;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      box-sizing: border-box;
-      background-color: $primary-color;
-      color: #fff; /* White text color */
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: darken($primary-color, 10%);
-      }
-    }
+  a:hover {
+    color: $primary-color;
   }
 }

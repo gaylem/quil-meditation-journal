@@ -40,7 +40,55 @@ app.use(
 app.use(express.json()); // Parses the JSON data and makes it available in the req.body object.
 app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
 app.use(cookieParser()); // Parses incoming cookie headers, extracts the cookies, and makes them available in the req.cookies object.
+
+// Security Middleware
 app.use(helmet()); // Applies HTTP headers such as X-Content-Type-Options, Strict-Transport-Security, X-Frame-Options, X-XSS-Protection, and others for enhanced security
+
+// Frameguard Middleware
+app.use(helmet.frameguard({ action: 'deny' }));
+
+// HSTS Middleware (example, adjust as needed)
+app.use(
+  helmet.hsts({
+    maxAge: 31536000, // 1 year in seconds
+    includeSubDomains: true,
+    preload: true,
+  }),
+);
+
+// Referrer Policy Middleware
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+
+// Function to set up security headers based on environment
+const setupSecurityHeaders = () => {
+  // CSP middleware based on environment
+  if (process.env.NODE_ENV === 'development') {
+    app.use(
+      helmet.contentSecurityPolicy({
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "'unsafe-eval'", 'http://localhost:8080'],
+          connectSrc: ["'self'", 'http://localhost:4000'],
+        },
+      }),
+    );
+    console.log('setupSecurityHeaders in development');
+  } else {
+    // Apply more restrictive CSP for production
+    app.use(
+      helmet.contentSecurityPolicy({
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", 'https://quil.space'],
+          // Add other directives as needed for production
+        },
+      }),
+    );
+  }
+};
+
+// Invoke the security headers function
+setupSecurityHeaders();
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {

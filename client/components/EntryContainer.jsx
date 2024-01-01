@@ -1,9 +1,6 @@
 //** ENTRY CONTAINER COMPONENT */
 
 import React from 'react';
-
-// Import components
-import NewEntry from './NewEntry.jsx';
 import PastEntriesFeed from './PastEntriesFeed.jsx';
 import Timer from './Timer.jsx';
 
@@ -18,19 +15,15 @@ import Timer from './Timer.jsx';
 function EntryContainer() {
   return (
     // Main EntryContainer component
-    <div className='EntryContainer'>
+    <div className='entry-container'>
       {/* TimerBox that contains the meditation Timer component */}
-      <div className='TimerBox'>
+      <div className='timer-box'>
         <Timer />
       </div>
-      {/* NewEntry component for creating new journal entries */}
-      <div className='NewEntryBox'>
-        <NewEntry />
-      </div>
-      {/* Horizontal rule to visually separate new entries from past entries */}
-      <hr />
       {/* PastEntriesFeed component for displaying previous journal entries */}
-      <PastEntriesFeed />
+      <div>
+        <PastEntriesFeed />
+      </div>
     </div>
   );
 }

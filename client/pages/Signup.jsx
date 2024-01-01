@@ -1,3 +1,5 @@
+//** SIGNUP PAGE */
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSignup } from '../hooks/useSignup.js';
@@ -31,50 +33,65 @@ function Signup() {
   };
 
   return (
-    <div className='loginSignupContainer'>
+    <div className='login-signup-container'>
       {/* Box containing the signup form */}
       <div className='box'>
         {/* Signup form */}
         <form onSubmit={handleSubmit}>
           {/* Title */}
           <h1 className='title'>Tranquility awaits...</h1>
-          {/* Username input */}
-          <input
-            type='username'
-            onChange={e => {
-              setUsername(e.target.value);
-            }}
-            placeholder='Username'
-            value={username}
-          />
-          {/* Email input */}
-          <input
-            type='email'
-            onChange={e => {
-              setEmail(e.target.value);
-            }}
-            placeholder='Email'
-            value={email}
-          />
-          {/* Password input */}
-          <input
-            type='password'
-            onChange={e => {
-              setPassword(e.target.value);
-            }}
-            placeholder='Password'
-            value={password}
-          />
+          <div className='input-box'>
+            {/* Username input */}
+            <label htmlFor='username'>Username:</label>
+            <input
+              type='username'
+              id='username'
+              onChange={e => {
+                setUsername(e.target.value);
+              }}
+              placeholder='ex: jane'
+              value={username}
+            />
+            {/* Email input */}
+            <label htmlFor='email'>Email:</label>
+            <input
+              type='email'
+              id='email'
+              onChange={e => {
+                setEmail(e.target.value);
+              }}
+              placeholder='ex: jane@example.com'
+              value={email}
+            />
+            {/* Password input */}
+            <label htmlFor='password'>Password:</label>
+            <input
+              type='password'
+              id='password'
+              onChange={e => {
+                setPassword(e.target.value);
+              }}
+              placeholder='Enter your password'
+              value={password}
+            />
+          </div>
           {/* Signup button */}
-          <button className='loginSignupBtn' disabled={isLoading}>
+          <button className='form-btn' disabled={isLoading}>
             Sign Up
           </button>
-          {/* Display error message if there is an error */}
-          {error && <div className='error'>{error}</div>}
-          {/* Link to the signin page */}
-          <p>
-            Already have an account? <Link to='/'>Sign in!</Link>
-          </p>
+          <p className='account-emails'> You will only receive essential account-related emails.</p>
+          <div className='message-container'>
+            {/* Display error message if there is an error */}
+            {error && (
+              <div className='signup-error-message'>
+                <p>{error.message}</p>
+              </div>
+            )}
+            {/* Link to the signin page */}
+            <p className='signup-signin-message'>
+              Already have an account? <Link to='/'>Sign in!</Link>
+            </p>
+          </div>
         </form>
       </div>
       <Blurb />

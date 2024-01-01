@@ -4,12 +4,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Import jwt and User model
-import jwt from 'jsonwebtoken';
-import { User } from '../db/models.js';
+// Import token utils
+import { verifyAccessToken, verifyRefreshToken, validateRefreshToken, checkTokenExpiration, refreshTokensAndDatabase, updateAuthorizationHeadersAndCookies, handleExpiredToken } from '../utils/token.utils.js';
 
 /**
  * Authentication middleware for verifying access tokens.
+ *
  * @function
  * @async
  * @param {Object} req - Express request object.
@@ -19,46 +19,90 @@ import { User } from '../db/models.js';
  * @returns {void}
  */
 const authMiddleware = async (req, res, next) => {
-  // Secret key for JWT verification.
-  const secretKey = process.env.SECRET_KEY;
-  // Access token extracted from the request headers.
-  const accessToken = req.headers.authorization?.split(' ')[1];
-
-  // Check if the access token is missing
-  if (!accessToken) {
-    return res.status(401).json({
-      log: 'authMiddleware: No access token received.',
-      status: 401,
-      message: 'Unauthorized - Missing access token.',
-    });
-  }
-
   try {
-    // Verify the access token using the provided secret key
-    const decoded = jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
-    // Extract user ID from the decoded token
-    const { userId } = decoded;
-    // Find user by ID in the database
-    const user = await User.findById(userId);
-    // Check if the user exists
-    if (!user) {
-      return res.status(404).json({
-        log: 'authMiddleware: User not found.',
+    // Retrieve the userId from the request
+    const userId = req.params.id;
+    console.log('userId boop: ', userId);
+    // Retrieve the access token from the request
+    const accessToken = req.headers.authorization?.split(' ')[1];
+    console.log('accessToken: ', accessToken);
+    // Retrieve the refresh token from cookies
+    const refreshToken = req.cookies.refreshToken;
+    console.log('refreshToken: ', refreshToken);
+
+    // Check if access token is missing
+    if (!accessToken) {
+      return res.status(401).json({
+        log: `authMiddleware: ERROR: No accessToken`,
         status: 404,
-        message: 'User not found.',
+        message: 'Something went wrong. Please try again later.',
       });
     }
-    // Attach user data to the request for further use
-    // TODO: These aren't being used by the entryController but it may be useful in the future
-    req.user = user;
-    req.accessToken = accessToken;
-    // Continue to the next middleware or route
-    next();
+
+    // Check if refresh token is missing
+    if (!refreshToken) {
+      return res.status(401).json({
+        log: `authMiddleware: ERROR: No refreshToken`,
+        status: 404,
+        message: 'Something went wrong. Please try again later.',
+      });
+    }
+
+    // Verify and decode the accessToken
+    const decodedAccessToken = await verifyAccessToken(accessToken);
+    console.log('decodedAccessToken: ', decodedAccessToken);
+
+    // Validate that refreshToken exists in database and return user object
+    const user = await validateRefreshToken(userId, refreshToken);
+    console.log('user authMid: ', user);
+
+    // Verify and decode the refreshToken
+    const decodedRefreshToken = await verifyRefreshToken(refreshToken);
+    console.log('decodedRefreshToken: ', decodedRefreshToken);
+
+    const accessTokenIsExpired = checkTokenExpiration(decodedAccessToken);
+    const refreshTokenIsExpired = checkTokenExpiration(decodedRefreshToken);
+
+    // If the token is about to expire, refresh tokens and database
+    if (accessTokenIsExpired || refreshTokenIsExpired) {
+      console.log('Token is about to expire');
+
+      // Create Payload object for token generation
+      const payload = { username: user.username, userId };
+      console.log('payload: ', payload);
+
+      // Refresh tokens in the database and save new tokens in an object
+      const { accessToken, refreshToken } = await refreshTokensAndDatabase(userId, payload);
+      console.log('newRefreshToken: ', refreshToken);
+      console.log('newAccessToken: ', accessToken);
+
+      // Update authorization headers and cookies
+      updateAuthorizationHeadersAndCookies(req, res, accessToken, refreshToken);
+
+      // Store additional data in res.locals
+      res.locals.authData = { username: user.username, accessToken, userId };
+      console.log('res.locals.authData: ', res.locals.authData);
+
+      // Continue to the next middleware or route
+      next();
+    } else {
+      console.log('Tokens are still valid');
+      res.locals.authData = { username: user.username, accessToken, userId };
+      console.log('res.locals.authData boop: ', res.locals.authData);
+      next();
+    }
   } catch (error) {
-    // Clear the user's session by removing cookies
-    res.clearCookie('refreshToken');
-    // Redirect the user to the login page
-    res.redirect('/login');
+    console.error(error.stack);
+    // Handle token-related errors
+    if (error.name === 'TokenExpiredError') {
+      handleExpiredToken(res);
+    } else {
+      return res.status(401).json({
+        log: `authMiddleware: Token verification failed: ERROR ${error.message}.`,
+        status: 401,
+        message: 'Unauthorized.',
+      });
+    }
   }
 };
 

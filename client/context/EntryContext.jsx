@@ -1,6 +1,4 @@
 import React, { createContext, useReducer } from 'react';
-
-// Import props validation
 import PropTypes from 'prop-types';
 
 /**
@@ -51,6 +49,11 @@ export const entriesReducer = (state, action) => {
         ...state,
         entries: state.entries.filter(entry => entry._id !== action.payload._id),
       };
+    case 'EDIT_ENTRY':
+      return {
+        ...state,
+        entries: state.entries.map(entry => (entry._id === action.payload._id ? { ...entry, body: action.payload.body } : entry)),
+      };
     default:
       return state;
   }
@@ -73,7 +76,6 @@ export const EntriesContextProvider = ({ children }) => {
   return <EntriesContext.Provider value={{ ...state, dispatch }}>{children}</EntriesContext.Provider>;
 };
 
-//PropTypes for the EntriesContext component
 EntriesContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

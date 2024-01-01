@@ -1,6 +1,7 @@
 //** LOGIN PAGE */
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+const { Link } = await import('react-router-dom');
 import { useLogin } from '../hooks/useLogin.js';
 import Blurb from '../components/Blurb.jsx';
 
@@ -29,27 +30,37 @@ function Login() {
 
   return (
     // Main login and signup container
-    <div className='loginSignupContainer'>
+    <div className='login-signup-container'>
       {/* Box containing the login form */}
       <div className='box'>
         {/* Login form */}
         <form onSubmit={handleSubmit}>
           {/* Title */}
           <h1 className='title'>Welcome back!</h1>
-          {/* Username input */}
-          <input type='username' onChange={e => setUsername(e.target.value)} placeholder='Username' value={username} />
-          {/* Password input */}
-          <input type='password' onChange={e => setPassword(e.target.value)} placeholder='Password' value={password} />
-          {/* Login button */}
-          <button className='loginSignupBtn' type='submit' disabled={isLoading}>
-            Log in
-          </button>
-          {/* Display error message if there is an error */}
-          {error && <div className='error'>{error}</div>}
-          {/* Link to the signup page */}
-          <p>
-            Don&apos;t have an account? <Link to='/signup'>Sign up!</Link>
-          </p>
+          <div className='input-box'>
+            {/* Username input */}
+            <label htmlFor='username'>Username:</label>
+            <input type='username' id='username' onChange={e => setUsername(e.target.value)} placeholder='ex: jane' value={username} />
+            {/* Password input */}
+            <label htmlFor='password'>Password:</label>
+            <input type='password' id='password' onChange={e => setPassword(e.target.value)} placeholder='Enter your password' value={password} />
+            {/* Login button */}
+            <button className='form-btn' type='submit' disabled={isLoading}>
+              Log in
+            </button>
+          </div>
+          <div className='message-container'>
+            {/* Display error message if there is an error */}
+            {error && (
+              <div className='error-message'>
+                <p>{error}</p>
+              </div>
+            )}
+            {/* Link to the signup page */}
+            <p className='signup-signin-message'>
+              Don&apos;t have an account? <Link to='/signup'>Sign up!</Link>
+            </p>
+          </div>
         </form>
       </div>
       <Blurb />

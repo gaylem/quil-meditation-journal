@@ -1,12 +1,14 @@
 //** TIMER COMPONENT */
 
 import React, { useState, useEffect } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useWakeLock } from 'react-screen-wake-lock';
 
 // Import sound hook and audio file
 import useSound from 'use-sound';
 import singingBowl from '../../public/assets/audio/singing-bowl.mp3';
 
-// Icon Images for play, pause, and reset buttons
+// Icon images for play, pause, and reset buttons
 import playImage from '../../public/assets/images/play-button.png';
 import resetImage from '../../public/assets/images/reset-button.png';
 import pauseImage from '../../public/assets/images/pause-button.png';
@@ -24,6 +26,21 @@ const Timer = () => {
   const [countdownFinished, setCountdownFinished] = useState(false);
   const [durationFinished, setDurationFinished] = useState(false);
   const [play, { stop }] = useSound(singingBowl);
+
+  // Wake lock hook
+  const { request, release } = useWakeLock({
+    onRequest: () => console.log('Screen Wake Lock: requested!'),
+    onError: () => console.log('An error happened 💥'),
+    onRelease: () => console.log('Screen Wake Lock: released!'),
+  });
+
+  // If there is no user, stop the timer audio
+  const { user } = useAuthContext();
+  useEffect(() => {
+    return () => {
+      stop();
+    };
+  }, [user, stop]);
 
   /**
    * Creates a closure to ensure the sound plays only once at the beginning and end.
@@ -62,6 +79,9 @@ const Timer = () => {
     if (isActive) {
       // If it was paused, stop the sound
       stop();
+    } else {
+      // If it was not active, request wake lock
+      request();
     }
   };
 
@@ -78,7 +98,10 @@ const Timer = () => {
     const durationInput = document.querySelector('.duration-input');
     if (countdownInput) countdownInput.value = '';
     if (durationInput) durationInput.value = '';
+    // Stop audio
     stop();
+    // Release wake lock
+    release();
   };
 
   /**
@@ -114,6 +137,7 @@ const Timer = () => {
     if (isActive && countdown === 0 && duration === 0 && !durationFinished && countdownFinished) {
       setDurationFinished(true);
       playOnceEnd();
+      release(); // Release wake lock
       clearInterval(countdownInterval);
       clearInterval(durationInterval);
       setActive(false);
@@ -188,7 +212,7 @@ const Timer = () => {
    * @returns {JSX.Element} The rendered Timer component.
    */
   return (
-    <div className='Timer'>
+    <div className='timer'>
       {/* Timer Display */}
       <div className='time'>
         <div className={`timer-circle ${isActive ? 'timer-circle-grow' : ''}`}>
@@ -197,55 +221,59 @@ const Timer = () => {
         </div>
       </div>
       {/* Quote */}
-      <p className='quote'>Let&apos;s begin.</p>
-      {/* Time Dropdowns */}
-      <div className='time-dropdown'>
-        {/* Countdown Input */}
-        <div className='countdown-container'>
-          <input className='countdown-input' list='countdown-options' placeholder='Countdown' name='countdown' onChange={handleCountdownChange} />
-          {/* Dropdown options for countdown */}
-          <datalist id='countdown-options'>
-            <option value='5s' />
-            <option value='10s' />
-            <option value='15s' />
-            <option value='20s' />
-            <option value='25s' />
-            <option value='30s' />
-            <option value='45s' />
-            <option value='60s' />
-          </datalist>
+      <h2 className='quote'>Let&apos;s begin.</h2>
+      <div className='control-panel'>
+        {/* Time Dropdowns */}
+        <div className='time-dropdown'>
+          {/* Countdown Input */}
+          <div className='countdown-container'>
+            <label htmlFor='countdown'>Countdown:</label>
+            <input className='countdown-input' id='countdown' list='countdown-options' placeholder='Time in seconds' name='countdown' onChange={handleCountdownChange} />
+            {/* Dropdown options for countdown */}
+            <datalist id='countdown-options'>
+              <option value='5s' />
+              <option value='10s' />
+              <option value='15s' />
+              <option value='20s' />
+              <option value='25s' />
+              <option value='30s' />
+              <option value='45s' />
+              <option value='60s' />
+            </datalist>
+          </div>
+          {/* Duration Input */}
+          <div className='duration-container'>
+            <label htmlFor='duration'>Duration:</label>
+            <input className='duration-input' id='duration' list='duration-options' placeholder='Time in minutes' name='duration' onChange={handleDurationChange} />
+            {/* Dropdown options for duration */}
+            <datalist id='duration-options'>
+              <option value='1m' />
+              <option value='5m' />
+              <option value='10m' />
+              <option value='15m' />
+              <option value='20m' />
+              <option value='25m' />
+              <option value='30m' />
+              <option value='35m' />
+              <option value='40m' />
+              <option value='45m' />
+              <option value='60m' />
+              <option value='90m' />
+              <option value='120m' />
+            </datalist>
+          </div>
         </div>
-        {/* Duration Input */}
-        <div className='duration-container'>
-          <input className='duration-input' list='duration-options' placeholder='Duration' name='duration' onChange={handleDurationChange} />
-          {/* Dropdown options for duration */}
-          <datalist id='duration-options'>
-            <option value='1m' />
-            <option value='5m' />
-            <option value='10m' />
-            <option value='15m' />
-            <option value='20m' />
-            <option value='25m' />
-            <option value='30m' />
-            <option value='35m' />
-            <option value='40m' />
-            <option value='45m' />
-            <option value='60m' />
-            <option value='90m' />
-            <option value='120m' />
-          </datalist>
+        {/* Control Buttons */}
+        <div className='circle-button-container'>
+          {/* Play/Pause Button */}
+          <button className={`circle-button button-primary-${isActive ? 'active' : 'inactive'}`} onClick={togglePlayPause}>
+            <img src={isActive ? pauseImage : playImage} id='play-pause-btn' alt={isActive ? 'Pause' : 'Play'} />
+          </button>
+          {/* Reset Button */}
+          <button className='circle-button' onClick={reset}>
+            <img src={resetImage} alt='Reset' id='reset-btn' />
+          </button>
         </div>
-      </div>
-      {/* Control Buttons */}
-      <div className='circle-button-container'>
-        {/* Play/Pause Button */}
-        <button className={`circle-button button-primary-${isActive ? 'active' : 'inactive'}`} onClick={togglePlayPause}>
-          <img src={isActive ? pauseImage : playImage} id='play-pause-btn' alt={isActive ? 'Pause' : 'Play'} />
-        </button>
-        {/* Reset Button */}
-        <button className='circle-button' onClick={reset}>
-          <img src={resetImage} alt='Reset' id='reset-btn' />
-        </button>
       </div>
     </div>
   );
