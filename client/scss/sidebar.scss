@@ -1,0 +1,87 @@
+/* Color Variables */
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
+$shadow-color: rgb(172, 172, 172);
+
+/* Font Family */
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+
+/* Mixon for box shadow */
+@mixin box-shadow($offset-x, $offset-y, $blur, $color) {
+  box-shadow: $offset-x $offset-y $blur $color;
+}
+
+/* Sidebar Container Styles */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: -76em;
+  height: 100vh;
+  width: 16em;
+  background-color: white;
+  border: 0.5px solid lightgray;
+  z-index: 98; /* Set z-index higher than the main content */
+  transition: left 0.5s ease-in-out;
+  @include box-shadow(0, 2px, 8px, $shadow-color);
+}
+
+/* Styles for sidebar content container and links */
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  padding: 1em 0.75em;
+  font-size: x-large;
+  font-weight: 600;
+  font-family: $paragraph-font;
+
+  .link {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 0.5em;
+    line-height: 1em;
+    .icon {
+      width: 20px;
+      height: 20px;
+      padding: 0.5em;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: $secondary-color;
+  }
+
+  a:hover {
+    color: $primary-color;
+    text-shadow: 1px 1px 5px lightgray;
+  }
+}
+
+/* Opened Sidebar Styles */
+.sidebar.open {
+  display: flex;
+  flex-direction: column;
+  left: 0;
+}
+
+/* Styling for close button icon */
+.closeBtn {
+  align-self: flex-end; /* Position the close button to the right */
+  padding: 1em;
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+}
+
+/* Expand width of sidebar on mobile devices to take up entire screen */
+@media (max-width: 400px) {
+  .sidebar {
+    width: 100%;
+    left: -110%;
+  }
+}
