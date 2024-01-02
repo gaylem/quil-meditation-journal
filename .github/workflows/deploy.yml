@@ -19,11 +19,6 @@ jobs:
       - name: Build
         run: npm run build # The build command of your project
 
-      - name: Create build branch
-        run: |
-          git checkout -b build
-          git push origin build
-
       - name: Push
         uses: s0/git-publish-subdir-action@develop
         env:
