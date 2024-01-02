@@ -21,7 +21,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Handle CORS
-const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil.space'];
+const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://classy-chimera-e7b4ec.netlify.app', 'https://quil.space'];
 
 app.use(
   cors({
