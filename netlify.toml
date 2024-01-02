@@ -1,6 +1,0 @@
-[[build]]
-  command = "npm run build"  # Adjust the build command as needed
-  publish = "build"          # Specify the build folder
-
-  [[build.plugins]]
-  package = "@netlify/plugin-nextjs"
