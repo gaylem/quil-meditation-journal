@@ -22,7 +22,7 @@ jobs:
         id: assume_role
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          role-to-assume: arn:aws:iam::999173078628:role/GitHubAction-AssumeRoleWithAction
+          role-to-assume: ${{ secrets.PROD_DEPLOY_ROLE }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
 
