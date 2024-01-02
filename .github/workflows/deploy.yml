@@ -1,9 +1,8 @@
-# This is a basic workflow to help you get started with Actions
 name: Connect to an AWS role from a GitHub repository
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 env:
   AWS_REGION: "us-east-1"
@@ -29,27 +28,15 @@ jobs:
 
       - name: Deploy to Elastic Beanstalk
         run: |
-          # Set AWS credentials from the assumed role
-          export AWS_ACCESS_KEY_ID="${{ steps.assume_role.outputs.AWS_ACCESS_KEY_ID }}"
-          export AWS_SECRET_ACCESS_KEY="${{ steps.assume_role.outputs.AWS_SECRET_ACCESS_KEY }}"
-          export AWS_SESSION_TOKEN="${{ steps.assume_role.outputs.AWS_SESSION_TOKEN }}"
-
-          # Add your deployment commands here
-          # For example, if you have a zipped application code, you might upload it to Elastic Beanstalk
           aws elasticbeanstalk create-application-version \
             --application-name quil \
             --version-label $GITHUB_SHA \
             --source-bundle S3Bucket=elasticbeanstalk-$AWS_REGION,S3Key=$GITHUB_SHA.zip
-
           aws elasticbeanstalk update-environment \
             --environment-name quil-prod \
             --version-label $GITHUB_SHA
         env:
           AWS_REGION: ${{ env.AWS_REGION }}
-          AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ steps.assume_role.outputs.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ steps.assume_role.outputs.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ steps.assume_role.outputs.AWS_SESSION_TOKEN }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
           KEY: ${{ secrets.KEY }}
           SALT_WORK_FACTOR: ${{ secrets.SALT_WORK_FACTOR }}
