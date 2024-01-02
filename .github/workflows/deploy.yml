@@ -1,36 +1,32 @@
-name: Generate a build and push to another branch
+# This is a basic workflow to help you get started with Actions
+name: Connect to an AWS role from a GitHub repository
 
+# Controls when the action will run. Invokes the workflow on push events but only for the main branch
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
+env:
+  
+  AWS_REGION : "us-east-2" 
+
+# Permission can be added at job level or workflow level    
+permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
 jobs:
-  build:
+  AssumeRoleAndCallIdentity:
     runs-on: ubuntu-latest
-    name: Build and Push
     steps:
-      - name: git-checkout
+      - name: Git clone the repository
         uses: actions/checkout@v3
-
-      - name: Install all dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build # The build command of your project
-
-      - name: Push
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: build # The branch name where you want to push the assets
-          FOLDER: build # The directory where your assets are generated
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          KEY: ${{ secrets.KEY }}
-          SALT_WORK_FACTOR: ${{ secrets.SALT_WORK_FACTOR }}
-          PORT: ${{ secrets.PORT }}
-          REACT_APP_FORM_ENDPOINT: ${{ secrets.REACT_APP_FORM_ENDPOINT }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          MESSAGE: "Build: ({sha}) {msg}" # The commit message
-          
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: arn:aws:iam::999173078628:role/GitHubAction-AssumeRoleWithAction
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
