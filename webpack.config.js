@@ -4,7 +4,7 @@ import HTMLWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -157,7 +157,7 @@ export default {
         },
         filename: '[path][base].gz',
       }),
-    process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
+    // process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ],
 };
