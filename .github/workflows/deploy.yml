@@ -23,12 +23,12 @@ jobs:
     - name: Deploy to Elastic Beanstalk
       run: |
         aws elasticbeanstalk create-application-version \
-          --application-name YourAppName \
+          --application-name quil \
           --version-label $GITHUB_SHA \
           --source-bundle S3Bucket=elasticbeanstalk-$AWS_REGION,S3Key=$GITHUB_SHA.zip
 
         aws elasticbeanstalk update-environment \
-          --environment-name YourEnvironmentName \
+          --environment-name quil-prod \
           --version-label $GITHUB_SHA
 
         env:
