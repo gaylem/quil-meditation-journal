@@ -1,4 +1,6 @@
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/server/:splat"
-  status = 200
+[[build]]
+  command = "npm run build"  # Adjust the build command as needed
+  publish = "build"          # Specify the build folder
+
+  [[build.plugins]]
+  package = "@netlify/plugin-nextjs"

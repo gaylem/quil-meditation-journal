@@ -1,0 +1,2 @@
+# Redirect all requests under "/api" to your serverless functions
+/api/* /.netlify/functions/:splat 200
