@@ -23,6 +23,7 @@ const __dirname = path.dirname(__filename);
 // Handle CORS
 const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://classy-chimera-e7b4ec.netlify.app', 'https://quil.space'];
 
+// Handle CORS
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -33,8 +34,23 @@ app.use(
       }
     },
     credentials: true,
-  }),
+  })
 );
+
+// Add this middleware to set the 'Access-Control-Allow-Origin' header
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://classy-chimera-e7b4ec.netlify.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).send();
+  } else {
+    next();
+  }
+});
+
 
 // Middleware setup
 app.use(express.json()); // Parses the JSON data and makes it available in the req.body object.
