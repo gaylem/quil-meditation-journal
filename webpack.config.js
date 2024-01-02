@@ -147,7 +147,7 @@ export default {
       template: path.resolve(__dirname, 'index.html'),
       publicPath: '/',
     }),
-    new Dotenv(),
+    process.env.NODE_ENV !== 'production' && new Dotenv(),
     new CompressionPlugin({
       algorithm: 'gzip',
       test: /\.(js|css|html|svg)$/,
