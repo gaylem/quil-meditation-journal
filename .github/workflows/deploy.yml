@@ -25,12 +25,7 @@ jobs:
           role-to-assume: arn:aws:iam::999173078628:role/GitHubAction-AssumeRoleWithAction
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-
-      - name: Print AWS Credentials
-        run: |
-          echo "AWS_ACCESS_KEY_ID=${{ steps.assume_role.outputs.AWS_ACCESS_KEY_ID }}"
-          echo "AWS_SECRET_ACCESS_KEY=${{ steps.assume_role.outputs.AWS_SECRET_ACCESS_KEY }}"
-          echo "AWS_SESSION_TOKEN=${{ steps.assume_role.outputs.AWS_SESSION_TOKEN }}"
+          role-web-identity-token-file: $GITHUB_TOKEN
 
       - name: Deploy to Elastic Beanstalk
         run: |
