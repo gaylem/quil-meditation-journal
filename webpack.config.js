@@ -148,14 +148,15 @@ export default {
       publicPath: '/',
     }),
     process.env.NODE_ENV !== 'production' && new Dotenv(),
-    new CompressionPlugin({
-      algorithm: 'gzip',
-      test: /\.(js|css|html|svg)$/,
-      compressionOptions: {
-        level: 9,
-      },
-      filename: '[path][base].gz',
-    }),
+    process.env.NODE_ENV === 'production' &&
+      new CompressionPlugin({
+        algorithm: 'gzip',
+        test: /\.(js|css|html|svg)$/,
+        compressionOptions: {
+          level: 9,
+        },
+        filename: '[path][base].gz',
+      }),
     process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ],
