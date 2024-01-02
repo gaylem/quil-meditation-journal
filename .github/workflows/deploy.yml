@@ -25,7 +25,6 @@ jobs:
           role-to-assume: arn:aws:iam::999173078628:role/GitHubAction-AssumeRoleWithAction
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-          role-web-identity-token-file: $GITHUB_TOKEN
 
       - name: Deploy to Elastic Beanstalk
         run: |
