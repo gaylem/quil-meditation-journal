@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 // Connect to MongoDB database
 async function connectToDatabase() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
+    await mongoose.connect('mongodb+srv://quilAdmin:vm4WW1s0hhgZhIan@cluster0.dyceazm.mongodb.net/?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       dbName: 'quil_app',
