@@ -1,5 +1,7 @@
 {
   "name": "quil",
+  "homepage": "https://quil.space",
+  "private": true,
   "version": "1.0.0",
   "proxy": "http://localhost:4000",
   "description": "Meditation journal",
