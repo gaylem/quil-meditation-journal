@@ -1,40 +1,36 @@
-name: Connect to an AWS role from a GitHub repository
+name: Deploy to AWS Elastic Beanstalk
 
 on:
   push:
-    branches: [main]
-
-env:
-  AWS_REGION: "us-east-2"
-
-permissions:
-  id-token: write
-  contents: read
+    branches:
+      - main
 
 jobs:
-  AssumeRoleAndDeploy:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Git clone the repository
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Configure AWS credentials
-        id: assume_role
-        uses: aws-actions/configure-aws-credentials@v1.7.0
-        with:
-          role-to-assume: arn:aws:iam::999173078628:role/GitHubAction-AssumeRoleWithAction
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: ${{ env.AWS_REGION }}
+    - name: Set up AWS CLI
+      uses: aws-actions/setup-aws-cli@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Deploy to Elastic Beanstalk
-        run: |
-          aws elasticbeanstalk create-application-version \
-            --application-name quil \
-            --version-label $GITHUB_SHA \
-            --source-bundle S3Bucket=elasticbeanstalk-$AWS_REGION,S3Key=$GITHUB_SHA.zip
-          aws elasticbeanstalk update-environment \
-            --environment-name quil-prod \
-            --version-label $GITHUB_SHA
+    - name: Deploy to Elastic Beanstalk
+      run: |
+        aws elasticbeanstalk create-application-version \
+          --application-name YourAppName \
+          --version-label $GITHUB_SHA \
+          --source-bundle S3Bucket=elasticbeanstalk-$AWS_REGION,S3Key=$GITHUB_SHA.zip
+
+        aws elasticbeanstalk update-environment \
+          --environment-name YourEnvironmentName \
+          --version-label $GITHUB_SHA
+
         env:
           AWS_REGION: ${{ env.AWS_REGION }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
