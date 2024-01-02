@@ -33,10 +33,9 @@ jobs:
 
       - name: Deploy to Elastic Beanstalk
         run: |
-          # Your deployment commands here
           aws elasticbeanstalk create-application-version \
             --application-name quil \
-            --version-label $GITHUB_SHA \
+            --version-label $GITHUB_SHA
           aws elasticbeanstalk update-environment \
             --environment-name quil-prod \
             --version-label $GITHUB_SHA
