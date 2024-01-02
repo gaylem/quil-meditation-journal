@@ -24,7 +24,7 @@ jobs:
         env:
           REPO: self
           BRANCH: build # The branch name where you want to push the assets
-          FOLDER: public # The directory where your assets are generated
+          FOLDER: public/build # The directory where your assets are generated
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
           KEY: ${{ secrets.KEY }}
