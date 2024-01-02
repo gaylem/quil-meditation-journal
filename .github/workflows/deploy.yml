@@ -7,26 +7,39 @@ on:
     branches: [ main ]
 
 env:
-  
-  AWS_REGION : "us-east-2" 
+  AWS_REGION: "us-east-2"
 
 # Permission can be added at job level or workflow level    
 permissions:
-      id-token: write   # This is required for requesting the JWT
-      contents: read    # This is required for actions/checkout
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
 jobs:
   AssumeRoleAndCallIdentity:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
-      - name: configure aws credentials
+
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: arn:aws:iam::999173078628:role/GitHubAction-AssumeRoleWithAction
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-      # Hello from AWS: WhoAmI
-      - name: Sts GetCallerIdentity
+
+      - name: Deploy to Elastic Beanstalk
         run: |
-          aws sts get-caller-identity
+          aws elasticbeanstalk create-application-version --application-name quil --version-label $GITHUB_SHA --source-bundle S3Bucket=elasticbeanstalk-$AWS_REGION,Key=$GITHUB_SHA.zip
+          aws elasticbeanstalk update-environment --environment-name quil-prod --version-label $GITHUB_SHA
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ steps.assume_role.outputs.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ steps.assume_role.outputs.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ steps.assume_role.outputs.AWS_SESSION_TOKEN }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          KEY: ${{ secrets.KEY }}
+          SALT_WORK_FACTOR: ${{ secrets.SALT_WORK_FACTOR }}
+          PORT: ${{ secrets.PORT }}
+          REACT_APP_FORM_ENDPOINT: ${{ secrets.REACT_APP_FORM_ENDPOINT }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
