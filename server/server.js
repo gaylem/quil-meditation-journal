@@ -94,7 +94,7 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'https://quil.space'],
+          scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com/', 'https://quil-prod-b3e044c49835.herokuapp.com/'],
           // Add other directives as needed for production
         },
       }),
@@ -115,7 +115,7 @@ app.use((req, _, next) => {
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
   app.use(express.static(path.join(__dirname, '../public/build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../public", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, '../public', 'build', 'index.html'));
   });
   // If env is development (local), serve the static files from the public folder
 } else if (process.env.NODE_ENV === 'development') {
