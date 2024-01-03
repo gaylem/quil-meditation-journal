@@ -34,6 +34,8 @@ const PastEntriesFeed = () => {
           withCredentials: true,
           headers: { Authorization: `Bearer ${user.accessToken}` },
         });
+
+        console.log('RESPONSE', response.data.allEntries);
         // Sort the entries by createdAt date in descending order
         const sortedEntries = response.data.allEntries.sort((a, b) => {
           const dateA = a.createdAt ? new Date(a.createdAt) : 0;
