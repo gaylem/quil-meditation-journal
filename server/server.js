@@ -74,7 +74,6 @@ app.use(
 // Referrer Policy Middleware
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
-// Function to set up security headers based on environment
 const setupSecurityHeaders = () => {
   // CSP middleware based on environment
   if (process.env.NODE_ENV === 'development') {
@@ -82,7 +81,7 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'http://localhost:8080'],
+          scriptSrc: ["'self'", "'unsafe-eval'", 'http://localhost:8080'],
           connectSrc: ["'self'", 'http://localhost:4000'],
         },
       }),
@@ -93,7 +92,7 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com/'],
+          scriptSrc: ["'self'", "'unsafe-eval'", 'https://quil-staging-97e232bad7d0.herokuapp.com/'],
         },
       }),
     );
@@ -103,7 +102,7 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com/'],
-          scriptSrc: ["'self'"],
+          scriptSrc: ["'self'", "'unsafe-eval'"],
         },
       }),
     );
