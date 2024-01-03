@@ -14,7 +14,7 @@ export default {
   output: {
     path: path.join(__dirname, 'public/build'),
     filename: '[name].[contenthash].js',
-    publicPath: '/',
+    publicPath: '/public',
   },
 
   module: {
