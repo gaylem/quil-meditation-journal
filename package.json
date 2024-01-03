@@ -11,14 +11,14 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "build": "webpack",
+    "build": "webpack --mode production",
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon ./server/server.js",
     "client": "webpack-dev-server --hot --mode development",
     "test": "nyc jest",
     "test:watch": "jest --watch",
     "analyze": "webpack-bundle-analyzer --mode production",
-    "heroku-postbuild": "cd public && npm install && npm run build"
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
