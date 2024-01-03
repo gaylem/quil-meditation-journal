@@ -1,1 +1,1 @@
-web: node server/server.js
+web: node ./public/build/index.js
