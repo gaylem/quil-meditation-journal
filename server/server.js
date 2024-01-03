@@ -135,7 +135,7 @@ app.use((req, _, next) => {
 
 // Serve static files from build folder in production or staging
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  app.use(express.static(path.join(__dirname, '/public/build')));
+  app.use(express.static(path.join(__dirname, 'public/build')));
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '/public', 'build', 'index.html'));
   });
