@@ -11,9 +11,6 @@ if (process.env.NODE_ENV === 'development') {
   baseURL = 'https://quil-staging-97e232bad7d0.herokuapp.com';
 } else if (process.env.NODE_ENV === 'production') {
   baseURL = 'https://quil-prod-b3e044c49835.herokuapp.com';
-} else {
-  // Default to a development URL if the environment is not explicitly set
-  baseURL = 'http://localhost:4000';
 }
 
 // Create an instance of Axios with a custom configuration
