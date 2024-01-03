@@ -7,10 +7,13 @@ let baseURL;
 
 if (process.env.NODE_ENV === 'development') {
   baseURL = 'http://localhost:4000';
+  console.log('baseURL: ', baseURL);
 } else if (process.env.NODE_ENV === 'staging') {
   baseURL = 'https://quil-staging-97e232bad7d0.herokuapp.com';
+  console.log('baseURL: ', baseURL);
 } else if (process.env.NODE_ENV === 'production') {
   baseURL = 'https://quil-prod-b3e044c49835.herokuapp.com';
+  console.log('baseURL: ', baseURL);
 }
 
 // Create an instance of Axios with a custom configuration
