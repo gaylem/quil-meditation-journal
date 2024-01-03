@@ -113,9 +113,9 @@ app.use((req, _, next) => {
 
 // Serve static files from build folder in production or staging
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  app.use(express.static(path.join(__dirname, 'app/server/build')));
+  app.use(express.static(path.join(__dirname, 'build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/app/server/build/index.html'));
+    res.sendFile(path.join(__dirname + '/build/index.html'));
   });
   // If env is development (local), serve the static files from the public folder
 } else if (process.env.NODE_ENV === 'development') {
@@ -174,8 +174,12 @@ app.use((err, _, res) => {
 console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
 
 // Start the server
-app.listen(process.env.PORT, () => {
-  console.log(`Listening on port ${process.env.PORT}`);
+let port = process.env.PORT;
+if (port == null || port == '') {
+  port = 8000;
+}
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
 
 // Export the app
