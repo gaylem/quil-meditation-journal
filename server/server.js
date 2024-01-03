@@ -21,7 +21,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Handle CORS
-const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://classy-chimera-e7b4ec.netlify.app', 'https://quil.space'];
+const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil-prod-b3e044c49835.herokuapp.com/', 'https://quil.space'];
 
 // Handle CORS
 app.use(
@@ -34,7 +34,7 @@ app.use(
       }
     },
     credentials: true,
-  })
+  }),
 );
 
 // Add this middleware to set the 'Access-Control-Allow-Origin' header
@@ -50,7 +50,6 @@ app.use((req, res, next) => {
     next();
   }
 });
-
 
 // Middleware setup
 app.use(express.json()); // Parses the JSON data and makes it available in the req.body object.
@@ -112,9 +111,17 @@ app.use((req, _, next) => {
   next();
 });
 
-// Serve static files from the 'public' directory
-const publicPath = path.resolve(__dirname, 'public');
-app.use(express.static(publicPath));
+// Serve static files from build folder in production or staging
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+  app.use(express.static(path.join(__dirname, 'build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/build/index.html'));
+  });
+  // If env is development (local), serve the static files from the public folder
+} else if (process.env.NODE_ENV === 'development') {
+  const publicPath = path.resolve(__dirname, 'public');
+  app.use(express.static(publicPath));
+}
 
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
@@ -170,13 +177,6 @@ app.use((err, _, res) => {
   // Send a JSON response with the error status and message
   return res.status(errorObj.status).json(errorObj.message);
 });
-
-// Serve static files in production
-// TODO: Will I need this in CI/CD? Or is it just not doing anything?
-if (process.env.NODE_ENV === 'production') {
-  // Statically serve everything in the build folder on the route '/build'
-  app.use('/public/build', express.static(path.join(__dirname, '../public/build')));
-}
 
 // Log the current environment
 console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
