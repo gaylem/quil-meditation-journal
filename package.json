@@ -6,6 +6,9 @@
   "description": "Meditation journal",
   "main": "./index.js",
   "type": "module",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "start": "NODE_ENV=production node --experimental-vm-modules server/server.js",
     "build": "NODE_ENV=production webpack",
