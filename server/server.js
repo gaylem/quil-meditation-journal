@@ -109,6 +109,7 @@ const setupSecurityHeaders = () => {
         },
       }),
     );
+    console.log('setupSecurityHeaders in staging');
   } else if (process.env.NODE_ENV === 'production') {
     // Apply more restrictive CSP for production
     app.use(
@@ -119,6 +120,7 @@ const setupSecurityHeaders = () => {
         },
       }),
     );
+    console.log('setupSecurityHeaders in production');
   }
 };
 
@@ -133,9 +135,9 @@ app.use((req, _, next) => {
 
 // Serve static files from build folder in production or staging
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  app.use(express.static(path.join(__dirname, '../public/build')));
+  app.use(express.static(path.join(__dirname, '/public/build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../public', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '/public', 'build', 'index.html'));
   });
   // If env is development (local), serve the static files from the public folder
 } else if (process.env.NODE_ENV === 'development') {

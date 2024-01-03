@@ -2,24 +2,12 @@
 
 import axios from 'axios';
 
-// Determine the base URL based on the environment
-let baseURL;
-
-if (process.env.NODE_ENV === 'development') {
-  baseURL = 'http://localhost:4000';
-  console.log('baseURL: ', baseURL);
-} else if (process.env.NODE_ENV === 'staging') {
-  baseURL = 'https://quil-staging-97e232bad7d0.herokuapp.com';
-  console.log('baseURL: ', baseURL);
-} else if (process.env.NODE_ENV === 'production') {
-  baseURL = 'https://quil-prod-b3e044c49835.herokuapp.com';
-  console.log('baseURL: ', baseURL);
-}
+const loc = window.location;
 
 // Create an instance of Axios with a custom configuration
 const instance = axios.create({
   // Set the base URL for requests
-  baseURL,
+  baseURL: `${loc.protocol}//${lock.hostname}${loc.hostname === 'localhost' ? ':4000' : ''}`,
 });
 
 // Set withCredentials for the instance
