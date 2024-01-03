@@ -21,7 +21,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Handle CORS
-const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil-prod-b3e044c49835.herokuapp.com/', 'https://quil.space'];
+const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil-staging-97e232bad7d0.herokuapp.com/', 'https://quil-prod-b3e044c49835.herokuapp.com/', 'https://quil.space'];
 
 // Handle CORS
 app.use(
