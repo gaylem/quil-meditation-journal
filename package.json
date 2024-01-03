@@ -18,7 +18,7 @@
     "test": "nyc jest",
     "test:watch": "jest --watch",
     "analyze": "webpack-bundle-analyzer --mode production",
-    "heroku-postbuild": "cd public && npm install && npm run build"
+    "heroku-postbuild": "cd app && cd public && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
