@@ -113,14 +113,16 @@ app.use((req, _, next) => {
 
 // Serve static files from build folder in production or staging
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  app.use(express.static(path.join(__dirname, '../build')));
+  app.use(express.static(path.join(__dirname, 'app/server/build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '../build/index.html'));
+    res.sendFile(path.join(__dirname + '/app/server/build/index.html'));
   });
   // If env is development (local), serve the static files from the public folder
 } else if (process.env.NODE_ENV === 'development') {
   console.log('Serving static files from development/public');
   app.use(express.static('public'));
+} else if (err) {
+  res.status(500).send(err);
 }
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
@@ -148,15 +150,6 @@ import accountRouter from './routers/accountRouter.js';
 app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
 app.use('/api/accounts', accountRouter);
-
-// Handle requests to any route by serving the appropriate 'index.html' file
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(publicPath, 'index.html'), function (err) {
-    if (err) {
-      res.status(500).send(err);
-    }
-  });
-});
 
 // Catch-all route handler for unknown routes
 app.use((_, res) => res.status(404).send('A journey of a thousand miles begins with a single step...but not in this direction.'));

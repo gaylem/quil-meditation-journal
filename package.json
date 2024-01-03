@@ -6,6 +6,9 @@
   "description": "Meditation journal",
   "main": "./index.js",
   "type": "module",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "start": "NODE_ENV=production node --experimental-vm-modules server/server.js",
     "build": "NODE_ENV=production webpack",
@@ -15,7 +18,7 @@
     "test": "nyc jest",
     "test:watch": "jest --watch",
     "analyze": "webpack-bundle-analyzer --mode production",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "cd app && cd server && npm install --only=dev && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
