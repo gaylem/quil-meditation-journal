@@ -20,36 +20,49 @@ import etag from 'etag';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Handle CORS
-const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://quil-staging-97e232bad7d0.herokuapp.com/', 'https://quil-prod-b3e044c49835.herokuapp.com/', 'https://quil.space'];
-
-// Handle CORS
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,
-  }),
-);
-
-// Add this middleware to set the 'Access-Control-Allow-Origin' header
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://classy-chimera-e7b4ec.netlify.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    res.status(200).send();
-  } else {
-    next();
+// Function to set up CORS based on environment
+const setupCORS = () => {
+  // Define allowed origins based on environment
+  let allowedOrigin;
+  if (process.env.NODE_ENV === 'development') {
+    allowedOrigin = 'http://localhost:8080';
+  } else if (process.env.NODE_ENV === 'staging') {
+    allowedOrigin = 'https://quil-staging-97e232bad7d0.herokuapp.com';
+  } else if (process.env.NODE_ENV === 'production') {
+    allowedOrigin = 'https://quil-prod-b3e044c49835.herokuapp.com/';
   }
-});
+
+  // Handle CORS
+  app.use(
+    cors({
+      origin: function (origin, callback) {
+        if (!origin || allowedOrigin.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true,
+    }),
+  );
+
+  // Add this middleware to set the 'Access-Control-Allow-Origin' header
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', allowedOrigin); // You can choose a default origin or modify it based on your requirements
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+      res.status(200).send();
+    } else {
+      next();
+    }
+  });
+};
+
+// Invoke the CORS setup function
+setupCORS();
 
 // Middleware setup
 app.use(express.json()); // Parses the JSON data and makes it available in the req.body object.

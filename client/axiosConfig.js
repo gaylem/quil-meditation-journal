@@ -10,6 +10,8 @@ const instance = axios.create({
   baseURL: `${loc.protocol}//${loc.hostname}${loc.hostname === 'localhost' ? ':4000' : ''}`,
 });
 
+console.log('zoop', instance.baseURL);
+
 // Set withCredentials for the instance
 instance.defaults.withCredentials = true;
 
