@@ -106,6 +106,7 @@ const setupSecurityHeaders = () => {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", "'unsafe-eval'", 'https://quil-staging-97e232bad7d0.herokuapp.com/'],
+          connectSrc: ["'self'", 'http://localhost:4000'],
         },
       }),
     );
@@ -116,6 +117,7 @@ const setupSecurityHeaders = () => {
         directives: {
           defaultSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com/'],
           scriptSrc: ["'self'", "'unsafe-eval'"],
+          connectSrc: ["'self'", 'http://localhost:4000'],
         },
       }),
     );
