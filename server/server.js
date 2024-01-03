@@ -82,20 +82,28 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "'unsafe-eval'", 'http://localhost:8080'],
+          scriptSrc: ["'self'", 'http://localhost:8080'],
           connectSrc: ["'self'", 'http://localhost:4000'],
         },
       }),
     );
     console.log('setupSecurityHeaders in development');
-  } else {
-    // Apply more restrictive CSP for production
+  } else if (process.env.NODE_ENV === 'staging') {
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com/', 'https://quil-prod-b3e044c49835.herokuapp.com/'],
-          // Add other directives as needed for production
+          scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com/'],
+        },
+      }),
+    );
+  } else if (process.env.NODE_ENV === 'production') {
+    // Apply more restrictive CSP for production
+    app.use(
+      helmet.contentSecurityPolicy({
+        directives: {
+          defaultSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com/'],
+          scriptSrc: ["'self'"],
         },
       }),
     );
