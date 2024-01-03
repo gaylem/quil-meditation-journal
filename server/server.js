@@ -113,16 +113,14 @@ app.use((req, _, next) => {
 
 // Serve static files from build folder in production or staging
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  const buildPath = path.join(__dirname, 'build');
-  app.use(express.static(buildPath));
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(buildPath, 'index.html'));
+  app.use(express.static(path.join(__dirname, 'build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/build/index.html'));
   });
   // If env is development (local), serve the static files from the public folder
 } else if (process.env.NODE_ENV === 'development') {
   console.log('Serving static files from development/public');
-  const publicPath = path.resolve(__dirname, 'public');
-  app.use(express.static(publicPath));
+  app.use(express.static('public'));
 }
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
