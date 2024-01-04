@@ -35,7 +35,7 @@ function App() {
       {/* Set up the application routes using BrowserRouter */}
       <BrowserRouter>
         {/* Render the Header component for navigation */}
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense>
           <LazyHeader />
           {/* Define the routes for the application */}
           <Routes>
