@@ -94,7 +94,7 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "'unsafe-eval'", 'http://localhost:8080'],
+          scriptSrc: ["'self'", 'http://localhost:8080'],
           connectSrc: ["'self'", 'http://localhost:4000'],
         },
       }),
