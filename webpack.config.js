@@ -133,7 +133,7 @@ export default {
     maxAssetSize: 244 * 1024, // 244 KiB
   },
 
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
 
   resolve: {
     fallback: {
