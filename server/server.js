@@ -87,47 +87,47 @@ app.use(
 // Referrer Policy Middleware
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
-const setupSecurityHeaders = () => {
-  // CSP middleware based on environment
-  if (process.env.NODE_ENV === 'development') {
-    app.use(
-      helmet.contentSecurityPolicy({
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'http://localhost:8080'],
-          connectSrc: ["'self'", 'http://localhost:4000'],
-        },
-      }),
-    );
-    console.log('setupSecurityHeaders in development');
-  } else if (process.env.NODE_ENV === 'staging') {
-    app.use(
-      helmet.contentSecurityPolicy({
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
-          connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
-        },
-      }),
-    );
-    console.log('setupSecurityHeaders in staging');
-  } else if (process.env.NODE_ENV === 'production') {
-    // Apply more restrictive CSP for production
-    app.use(
-      helmet.contentSecurityPolicy({
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
-          connectSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
-        },
-      }),
-    );
-    console.log('setupSecurityHeaders in production');
-  }
-};
+// const setupSecurityHeaders = () => {
+//   // CSP middleware based on environment
+//   if (process.env.NODE_ENV === 'development') {
+//     app.use(
+//       helmet.contentSecurityPolicy({
+//         directives: {
+//           defaultSrc: ["'self'"],
+//           scriptSrc: ["'self'", 'http://localhost:8080'],
+//           connectSrc: ["'self'", 'http://localhost:4000'],
+//         },
+//       }),
+//     );
+//     console.log('setupSecurityHeaders in development');
+//   } else if (process.env.NODE_ENV === 'staging') {
+//     app.use(
+//       helmet.contentSecurityPolicy({
+//         directives: {
+//           defaultSrc: ["'self'"],
+//           scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
+//           connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
+//         },
+//       }),
+//     );
+//     console.log('setupSecurityHeaders in staging');
+//   } else if (process.env.NODE_ENV === 'production') {
+//     // Apply more restrictive CSP for production
+//     app.use(
+//       helmet.contentSecurityPolicy({
+//         directives: {
+//           defaultSrc: ["'self'"],
+//           scriptSrc: ["'self'",  'https://quil-prod-b3e044c49835.herokuapp.com'],
+//           connectSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
+//         },
+//       }),
+//     );
+//     console.log('setupSecurityHeaders in production');
+//   }
+// };
 
-// Invoke the security headers function
-setupSecurityHeaders();
+// // Invoke the security headers function
+// setupSecurityHeaders();
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
