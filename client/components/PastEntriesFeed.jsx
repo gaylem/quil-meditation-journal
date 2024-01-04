@@ -53,12 +53,12 @@ const PastEntriesFeed = () => {
             sameSite: 'Strict', // SameSite attribute set to 'Strict'
           });
 
-          console.log('PastEntries dispatch');
           // Update entries state
           entriesDispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
           // Update tokens and user state
           userDispatch({ type: 'LOGIN', payload: response.data.authData });
           userDispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+          console.log('PastEntries dispatch');
         }
       } catch (error) {
         console.error('Error fetching entries:', error.stack);

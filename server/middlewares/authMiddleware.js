@@ -26,6 +26,7 @@ const authMiddleware = async (req, res, next) => {
     const accessToken = req.headers.authorization?.split(' ')[1];
     // Retrieve the refresh token from cookies
     const refreshToken = req.cookies.refreshToken;
+    console.log('auth middleware');
 
     // Check if access token is missing
     if (!accessToken) {
