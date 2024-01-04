@@ -32,6 +32,7 @@ const items = [
         for: 'newUsername',
         id: 'newUsername',
         name: 'newUsername',
+        type: 'text',
         placeholder: 'ex: jane',
       },
       {
