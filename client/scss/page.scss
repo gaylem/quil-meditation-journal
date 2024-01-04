@@ -10,11 +10,12 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 /* Main page container */
 .page-container {
   display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: auto;
   color: black;
   max-width: 900px;
+  margin-top: 5em;
   font-family: $paragraph-font;
   line-height: 2em;
   font-size: large;
