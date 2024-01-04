@@ -19,6 +19,7 @@ const LazyHelpFAQ = lazy(() => import(/* webpackChunkName: "help" */ './pages/He
 const LazyCommunity = lazy(() => import(/* webpackChunkName: "community" */ './pages/Community.jsx'));
 const LazyAccount = lazy(() => import(/* webpackChunkName: "account" */ './pages/Account.jsx'));
 const LazyFooter = lazy(() => import(/* webpackChunkName: "footer" */ './components/Footer.jsx'));
+const LazyNotFound = lazy(() => import(/* webpackChunkName: "not-found" */ './pages/NotFound.jsx'));
 
 /**
  * Main application component that handles routing and rendering of pages.
@@ -55,6 +56,8 @@ function App() {
             <Route path='/community' element={<LazyCommunity />} />
             {/* Account route - Renders Account page */}
             <Route path='/account' element={!user ? <LazyLogin /> : <LazyAccount />} />
+            {/* Catch-all route for 404 */}
+            <Route path='*' element={<LazyNotFound />} />
           </Routes>
           <LazyFooter />
         </Suspense>
