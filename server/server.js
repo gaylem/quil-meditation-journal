@@ -53,11 +53,11 @@ const setupCORS = () => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     console.log(req.method);
     // Handle preflight requests
-    if (req.method === 'OPTIONS') {
-      res.status(200).send();
-    } else {
-      next();
-    }
+    // if (req.method === 'OPTIONS') {
+    //   res.status(200).send();
+    // } else {
+    //   next();
+    // }
   });
 };
 
