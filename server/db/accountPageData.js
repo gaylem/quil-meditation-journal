@@ -29,8 +29,8 @@ const items = [
     formFields: [
       {
         label: 'New Username',
-        for: 'username',
-        id: 'username',
+        for: 'newUsername',
+        id: 'newUsername',
         name: 'newUsername',
         placeholder: 'ex: jane',
       },

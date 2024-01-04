@@ -61,8 +61,6 @@ export const AuthContextProvider = ({ children }) => {
     accessToken: null,
   });
 
-  console.log('state', state);
-
   /**
    * Effect to check for a stored user in cookies and update the context with the stored user details.
    */
@@ -112,11 +110,9 @@ export const AuthContextProvider = ({ children }) => {
     const refreshAccessToken = async () => {
       const storedUserString = Cookies.get('user');
       if (storedUserString) {
-        console.log('storedUserString: ', storedUserString);
         // Parse string
         const storedUser = JSON.parse(storedUserString);
         try {
-          console.log(storedUser.accessToken);
           if (storedUser && storedUser.accessToken) {
             const response = await axios.post(
               `/api/users/token/${storedUser.userId}`,
@@ -128,8 +124,6 @@ export const AuthContextProvider = ({ children }) => {
                 },
               },
             );
-
-            console.log('refreshAccessToken response.data', response.data);
 
             if (response.status === 200) {
               // Update tokens and user in the context
@@ -144,8 +138,6 @@ export const AuthContextProvider = ({ children }) => {
                 type: 'ACCESS_TOKEN',
                 payload: response.data.accessToken,
               }));
-
-              console.log(state);
 
               Cookies.set('user', JSON.stringify(response.data), {
                 expires: 28 / (24 * 60), // Expires in 28 minutes
@@ -187,7 +179,6 @@ export const AuthContextProvider = ({ children }) => {
   // Update cookies when user state changes
   useEffect(() => {
     if (state.user) {
-      console.log('state.user: ', state.user);
       // Update cookies with the current user context
       Cookies.set('user', JSON.stringify(state.user), {
         expires: 28 / (24 * 60), // Expires in 28 minutes
