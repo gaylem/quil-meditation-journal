@@ -28,9 +28,11 @@ const PastEntriesFeed = () => {
   useEffect(() => {
     // Function to fetch past entries from the server
     const fetchEntries = async () => {
+      const storedUserString = Cookies.get('user');
+      const storedUser = JSON.parse(storedUserString);
       try {
         // Make a GET request to the server to fetch past entries
-        const response = await axios.get(`/api/entries/${user.userId}`, {
+        const response = await axios.get(`/api/entries/${storedUser.userId}`, {
           withCredentials: true,
           headers: { Authorization: `Bearer ${user.accessToken}` },
         });
