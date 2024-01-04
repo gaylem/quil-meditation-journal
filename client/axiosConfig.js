@@ -12,7 +12,7 @@ const baseURLs = {
 };
 
 // Determine the environment based on NODE_ENV or default to 'development'
-const environment = process.env.NODE_ENV || 'development';
+const environment = process.env.NODE_ENV;
 
 // Log the current environment
 console.log('Axios environment:', environment);
