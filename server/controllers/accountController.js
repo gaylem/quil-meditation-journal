@@ -106,7 +106,12 @@ accountController.updateUsername = async (req, res) => {
       return res.status(400).send();
     }
     // Is the username already being used?
-    await User.findOne({ username });
+    const newUsernameExists = await User.findOne({ username: newUsername });
+    console.log('newUsernameExists: ', newUsernameExists);
+
+    if (newUsernameExists) {
+      throw new Error('Username already exists');
+    }
 
     // Update the user data
     const updatedUser = await User.findOneAndUpdate({ _id: userId }, { $set: { username: newUsername } }, { new: true });
