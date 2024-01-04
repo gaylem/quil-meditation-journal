@@ -34,7 +34,7 @@ const getProxyConfig = () => {
 };
 
 export default {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: process.env.NODE_ENV || 'development';
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'public/build'),
