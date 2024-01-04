@@ -22,8 +22,10 @@ entryController.getAllEntries = async (req, res) => {
   try {
     // Store userId in variable
     const userId = req.params.id;
+    console.log('userId: ', userId);
     // Call database to request all entries from user
     const allEntries = await Entry.find({ userId });
+    console.log('allEntries: ', allEntries);
     // If nothing is returned, log an error
     if (!allEntries) {
       return res.status(404).json({
