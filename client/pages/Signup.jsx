@@ -19,7 +19,7 @@ function Signup() {
   const [password, setPassword] = useState('');
 
   // Extract functions from useSignup hook
-  const { signup, error, isLoading } = useSignup();
+  const { signup, error } = useSignup();
 
   /**
    * Handles the form submission for user signup.
@@ -76,9 +76,7 @@ function Signup() {
             />
           </div>
           {/* Signup button */}
-          <button className='form-btn' disabled={isLoading}>
-            Sign Up
-          </button>
+          <button className='form-btn'>Sign Up</button>
           <p className='account-emails'> You will only receive essential account-related emails.</p>
           <div className='message-container'>
             {/* Display error message if there is an error */}

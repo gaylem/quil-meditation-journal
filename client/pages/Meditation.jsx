@@ -141,13 +141,23 @@ const Meditate = () => {
       <br />
       <ul>
         <li>
-          <a href='https://www.goodreads.com/book/show/32895535'>Why Buddhism is True</a> by Robert Wright. This book doesn&apos;t make any grand claims about the religious side of Buddhism. Rather, it&apos;s a scientific and philosophical look at the practices of Buddhism and it describes the author&apos;s attempt to gauge their efficacy at addressing the human condition. It would be more accurately titled <i>Why Buddhist Practices Work</i>.
+          <a href='https://www.goodreads.com/book/show/32895535' target='_blank'>
+            Why Buddhism is True
+          </a>{' '}
+          by Robert Wright. This book doesn&apos;t make any grand claims about the religious side of Buddhism. Rather, it&apos;s a scientific and philosophical look at the practices of Buddhism and it describes the author&apos;s attempt to gauge their efficacy at addressing the human condition. It would be more accurately titled <i>Why Buddhist Practices Work</i>.
         </li>
         <li>
-          <a href='https://www.goodreads.com/en/book/show/25942786'>The Mind Illuminated</a> by John Yates. This book is for the serious student and outlines many pitfalls and considerations a practitioner should make at various phases of their meditation journey.
+          <a href='https://www.goodreads.com/en/book/show/25942786' target='_blank'>
+            The Mind Illuminated
+          </a>{' '}
+          by John Yates. This book is for the serious student and outlines many pitfalls and considerations a practitioner should make at various phases of their meditation journey.
         </li>
         <li>
-          Anything by <a href='https://www.goodreads.com/author/list/9074.Thich_Nhat_Hanh'>Thich Nhat Hanh</a>.
+          Anything by{' '}
+          <a href='https://www.goodreads.com/author/list/9074.Thich_Nhat_Hanh' target='_blank'>
+            Thich Nhat Hanh
+          </a>
+          .
         </li>
       </ul>
       <br />

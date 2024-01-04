@@ -72,11 +72,6 @@ const PastEntriesFeed = () => {
     }
   }, [dispatch, user]);
 
-  // Check if entries is null, display a loading message
-  if (entries === null) {
-    return <div className='loading'>Loading...</div>;
-  }
-
   // Render the PastEntriesFeed component
   return (
     <div className='feed-container'>

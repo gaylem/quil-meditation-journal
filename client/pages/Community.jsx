@@ -19,7 +19,9 @@ const Community = () => {
       <p>
         Join our community on{' '}
         <span className='purple'>
-          <a href='https://discord.gg/ph8YBz9Xnn'>Discord</a>
+          <a href='https://discord.gg/ph8YBz9Xnn' target='_blank'>
+            Discord
+          </a>
         </span>{' '}
         to discuss meditation, provide valuable feedback, and have fun!
       </p>
@@ -33,7 +35,9 @@ const Community = () => {
       <p>
         If you&apos;re a software developer, and you&apos;d like to help make quil the best it can be, join the Discord above and check out our{' '}
         <span className='purple'>
-          <a href='https://github.com/gaylem/quil-meditation-journal'>GitHub</a>
+          <a href='https://github.com/gaylem/quil-meditation-journal' target='_blank'>
+            GitHub
+          </a>
         </span>{' '}
         for more information on how you can participate.
       </p>
