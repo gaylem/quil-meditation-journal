@@ -29,37 +29,14 @@ const setupCORS = () => {
   } else if (process.env.NODE_ENV === 'staging') {
     allowedOrigin = 'https://quil-staging-97e232bad7d0.herokuapp.com';
   } else if (process.env.NODE_ENV === 'production') {
-    allowedOrigin = 'https://quil-prod-b3e044c49835.herokuapp.com/';
+    allowedOrigin = 'https://quil-prod-b3e044c49835.herokuapp.com';
   }
 
-  // Handle CORS
-  app.use(
-    cors({
-      origin: function (origin, callback) {
-        if (!origin || allowedOrigin.includes(origin)) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
-      credentials: true,
-    }),
-  );
-
-  // Add this middleware to set the 'Access-Control-Allow-Origin' header
-  app.use((req, res, next) => {
-    console.log('req', req.method);
-    res.header('Access-Control-Allow-Origin', allowedOrigin);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    // Handle preflight requests
-    if (req.method === 'OPTIONS') {
-      return res.status(200).send();
-    } else {
-      console.log('next');
-      next();
-    }
-  });
+  // Handle CORS for all routes
+  app.use(cors({
+    origin: allowedOrigin,
+    credentials: true,
+  }));
 };
 
 // Invoke the CORS setup function
@@ -71,22 +48,22 @@ app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
 app.use(cookieParser()); // Parses incoming cookie headers, extracts the cookies, and makes them available in the req.cookies object.
 
 // Security Middleware
-// app.use(helmet()); // Applies HTTP headers such as X-Content-Type-Options, Strict-Transport-Security, X-Frame-Options, X-XSS-Protection, and others for enhanced security
+app.use(helmet()); // Applies HTTP headers such as X-Content-Type-Options, Strict-Transport-Security, X-Frame-Options, X-XSS-Protection, and others for enhanced security
 
-// // Frameguard Middleware
-// app.use(helmet.frameguard({ action: 'deny' }));
+// Frameguard Middleware
+app.use(helmet.frameguard({ action: 'deny' }));
 
-// // HSTS Middleware (example, adjust as needed)
-// app.use(
-//   helmet.hsts({
-//     maxAge: 31536000, // 1 year in seconds
-//     includeSubDomains: true,
-//     preload: true,
-//   }),
-// );
+// HSTS Middleware (example, adjust as needed)
+app.use(
+  helmet.hsts({
+    maxAge: 31536000, // 1 year in seconds
+    includeSubDomains: true,
+    preload: true,
+  }),
+);
 
-// // Referrer Policy Middleware
-// // app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+// Referrer Policy Middleware
+// app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
 const setupSecurityHeaders = () => {
   // CSP middleware based on environment
