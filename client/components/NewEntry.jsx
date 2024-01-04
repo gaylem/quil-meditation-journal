@@ -67,7 +67,7 @@ function NewEntry() {
       // Reset the body state
       setBody('');
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         // Update the access token in the cookie
         Cookies.set('user', JSON.stringify(response.data.authData), {
           expires: 28 / (24 * 60), // Expires in 28 minutes
