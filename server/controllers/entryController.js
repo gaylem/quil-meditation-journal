@@ -19,6 +19,7 @@ import { encrypt, decrypt } from '../utils/encrypt-decrypt-utils.js';
  * @returns {Object} - JSON response containing an array of all entries objects for the user or an error response
  */
 entryController.getAllEntries = async (req, res) => {
+  console.log('entries controller');
   try {
     // Store userId in variable
     const userId = req.params.id;
@@ -61,7 +62,7 @@ entryController.getAllEntries = async (req, res) => {
       allEntries: res.locals.allEntries,
       authData: res.locals.authData,
     };
-    console.log("all entries return");
+    console.log('all entries return');
     // Return the combined response object
     return res.status(200).json(responseObj);
   } catch (error) {
@@ -116,6 +117,7 @@ entryController.addEntry = async (req, res) => {
       newEntry,
       authData: res.locals.authData,
     };
+    console.log('add entry');
     // Return the newEntry and authData to the client
     return res.status(201).json(responseObj);
   } catch (error) {
