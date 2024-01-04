@@ -8,6 +8,31 @@ import Dotenv from 'dotenv-webpack';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
+const getProxyConfig = () => {
+  // Define proxy targets based on environment
+  const proxyTargets = {
+    development: 'http://localhost:4000',
+    staging: 'https://quil-staging-97e232bad7d0.herokuapp.com',
+    production: 'https://quil-prod-b3e044c49835.herokuapp.com',
+  };
+
+  // Get the current environment
+  const environment = process.env.NODE_ENV || 'development';
+
+  // Set up the proxy configuration based on the environment
+  return {
+    '/api': {
+      target: proxyTargets[environment],
+      secure: false,
+      pathRewrite: { '^/api': '' },
+    },
+    '/assets': {
+      target: proxyTargets[environment],
+      secure: false,
+    },
+  };
+};
+
 export default {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './client/index.js',
@@ -71,10 +96,7 @@ export default {
       publicPath: '/',
     },
     port: 8080,
-    proxy: {
-      '/api': 'http://localhost:4000/',
-      '/assets': 'http://localhost:4000/',
-    },
+    proxy: getProxyConfig(),
     historyApiFallback: true,
   },
 
@@ -150,10 +172,10 @@ export default {
     process.env.NODE_ENV !== 'production' && new Dotenv(),
     process.env.NODE_ENV === 'production' &&
       new CompressionPlugin({
-        algorithm: 'gzip',
         test: /\.(js|css|html|svg)$/,
         compressionOptions: {
           level: 9,
+          algorithm: 'gzip',
         },
         filename: '[path][base].gz',
       }),
