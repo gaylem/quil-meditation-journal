@@ -144,7 +144,7 @@ export default {
 
   plugins: [
     new HTMLWebpackPlugin({
-      template: path.resolve(__dirname, 'index.html'),
+      template: './public/index.html',
       publicPath: '/',
     }),
     process.env.NODE_ENV !== 'production' && new Dotenv(),
