@@ -23,8 +23,8 @@ const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
  * @description Get all entries for a specific user
  * @param req.params userId
  */
-
-router.get('/:id', getAllEntries);
+console.log('entry router');
+router.get('/:id', authMiddleware, getAllEntries);
 
 /**
  * @route POST /entries/
