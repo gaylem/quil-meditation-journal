@@ -54,8 +54,9 @@ const setupCORS = () => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     // Handle preflight requests
     if (req.method === 'OPTIONS') {
-      res.status(200).json({ error: 'oops' });
+      return res.status(200).json({ error: 'oops' });
     } else {
+      console.log('next');
       next();
     }
   });
