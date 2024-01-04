@@ -20,10 +20,10 @@ import Cookies from 'js-cookie';
  */
 const PastEntriesFeed = () => {
   // Retrieve entries and dispatch functionality from useEntriesContext
-  const { entries, dispatch } = useEntriesContext();
+  const { entries, dispatch: entriesDispatch } = useEntriesContext();
 
   // Retrieve user information from useAuthContext
-  const { user } = useAuthContext();
+  const { user, dispatch: userDispatch } = useAuthContext();
 
   useEffect(() => {
     // Function to fetch past entries from the server
@@ -50,10 +50,10 @@ const PastEntriesFeed = () => {
             sameSite: 'Strict', // SameSite attribute set to 'Strict'
           });
           // Update entries state
-          dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
+          entriesDispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
           // Update tokens and user state
-          dispatch({ type: 'LOGIN', payload: response.data.authData });
-          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+          userDispatch({ type: 'LOGIN', payload: response.data.authData });
+          userDispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
         }
       } catch (error) {
         console.error('Error fetching entries:', error.stack);
@@ -67,10 +67,10 @@ const PastEntriesFeed = () => {
     };
 
     // If the user is authenticated, fetch past entries
-    if (user) {
+    if (user && entries.length === 0) {
       fetchEntries();
     }
-  }, [dispatch, user, entries]);
+  }, [entriesDispatch, userDispatch, user]);
 
   // Render the PastEntriesFeed component
   return (
