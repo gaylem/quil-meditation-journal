@@ -23,21 +23,8 @@ const { getAllEntries, addEntry, updateEntry, deleteEntry } = entryController;
  * @description Get all entries for a specific user
  * @param req.params userId
  */
-router.get('/:id', authMiddleware, async (req, res) => {
-  try {
-    console.log('Request to /api/entries/:id with ID:', req.params.id);
 
-    // Call your controller function
-    const result = await getAllEntries(req.params.id); // pass any required parameters
-
-    // Respond based on the result from the controller
-    res.status(200).json(result);
-  } catch (error) {
-    // Handle errors appropriately
-    console.error('Error in /api/entries/:id route:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+router.get('/:id', getAllEntries);
 
 /**
  * @route POST /entries/
