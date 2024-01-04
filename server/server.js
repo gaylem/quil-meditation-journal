@@ -105,7 +105,8 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "'unsafe-eval'", 'https://quil-staging-97e232bad7d0.herokuapp.com/'],
+          scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com/'],
+          connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com/'],
         },
       }),
     );
@@ -115,8 +116,9 @@ const setupSecurityHeaders = () => {
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
-          defaultSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com/'],
-          scriptSrc: ["'self'", "'unsafe-eval'"],
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com/'],
+          connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com/'],
         },
       }),
     );
