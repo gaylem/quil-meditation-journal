@@ -37,7 +37,7 @@ const getProxyConfig = () => {
 };
 
 export default {
-  mode: 'production',
+  mode: 'development',
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'public/build'),
