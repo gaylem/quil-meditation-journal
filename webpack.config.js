@@ -17,24 +17,24 @@ const getProxyConfig = () => {
   };
 
   // Get the current environment
-  const environment = process.env.NODE_ENV || 'development';
+  const environment = process.env.NODE_ENV;
 
   // Set up the proxy configuration based on the environment
   return {
     '/api': {
-      target: proxyTargets[environment] || proxyTargets.development,
+      target: proxyTargets[environment],
       secure: false,
       pathRewrite: { '^/api': '' },
     },
     '/assets': {
-      target: proxyTargets[environment] || proxyTargets.development,
+      target: proxyTargets[environment],
       secure: false,
     },
   };
 };
 
 export default {
-  mode: process.env.NODE_ENV || 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'public/build'),
