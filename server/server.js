@@ -49,13 +49,12 @@ const setupCORS = () => {
   // Add this middleware to set the 'Access-Control-Allow-Origin' header
   app.use((req, res, next) => {
     console.log('req', req.method);
-    res.header('Access-Control-Allow-Origin', allowedOrigin); 
+    res.header('Access-Control-Allow-Origin', allowedOrigin);
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    console.log(req.method);
     // Handle preflight requests
     if (req.method === 'OPTIONS') {
-      res.status(200).send();
+      res.status(200).json({ error: 'oops' });
     } else {
       next();
     }
