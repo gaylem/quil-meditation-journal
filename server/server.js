@@ -51,7 +51,7 @@ const setupCORS = () => {
     res.header('Access-Control-Allow-Origin', allowedOrigin); // You can choose a default origin or modify it based on your requirements
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
+    console.log(req.method);
     // Handle preflight requests
     if (req.method === 'OPTIONS') {
       res.status(200).send();
@@ -119,7 +119,7 @@ const setupSecurityHeaders = () => {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
-          connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
+          connectSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
           formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
         },
       }),
