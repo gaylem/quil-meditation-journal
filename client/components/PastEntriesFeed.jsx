@@ -32,7 +32,6 @@ const PastEntriesFeed = () => {
       try {
         // Make a GET request to the server to fetch past entries
         const response = await axios.get(`/api/entries/${user.userId}`, {
-          withCredentials: true,
           headers: { Authorization: `Bearer ${user.accessToken}` },
         });
 
