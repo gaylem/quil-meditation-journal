@@ -26,7 +26,6 @@ header {
   font-size: 1.3em;
   @include box-shadow(0, 2px, 8px, $shadow-color);
   position: sticky;
-  top: 0;
   width: 100%;
   background-image: linear-gradient(to bottom right, $primary-color, $secondary-color);
   color: white;
