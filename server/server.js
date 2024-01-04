@@ -71,22 +71,22 @@ app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
 app.use(cookieParser()); // Parses incoming cookie headers, extracts the cookies, and makes them available in the req.cookies object.
 
 // Security Middleware
-app.use(helmet()); // Applies HTTP headers such as X-Content-Type-Options, Strict-Transport-Security, X-Frame-Options, X-XSS-Protection, and others for enhanced security
+// app.use(helmet()); // Applies HTTP headers such as X-Content-Type-Options, Strict-Transport-Security, X-Frame-Options, X-XSS-Protection, and others for enhanced security
 
-// Frameguard Middleware
-app.use(helmet.frameguard({ action: 'deny' }));
+// // Frameguard Middleware
+// app.use(helmet.frameguard({ action: 'deny' }));
 
-// HSTS Middleware (example, adjust as needed)
-app.use(
-  helmet.hsts({
-    maxAge: 31536000, // 1 year in seconds
-    includeSubDomains: true,
-    preload: true,
-  }),
-);
+// // HSTS Middleware (example, adjust as needed)
+// app.use(
+//   helmet.hsts({
+//     maxAge: 31536000, // 1 year in seconds
+//     includeSubDomains: true,
+//     preload: true,
+//   }),
+// );
 
-// Referrer Policy Middleware
-app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+// // Referrer Policy Middleware
+// // app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
 const setupSecurityHeaders = () => {
   // CSP middleware based on environment
