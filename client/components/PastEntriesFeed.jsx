@@ -29,31 +29,37 @@ const PastEntriesFeed = () => {
     // Function to fetch past entries from the server
     const fetchEntries = async () => {
       try {
-        // Make a GET request to the server to fetch past entries
-        const response = await axios.get(`/api/entries/${user.userId}`, {
-          withCredentials: true,
-          headers: { Authorization: `Bearer ${user.accessToken}` },
-        });
-        // Sort the entries by createdAt date in descending order
-        const sortedEntries = response.data.allEntries.sort((a, b) => {
-          const dateA = a.createdAt ? new Date(a.createdAt) : 0;
-          const dateB = b.createdAt ? new Date(b.createdAt) : 0;
-          return dateB - dateA;
-        });
-
-        // If the GET request is successful (status code 200), update the entries in the context
-        if (response.status === 200) {
-          // Update the access token in the cookie
-          Cookies.set('user', JSON.stringify(response.data.authData), {
-            expires: 28 / (24 * 60), // Expires in 28 minutes
-            secure: true, // Secure attribute (requires HTTPS)
-            sameSite: 'Strict', // SameSite attribute set to 'Strict'
+        const storedUserString = Cookies.get('user');
+        if (storedUserString) {
+          // Parse string
+          const storedUser = JSON.parse(storedUserString);
+          console.log('storedUser: ', storedUser);
+          // Make a GET request to the server to fetch past entries
+          const response = await axios.get(`/api/entries/${storedUser.userId}`, {
+            withCredentials: true,
+            headers: { Authorization: `Bearer ${user.accessToken}` },
           });
-          // Update entries state
-          dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
-          // Update tokens and user state
-          dispatch({ type: 'LOGIN', payload: response.data.authData });
-          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+          // Sort the entries by createdAt date in descending order
+          const sortedEntries = response.data.allEntries.sort((a, b) => {
+            const dateA = a.createdAt ? new Date(a.createdAt) : 0;
+            const dateB = b.createdAt ? new Date(b.createdAt) : 0;
+            return dateB - dateA;
+          });
+
+          // If the GET request is successful (status code 200), update the entries in the context
+          if (response.status === 200) {
+            // Update the access token in the cookie
+            Cookies.set('user', JSON.stringify(response.data.authData), {
+              expires: 28 / (24 * 60), // Expires in 28 minutes
+              secure: true, // Secure attribute (requires HTTPS)
+              sameSite: 'Strict', // SameSite attribute set to 'Strict'
+            });
+            // Update entries state
+            dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
+            // Update tokens and user state
+            dispatch({ type: 'LOGIN', payload: response.data.authData });
+            dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+          }
         }
       } catch (error) {
         console.error('Error fetching entries:', error.stack);
