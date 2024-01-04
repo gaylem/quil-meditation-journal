@@ -48,7 +48,7 @@ const setupCORS = () => {
 
   // Add this middleware to set the 'Access-Control-Allow-Origin' header
   app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', allowedOrigin); // You can choose a default origin or modify it based on your requirements
+    res.header('Access-Control-Allow-Origin', '*'); // You can choose a default origin or modify it based on your requirements
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
