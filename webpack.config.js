@@ -19,22 +19,25 @@ const getProxyConfig = () => {
   // Get the current environment
   const environment = process.env.NODE_ENV || 'development';
 
+  // Use a default target if the environment is not recognized
+  const defaultTarget = 'http://localhost:4000';
+
   // Set up the proxy configuration based on the environment
   return {
     '/api': {
-      target: proxyTargets[environment],
+      target: proxyTargets[environment] || defaultTarget,
       secure: false,
       pathRewrite: { '^/api': '' },
     },
     '/assets': {
-      target: proxyTargets[environment],
+      target: proxyTargets[environment] || defaultTarget,
       secure: false,
     },
   };
 };
 
 export default {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: 'production',
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'public/build'),
@@ -169,7 +172,7 @@ export default {
       template: './public/index.html',
       publicPath: '/',
     }),
-    process.env.NODE_ENV !== 'production' && new Dotenv(),
+    process.env.NODE_ENV === 'development' && new Dotenv(),
     process.env.NODE_ENV === 'production' &&
       new CompressionPlugin({
         test: /\.(js|css|html|svg)$/,
