@@ -54,7 +54,7 @@ const setupCORS = () => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     // Handle preflight requests
     if (req.method === 'OPTIONS') {
-      return res.status(200).json({ error: 'oops' });
+      return res.status(200).send();
     } else {
       console.log('next');
       next();
@@ -138,6 +138,16 @@ app.use((req, _, next) => {
   next();
 });
 
+// Import Routes
+import entryRouter from './routers/entryRouter.js';
+import userRouter from './routers/userRouter.js';
+import accountRouter from './routers/accountRouter.js';
+
+// Define routes for entries and users
+app.use('/api/entries', entryRouter);
+app.use('/api/users', userRouter);
+app.use('/api/accounts', accountRouter);
+
 // Serve static files from build folder in production or staging
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
   app.use(express.static(path.join(__dirname, '../public/build')));
@@ -167,16 +177,6 @@ app.use((req, res, next) => {
 
   next();
 });
-
-// Import Routes
-import entryRouter from './routers/entryRouter.js';
-import userRouter from './routers/userRouter.js';
-import accountRouter from './routers/accountRouter.js';
-
-// Define routes for entries and users
-app.use('/api/entries', entryRouter);
-app.use('/api/users', userRouter);
-app.use('/api/accounts', accountRouter);
 
 // Catch-all route handler for unknown routes
 app.use((_, res) => res.status(404).send('A journey of a thousand miles begins with a single step...but not in this direction.'));
