@@ -106,7 +106,8 @@ const setupSecurityHeaders = () => {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
-          connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com', 'https://getform.io'],
+          connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
+          formAction: ["'self'", 'https://getform.io'],
         },
       }),
     );
@@ -118,7 +119,8 @@ const setupSecurityHeaders = () => {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
-          connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com', 'https://getform.io'],
+          connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
+          formAction: ["'self'", 'https://getform.io'],
         },
       }),
     );
