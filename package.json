@@ -11,7 +11,9 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "build": "webpack --mode production",
+    "build:development": "webpack --mode development",
+    "build:staging": "cross-env NODE_ENV=staging webpack --mode production",
+    "build:production": "webpack --mode production",
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon ./server/server.js",
     "client": "webpack-dev-server --hot --mode development",
