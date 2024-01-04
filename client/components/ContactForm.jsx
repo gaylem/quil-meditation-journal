@@ -10,7 +10,7 @@ import React from 'react';
 function ContactForm() {
   return (
     <div className='contact-form-container'>
-      <form action='https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a' method='POST' className='form'>
+      <form action={process.env.REACT_APP_FORM_ENDPOINT} method='POST' className='form'>
         <label htmlFor='name'>Your Name:</label>
         <input type='text' name='name' id='name' placeholder='ex: Jane Doe' className='name' />
         <div className='visually-hidden'>
