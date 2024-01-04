@@ -24,7 +24,6 @@ const PastEntriesFeed = () => {
 
   // Retrieve user information from useAuthContext
   const { user, dispatch: userDispatch } = useAuthContext();
-  console.log('user: ', user);
 
   useEffect(() => {
     // Function to fetch past entries from the server
@@ -54,12 +53,12 @@ const PastEntriesFeed = () => {
             sameSite: 'Strict', // SameSite attribute set to 'Strict'
           });
 
+          console.log('PastEntries dispatch');
           // Update entries state
           entriesDispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
           // Update tokens and user state
           userDispatch({ type: 'LOGIN', payload: response.data.authData });
           userDispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
-          console.log('PastEntries dispatch');
         }
       } catch (error) {
         console.error('Error fetching entries:', error.stack);
@@ -71,12 +70,8 @@ const PastEntriesFeed = () => {
         }
       }
     };
-
-    // If the user is authenticated, fetch past entries
-    if (user && entries.length === 0) {
-      fetchEntries();
-    }
-  }, [entriesDispatch, userDispatch, user]);
+    fetchEntries();
+  }, []);
 
   // Render the PastEntriesFeed component
   return (
@@ -86,9 +81,7 @@ const PastEntriesFeed = () => {
         <NewEntry />
       </div>
       {/* Map through the entries and render each PastEntry component */}
-      {entries.map((entry, index) => (
-        <PastEntry key={entry._id || index} entry={entry} />
-      ))}
+      {entries && entries.map((entry, index) => <PastEntry key={entry._id || index} entry={entry} />)}
     </div>
   );
 };
