@@ -74,13 +74,9 @@ export const verifyAccessToken = accessToken => {
 
 // Validate the refresh token stored in the HTTP-only cookie
 export const validateRefreshToken = async (userId, refreshToken) => {
-  console.log('original refreshToken: ', refreshToken);
-  console.log('userId validate refresh token: ', userId);
   try {
     // Verify that refreshToken cookie matches the token stored in the database
     const user = await User.findById(userId);
-    console.log('user utils: ', user);
-
     // Throw error if tokens do not match
     if (!user || !user.refreshTokens.includes(refreshToken)) {
       throw new Error('Invalid refresh token');
@@ -125,11 +121,8 @@ export const checkTokenExpiration = decodedToken => {
  * @returns {Object} - An object containing new access and refresh tokens and the updated user object from the database.
  */
 export const refreshTokensAndDatabase = async (userId, payload) => {
-  console.log('userId database: ', userId);
   const response = await createTokens(payload);
-  console.log('response: ', response);
   const { accessToken, refreshToken } = response;
-  console.log('new refreshToken: ', refreshToken);
   // Update database: Push new token and retain only the previous three tokens
   const refreshedUser = await User.findByIdAndUpdate(
     { _id: userId },
@@ -146,7 +139,6 @@ export const refreshTokensAndDatabase = async (userId, payload) => {
 
   // Save the updated user
   await refreshedUser.save();
-  console.log('refreshedUser: ', refreshedUser);
   return { accessToken, refreshToken, refreshedUser };
 };
 

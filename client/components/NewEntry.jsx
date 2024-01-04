@@ -75,7 +75,7 @@ function NewEntry() {
           sameSite: 'Strict', // SameSite attribute set to 'Strict'
         });
         // Dispatch the new entry with response.data as the payload
-      entriesDispatch({ type: 'CREATE_ENTRY', payload: response.data.newEntry });
+        entriesDispatch({ type: 'CREATE_ENTRY', payload: response.data.newEntry });
         // Update tokens and user state
         userDispatch({ type: 'LOGIN', payload: response.data.authData });
         userDispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
