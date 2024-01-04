@@ -37,19 +37,19 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   height: $circle-param;
   width: $circle-param;
   margin: 0.2em;
+  border-radius: 50%;
   background-color: $primary-color;
-  border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
   line-height: $circle-param;
   display: inline-block;
   text-align: center;
   font-size: larger;
   vertical-align: middle;
   color: white;
-  animation: wobble 7s linear infinite;
 }
 
 /* Grow animation for the meditation timer circle */
 .timer-circle-grow {
+  border-radius: 43% 57% 48% 52% / 47% 43% 57% 53%;
   animation:
     grow 7s ease infinite,
     wobble 7s linear infinite;
