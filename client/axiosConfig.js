@@ -2,8 +2,6 @@
 
 import axios from 'axios';
 
-const loc = window.location;
-
 // Define base URLs for different environments
 const baseURLs = {
   development: 'http://localhost:4000',
