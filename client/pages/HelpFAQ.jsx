@@ -46,6 +46,7 @@ const HelpFAQ = () => {
           </div>
         ))}
       </div>
+      <br />
       <div className='page-text'>
         <h2>Still need help?</h2>
         <p>If you didn't find the answer to your question, or you have some feedback you'd like to share, reach out through the form below.</p>

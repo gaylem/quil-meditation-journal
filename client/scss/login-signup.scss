@@ -10,8 +10,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 /* Container for login and signup page components */
 .login-signup-container {
   display: flex;
-  margin: 0 auto;
-  min-height: 100vh;
+  min-height: 85dvh;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -21,7 +20,7 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     background-color: white;
     box-shadow: none;
     border: 0px;
-    padding-top: 8em;
+    padding-top: 2em;
   }
 }
 

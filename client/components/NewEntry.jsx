@@ -35,8 +35,8 @@ function NewEntry() {
   };
 
   // Retrieve dispatch functionality from useEntriesContext and user data from useAuthContext
-  const { dispatch } = useEntriesContext();
-  const { user } = useAuthContext();
+  const { dispatch: entriesDispatch } = useEntriesContext();
+  const { user, dispatch: userDispatch } = useAuthContext();
 
   // State and function to manage the entry body content, errors, and empty fields
   const [body, setBody] = useState('');
@@ -75,10 +75,10 @@ function NewEntry() {
           sameSite: 'Strict', // SameSite attribute set to 'Strict'
         });
         // Dispatch the new entry with response.data as the payload
-        dispatch({ type: 'CREATE_ENTRY', payload: response.data.newEntry });
+        entriesDispatch({ type: 'CREATE_ENTRY', payload: response.data.newEntry });
         // Update tokens and user state
-        dispatch({ type: 'LOGIN', payload: response.data.authData });
-        dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+        userDispatch({ type: 'LOGIN', payload: response.data.authData });
+        userDispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
       }
     } catch (error) {
       console.error('Error adding entry:', error.stack);

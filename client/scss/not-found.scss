@@ -1,0 +1,39 @@
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
+$shadow-color: rgb(172, 172, 172);
+
+/* Font Families */
+$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+$header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-self: center;
+  align-items: center;
+  min-height: 95vh;
+  padding: 10em 1em 1em 1em;
+}
+
+.code {
+  font-size: 10em;
+  font-family: $header-font;
+  color: $secondary-color;
+  text-shadow: 1px 1px 5px rgb(116, 115, 115);
+}
+
+.code-description {
+  font-family: $paragraph-font;
+  font-size: x-large;
+  color: $primary-color;
+  text-align: center;
+}
+
+.code-description-punchline {
+  font-family: $paragraph-font;
+  font-size: x-large;
+  color: $primary-color;
+  text-align: center;
+  font-weight: 600;
+}

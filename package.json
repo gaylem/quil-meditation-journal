@@ -2,19 +2,23 @@
   "name": "quil",
   "private": true,
   "version": "1.0.0",
-  "proxy": "http://localhost:4000",
+  "proxy": "",
   "description": "Meditation journal",
   "main": "./index.js",
   "type": "module",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
-    "start": "NODE_ENV=production node --experimental-vm-modules server/server.js",
-    "build": "NODE_ENV=production webpack",
+    "start": "node server/server.js",
+    "build": "webpack --mode production",
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon ./server/server.js",
     "client": "webpack-dev-server --hot --mode development",
     "test": "nyc jest",
     "test:watch": "jest --watch",
-    "analyze": "webpack-bundle-analyzer --mode production"
+    "analyze": "webpack-bundle-analyzer --mode production",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",

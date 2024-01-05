@@ -20,10 +20,10 @@ import Cookies from 'js-cookie';
  */
 const PastEntriesFeed = () => {
   // Retrieve entries and dispatch functionality from useEntriesContext
-  const { entries, dispatch } = useEntriesContext();
+  const { entries, dispatch: entriesDispatch } = useEntriesContext();
 
   // Retrieve user information from useAuthContext
-  const { user } = useAuthContext();
+  const { user, dispatch: userDispatch } = useAuthContext();
 
   useEffect(() => {
     // Function to fetch past entries from the server
@@ -34,6 +34,8 @@ const PastEntriesFeed = () => {
           withCredentials: true,
           headers: { Authorization: `Bearer ${user.accessToken}` },
         });
+
+        console.log('PastEntries response', response);
         // Sort the entries by createdAt date in descending order
         const sortedEntries = response.data.allEntries.sort((a, b) => {
           const dateA = a.createdAt ? new Date(a.createdAt) : 0;
@@ -43,17 +45,20 @@ const PastEntriesFeed = () => {
 
         // If the GET request is successful (status code 200), update the entries in the context
         if (response.status === 200) {
+          console.log('PastEntries 200 OK');
           // Update the access token in the cookie
           Cookies.set('user', JSON.stringify(response.data.authData), {
             expires: 28 / (24 * 60), // Expires in 28 minutes
             secure: true, // Secure attribute (requires HTTPS)
             sameSite: 'Strict', // SameSite attribute set to 'Strict'
           });
+
+          console.log('PastEntries dispatch');
           // Update entries state
-          dispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
+          entriesDispatch({ type: 'SET_ENTRIES', payload: sortedEntries });
           // Update tokens and user state
-          dispatch({ type: 'LOGIN', payload: response.data.authData });
-          dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+          userDispatch({ type: 'LOGIN', payload: response.data.authData });
+          userDispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
         }
       } catch (error) {
         console.error('Error fetching entries:', error.stack);
@@ -65,17 +70,8 @@ const PastEntriesFeed = () => {
         }
       }
     };
-
-    // If the user is authenticated, fetch past entries
-    if (user) {
-      fetchEntries();
-    }
-  }, [dispatch, user]);
-
-  // Check if entries is null, display a loading message
-  if (entries === null) {
-    return <div className='loading'>Loading...</div>;
-  }
+    fetchEntries();
+  }, []);
 
   // Render the PastEntriesFeed component
   return (
@@ -85,9 +81,7 @@ const PastEntriesFeed = () => {
         <NewEntry />
       </div>
       {/* Map through the entries and render each PastEntry component */}
-      {entries.map((entry, index) => (
-        <PastEntry key={entry._id || index} entry={entry} />
-      ))}
+      {entries && entries.map((entry, index) => <PastEntry key={entry._id || index} entry={entry} />)}
     </div>
   );
 };

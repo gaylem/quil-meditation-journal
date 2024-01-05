@@ -23,8 +23,8 @@ const PastEntry = ({ entry }) => {
   const { _id, createdAt, body } = entry;
 
   // Retrieve dispatch and user information from contexts
-  const { dispatch } = useEntriesContext();
-  const { user } = useAuthContext();
+  const { dispatch: entriesDispatch } = useEntriesContext();
+  const { user, dispatch: userDispatch } = useAuthContext();
 
   // useState hooks for managing component state
   const [open, setOpen] = useState(false);
@@ -62,21 +62,21 @@ const PastEntry = ({ entry }) => {
           sameSite: 'Strict', // SameSite attribute set to 'Strict'
         });
         // Update the local state immediately
-        dispatch({ type: 'EDIT_ENTRY', payload: { _id, body: response.data.body } });
+        entriesDispatch({ type: 'EDIT_ENTRY', payload: { _id, body: response.data.body } });
         // Update tokens and user state
-        dispatch({ type: 'LOGIN', payload: response.data.authData });
-        dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+        userDispatch({ type: 'LOGIN', payload: response.data.authData });
+        userDispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
       }
       // Toggle the entry closed
       toggle();
     } catch (error) {
       console.error('Error editing entry:', error.stack);
-     if (error.response?.data?.redirectToLogin) {
-       // Clear token from local storage
-       Cookies.remove('user');
-       // Redirect to the login page
-       window.location.href = '/login';
-     }
+      if (error.response?.data?.redirectToLogin) {
+        // Clear token from local storage
+        Cookies.remove('user');
+        // Redirect to the login page
+        window.location.href = '/login';
+      }
     }
   };
 
@@ -96,10 +96,10 @@ const PastEntry = ({ entry }) => {
 
       if (response.status === 200) {
         // Remove the entry from the local state immediately
-        dispatch({ type: 'DELETE_ENTRY', payload: { _id: deletedId } });
+        entriesDispatch({ type: 'DELETE_ENTRY', payload: { _id: deletedId } });
         // Update tokens and user state
-        dispatch({ type: 'LOGIN', payload: response.data.authData });
-        dispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
+        userDispatch({ type: 'LOGIN', payload: response.data.authData });
+        userDispatch({ type: 'ACCESS_TOKEN', payload: response.data.authData.accessToken });
       }
     } catch (error) {
       console.error('Error deleting entry:', error.stack);

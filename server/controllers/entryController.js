@@ -19,11 +19,14 @@ import { encrypt, decrypt } from '../utils/encrypt-decrypt-utils.js';
  * @returns {Object} - JSON response containing an array of all entries objects for the user or an error response
  */
 entryController.getAllEntries = async (req, res) => {
+  console.log('entries controller');
   try {
     // Store userId in variable
     const userId = req.params.id;
+    console.log('allEntries userId: ', userId);
     // Call database to request all entries from user
     const allEntries = await Entry.find({ userId });
+    console.log('allEntries: ', allEntries);
     // If nothing is returned, log an error
     if (!allEntries) {
       return res.status(404).json({
@@ -53,11 +56,13 @@ entryController.getAllEntries = async (req, res) => {
     });
     // If result is returned, store in locals object
     res.locals.allEntries = decryptedEntries;
+    console.log('res.locals.allEntries: ', res.locals.allEntries);
     // Create a response object with allEntries and authData
     const responseObj = {
       allEntries: res.locals.allEntries,
       authData: res.locals.authData,
     };
+    console.log('all entries return');
     // Return the combined response object
     return res.status(200).json(responseObj);
   } catch (error) {
@@ -112,6 +117,7 @@ entryController.addEntry = async (req, res) => {
       newEntry,
       authData: res.locals.authData,
     };
+    console.log('add entry');
     // Return the newEntry and authData to the client
     return res.status(201).json(responseObj);
   } catch (error) {
@@ -138,10 +144,10 @@ entryController.updateEntry = async (req, res) => {
   try {
     // Store request parameter in a variable
     const { _id } = req.body;
-    console.log('_id: ', _id);
+    console.log('updateEntry _id: ', _id);
     // Extract the entry body and userId from the request body
     const { body } = req.body;
-    console.log('body: ', body);
+    console.log('updateEntry body: ', body);
     // Encrypt the entry body using the common key and IV
     const { iv, encryptedData } = encrypt(body);
     // Find and update the encrypted entry in database and store updated entry in a variable
