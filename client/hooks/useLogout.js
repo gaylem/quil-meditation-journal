@@ -2,6 +2,7 @@
 
 import { useAuthContext } from './useAuthContext.js';
 import { useEntriesContext } from './useEntriesContext.js';
+import axios from '../axiosConfig.js';
 import Cookies from 'js-cookie';
 
 /**
@@ -24,7 +25,7 @@ export const useLogout = () => {
   const logout = async userId => {
     try {
       // Send a request to the server to logout and invalidate the refresh token
-      const response = await fetch(
+      const response = await axios.post(
         `/api/users/logout/${userId}`,
         {
           method: 'POST',
