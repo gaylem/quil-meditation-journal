@@ -33,10 +33,12 @@ const setupCORS = () => {
   }
 
   // Handle CORS for all routes
-  app.use(cors({
-    origin: allowedOrigin,
-    credentials: true,
-  }));
+  app.use(
+    cors({
+      origin: allowedOrigin,
+      credentials: true,
+    }),
+  );
 };
 
 // Invoke the CORS setup function
