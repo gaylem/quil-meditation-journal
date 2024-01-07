@@ -26,10 +26,6 @@ const getProxyConfig = () => {
       secure: false,
       pathRewrite: { '^/api': '' },
     },
-    '/assets': {
-      target: proxyTargets[environment],
-      secure: false,
-    },
   };
 };
 
@@ -37,7 +33,7 @@ export default {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './client/index.js',
   output: {
-    path: path.join(__dirname, 'public/build'),
+    path: path.join(__dirname, 'build'),
     filename: '[name].[contenthash].js',
     publicPath: '/',
   },
@@ -124,11 +120,6 @@ export default {
         vendorAxios: {
           test: /[\\/]node_modules[\\/](axios)[\\/]/,
           name: 'vendor-axios',
-          chunks: 'all',
-        },
-        vendorHowler: {
-          test: /[\\/]node_modules[\\/](howler)[\\/]/,
-          name: 'vendor-howler',
           chunks: 'all',
         },
         vendorDateFns: {

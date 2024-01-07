@@ -44,7 +44,6 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.18.0",
     "react-screen-wake-lock": "^3.0.2",
-    "use-sound": "^4.0.1",
     "validator": "^13.11.0",
     "web-vitals": "^3.5.0"
   },
