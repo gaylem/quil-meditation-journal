@@ -18,8 +18,7 @@
     "client": "webpack-dev-server --hot --mode development",
     "test": "nyc jest",
     "test:watch": "jest --watch",
-    "analyze": "webpack-bundle-analyzer --mode production",
-    "heroku-postbuild": "npm run build"
+    "analyze": "webpack-bundle-analyzer --mode production"
   },
   "keywords": [],
   "author": "",
