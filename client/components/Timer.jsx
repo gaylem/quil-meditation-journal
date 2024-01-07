@@ -5,13 +5,15 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { useWakeLock } from 'react-screen-wake-lock';
 
 // Import sound hook and audio file
-import useSound from 'use-sound';
 import singingBowl from '../../public/assets/audio/singing-bowl.mp3';
 
 // Icon images for play, pause, and reset buttons
 import playImage from '../../public/assets/images/play-button.png';
 import resetImage from '../../public/assets/images/reset-button.png';
 import pauseImage from '../../public/assets/images/pause-button.png';
+
+// Initialize audio element
+const audioElement = new Audio(singingBowl);
 
 /**
  * Timer component for meditation sessions.
@@ -25,7 +27,12 @@ const Timer = () => {
   const [isActive, setActive] = useState(false);
   const [countdownFinished, setCountdownFinished] = useState(false);
   const [durationFinished, setDurationFinished] = useState(false);
-  const [play, { stop }] = useSound(singingBowl);
+
+  // Function to stop the audio
+  const stopAudio = () => {
+    audioElement.currentTime = 0;
+    audioElement.pause();
+  };
 
   // Wake lock hook
   const { request, release } = useWakeLock({
@@ -37,10 +44,12 @@ const Timer = () => {
   // If there is no user, stop the timer audio
   const { user } = useAuthContext();
   useEffect(() => {
-    return () => {
-      stop();
-    };
-  }, [user, stop]);
+    if (!user) {
+      return () => {
+        audioElement.pause();
+      };
+    }
+  }, [user]);
 
   /**
    * Creates a closure to ensure the sound plays only once at the beginning and end.
@@ -54,7 +63,7 @@ const Timer = () => {
       if (count === 1) {
         return count;
       } else {
-        play();
+        audioElement.play();
         count++;
       }
     };
@@ -78,7 +87,7 @@ const Timer = () => {
 
     if (isActive) {
       // If it was paused, stop the sound
-      stop();
+      audioElement.pause();
     } else {
       // If it was not active, request wake lock
       request();
@@ -99,7 +108,7 @@ const Timer = () => {
     if (countdownInput) countdownInput.value = '';
     if (durationInput) durationInput.value = '';
     // Stop audio
-    stop();
+    stopAudio();
     // Release wake lock
     release();
   };
@@ -141,6 +150,7 @@ const Timer = () => {
       clearInterval(countdownInterval);
       clearInterval(durationInterval);
       setActive(false);
+      stopAudio();
     }
 
     // Cleanup intervals when the component unmounts or dependencies change
