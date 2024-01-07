@@ -5,35 +5,17 @@ import dotenv from 'dotenv';
 dotenv.config();
 import mongoose from 'mongoose';
 
+// Connect to MongoDB database
 async function connectToDatabase() {
   try {
-    let options = {
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       dbName: 'quil_app',
-    };
-
-    if (process.env.NODE_ENV === 'production') {
-      const fixieData = process.env.FIXIE_SOCKS_HOST.split(new RegExp('[/(:\\/@/]+'));
-
-      options = {
-        ...options,
-        auth: {
-          user: fixieData[0],
-          password: fixieData[1],
-        },
-        proxy: {
-          host: fixieData[2],
-          port: parseInt(fixieData[3]),
-        },
-      };
-    }
-
-    await mongoose.connect(process.env.MONGODB_URI, options);
-    console.log('Connected to MongoDB.');
+    });
+    console.log('Connected to Mongo DB.');
   } catch (err) {
-    console.error('Error connecting to MongoDB:', err.message);
-    process.exit(1); // Exit the process if connection fails
+    console.log(err);
   }
 }
 
