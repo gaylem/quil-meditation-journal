@@ -127,8 +127,8 @@ app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
 app.use('/api/accounts', accountRouter);
 
-// Serve static files
-app.use(express.static(path.join(__dirname, '../public')));
+// Serve static files 
+app.use(express.static(path.join(__dirname, '../build')));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
 });
