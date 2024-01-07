@@ -127,19 +127,12 @@ app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
 app.use('/api/accounts', accountRouter);
 
-// Serve static files from build folder in production or staging
-// if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-app.use(express.static(path.join(__dirname, '../build')));
+// Serve static files
+app.use(express.static(path.join(__dirname, '../public')));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
 });
-// If env is development (local), serve the static files from the public folder
-// } else if (process.env.NODE_ENV === 'development') {
-//   console.log('Serving static files from development/public');
-//   app.use(express.static('public'));
-// } else if (err) {
-//   res.status(500).send(err);
-// }
+
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
   const originalSend = res.send;
