@@ -26,11 +26,6 @@ const getProxyConfig = () => {
       secure: false,
       pathRewrite: { '^/api': '' },
     },
-
-    '/assets': {
-      target: proxyTargets[environment],
-      secure: false,
-    },
   };
 };
 
