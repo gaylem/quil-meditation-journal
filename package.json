@@ -17,7 +17,7 @@
     "client": "webpack-dev-server --hot --mode development",
     "test": "nyc jest",
     "test:watch": "jest --watch",
-    "analyze": "webpack-bundle-analyzer --mode production",
+    "analyze": "webpack-bundle-analyzer --mode production"
   },
   "keywords": [],
   "author": "",
