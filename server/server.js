@@ -129,9 +129,9 @@ app.use('/api/accounts', accountRouter);
 
 // Serve static files from build folder in production or staging
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  app.use(express.static(path.join(__dirname, '../public/build')));
+  app.use(express.static(path.join(__dirname, '../build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../public', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
   });
   // If env is development (local), serve the static files from the public folder
 } else if (process.env.NODE_ENV === 'development') {
