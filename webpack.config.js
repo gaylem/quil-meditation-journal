@@ -4,7 +4,6 @@ import HTMLWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
-import axiosConfig from './client/axiosConfig';
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
@@ -72,7 +71,13 @@ export default {
       publicPath: '/',
     },
     port: 8080,
-    proxy: axiosConfig.defaults.baseURL,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000', 
+        secure: false,
+        pathRewrite: { '^/api': '' },
+      },
+    },
     historyApiFallback: true,
   },
 
