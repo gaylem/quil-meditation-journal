@@ -4,33 +4,13 @@ import HTMLWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
+import axiosConfig from './client/axiosConfig';
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-const getProxyConfig = () => {
-  // Define proxy targets based on environment
-  const proxyTargets = {
-    development: 'http://localhost:4000',
-    staging: 'https://quil-staging-97e232bad7d0.herokuapp.com',
-    production: 'https://quil-prod-b3e044c49835.herokuapp.com',
-  };
-
-  // Get the current environment
-  const environment = process.env.NODE_ENV;
-
-  // Set up the proxy configuration based on the environment
-  return {
-    '/api': {
-      target: proxyTargets[environment],
-      secure: false,
-      pathRewrite: { '^/api': '' },
-    },
-  };
-};
-
 export default {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: 'production',
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'build'),
@@ -92,7 +72,7 @@ export default {
       publicPath: '/',
     },
     port: 8080,
-    proxy: getProxyConfig(),
+    proxy: axiosConfig.defaults.baseURL,
     historyApiFallback: true,
   },
 
