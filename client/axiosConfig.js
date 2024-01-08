@@ -10,7 +10,17 @@ const baseURLs = {
 };
 
 // Determine the environment based on NODE_ENV
-const environment = TARGET_ENV;
+let environment;
+
+// Set environment to development if TARGET_ENV is not production
+// This is necessary because process.env will trigger an error in staging/production
+if (TARGET_ENV === 'production') {
+  environment = TARGET_ENV;
+} else {
+  environment = 'development';
+}
+
+console.log('environment: ', environment);
 
 // Create an instance of Axios with a custom configuration
 const instance = axios.create({
