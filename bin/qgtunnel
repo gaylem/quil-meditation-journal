@@ -1,0 +1,6 @@
+
+[qgtunnel.quil-prod-mongodb]
+accept = "127.0.0.1:27017"
+connect = "quil-prod.cb6eybn.mongodb.net:27017"
+encrypted = false
+transparent = true

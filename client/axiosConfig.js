@@ -12,19 +12,11 @@ const baseURLs = {
 // Determine the environment based on NODE_ENV or default to 'development'
 const environment = process.env.NODE_ENV;
 
-// Log the current environment
-console.log('Axios environment:', environment);
-
 // Create an instance of Axios with a custom configuration
 const instance = axios.create({
   // Set the base URL for requests
   baseURL: baseURLs[environment],
+  withCredentials: true,
 });
-
-// Log the base URL
-console.log('Base URL:', baseURLs[environment]);
-
-// Set withCredentials for the instance
-instance.defaults.withCredentials = true;
 
 export default instance;
