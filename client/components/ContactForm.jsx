@@ -10,7 +10,7 @@ import React from 'react';
 function ContactForm() {
   return (
     <div className='contact-form-container'>
-      <form action={TARGET_ENV === 'production' ? REACT_APP_FORM_ENDPOINT : process.env.REACT_APP_FORM_ENDPOINT} method='POST' className='form'>
+      <form action={TARGET_ENV === 'production' || TARGET_ENV === 'staging' ? REACT_APP_FORM_ENDPOINT : process.env.REACT_APP_FORM_ENDPOINT} method='POST' className='form'>
         <label htmlFor='name'>Your Name:</label>
         <input type='text' name='name' id='name' placeholder='ex: Jane Doe' className='name' />
         <div className='visually-hidden'>
