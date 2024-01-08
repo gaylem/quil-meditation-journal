@@ -24,11 +24,11 @@ const __dirname = path.dirname(__filename);
 const setupCORS = () => {
   // Define allowed origins based on environment
   let allowedOrigin;
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.TARGET_ENV === 'development') {
     allowedOrigin = 'http://localhost:8080';
-  } else if (process.env.NODE_ENV === 'staging') {
+  } else if (process.env.TARGET_ENV === 'staging') {
     allowedOrigin = 'https://quil-staging-97e232bad7d0.herokuapp.com';
-  } else if (process.env.NODE_ENV === 'production') {
+  } else if (process.env.TARGET_ENV === 'production') {
     allowedOrigin = 'https://quil-prod-b3e044c49835.herokuapp.com';
   }
 
@@ -69,7 +69,7 @@ app.use(
 
 const setupSecurityHeaders = () => {
   // CSP middleware based on environment
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.TARGET_ENV === 'development') {
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
@@ -80,7 +80,7 @@ const setupSecurityHeaders = () => {
       }),
     );
     console.log('setupSecurityHeaders in development');
-  } else if (process.env.NODE_ENV === 'staging') {
+  } else if (process.env.TARGET_ENV === 'staging') {
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
@@ -92,7 +92,7 @@ const setupSecurityHeaders = () => {
       }),
     );
     console.log('setupSecurityHeaders in staging');
-  } else if (process.env.NODE_ENV === 'production') {
+  } else if (process.env.TARGET_ENV === 'production') {
     // Apply more restrictive CSP for production
     app.use(
       helmet.contentSecurityPolicy({
@@ -173,7 +173,8 @@ app.use((err, _, res) => {
 });
 
 // Log the current environment
-console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
+console.log('TARGET_ENV:', process.env.TARGET_ENV);
+console.log('NODE_ENV:', process.env.NODE_ENV);
 
 // Start the server
 let port = process.env.PORT;
