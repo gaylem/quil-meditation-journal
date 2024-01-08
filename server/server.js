@@ -86,7 +86,7 @@ const setupSecurityHeaders = () => {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
-          connectSrc: ["'self'", 'http://localhost:4000'],
+          connectSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
           formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
         },
       }),
