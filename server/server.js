@@ -80,13 +80,26 @@ const setupSecurityHeaders = () => {
       }),
     );
     console.log('setupSecurityHeaders in development');
-  } else if (process.env.NODE_ENV === 'production') {
+  } else if (process.env.NODE_ENV === 'staging') {
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
           connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
+          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
+        },
+      }),
+    );
+    console.log('setupSecurityHeaders in staging');
+  } else if (process.env.NODE_ENV === 'production') {
+    // Apply more restrictive CSP for production
+    app.use(
+      helmet.contentSecurityPolicy({
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
+          connectSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
           formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
         },
       }),
