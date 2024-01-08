@@ -29,11 +29,8 @@ const getProxyConfig = () => {
   };
 };
 
-const isProduction = process.env.NODE_ENV === 'production';
-const isStaging = process.env.NODE_ENV === 'staging';
-
 export default {
-  mode: isProduction ? 'production' : isStaging ? 'none' : 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'build'),
