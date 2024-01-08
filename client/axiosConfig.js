@@ -10,7 +10,7 @@ const baseURLs = {
 };
 
 // Determine the environment based on NODE_ENV or default to 'development'
-const environment = process.env.TARGET_ENV;
+const environment = process.env.REACT_APP_TARGET_ENV;
 
 // Create an instance of Axios with a custom configuration
 const instance = axios.create({
