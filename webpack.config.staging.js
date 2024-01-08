@@ -3,13 +3,12 @@ import webpack from 'webpack';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
-import Dotenv from 'dotenv-webpack';
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 export default {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: 'production',
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'build'),
@@ -145,8 +144,6 @@ export default {
       template: './public/index.html',
       publicPath: '/',
     }),
-    process.env.NODE_ENV === 'development' && new Dotenv(),
-    process.env.NODE_ENV === 'production' &&
       new CompressionPlugin({
         test: /\.(js|css|html|svg)$/,
         compressionOptions: {
@@ -155,10 +152,10 @@ export default {
         },
         filename: '[path][base].gz',
       }),
-    // process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.NODE_ENV': JSON.stringify('staging'),
     }),
   ],
 };
