@@ -157,5 +157,8 @@ export default {
       }),
     // process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.DefinePlugin({
+      TARGET_ENV: JSON.stringify(process.env.TARGET_ENV),
+    }),
   ],
 };
