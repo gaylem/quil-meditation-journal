@@ -8,7 +8,7 @@ let baseUrl;
 if (TARGET_ENV === 'production') {
   baseUrl = 'https://quil-prod-b3e044c49835.herokuapp.com';
 } else if (TARGET_ENV === 'staging') {
-  baseUrl = STAGING_URL;
+  baseUrl = 'https://quil-staging-97e232bad7d0.herokuapp.com';
 } else {
   baseUrl = 'http://localhost:4000';
 }
