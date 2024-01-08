@@ -8,11 +8,19 @@ import mongoose from 'mongoose';
 // Connect to MongoDB database
 async function connectToDatabase() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      dbName: 'quil_app',
-    });
+    if (process.env.NODE_ENV === 'production') {
+       await mongoose.connect(process.env.QUOTAGUARDSTATIC_URL, {
+         useNewUrlParser: true,
+         useUnifiedTopology: true,
+         dbName: 'quil_app',
+       });
+    } else {
+      await mongoose.connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: 'quil_app',
+      });
+    }
     console.log('Connected to Mongo DB.');
   } catch (err) {
     console.log(err);
