@@ -9,7 +9,7 @@ const baseURLs = {
   production: 'https://quil-prod-b3e044c49835.herokuapp.com',
 };
 
-// Determine the environment based on NODE_ENV or default to 'development'
+// Determine the environment based on NODE_ENV
 const environment = TARGET_ENV;
 
 // Create an instance of Axios with a custom configuration
