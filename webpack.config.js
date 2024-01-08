@@ -9,7 +9,7 @@ import Dotenv from 'dotenv-webpack';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 export default {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: process.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'build'),
@@ -157,8 +157,5 @@ export default {
       }),
     // process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-    }),
   ],
 };
