@@ -8,8 +8,11 @@ import Dotenv from 'dotenv-webpack';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
+const isProduction = process.env.NODE_ENV === 'production';
+const isStaging = process.env.NODE_ENV === 'staging';
+
 export default {
-  mode: 'production',
+  mode: isProduction ? 'production' : isStaging ? 'production' : 'development',
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'build'),
