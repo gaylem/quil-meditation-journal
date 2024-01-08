@@ -73,7 +73,7 @@ export default {
     port: 8080,
     proxy: {
       '/api': {
-        target: 'http://localhost:4000', 
+        target: 'http://localhost:4000',
         secure: false,
         pathRewrite: { '^/api': '' },
       },
@@ -157,5 +157,8 @@ export default {
       }),
     // process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    }),
   ],
 };
