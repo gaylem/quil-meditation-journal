@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "build": "webpack --production",
+    "build": "webpack",
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon ./server/server.js",
     "client": "webpack-dev-server --hot --mode development",
