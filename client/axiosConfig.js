@@ -16,7 +16,7 @@ if (TARGET_ENV === 'production') {
 // Create an instance of Axios with a custom configuration
 const instance = axios.create({
   // Set the base URL for requests
-  baseURL,
+  baseURL: baseURL,
   withCredentials: true,
 });
 
