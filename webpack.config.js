@@ -159,6 +159,7 @@ export default {
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.DefinePlugin({
       TARGET_ENV: JSON.stringify(process.env.TARGET_ENV),
+      REACT_APP_FORM_ENDPOINT: JSON.stringify(process.env.REACT_APP_FORM_ENDPOINT),
     }),
   ],
 };
