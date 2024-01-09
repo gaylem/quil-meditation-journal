@@ -27,9 +27,9 @@ const setupCORS = () => {
   if (process.env.TARGET_ENV === 'development') {
     allowedOrigin = 'http://localhost:8080';
   } else if (process.env.TARGET_ENV === 'staging') {
-    allowedOrigin = 'https://quil-staging-97e232bad7d0.herokuapp.com';
+    allowedOrigin = process.env.STAGING_URL;
   } else if (process.env.TARGET_ENV === 'production') {
-    allowedOrigin = 'https://quil-prod-b3e044c49835.herokuapp.com';
+    allowedOrigin = process.env.PROD_URL;
   }
 
   // Handle CORS for all routes
@@ -85,9 +85,9 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
-          connectSrc: ["'self'", 'https://quil-staging-97e232bad7d0.herokuapp.com'],
-          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
+          scriptSrc: ["'self'", process.env.STAGING_URL],
+          connectSrc: ["'self'", process.env.STAGING_URL],
+          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
@@ -98,9 +98,9 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
-          connectSrc: ["'self'", 'https://quil-prod-b3e044c49835.herokuapp.com'],
-          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
+          scriptSrc: ["'self'", process.env.PROD_URL],
+          connectSrc: ["'self'", process.env.PROD_URL],
+          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );

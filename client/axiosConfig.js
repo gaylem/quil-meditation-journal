@@ -4,16 +4,16 @@ import axios from 'axios';
 
 let baseURL;
 
-// Set environment to development if TARGET_ENV is not production or staging
+// Set environment to development based on TARGET_ENV
 if (TARGET_ENV === 'production') {
-  baseURL = 'https://quil-prod-b3e044c49835.herokuapp.com';
+  baseURL = PROD_URL;
 } else if (TARGET_ENV === 'staging') {
-  baseURL = 'https://quil-staging-97e232bad7d0.herokuapp.com';
+  baseURL = STAGING_URL;
 } else {
   baseURL = 'http://localhost:4000';
 }
 
-// Create an instance of Axios with a custom configuration
+// Create an instance of Axios with baseURL and withCredentials: true
 const instance = axios.create({
   // Set the base URL for requests
   baseURL: baseURL,

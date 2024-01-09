@@ -40,7 +40,7 @@ export default {
             loader: 'file-loader',
             options: {
               name: '[name].[contenthash].[ext]',
-              outputPath: 'assets/images', // or your preferred output directory
+              outputPath: 'assets/images',
             },
           },
           {
@@ -160,6 +160,8 @@ export default {
     new webpack.DefinePlugin({
       TARGET_ENV: JSON.stringify(process.env.TARGET_ENV),
       REACT_APP_FORM_ENDPOINT: JSON.stringify(process.env.REACT_APP_FORM_ENDPOINT),
+      STAGING_URL: JSON.stringify(process.env.STAGING_URL),
+      PROD_URL: JSON.stringify(process.env.PROD_URL),
     }),
   ],
 };

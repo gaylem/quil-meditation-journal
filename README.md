@@ -1,12 +1,7 @@
-# quil, a meditation journal
+# Welcome to the quil private repo!
 
-quil is your distraction-free space for chronicling your meditation journey. Sure, you could use any other digital note taking app instead, but the last thing you need when you’re about to meditate is to glance at your to do list. quil also steers clear of social sharing features and alerts, recognizing that true success in meditation lies in your ability to dedicate time and space to your practice. 
+This is where the magic happens. If you're reading this, it's likely because you've offered to help make improve quil, and I'm very grateful to you. 
 
-With quil, your meditation journal is accessible wherever you go, leveraging the convenience of your mobile device. No longer reliant on a physical meditation notebook, you can effortlessly capture and reflect on your mindfulness moments at any time.
-
-We recognize that your meditation journal contains your personal inner experiences and reflections, which is why we take privacy and security very seriously. All journal entries are fully encrypted, and we will never share or sell your data to third parties. You can meditate with quil knowing your journal is completely confidential and seen only by you. 
-
-quil is also an open-source product, which is why we can offer it to the public at no cost. We believe that meditation should be free and accessible to everyone who wants to learn regardless of their beliefs (or lack thereof). We also hope that, in addition to learning about meditation, quil will also foster growth and collaboration within the open source software community. 
 <br />
 
 ## Tech Stack
@@ -19,51 +14,40 @@ quil is also an open-source product, which is why we can offer it to the public 
 <img align="left" alt="Express" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" />
 <img align="left" alt="MongoDB" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" />
 </div>
-
-<br/>
-<br/>
-
-## Preview
-
-### Account Page
-<img width="907" alt="Screenshot 2023-11-20 at 6 55 07 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/4e87a02a-dd88-460c-bbf2-9b9ecd6809db">
-
-### Add New Entry
-<img width="903" alt="Screenshot 2023-11-20 at 6 55 35 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/c4cbde4b-2c7d-4b24-9c81-5cd374c8672f">
-
-### New Entry Added
-<img width="905" alt="Screenshot 2023-11-20 at 6 54 45 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/d8394074-d131-4969-9b97-21e1fcff33c5">
-
-### Login Page
-<img width="905" alt="Screenshot 2023-11-20 at 6 53 45 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/d8e20536-caec-451e-910e-d92ee47af3e8">
-
-### Signup Page
-<img width="908" alt="Screenshot 2023-11-20 at 6 53 56 PM" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/3c89f91a-719b-4c22-be22-7b1a5c93a1ab">
-
 ---
+
+<br/>
+<br/>
+
 ## Progress
+<br/>
 
 | Feature                                                   | Status |
 | --------------------------------------------------------- | ------ |
-| Journal entry functionality                               | ⏳     |
-| Journal entry content encryption                          | ⏳     |
-| JWT authentication                                        | ⏳     |
-| Design enhancements                                       | ⏳     |
-| Collapsable sidebar and additional pages                  | 🙏🏻     |
-| Search functionality                                      | 🙏🏻     |
-| Build random meditation quotes API                        | 🙏🏻     |
+| Journal entry functionality                               | ✅     |
+| Journal entry content encryption                          | ✅     |
+| JWT authentication                                        | ✅     |
+| Collapsable sidebar and additional pages                  | ✅     |
+| Design & accessibility improvements                       | ✅     |
+| Performance improvements                                  | ⏳     |
+| Security enhancements                                     | ⏳     |
+| Password reset functionality                              | ⏳     |
 | Testing Coverage                                          | 🙏🏻     |
-| OAuth2.0 with cloud-hosting providers (i.e. AWS)          | 🙏🏻     |
-| Lighthouse (accessibility, SEO, performance) improvements | 🙏🏻     |
+| Search functionality                                      | 🙏🏻     |
+| Stats page                                                | 🙏🏻     |
+| OAuth with Passport.js                                    | 🙏🏻     |
+| Design advice                                             | 🙏🏻     |
+| Build random meditation quotes API                        | 🙏🏻     |
 
 - ✅ = Ready to use
 - ⏳ = In progress
 - 🙏🏻 = Looking for contributors
 
----
+<br/>
+<br/>
 
 # How to Contribute
-This repo is contribution-friendly! If you're interested in helping out, please follow these guidelines:
+Once you're ready to go, please follow these guidelines:
 
 1. Fork and clone the repository.
 2. Install the dependencies.
