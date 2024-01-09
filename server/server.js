@@ -26,10 +26,10 @@ const setupCORS = () => {
   let allowedOrigin;
   if (process.env.TARGET_ENV === 'development') {
     allowedOrigin = 'http://localhost:8080';
-  } else if (TARGET_ENV === 'staging') {
-    allowedOrigin = STAGING_URL;
-  } else if (TARGET_ENV === 'production') {
-    allowedOrigin = PROD_URL;
+  } else if (process.env.TARGET_ENV === 'staging') {
+    allowedOrigin = process.env.STAGING_URL;
+  } else if (process.env.TARGET_ENV === 'production') {
+    allowedOrigin = process.env.PROD_URL;
   }
 
   // Handle CORS for all routes
@@ -85,9 +85,9 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", STAGING_URL],
-          connectSrc: ["'self'", STAGING_URL],
-          formAction: ["'self'", REACT_APP_FORM_ENDPOINT],
+          scriptSrc: ["'self'", process.env.STAGING_URL],
+          connectSrc: ["'self'", process.env.STAGING_URL],
+          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
@@ -98,9 +98,9 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", PROD_URL],
-          connectSrc: ["'self'", PROD_URL],
-          formAction: ["'self'", REACT_APP_FORM_ENDPOINT],
+          scriptSrc: ["'self'", process.env.PROD_URL],
+          connectSrc: ["'self'", process.env.PROD_URL],
+          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
