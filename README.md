@@ -1,6 +1,6 @@
 # Welcome to the quil private repo!
 
-This is where the magic happens. If you're reading this, it's likely because you've offered to help make improve quil, and I'm very grateful to you. 
+If you're reading this, it's likely because you've offered to help make improve quil, and I'm very grateful to you. 
 
 <br />
 
