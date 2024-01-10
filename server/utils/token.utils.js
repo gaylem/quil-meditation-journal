@@ -25,7 +25,7 @@ import jwt from 'jsonwebtoken';
  */
 export const createTokens = payload => {
   // Assign secret key to variable
-  const secretKey = process.env.SECRET_KEY;
+  const secretKey = process.env.TOKEN_KEY;
   // Validate input
   try {
     // Check if input is an object
@@ -63,7 +63,7 @@ export const createTokens = payload => {
  */
 export const verifyAccessToken = accessToken => {
   // Assign secret key to variable
-  const secretKey = process.env.SECRET_KEY;
+  const secretKey = process.env.TOKEN_KEY;
   try {
     return jwt.verify(accessToken, secretKey, { algorithms: ['HS256'] });
   } catch (error) {
@@ -92,7 +92,7 @@ export const validateRefreshToken = async (userId, refreshToken) => {
 
 export const verifyRefreshToken = async refreshToken => {
   // Assign secret key to variable
-  const secretKey = process.env.SECRET_KEY;
+  const secretKey = process.env.TOKEN_KEY;
   try {
     // Verify JWT token
     return jwt.verify(refreshToken, secretKey, { algorithms: ['HS256'] });

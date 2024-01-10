@@ -11,7 +11,7 @@ import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 const algorithm = 'aes-256-cbc';
 
 // Key
-const key = process.env.KEY;
+const key = process.env.ENCRYPTION_KEY;
 
 /**
  * Encrypts the given text using AES-256-CBC algorithm and a unique IV.
