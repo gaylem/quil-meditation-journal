@@ -3,7 +3,5 @@ package-lock.json
 .env
 build
 coverage
-private-key-script.js
+secret-key-script.js
 .nyc_output
-secret-script.js
-entry-encryption-script.js
