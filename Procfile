@@ -1,1 +1,1 @@
-web: bin/qgtunnel quil-staging npm start
+web: bin/qgtunnel npm start
