@@ -6,7 +6,8 @@ encrypted = false
 transparent = true
 
 [qgtunnel.quil-staging-mongodb]
-accept = "127.0.0.1:27107"
+accept = "127.0.0.2:27017"
 connect = "quil-staging.5a4qzfh.mongodb.net:27017"
 encrypted = false
 transparent = true
+
