@@ -1,12 +1,13 @@
 
 [qgtunnel.quil-prod-mongodb]
 accept = "127.0.0.1:27017"
-connect = "quil-prod.cb6eybn.mongodb.net:27017"
+connect = "ac-yfspc02-lb.cb6eybn.mongodb.net:27017"
 encrypted = false
 transparent = true
 
 [qgtunnel.quil-staging-mongodb]
-accept = "127.0.0.1:27107"
-connect = "quil-staging.5a4qzfh.mongodb.net:27017"
+accept = "127.0.0.2:27017"
+connect = "ac-cgfdiuv-lb.5a4qzfh.mongodb.net:27017"
 encrypted = false
 transparent = true
+
