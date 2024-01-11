@@ -29,12 +29,14 @@ quil is a free, open-source meditation app that comes in two forms:
 
 **quil offers the following features:**
 
-* Accessible, responsive UI design built with React and aligned with  WebAIM standards 
 * A meditation timer with soothing sounds and SCSS animations
+* Accessible, responsive UI design built with React and aligned with  WebAIM standards 
+* Scalable Node.js/Express server with REST APIs
 * Optimized site performance with enhanced minification, code splitting, compression, lazy loading, and caching 
 * Server-side JSON Web Token (JWT) authentication 
 * Password hashing and journal entry encryption to protect user privacy
 * Additional security measures to prevent MitM, XSS, and other attacks
+* Pipeline with production and staging environments built on Heroku
 
 <br></br>
 
