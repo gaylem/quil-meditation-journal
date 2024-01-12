@@ -16,6 +16,7 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import etag from 'etag';
 import crypto from 'crypto';
+import fs from 'fs';
 
 // Get the directory name of the current module's file path
 const __filename = fileURLToPath(import.meta.url);
@@ -68,11 +69,12 @@ app.use(
 // Referrer Policy Middleware
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
-// Generate nonce
+// Generate Nonce to allow Google Analytics Tag
 const generateNonce = () => {
   return crypto.randomBytes(16).toString('base64');
 };
 
+// Setup Security Headers (CSP)
 const setupSecurityHeaders = () => {
   const nonce = generateNonce();
 
@@ -143,8 +145,16 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Handle all other routes by sending the 'index.html' file
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+  // Read the HTML file
+  const htmlTemplate = fs.readFileSync(path.resolve(__dirname, '../build', 'index.html'), 'utf-8');
+  
+  // Replace __NONCE__ with the actual nonce value
+  const finalHtml = htmlTemplate.replace(/__NONCE__/g, app.locals.nonce);
+
+  // Send the modified HTML as the response
+  res.send(finalHtml);
 });
+
 
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
