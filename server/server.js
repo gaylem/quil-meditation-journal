@@ -75,7 +75,7 @@ const setupSecurityHeaders = () => {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'http://localhost:8080'],
-          connectSrc: ["'self'", 'http://localhost:4000', 'https://www.googletagmanager.com'],
+          connectSrc: ["'self'", 'http://localhost:4000'],
         },
       }),
     );
