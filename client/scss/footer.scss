@@ -7,8 +7,8 @@ $shadow-color: rgb(172, 172, 172);
 }
 
 footer {
-  // position: absolute;
-  // width: 100vw;
+  position: absolute;
+  width: 100vw;
   background-color: rgb(233, 232, 232);
   padding: 1em;
   text-align: center;
@@ -19,6 +19,7 @@ footer {
   }
   .footer-container {
     display: flex;
+    bottom: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
