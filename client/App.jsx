@@ -33,11 +33,16 @@ function App() {
   const [showFooter, setShowFooter] = useState(false);
 
   useEffect(() => {
-    const delayFooter = setTimeout(() => {
-      setShowFooter(true);
-    }, 6000); // Adjust the delay time (in milliseconds) as needed
+    const loadFooter = async () => {
+      await Promise.all([
+        import(/* webpackChunkName: "footer" */ './components/Footer.jsx'),
+        new Promise(resolve => setTimeout(resolve, 5000)), // Adjust the delay time as needed
+      ]);
 
-    return () => clearTimeout(delayFooter); // Cleanup the timeout on component unmount
+      setShowFooter(true);
+    };
+
+    loadFooter();
   }, []);
 
   return (
@@ -69,13 +74,9 @@ function App() {
             {/* Catch-all route for 404 */}
             <Route path='*' element={<LazyNotFound />} />
           </Routes>
+          {showFooter && <LazyFooter />}
         </Suspense>
       </BrowserRouter>
-      {showFooter && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <LazyFooter />
-        </Suspense>
-      )}
     </div>
   );
 }
