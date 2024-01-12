@@ -15,8 +15,6 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import etag from 'etag';
-import crypto from 'crypto';
-import fs from 'fs';
 
 // Get the directory name of the current module's file path
 const __filename = fileURLToPath(import.meta.url);
@@ -69,22 +67,14 @@ app.use(
 // Referrer Policy Middleware
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
-// Generate Nonce to allow Google Analytics Tag
-const generateNonce = () => {
-  return crypto.randomBytes(16).toString('base64');
-};
-
-// Setup Security Headers (CSP)
 const setupSecurityHeaders = () => {
-  const nonce = generateNonce();
-
   // CSP middleware based on environment
   if (process.env.TARGET_ENV === 'development') {
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'http://localhost:8080', 'https://www.googletagmanager.com'],
+          scriptSrc: ["'self'", 'http://localhost:8080'],
           connectSrc: ["'self'", 'http://localhost:4000', 'https://www.googletagmanager.com'],
         },
       }),
@@ -95,7 +85,7 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.STAGING_URL, 'https://www.googletagmanager.com'],
+          scriptSrc: ["'self'", process.env.STAGING_URL],
           connectSrc: ["'self'", process.env.STAGING_URL, 'https://www.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
@@ -103,11 +93,11 @@ const setupSecurityHeaders = () => {
     );
     console.log('setupSecurityHeaders in staging');
   } else if (process.env.TARGET_ENV === 'production') {
+    // Apply more restrictive CSP for production
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com', `'nonce-${nonce}'`],
+          defaultSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
@@ -115,9 +105,6 @@ const setupSecurityHeaders = () => {
     );
     console.log('setupSecurityHeaders in production');
   }
-
-  // Set the nonce value in a variable accessible to template engine
-  app.locals.nonce = nonce;
 };
 
 // Invoke the security headers function
@@ -145,16 +132,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Handle all other routes by sending the 'index.html' file
 app.get('*', (req, res) => {
-  // Read the HTML file
-  const htmlTemplate = fs.readFileSync(path.resolve(__dirname, '../build', 'index.html'), 'utf-8');
-  
-  // Replace __NONCE__ with the actual nonce value
-  const finalHtml = htmlTemplate.replace(/__NONCE__/g, app.locals.nonce);
-
-  // Send the modified HTML as the response
-  res.send(finalHtml);
+  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
 });
-
 
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
