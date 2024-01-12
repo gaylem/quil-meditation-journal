@@ -30,21 +30,6 @@ function App() {
   // Retrieve user information from the authentication context
   const { user } = useAuthContext();
 
-  const [showFooter, setShowFooter] = useState(false);
-
-  useEffect(() => {
-    const loadFooter = async () => {
-      await Promise.all([
-        import(/* webpackChunkName: "footer" */ './components/Footer.jsx'),
-        new Promise(resolve => setTimeout(resolve, 5000)), // Adjust the delay time as needed
-      ]);
-
-      setShowFooter(true);
-    };
-
-    loadFooter();
-  }, []);
-
   return (
     // Main container for the application
     <div className='app-container'>
@@ -74,7 +59,7 @@ function App() {
             {/* Catch-all route for 404 */}
             <Route path='*' element={<LazyNotFound />} />
           </Routes>
-          {showFooter && <LazyFooter />}
+          <LazyFooter />
         </Suspense>
       </BrowserRouter>
     </div>
