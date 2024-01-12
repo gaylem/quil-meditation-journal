@@ -43,10 +43,9 @@ function App() {
   return (
     // Main container for the application
     <div className='app-container'>
-      {/* Render the Header component for navigation */}
-      <LazyHeader />
       {/* Set up the application routes using BrowserRouter */}
       <BrowserRouter>
+        {/* Render the Header component for navigation */}
         <Suspense>
           <LazyHeader />
           {/* Define the routes for the application */}
@@ -71,12 +70,12 @@ function App() {
             <Route path='*' element={<LazyNotFound />} />
           </Routes>
         </Suspense>
-        {showFooter && (
-          <Suspense fallback={<div>Loading...</div>}>
-            <LazyFooter />
-          </Suspense>
-        )}
       </BrowserRouter>
+      {showFooter && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyFooter />
+        </Suspense>
+      )}
     </div>
   );
 }
