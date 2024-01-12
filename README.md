@@ -2,9 +2,8 @@
 
 quil is a meditation app that comes in two forms:
 
-1. **A free online meditation journal and timer.** To sign up, go to <a href="https://quilmind.com">quilmind.com</a> and create an account.
+1. **A free online meditation journal and timer.** To sign up, go to <a href="https://quilmind.com" target="_blank">quilmind.com</a> and create an account.
 2. **An open-source meditation timer.** See the instructions at the bottom of this README to fork, clone, and use the meditation timer code. 
-
 <br></br>
 
 ## Tech Stack
@@ -25,8 +24,10 @@ quil is a meditation app that comes in two forms:
 
 ## quilmind.com
 
+<img width="1000" alt="quil-image" src="https://github.com/gaylem/quil-meditation-journal/assets/76500899/01ea0e11-b18c-4c29-8f88-36665a8033a1">
+<br></br>
 
-**<a href="https://www.quil.space">quil.space</a> offers the following features:**
+**<a href="https://www.quilmind.com" target="_blank">quilmind.com</a> offers the following features:**
 
 * A meditation timer with soothing sounds and SCSS animations
 * Accessible, responsive UI design built with React and aligned with  WebAIM standards 
@@ -36,23 +37,6 @@ quil is a meditation app that comes in two forms:
 * Password hashing and journal entry encryption to protect user privacy
 * Additional security measures to prevent MitM, XSS, and other attacks
 * Pipeline with production and staging environments built on Heroku
-
-<br></br>
-
-## How to View & Use the Open Source Timer
-
-1. Fork and clone this repository.
-2. Install the dependencies.
-
-```bash
-npm install
-```
-
-3. Launch quil from the command line:
-
-```bash
-npm run dev
-```
 <br></br>
 
 ## Progress
@@ -79,4 +63,21 @@ npm run dev
 - 🙏🏻 = Looking for contributors
 <br></br>
 
-quil contribution friendly! If you're interested in helping us make quil even better, please visit <a href="https://quilmind.com/community">quilmind.com/community</a> to connect!
+quil contribution friendly! If you're interested in helping us make quil even better, please visit <a href="https://quilmind.com/community" target="_blank">quilmind.com/community</a> to connect!
+<br></br>
+
+## How to View & Use the Open Source Timer
+
+1. Fork and clone this repository.
+2. Install the dependencies.
+
+```bash
+npm install
+```
+
+3. Launch quil from the command line:
+
+```bash
+npm run dev
+```
+
