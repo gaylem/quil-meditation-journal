@@ -23,7 +23,7 @@ const __dirname = path.dirname(__filename);
 // Function to set up CORS based on environment
 const setupCORS = () => {
   // Define allowed origins based on environment
-  let allowedOrigin;
+  let allowedOrigins;
   if (process.env.TARGET_ENV === 'development') {
     allowedOrigins = ['http://localhost:8080'];
   } else if (process.env.TARGET_ENV === 'staging') {
