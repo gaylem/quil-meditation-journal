@@ -33,16 +33,11 @@ function App() {
   const [showFooter, setShowFooter] = useState(false);
 
   useEffect(() => {
-    const loadFooter = async () => {
-      await Promise.all([
-        import(/* webpackChunkName: "footer" */ './components/Footer.jsx'),
-        new Promise(resolve => setTimeout(resolve, 6000)), // Adjust the delay time as needed
-      ]);
-
+    const delayFooter = setTimeout(() => {
       setShowFooter(true);
-    };
+    }, 6000); // Adjust the delay time (in milliseconds) as needed
 
-    loadFooter();
+    return () => clearTimeout(delayFooter); // Cleanup the timeout on component unmount
   }, []);
 
   return (
