@@ -1,9 +1,9 @@
 # quil, a meditation journal
 
-quil is a free, open-source meditation app that comes in two forms:
+quil is a meditation app that comes in two forms:
 
-1. A free online meditation journal and timer. To sign up, go to <a href="https://www.quil.space">quil.space</a> and create an account.
-2. An open-source meditation timer. See the instructions at the bottom of this README to fork, clone, and use the meditation timer code. 
+1. **A free online meditation journal and timer.** To sign up, go to <a href="https://quilmind.com">quilmind.com</a> and create an account.
+2. **An open-source meditation timer.** See the instructions at the bottom of this README to fork, clone, and use the meditation timer code. 
 
 <br></br>
 
@@ -23,11 +23,10 @@ quil is a free, open-source meditation app that comes in two forms:
 <br></br>
 <br></br>
 
-## Demo
+## quilmind.com
 
-[VIDEO DEMO HERE]
 
-**quil offers the following features:**
+**<a href="https://www.quil.space">quil.space</a> offers the following features:**
 
 * A meditation timer with soothing sounds and SCSS animations
 * Accessible, responsive UI design built with React and aligned with  WebAIM standards 
@@ -42,7 +41,7 @@ quil is a free, open-source meditation app that comes in two forms:
 
 ## How to View & Use the Open Source Timer
 
-1. Fork and clone the repository.
+1. Fork and clone this repository.
 2. Install the dependencies.
 
 ```bash
@@ -80,4 +79,4 @@ npm run dev
 - 🙏🏻 = Looking for contributors
 <br></br>
 
-quil contribution friendly! If you're interested in helping us make quil even better, please visit <a href="https://www.quil.space/community">quil.space/community</a> to connect!
+quil contribution friendly! If you're interested in helping us make quil even better, please visit <a href="https://quilmind.com/community">quilmind.com/community</a> to connect!
