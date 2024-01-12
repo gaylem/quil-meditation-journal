@@ -15,6 +15,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import etag from 'etag';
+import crypto from 'crypto';
 
 // Get the directory name of the current module's file path
 const __filename = fileURLToPath(import.meta.url);
@@ -67,7 +68,14 @@ app.use(
 // Referrer Policy Middleware
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
+// Generate nonce
+const generateNonce = () => {
+  return crypto.randomBytes(16).toString('base64');
+};
+
 const setupSecurityHeaders = () => {
+  const nonce = generateNonce();
+
   // CSP middleware based on environment
   if (process.env.TARGET_ENV === 'development') {
     app.use(
@@ -93,12 +101,11 @@ const setupSecurityHeaders = () => {
     );
     console.log('setupSecurityHeaders in staging');
   } else if (process.env.TARGET_ENV === 'production') {
-    // Apply more restrictive CSP for production
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com'],
+          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com', `'nonce-${nonce}'`],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
@@ -106,6 +113,9 @@ const setupSecurityHeaders = () => {
     );
     console.log('setupSecurityHeaders in production');
   }
+
+  // Set the nonce value in a variable accessible to template engine
+  app.locals.nonce = nonce;
 };
 
 // Invoke the security headers function
