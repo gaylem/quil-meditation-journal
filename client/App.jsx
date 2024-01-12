@@ -1,6 +1,6 @@
 //** APP COMPONENT */
 
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 
 // Import BrowserRouter for managing page routes and navigation
 const { BrowserRouter, Routes, Route, Navigate } = await import('react-router-dom');
@@ -29,6 +29,16 @@ const LazyNotFound = lazy(() => import(/* webpackChunkName: "not-found" */ './pa
 function App() {
   // Retrieve user information from the authentication context
   const { user } = useAuthContext();
+
+  const [showFooter, setShowFooter] = useState(false);
+
+  useEffect(() => {
+    const delayFooter = setTimeout(() => {
+      setShowFooter(true);
+    }, 6000); // Adjust the delay time (in milliseconds) as needed
+
+    return () => clearTimeout(delayFooter); // Cleanup the timeout on component unmount
+  }, []);
 
   return (
     // Main container for the application
@@ -59,9 +69,13 @@ function App() {
             {/* Catch-all route for 404 */}
             <Route path='*' element={<LazyNotFound />} />
           </Routes>
-          <LazyFooter />
         </Suspense>
       </BrowserRouter>
+      {showFooter && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyFooter />
+        </Suspense>
+      )}
     </div>
   );
 }
