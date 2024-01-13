@@ -47,9 +47,9 @@ function App() {
             {/* Signup route - Renders Signup page if the user is not authenticated, otherwise redirects to the home page */}
             <Route path='/signup' element={!user ? <LazySignup /> : <Navigate to='/' />} />
             {/* About route - Renders About page */}
-            <Route path='/about-quil' element={<LazyAbout />} />
+            <Route path='/about' element={<LazyAbout />} />
             {/* Help route - Renders Help & FAQs page */}
-            <Route path='/help-faqs' element={<LazyHelpFAQ />} />
+            <Route path='/help' element={<LazyHelpFAQ />} />
             {/* Meditation route - Renders How to Meditate page */}
             <Route path='/how-to-meditate' element={<LazyMeditation />} />
             {/* Community route - Renders Community page */}
