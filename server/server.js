@@ -83,8 +83,7 @@ app.use((req, res, next) => {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'http://localhost:8080', 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
-          connectSrc: ["'self'", 'http://localhost:4000', 'https://www.googletagmanager.com', 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
-          scriptSrcNonce: [res.locals.nonce], // Use the correct variable here
+          connectSrc: ["'self'", 'http://localhost:4000', 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
         },
       }),
     );
@@ -98,7 +97,6 @@ app.use((req, res, next) => {
           scriptSrc: ["'self'", process.env.STAGING_URL, 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
           connectSrc: ["'self'", process.env.STAGING_URL, 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
-          scriptSrcNonce: [res.locals.nonce], // Use the correct variable here
         },
       }),
     );
@@ -112,7 +110,6 @@ app.use((req, res, next) => {
           scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
-          scriptSrcNonce: [res.locals.nonce], // Use the correct variable here
         },
       }),
     );
