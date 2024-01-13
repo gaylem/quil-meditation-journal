@@ -72,7 +72,8 @@ app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 // Content Security Policy
 app.use((req, res, next) => {
   // Generate nonce
-  res.locals.nonce = randomBytes(32).toString('hex');
+  const nonce = randomBytes(32).toString('hex');
+  res.locals.nonce = nonce;
   console.log('res.locals.nonce: ', res.locals.nonce);
 
   // CSP By Environment
