@@ -7,6 +7,10 @@ $secondary-color: #2f3c7e;
   margin: 0;
 }
 
+html {
+  min-height: 100%;
+}
+
 .app-container {
   position: absolute;
   min-height: 100vh;
