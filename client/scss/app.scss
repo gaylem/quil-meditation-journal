@@ -1,3 +1,6 @@
+$primary-color: #721bac;
+$secondary-color: #2f3c7e;
+
 /* Reset default margin and padding for all elements */
 * {
   padding: 0;
@@ -9,4 +12,16 @@
   min-height: 100vh;
   min-width: 100vw;
   overflow-x: hidden;
+}
+
+/* Styles links */
+a {
+  color: $secondary-color;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $primary-color;
+  text-decoration: underline;
 }
