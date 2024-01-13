@@ -68,17 +68,20 @@ app.use(
 // Referrer Policy Middleware
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
+app.use((req, res, next) => {
+  res.locals.nonce = randomBytes(32).toString('hex');
+  next();
+});
+
 const setupSecurityHeaders = () => {
-  const nonce = randomBytes(16).toString('base64');
   // CSP middleware based on environment
   if (process.env.TARGET_ENV === 'development') {
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'http://localhost:8080', 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
-          connectSrc: ["'self'", 'http://localhost:4000', 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
-          scriptSrcNonce: [nonce],
+          scriptSrc: ["'self'", 'http://localhost:8080', 'https://www.googletagmanager.com'],
+          scriptSrc: ["'self'", (req, res) => 'http://localhost:4000', 'https://www.googletagmanager.com', `'nonce-{$res.locals.nonce}'`],
         },
       }),
     );
@@ -88,10 +91,9 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.STAGING_URL, 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
+          scriptSrc: ["'self'", (req, res) => process.env.STAGING_URL, 'https://www.googletagmanager.com', `'nonce-{$res.locals.nonce}'`],
           connectSrc: ["'self'", process.env.STAGING_URL],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
-          scriptSrcNonce: [nonce],
         },
       }),
     );
@@ -101,10 +103,9 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
+          scriptSrc: ["'self'", (req, res) => process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com', `'nonce-{$res.locals.nonce}'`],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
-          scriptSrcNonce: [nonce],
         },
       }),
     );
