@@ -104,7 +104,6 @@ const setupSecurityHeaders = () => {
           scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com', `'nonce-${nonce}'`],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
-          imgSrc: ['www.googletagmanager.com'],
         },
       }),
     );
