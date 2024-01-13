@@ -82,8 +82,8 @@ app.use((req, res, next) => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'http://localhost:8080', 'https://www.googletagmanager.com'],
-          scriptSrc: ["'self'", 'http://localhost:4000', 'https://www.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
+          scriptSrc: ["'self'", 'http://localhost:8080', 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
+          connectSrc: ["'self'", 'http://localhost:4000', 'https://www.googletagmanager.com', 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
           scriptSrcNonce: [res.locals.nonce], // Use the correct variable here
         },
       }),
@@ -95,8 +95,8 @@ app.use((req, res, next) => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.STAGING_URL, 'https://www.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
-          connectSrc: ["'self'", process.env.STAGING_URL],
+          scriptSrc: ["'self'", process.env.STAGING_URL, 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
+          connectSrc: ["'self'", process.env.STAGING_URL, 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
           scriptSrcNonce: [res.locals.nonce], // Use the correct variable here
         },
@@ -109,8 +109,8 @@ app.use((req, res, next) => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
-          connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
+          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
+          connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
           scriptSrcNonce: [res.locals.nonce], // Use the correct variable here
         },
