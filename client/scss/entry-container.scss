@@ -10,19 +10,20 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
 
 /* Container that holds all new and past entries */
 .entry-container {
-  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10rem;
   box-shadow:
     8px 0 20px -12px $shadow-color,
     -8px 0 13px -12px $shadow-color;
   top: 0;
   margin: auto;
   max-width: 900px;
-  min-height: 100dvh;
   color: black;
 
-  @media (max-width: 480px) {
+  @media (max-width: 1000px) {
+    min-width: 100vw;
     box-shadow: none;
-    width: 100%;
   }
 
   /* Main timer container on homepage */
@@ -34,7 +35,6 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
     width: 100%;
     line-height: 1.5;
     background-image: $quote-background-gradient;
-
     color: $quote-color;
   }
 }

@@ -7,9 +7,10 @@ $shadow-color: rgb(172, 172, 172);
 }
 
 footer {
-  // position: absolute;
-  // width: 100vw;
+  position: absolute;
+  width: 100vw;
   background-color: rgb(233, 232, 232);
+  bottom: 0;
   padding: 1em;
   text-align: center;
   margin: 0 auto;
@@ -19,18 +20,22 @@ footer {
   }
   .footer-container {
     display: flex;
+    bottom: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 90%;
-    margin: 0 auto;
     font-family: $paragraph-font;
     color: rgb(60, 60, 60);
+    @media (max-width: 300px) {
+      padding: 0;
+      margin: 0;
+    }
   }
 
   .credits,
   .copyright {
     font-size: small;
-    padding: 1em;
+    padding: 0.5em;
   }
 }
