@@ -17,9 +17,7 @@ justify-content: center;
   text-align: center;
   margin: 0 auto;
   @include box-shadow(0, 2px, 8px, $shadow-color);
-  a {
-    text-decoration: none;
-  }
+
   .footer-container {
     display: flex;
     bottom: 0;
