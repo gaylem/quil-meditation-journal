@@ -139,29 +139,30 @@ app.use(express.static(path.join(__dirname, '../build')));
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Handle all other routes by sending the 'index.html' file
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+});
 
 // Handle all other routes by sending the 'index.html' file with replaced nonce
-app.get('*', (req, res) => {
-  // Read the HTML file
-  fs.readFile(path.resolve(__dirname, '../build', 'index.html'), 'utf8', (err, data) => {
-    if (err) {
-      return res.status(500).send('Error reading HTML file');
-    }
+// app.get('*', (req, res) => {
+//   // Read the HTML file
+//   fs.readFile(path.resolve(__dirname, '../build', 'index.html'), 'utf8', (err, data) => {
+//     if (err) {
+//       return res.status(500).send('Error reading HTML file');
+//     }
 
-    // Replace the placeholder with the nonce
-    const modifiedHtml = data.replace('{{nonce-placeholder}}', res.locals.nonce);
+//     // Replace the placeholder with the nonce
+//     const modifiedHtml = data.replace('{{nonce-placeholder}}', res.locals.nonce);
+//     console.log('modifiedHtml: ', modifiedHtml);
 
-    // Set Content Security Policy header
-    res.setHeader('Content-Security-Policy', `script-src 'self' https://www.googletagmanager.com 'nonce-${res.locals.nonce}'`);
-    console.log('get res.locals.nonce: ', res.locals.nonce);
+//     // Set Content Security Policy header
+//     res.setHeader('Content-Security-Policy', `script-src 'self' https://www.googletagmanager.com 'nonce-${res.locals.nonce}'`);
+//     console.log('get res.locals.nonce: ', res.locals.nonce);
 
-    // Send the modified HTML
-    res.send(modifiedHtml);
-  });
-});
+//     // Send the modified HTML
+//     res.send(modifiedHtml);
+//   });
+// });
 
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
