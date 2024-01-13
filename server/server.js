@@ -15,6 +15,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import etag from 'etag';
+import { randomBytes } from 'crypto';
 
 // Get the directory name of the current module's file path
 const __filename = fileURLToPath(import.meta.url);
@@ -94,7 +95,7 @@ const setupSecurityHeaders = () => {
     console.log('setupSecurityHeaders in staging');
   } else if (process.env.TARGET_ENV === 'production') {
     // Generate Nonce to allow Google Analytics Tag
-    const nonce = crypto.randomBytes(16).toString('base64');
+    const nonce = randomBytes(16).toString('base64');
     // Apply more restrictive CSP for production
     app.use(
       helmet.contentSecurityPolicy({
