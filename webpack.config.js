@@ -23,7 +23,7 @@ const plugins = [
       },
       filename: '[path][base].gz',
     }),
-  // process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
+  // new BundleAnalyzerPlugin(),
   new webpack.optimize.ModuleConcatenationPlugin(),
 ];
 
