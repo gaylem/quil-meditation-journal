@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <!-- Google Tag Manager -->
-    <script nonce="{{ nonce }}">
+    <script nonce="${res.locals.nonce}">
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
@@ -14,15 +14,19 @@
         var n = d.querySelector('[nonce]');
         n && j.setAttribute('nonce', n.nonce || n.getAttribute('nonce'));
         f.parentNode.insertBefore(j, f);
-      })(window, document, 'script', 'dataLayer', 'G-2JPJDQY140');
+      })(window, document, 'script', 'dataLayer', 'GTM-5QRC7FJZ');
     </script>
+    <!-- End Google Tag Manager -->
+
     <!-- Preload Google Fonts -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Neucha&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" as="style" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
     <!-- Meta Data -->
     <meta name="description" content="quil meditation timer and journal." />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="favicon/apple-icon-57x57.png" />
     <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="favicon/apple-icon-60x60.png" />
@@ -40,12 +44,18 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png" />
     <meta name="theme-color" content="#ffffff" />
+
     <!-- Manifest -->
     <link rel="manifest" crossorigin="use-credentials" href="site.webmanifest" />
+
     <!-- Title Tag -->
     <title>quil meditation journal</title>
   </head>
+
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5QRC7FJZ" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
   </body>
 </html>

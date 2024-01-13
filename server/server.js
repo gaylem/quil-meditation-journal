@@ -16,6 +16,7 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import etag from 'etag';
 import { randomBytes } from 'crypto';
+import fs from 'fs';
 
 // Get the directory name of the current module's file path
 const __filename = fileURLToPath(import.meta.url);
@@ -68,53 +69,54 @@ app.use(
 // Referrer Policy Middleware
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
-const setupSecurityHeaders = () => {
-  // CSP middleware based on environment
+// Content Security Policy
+app.use((req, res, next) => {
+  // Generate nonce
+  res.locals.nonce = randomBytes(32).toString('hex');
+  console.log('res.locals.nonce: ', res.locals.nonce);
+
+  // CSP By Environment
   if (process.env.TARGET_ENV === 'development') {
+    // Development CSP
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'http://localhost:8080'],
-          connectSrc: ["'self'", 'http://localhost:4000'],
+          scriptSrc: ["'self'", 'http://localhost:8080', 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
+          connectSrc: ["'self'", 'http://localhost:4000', 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
         },
       }),
     );
     console.log('setupSecurityHeaders in development');
   } else if (process.env.TARGET_ENV === 'staging') {
+    // Staging CSP
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.STAGING_URL],
-          connectSrc: ["'self'", process.env.STAGING_URL],
+          scriptSrc: ["'self'", process.env.STAGING_URL, 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
+          connectSrc: ["'self'", process.env.STAGING_URL, 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
     console.log('setupSecurityHeaders in staging');
   } else if (process.env.TARGET_ENV === 'production') {
-    // Generate Nonce to allow Google Analytics Tag
-    const nonce = randomBytes(16).toString('base64');
-    // Apply more restrictive CSP for production
+    // Production CSP
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com', `'nonce-${nonce}'`],
-          connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com'],
+          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
+          connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
-    // Set the nonce value in a variable accessible to the template engine
-    app.locals.nonce = nonce;
     console.log('setupSecurityHeaders in production');
   }
-};
-
-// Invoke the security headers function
-setupSecurityHeaders();
+  next();
+});
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
@@ -140,6 +142,27 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
 });
+
+// Handle all other routes by sending the 'index.html' file with replaced nonce
+// app.get('*', (req, res) => {
+//   // Read the HTML file
+//   fs.readFile(path.resolve(__dirname, '../build', 'index.html'), 'utf8', (err, data) => {
+//     if (err) {
+//       return res.status(500).send('Error reading HTML file');
+//     }
+
+//     // Replace the placeholder with the nonce
+//     const modifiedHtml = data.replace('{{nonce-placeholder}}', res.locals.nonce);
+//     console.log('modifiedHtml: ', modifiedHtml);
+
+//     // Set Content Security Policy header
+//     res.setHeader('Content-Security-Policy', `script-src 'self' https://www.googletagmanager.com 'nonce-${res.locals.nonce}'`);
+//     console.log('get res.locals.nonce: ', res.locals.nonce);
+
+//     // Send the modified HTML
+//     res.send(modifiedHtml);
+//   });
+// });
 
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {

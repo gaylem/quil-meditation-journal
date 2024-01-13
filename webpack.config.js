@@ -8,6 +8,38 @@ import Dotenv from 'dotenv-webpack';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
+const plugins = [
+  new HTMLWebpackPlugin({
+    template: './public/index.html',
+    publicPath: '/',
+  }),
+  process.env.NODE_ENV === 'development' && new Dotenv(),
+  process.env.NODE_ENV === 'production' &&
+    new CompressionPlugin({
+      test: /\.(js|css|html|svg)$/,
+      compressionOptions: {
+        level: 9,
+        algorithm: 'gzip',
+      },
+      filename: '[path][base].gz',
+    }),
+  // process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
+  new webpack.optimize.ModuleConcatenationPlugin(),
+];
+
+// Conditionally add DefinePlugin only for production
+if (process.env.NODE_ENV === 'production') {
+  plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      TARGET_ENV: JSON.stringify(process.env.TARGET_ENV),
+      REACT_APP_FORM_ENDPOINT: JSON.stringify(process.env.REACT_APP_FORM_ENDPOINT),
+      STAGING_URL: JSON.stringify(process.env.STAGING_URL),
+      PROD_URL: JSON.stringify(process.env.PROD_URL),
+    }),
+  );
+}
+
 export default {
   mode: process.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './client/index.js',
@@ -140,28 +172,5 @@ export default {
     },
   },
 
-  plugins: [
-    new HTMLWebpackPlugin({
-      template: './public/index.html',
-      publicPath: '/',
-    }),
-    process.env.NODE_ENV === 'development' && new Dotenv(),
-    process.env.NODE_ENV === 'production' &&
-      new CompressionPlugin({
-        test: /\.(js|css|html|svg)$/,
-        compressionOptions: {
-          level: 9,
-          algorithm: 'gzip',
-        },
-        filename: '[path][base].gz',
-      }),
-    // process.env.NODE_ENV === 'production' && new BundleAnalyzerPlugin(),
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.DefinePlugin({
-      TARGET_ENV: JSON.stringify(process.env.TARGET_ENV),
-      REACT_APP_FORM_ENDPOINT: JSON.stringify(process.env.REACT_APP_FORM_ENDPOINT),
-      STAGING_URL: JSON.stringify(process.env.STAGING_URL),
-      PROD_URL: JSON.stringify(process.env.PROD_URL),
-    }),
-  ],
+  plugins: plugins.filter(Boolean),
 };
