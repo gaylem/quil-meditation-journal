@@ -80,14 +80,4 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   ol li::marker {
     color: $primary-color;
   }
-
-  /* Styles links */
-  a {
-    color: $secondary-color;
-    font-weight: 700;
-  }
-
-  a:hover {
-    color: $primary-color;
-  }
 }
