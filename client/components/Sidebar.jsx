@@ -34,7 +34,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {/* Link to the 'About' page */}
         <div className='link'>
           <img src={feather} className='icon' id='gear' alt='feather icon' />
-          <Link to='/about-quil' onClick={toggleSidebar}>
+          <Link to='/about' onClick={toggleSidebar}>
             About quil
           </Link>
         </div>
@@ -46,7 +46,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </div>
         <div className='link'>
           <img src={question} className='icon' id='gear' alt='queation mark icon' />
-          <Link to='/help-faqs' onClick={toggleSidebar}>
+          <Link to='/help' onClick={toggleSidebar}>
             Help & FAQs
           </Link>
         </div>
