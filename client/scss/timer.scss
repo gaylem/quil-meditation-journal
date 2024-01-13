@@ -26,10 +26,8 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   padding-top: 2em;
   font-family: $header-font;
   letter-spacing: 0.2em;
-  font-size: calc(10px + 2vmin);
+  font-size: largest;
   color: white;
-  animation: fadeInAnimation ease 3s;
-  animation-iteration-count: 1;
 }
 
 /* Styles for meditation timer circle */
@@ -40,7 +38,6 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   border-radius: 50%;
   background-color: $primary-color;
   line-height: $circle-param;
-  display: inline-block;
   text-align: center;
   font-size: larger;
   vertical-align: middle;
