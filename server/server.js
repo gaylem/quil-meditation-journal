@@ -86,7 +86,7 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.STAGING_URL],
+          scriptSrc: ["'self'", process.env.STAGING_URL, 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
           connectSrc: ["'self'", process.env.STAGING_URL],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
@@ -99,7 +99,7 @@ const setupSecurityHeaders = () => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
+          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
