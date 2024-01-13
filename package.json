@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "build": "webpack",
+    "build": "webpack --mode production",
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "client": "webpack-dev-server --hot --mode development",
     "server": "nodemon ./server/server.js",
@@ -30,7 +30,6 @@
     "csv-stringify": "^6.4.5",
     "date-fns": "^3.0.6",
     "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
     "etag": "^1.8.1",
     "express": "^4.18.2",
     "helmet": "^7.1.0",
