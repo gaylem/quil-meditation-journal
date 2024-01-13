@@ -23,19 +23,19 @@ const __dirname = path.dirname(__filename);
 // Function to set up CORS based on environment
 const setupCORS = () => {
   // Define allowed origins based on environment
-  let allowedOrigin;
+  let allowedOrigins;
   if (process.env.TARGET_ENV === 'development') {
-    allowedOrigin = 'http://localhost:8080';
+    allowedOrigins = ['http://localhost:8080'];
   } else if (process.env.TARGET_ENV === 'staging') {
-    allowedOrigin = process.env.STAGING_URL;
+    allowedOrigins = [process.env.STAGING_URL];
   } else if (process.env.TARGET_ENV === 'production') {
-    allowedOrigin = process.env.PROD_URL;
+    allowedOrigins = [process.env.PROD_URL, process.env.PROD_ALT_URL];
   }
 
   // Handle CORS for all routes
   app.use(
     cors({
-      origin: allowedOrigin,
+      origin: allowedOrigins,
       credentials: true,
     }),
   );
@@ -65,7 +65,7 @@ app.use(
 );
 
 // Referrer Policy Middleware
-// app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
 const setupSecurityHeaders = () => {
   // CSP middleware based on environment
@@ -93,17 +93,22 @@ const setupSecurityHeaders = () => {
     );
     console.log('setupSecurityHeaders in staging');
   } else if (process.env.TARGET_ENV === 'production') {
+    // Generate Nonce to allow Google Analytics Tag
+    const nonce = crypto.randomBytes(16).toString('base64');
     // Apply more restrictive CSP for production
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.PROD_URL],
-          connectSrc: ["'self'", process.env.PROD_URL],
+          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com', `'nonce-${nonce}'`],
+          connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com'],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
+          imgSrc: ['www.googletagmanager.com'],
         },
       }),
     );
+    // Set the nonce value in a variable accessible to the template engine
+    app.locals.nonce = nonce;
     console.log('setupSecurityHeaders in production');
   }
 };

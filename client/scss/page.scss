@@ -19,14 +19,14 @@ $header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
   line-height: 2em;
   font-size: large;
   color: rgb(46, 46, 46);
-  padding: 3em;
+  padding: 3em 3em 10em 3em;
 
   @media (max-width: 800px) {
-    padding: 2em;
+    padding: 2em 2em 10em 2em;
   }
 
-  @media (max-width: 480px) {
-    padding: 1em;
+  @media (max-width: 300px) {
+    padding: 1em 1em 10em 1em;
   }
 
   .page-text {

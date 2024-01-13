@@ -28,7 +28,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 999;
-  width: 100%;
+  width: 100vw;
   background-image: linear-gradient(to bottom right, $primary-color, $secondary-color);
   color: white;
 
@@ -39,15 +39,10 @@ header {
     width: 90%;
     @extend .flex-center;
 
-    @media (max-width: 300px) {
-      width: 100%;
-    }
-
     /* Hamburger menu styles */
     .hamburger {
       width: 2em;
       height: 2em;
-      padding-left: 1em;
       cursor: pointer;
       img {
         padding: 0;
@@ -115,13 +110,7 @@ header {
           }
           @media (max-width: 300px) {
             font-size: x-small;
-            padding: 1.5em 1em 1.5em 1em;
           }
-        }
-
-        // Media query for logout button container
-        @media (max-width: 300px) {
-          margin-right: 1em;
         }
 
         button:hover {
