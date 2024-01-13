@@ -69,14 +69,16 @@ app.use(
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
 const setupSecurityHeaders = () => {
+  const nonce = randomBytes(16).toString('base64');
   // CSP middleware based on environment
   if (process.env.TARGET_ENV === 'development') {
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'http://localhost:8080'],
-          connectSrc: ["'self'", 'http://localhost:4000'],
+          scriptSrc: ["'self'", 'http://localhost:8080', 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
+          connectSrc: ["'self'", 'http://localhost:4000', 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
+          scriptSrcNonce: [nonce],
         },
       }),
     );
@@ -89,12 +91,12 @@ const setupSecurityHeaders = () => {
           scriptSrc: ["'self'", process.env.STAGING_URL, 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
           connectSrc: ["'self'", process.env.STAGING_URL],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
+          scriptSrcNonce: [nonce],
         },
       }),
     );
     console.log('setupSecurityHeaders in staging');
   } else if (process.env.TARGET_ENV === 'production') {
-    // Apply more restrictive CSP for production
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
@@ -102,6 +104,7 @@ const setupSecurityHeaders = () => {
           scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140'],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
+          scriptSrcNonce: [nonce],
         },
       }),
     );

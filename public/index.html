@@ -2,23 +2,25 @@
 <html lang="en">
   <head>
     <!-- Google Tag -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140"></script>
-    <script>
+    <script async nonce="${nonce}" src="https://www.googletagmanager.com/gtag/js?id=G-2JPJDQY140"></script>
+    <script nonce="${nonce}">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-
       gtag('config', 'G-2JPJDQY140');
     </script>
+
     <!-- Preload Google Fonts -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Neucha&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" as="style" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
     <!-- Meta Data -->
     <meta name="description" content="quil meditation timer and journal." />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="favicon/apple-icon-57x57.png" />
     <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="favicon/apple-icon-60x60.png" />
@@ -36,11 +38,14 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png" />
     <meta name="theme-color" content="#ffffff" />
+
     <!-- Manifest -->
     <link rel="manifest" crossorigin="use-credentials" href="site.webmanifest" />
+
     <!-- Title Tag -->
     <title>quil meditation journal</title>
   </head>
+
   <body>
     <div id="root"></div>
   </body>
