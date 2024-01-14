@@ -63,8 +63,11 @@ const Timer = () => {
       if (count === 1) {
         return count;
       } else {
-        audioElement.play();
-        count++;
+        // Check if the audio is paused, and initiate playback with user gesture
+        if (audioElement.paused) {
+          audioElement.play();
+          count++;
+        }
       }
     };
   };
@@ -170,7 +173,7 @@ const Timer = () => {
 
     const countdownInSeconds = parseCountdown(selectedValue);
     console.log('countdownInSeconds: ', countdownInSeconds);
-    
+
     setCountdown(countdownInSeconds);
   };
 
