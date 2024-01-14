@@ -242,7 +242,7 @@ const Timer = () => {
       <div className='control-panel'>
         {/* Time Dropdowns */}
         <div className='time-dropdown'>
-          {/* Countdown Input
+          {/* Countdown Input //TODO: this doesnt work on mobile devices due to autoplay restrictions
           <div className='countdown-container'>
             <label htmlFor='countdown'>Countdown:</label>
             <input className='countdown-input' id='countdown' list='countdown-options' placeholder='Time in seconds' name='countdown' onChange={handleCountdownChange} />
