@@ -24,6 +24,7 @@ audioElement.muted = true;
  */
 const Timer = () => {
   // State variables
+  // TODO: Countdown timer is commented out in JSX due to autoplay restrictions
   const [countdown, setCountdown] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isActive, setActive] = useState(false);
