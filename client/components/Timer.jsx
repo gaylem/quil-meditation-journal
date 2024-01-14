@@ -14,8 +14,8 @@ import pauseImage from '../../public/assets/images/pause-button.png';
 
 // Initialize audio element
 const audioElement = new Audio(singingBowl);
-// audioElement.setAttribute('playsinline', '');
-// audioElement.muted = true;
+audioElement.setAttribute('playsinline', '');
+audioElement.muted = true;
 
 /**
  * Timer component for meditation sessions.
@@ -24,11 +24,8 @@ const audioElement = new Audio(singingBowl);
  */
 const Timer = () => {
   // State variables
-  // TODO: Countdown timer is commented out in JSX due to autoplay restrictions
-  const [countdown, setCountdown] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [isActive, setActive] = useState(false);
-  const [countdownFinished, setCountdownFinished] = useState(false);
+  const [duration, setDuration] = useState(0);
   const [durationFinished, setDurationFinished] = useState(false);
 
   // Function to stop the audio
@@ -67,7 +64,7 @@ const Timer = () => {
         return count;
       } else {
         // Check if the audio is paused, and initiate playback with user gesture
-        // audioElement.muted = false;
+        audioElement.muted = false;
         audioElement.play();
         count++;
       }
@@ -79,14 +76,9 @@ const Timer = () => {
 
   /**
    * Toggles the play/pause functionality of the timer.
-   * If either countdown or duration is zero, the timer is not activated, and the sound is not played.
+   * If duration is zero, the timer is not activated, and the sound is not played.
    */
   const togglePlayPause = () => {
-    if (countdown === 0 && duration === 0) {
-      // If both are zero, do not activate the timer and do not play the sound
-      return;
-    }
-
     // Set isActive to whatever the opposite of the current setting is
     setActive(!isActive);
 
@@ -104,13 +96,9 @@ const Timer = () => {
    */
   const reset = () => {
     setActive(false);
-    setCountdownFinished(false);
     setDurationFinished(false);
-    setCountdown(0);
     setDuration(0);
-    const countdownInput = document.querySelector('.countdown-input');
     const durationInput = document.querySelector('.duration-input');
-    if (countdownInput) countdownInput.value = '';
     if (durationInput) durationInput.value = '';
     // Stop audio
     stopAudio();
@@ -119,76 +107,33 @@ const Timer = () => {
   };
 
   /**
-   * Effect hook to manage the countdown and duration intervals,
+   * Effect hook to manage the duration intervals,
    * as well as handle the playOnceBegin and playOnceEnd functions.
    */
   useEffect(() => {
-    let countdownInterval;
     let durationInterval;
 
-    // Start the countdown interval when both countdown and duration are greater than zero
-    if (isActive && countdown > 0 && duration > 0) {
-      countdownInterval = setInterval(() => {
-        setCountdown(prevCountdown => prevCountdown - 1);
-      }, 1000);
-    }
-
-    // Handle the end of countdown and trigger the sound once
-    if (isActive && countdown === 0 && !countdownFinished) {
-      setCountdownFinished(true);
-      clearInterval(countdownInterval);
-    }
-
-    // Start the duration interval when countdown reaches zero and duration is greater than zero
-    if (isActive && countdown === 0 && duration > 0 && !durationFinished && countdownFinished) {
+    // Start the duration interval when reaches zero and duration is greater than zero
+    if (isActive && duration > 0 && !durationFinished) {
       playOnceBegin();
       durationInterval = setInterval(() => {
         setDuration(prevDuration => prevDuration - 1);
       }, 1000);
     }
-
     // Handle the end of duration and trigger the sound once
-    if (isActive && countdown === 0 && duration === 0 && !durationFinished && countdownFinished) {
+    if (isActive && duration === 0 && !durationFinished) {
       setDurationFinished(true);
       playOnceEnd();
       release(); // Release wake lock
-      clearInterval(countdownInterval);
       clearInterval(durationInterval);
       setActive(false);
     }
 
     // Cleanup intervals when the component unmounts or dependencies change
     return () => {
-      clearInterval(countdownInterval);
       clearInterval(durationInterval);
     };
-  }, [isActive, countdown, duration, countdownFinished, durationFinished]);
-
-  /**
-   * Handles the countdown change when the user selects or enters data into the countdown datalist.
-   *
-   * @param {Event} event - The input event.
-   */
-  const handleCountdownChange = event => {
-    const selectedValue = event.target.value;
-    console.log('selectedValue: ', selectedValue);
-
-    const countdownInSeconds = parseCountdown(selectedValue);
-    console.log('countdownInSeconds: ', countdownInSeconds);
-
-    setCountdown(countdownInSeconds);
-  };
-
-  /**
-   * Parses the countdown input from the datalist to be compatible with the timer.
-   *
-   * @param {string} durationString - The string representing the countdown duration.
-   * @returns {number} The parsed countdown duration in seconds.
-   */
-  const parseCountdown = durationString => {
-    const value = parseInt(durationString.replace('s', ''), 10);
-    return isNaN(value) ? 0 : value;
-  };
+  }, [isActive, duration, durationFinished]);
 
   /**
    * Handles the duration change when the user selects or enters data into the duration datalist.
@@ -234,8 +179,8 @@ const Timer = () => {
       {/* Timer Display */}
       <div className='time'>
         <div className={`timer-circle ${isActive ? 'timer-circle-grow' : ''}`}>
-          {/* Display either countdown or duration based on the active state */}
-          {countdown ? formatTime(countdown) : formatTime(duration)}
+          {/* Display duration based on the active state */}
+          {formatTime(duration)}
         </div>
       </div>
       {/* Quote */}
@@ -243,21 +188,6 @@ const Timer = () => {
       <div className='control-panel'>
         {/* Time Dropdowns */}
         <div className='time-dropdown'>
-          {/* Countdown Input //TODO: this doesnt work on mobile devices due to autoplay restrictions
-          <div className='countdown-container'>
-            <label htmlFor='countdown'>Countdown:</label>
-            <input className='countdown-input' id='countdown' list='countdown-options' placeholder='Time in seconds' name='countdown' onChange={handleCountdownChange} />
-            <datalist id='countdown-options'>
-              <option value='5s' />
-              <option value='10s' />
-              <option value='15s' />
-              <option value='20s' />
-              <option value='25s' />
-              <option value='30s' />
-              <option value='45s' />
-              <option value='60s' />
-            </datalist>
-          </div> */}
           {/* Duration Input */}
           <div className='duration-container'>
             <label htmlFor='duration'>Duration:</label>
