@@ -78,7 +78,7 @@ const Timer = () => {
    */
   const togglePlayPause = () => {
     if (countdown === 0 && duration === 0) {
-      // If either is zero, do not activate the timer and do not play the sound
+      // If both are zero, do not activate the timer and do not play the sound
       return;
     }
 
@@ -131,12 +131,12 @@ const Timer = () => {
     // Handle the end of countdown and trigger the sound once
     if (isActive && countdown === 0 && !countdownFinished) {
       setCountdownFinished(true);
-      playOnceBegin();
       clearInterval(countdownInterval);
     }
 
     // Start the duration interval when countdown reaches zero and duration is greater than zero
     if (isActive && countdown === 0 && duration > 0 && !durationFinished && countdownFinished) {
+      playOnceBegin();
       durationInterval = setInterval(() => {
         setDuration(prevDuration => prevDuration - 1);
       }, 1000);
@@ -166,7 +166,11 @@ const Timer = () => {
    */
   const handleCountdownChange = event => {
     const selectedValue = event.target.value;
+    console.log('selectedValue: ', selectedValue);
+
     const countdownInSeconds = parseCountdown(selectedValue);
+    console.log('countdownInSeconds: ', countdownInSeconds);
+    
     setCountdown(countdownInSeconds);
   };
 
