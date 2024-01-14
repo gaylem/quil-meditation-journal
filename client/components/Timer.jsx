@@ -14,6 +14,8 @@ import pauseImage from '../../public/assets/images/pause-button.png';
 
 // Initialize audio element
 const audioElement = new Audio(singingBowl);
+audioElement.setAttribute('playsinline', '');
+audioElement.muted = true;
 
 /**
  * Timer component for meditation sessions.
@@ -64,10 +66,9 @@ const Timer = () => {
         return count;
       } else {
         // Check if the audio is paused, and initiate playback with user gesture
-        if (audioElement.paused) {
-          audioElement.play();
-          count++;
-        }
+        audioElement.muted = false;
+        audioElement.play();
+        count++;
       }
     };
   };
