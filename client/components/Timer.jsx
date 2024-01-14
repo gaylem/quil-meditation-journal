@@ -79,6 +79,10 @@ const Timer = () => {
    * If duration is zero, the timer is not activated, and the sound is not played.
    */
   const togglePlayPause = () => {
+     if (!isActive && duration === 0) {
+       // If either is zero, do not activate the timer and do not play the sound
+       return;
+     }
     // Set isActive to whatever the opposite of the current setting is
     setActive(!isActive);
 
