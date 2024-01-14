@@ -242,11 +242,10 @@ const Timer = () => {
       <div className='control-panel'>
         {/* Time Dropdowns */}
         <div className='time-dropdown'>
-          {/* Countdown Input */}
+          {/* Countdown Input
           <div className='countdown-container'>
             <label htmlFor='countdown'>Countdown:</label>
             <input className='countdown-input' id='countdown' list='countdown-options' placeholder='Time in seconds' name='countdown' onChange={handleCountdownChange} />
-            {/* Dropdown options for countdown */}
             <datalist id='countdown-options'>
               <option value='5s' />
               <option value='10s' />
@@ -257,7 +256,7 @@ const Timer = () => {
               <option value='45s' />
               <option value='60s' />
             </datalist>
-          </div>
+          </div> */}
           {/* Duration Input */}
           <div className='duration-container'>
             <label htmlFor='duration'>Duration:</label>
