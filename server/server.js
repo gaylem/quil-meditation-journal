@@ -15,8 +15,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import etag from 'etag';
-import { randomBytes } from 'crypto';
-import fs from 'fs';
+// import { randomBytes } from 'crypto';
+// import fs from 'fs';
 
 // Get the directory name of the current module's file path
 const __filename = fileURLToPath(import.meta.url);
@@ -71,11 +71,6 @@ app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
 // Content Security Policy
 app.use((req, res, next) => {
-  // Generate nonce
-  const nonce = randomBytes(32).toString('hex');
-  res.locals.nonce = nonce;
-  console.log('res.locals.nonce: ', res.locals.nonce);
-
   // CSP By Environment
   if (process.env.TARGET_ENV === 'development') {
     // Development CSP
@@ -83,8 +78,9 @@ app.use((req, res, next) => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'http://localhost:8080', 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
-          connectSrc: ["'self'", 'http://localhost:4000', 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
+          scriptSrc: ["'self'", 'http://localhost:8080'],
+          connectSrc: ["'self'", 'http://localhost:4000'],
+          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
@@ -95,8 +91,8 @@ app.use((req, res, next) => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.STAGING_URL, 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
-          connectSrc: ["'self'", process.env.STAGING_URL, 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
+          scriptSrc: ["'self'", process.env.STAGING_URL],
+          connectSrc: ["'self'", process.env.STAGING_URL],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
@@ -108,8 +104,8 @@ app.use((req, res, next) => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://*.googletagmanager.com', `'nonce-${res.locals.nonce}'`],
-          connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'],
+          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
+          connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
           formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
@@ -143,27 +139,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
 });
-
-// Handle all other routes by sending the 'index.html' file with replaced nonce
-// app.get('*', (req, res) => {
-//   // Read the HTML file
-//   fs.readFile(path.resolve(__dirname, '../build', 'index.html'), 'utf8', (err, data) => {
-//     if (err) {
-//       return res.status(500).send('Error reading HTML file');
-//     }
-
-//     // Replace the placeholder with the nonce
-//     const modifiedHtml = data.replace('{{nonce-placeholder}}', res.locals.nonce);
-//     console.log('modifiedHtml: ', modifiedHtml);
-
-//     // Set Content Security Policy header
-//     res.setHeader('Content-Security-Policy', `script-src 'self' https://www.googletagmanager.com 'nonce-${res.locals.nonce}'`);
-//     console.log('get res.locals.nonce: ', res.locals.nonce);
-
-//     // Send the modified HTML
-//     res.send(modifiedHtml);
-//   });
-// });
 
 // Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
