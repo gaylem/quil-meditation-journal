@@ -12,8 +12,8 @@ $button-color-active: lighten($primary-color, 50%);
 $button-text-color: darken($secondary-color, 10%);
 
 /* Font Families */
-$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
-$header-font: 'Neucha', 'Poppins', Helvetica, Tahoma, sans-serif;
+$paragraph-font: 'Poppins', sans-serif;
+$header-font: 'Neucha', 'Poppins', sans-serif;
 
 /* Styles for parent component */
 .timer {

@@ -4,7 +4,7 @@ $secondary-color: #2f3c7e;
 $shadow-color: rgb(172, 172, 172);
 
 /* Font Family */
-$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+$paragraph-font: 'Poppins', sans-serif;
 
 /* Mixon for box shadow */
 @mixin box-shadow($offset-x, $offset-y, $blur, $color) {
