@@ -6,7 +6,8 @@ import TerserPlugin from 'terser-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+// Comment out BundleAnalyzerPlugin before deploying to staging/prod
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -21,6 +22,8 @@ const plugins = [
 // Conditionally add plugins by environment
 if (process.env.NODE_ENV === 'production') {
   plugins.push(
+    // Comment out BundleAnalyzerPlugin before deploying to staging/prod
+    // new BundleAnalyzerPlugin(),
     new CompressionPlugin({
       test: /\.(js|css|html|svg)$/,
       compressionOptions: {
@@ -30,7 +33,6 @@ if (process.env.NODE_ENV === 'production') {
       filename: '[path][base].gz',
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new BundleAnalyzerPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       TARGET_ENV: JSON.stringify(process.env.TARGET_ENV),
