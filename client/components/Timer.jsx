@@ -1,6 +1,6 @@
 //** TIMER COMPONENT */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useWakeLock } from 'react-screen-wake-lock';
 
@@ -11,6 +11,7 @@ import singingBowl from '../../public/assets/audio/singing-bowl.mp3';
 import playImage from '../../public/assets/images/play-button.png';
 import resetImage from '../../public/assets/images/reset-button.png';
 import pauseImage from '../../public/assets/images/pause-button.png';
+import { parse } from 'ipaddr.js';
 
 // Initialize audio element
 const audioElement = new Audio(singingBowl);
@@ -56,17 +57,21 @@ const Timer = () => {
    *
    * @returns {function(): number} A function that, when called, plays the sound once.
    */
-  const playOnce = () => {
-    let count = 0;
 
+  // useRef to track audio plays across renders
+  let countRef = useRef(0);
+
+  const playOnce = () => {
     return function () {
-      if (count === 1) {
-        return count;
+      if (countRef.current === 1) {
+        console.log('if');
+        return countRef.current;
       } else {
         // Check if the audio is paused, and initiate playback with user gesture
+        console.log('else');
         audioElement.muted = false;
         audioElement.play();
-        count++;
+        countRef.current++;
       }
     };
   };
@@ -108,6 +113,8 @@ const Timer = () => {
     stopAudio();
     // Release wake lock
     release();
+    // Reset timer count to 0
+    countRef.current = 0;
   };
 
   /**
@@ -117,20 +124,23 @@ const Timer = () => {
   useEffect(() => {
     let durationInterval;
 
+    if (isActive && duration > 0) {
+      playOnceBegin();
+      console.log('play once begin');
+    }
+
     // Start the duration interval when reaches zero and duration is greater than zero
     if (isActive && duration > 0 && !durationFinished) {
-      playOnceBegin();
       durationInterval = setInterval(() => {
+        console.log(duration);
         setDuration(prevDuration => prevDuration - 1);
       }, 1000);
     }
-    // Handle the end of duration and trigger the sound once
+
     if (isActive && duration === 0 && !durationFinished) {
+      console.log('duration finished');
       setDurationFinished(true);
-      playOnceEnd();
-      release(); // Release wake lock
-      clearInterval(durationInterval);
-      setActive(false);
+      countRef.current = 0
     }
 
     // Cleanup intervals when the component unmounts or dependencies change
@@ -138,6 +148,17 @@ const Timer = () => {
       clearInterval(durationInterval);
     };
   }, [isActive, duration, durationFinished]);
+
+  // Effect hook to handle the playOnceEnd function
+  useEffect(() => {
+    if (durationFinished) {
+      console.log('play once end');
+      playOnceEnd();
+      console.log('end');
+      release(); // Release wake lock
+      setActive(false);
+    }
+  }, [durationFinished]);
 
   /**
    * Handles the duration change when the user selects or enters data into the duration datalist.
