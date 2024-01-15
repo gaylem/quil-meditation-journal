@@ -4,17 +4,26 @@ import HTMLWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+// Comment out BundleAnalyzerPlugin before deploying to staging/prod
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const plugins = [
+  new MiniCssExtractPlugin(),
   new HTMLWebpackPlugin({
     template: './public/index.html',
     publicPath: '/',
   }),
-  process.env.NODE_ENV === 'development' && new Dotenv(),
-  process.env.NODE_ENV === 'production' &&
+];
+
+// Conditionally add plugins by environment
+if (process.env.NODE_ENV === 'production') {
+  plugins.push(
+    // Comment out BundleAnalyzerPlugin before deploying to staging/prod
+    // new BundleAnalyzerPlugin(),
     new CompressionPlugin({
       test: /\.(js|css|html|svg)$/,
       compressionOptions: {
@@ -23,13 +32,7 @@ const plugins = [
       },
       filename: '[path][base].gz',
     }),
-  // new BundleAnalyzerPlugin(),
-  new webpack.optimize.ModuleConcatenationPlugin(),
-];
-
-// Conditionally add DefinePlugin only for production
-if (process.env.NODE_ENV === 'production') {
-  plugins.push(
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       TARGET_ENV: JSON.stringify(process.env.TARGET_ENV),
@@ -40,6 +43,7 @@ if (process.env.NODE_ENV === 'production') {
   );
 } else if (process.env.NODE_ENV === 'development') {
   plugins.push(
+    new Dotenv(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
       TARGET_ENV: JSON.stringify(process.env.TARGET_ENV),
@@ -70,8 +74,8 @@ export default {
         },
       },
       {
-        test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /.s?css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(png|jpg|gif)$/i,
@@ -164,6 +168,8 @@ export default {
           },
         },
       }),
+      `...`,
+      new CssMinimizerPlugin(),
     ],
   },
 
