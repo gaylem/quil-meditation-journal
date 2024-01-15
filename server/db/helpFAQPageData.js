@@ -9,9 +9,6 @@ const items = [
       <div>
         <ol>
           <li>
-            <strong className='purple'>Set Countdown.</strong> Select or enter a countdown duration in seconds. The countdown gives you enough time to settle in and get comfortable before the timer sounds.
-          </li>
-          <li>
             <strong className='purple'>Set Duration.</strong> How long do you want to meditate? Select an option from the dropdown or enter a custom time in minutes.
           </li>
           <li>
