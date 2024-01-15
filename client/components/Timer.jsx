@@ -150,7 +150,6 @@ const Timer = () => {
       clearInterval(countdownInterval);
       clearInterval(durationInterval);
       setActive(false);
-      stopAudio();
     }
 
     // Cleanup intervals when the component unmounts or dependencies change
