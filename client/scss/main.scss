@@ -1,5 +1,8 @@
 /* Import all scss stylesheets into one main stylesheet for index.js file */
 
+//** GOOGLE FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Neucha&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap');
+
 //** GLOBAL */
 @import 'app';
 @import 'toggle';
