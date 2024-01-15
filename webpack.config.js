@@ -38,6 +38,14 @@ if (process.env.NODE_ENV === 'production') {
       PROD_URL: JSON.stringify(process.env.PROD_URL),
     }),
   );
+} else if (process.env.NODE_ENV === 'development') {
+  plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      TARGET_ENV: JSON.stringify(process.env.TARGET_ENV),
+      REACT_APP_FORM_ENDPOINT: JSON.stringify(process.env.REACT_APP_FORM_ENDPOINT),
+    }),
+  );
 }
 
 export default {

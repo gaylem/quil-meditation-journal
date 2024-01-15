@@ -79,10 +79,10 @@ const Timer = () => {
    * If duration is zero, the timer is not activated, and the sound is not played.
    */
   const togglePlayPause = () => {
-     if (!isActive && duration === 0) {
-       // If either is zero, do not activate the timer and do not play the sound
-       return;
-     }
+    if (!isActive && duration === 0) {
+      // If either is zero, do not activate the timer and do not play the sound
+      return;
+    }
     // Set isActive to whatever the opposite of the current setting is
     setActive(!isActive);
 
@@ -198,19 +198,19 @@ const Timer = () => {
             <input className='duration-input' id='duration' list='duration-options' placeholder='Time in minutes' name='duration' onChange={handleDurationChange} />
             {/* Dropdown options for duration */}
             <datalist id='duration-options'>
-              <option value='1m' />
-              <option value='5m' />
-              <option value='10m' />
-              <option value='15m' />
-              <option value='20m' />
-              <option value='25m' />
-              <option value='30m' />
-              <option value='35m' />
-              <option value='40m' />
-              <option value='45m' />
-              <option value='60m' />
-              <option value='90m' />
-              <option value='120m' />
+              <option value='1 minute' />
+              <option value='5 minutes' />
+              <option value='10 minutes' />
+              <option value='15 minutes' />
+              <option value='20 minutes' />
+              <option value='25 minutes' />
+              <option value='30 minutes' />
+              <option value='35 minutes' />
+              <option value='40 minutes' />
+              <option value='45 minutes' />
+              <option value='60 minutes' />
+              <option value='90 minutes' />
+              <option value='120 minutes' />
             </datalist>
           </div>
         </div>
