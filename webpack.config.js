@@ -1,10 +1,10 @@
 import path from 'path';
 import webpack from 'webpack';
+import Dotenv from 'dotenv-webpack';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
-import Dotenv from 'dotenv-webpack';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 // Comment out BundleAnalyzerPlugin before deploying to staging/prod
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
@@ -12,11 +12,12 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const plugins = [
-  new MiniCssExtractPlugin(),
+  // DO NOT CHANGE THE ORDER OF THESE PLUGINS
   new HTMLWebpackPlugin({
     template: './public/index.html',
     publicPath: '/',
   }),
+  new MiniCssExtractPlugin(),
 ];
 
 // Conditionally add plugins by environment
