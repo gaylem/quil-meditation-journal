@@ -3,7 +3,6 @@ import webpack from 'webpack';
 import Dotenv from 'dotenv-webpack';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import HtmlCriticalWebpackPlugin from 'html-critical-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
@@ -19,19 +18,6 @@ const plugins = [
     publicPath: '/',
   }),
   new MiniCssExtractPlugin(),
-  new HtmlCriticalWebpackPlugin({
-    base: path.resolve(__dirname, 'public'),
-    src: 'index.html',
-    dest: 'index.html',
-    inline: true,
-    minify: true,
-    extract: true,
-    width: 375,
-    height: 565,
-    penthouse: {
-      blockJSRequests: false,
-    },
-  }),
 ];
 
 // Conditionally add plugins by environment
