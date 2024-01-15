@@ -9,16 +9,13 @@ const items = [
       <div>
         <ol>
           <li>
-            <strong className='purple'>Set Countdown.</strong> Select or enter a countdown duration in seconds. The countdown gives you enough time to settle in and get comfortable before the timer sounds.
-          </li>
-          <li>
             <strong className='purple'>Set Duration.</strong> How long do you want to meditate? Select an option from the dropdown or enter a custom time in minutes.
           </li>
           <li>
-            <strong className='purple'>Hit Play.</strong> Tap or click the play button to begin. It will change to a pause button while the timer is running. Click or tap it again to pause.
+            <strong className='purple'>Hit Play.</strong> Tap or click the play button to begin. It will change to a pause button while the timer is running. Tap or click it again to pause.
           </li>
           <li>
-            <strong className='purple'>Restart If Needed</strong>. If you want to start over from scratch, hit the restart button. This will remove your Countdown and Duration selections and set the timer back to 0:00.
+            <strong className='purple'>Restart If Needed</strong>. If you want to start over from scratch, hit the restart button. This will remove your duration selection and set the timer back to 0:00.
           </li>
         </ol>
       </div>
