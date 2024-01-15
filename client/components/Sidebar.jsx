@@ -10,6 +10,7 @@ import brain from '../../public/assets/images/brain.png';
 import question from '../../public/assets/images/question.png';
 import feather from '../../public/assets/images/feather.png';
 import smiley from '../../public/assets/images/smiley.png';
+import book from '../../public/assets/images/book.png';
 
 // Import props validation
 import PropTypes from 'prop-types';
@@ -31,6 +32,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {/* Close button to toggle the sidebar closed */}
       <img src={circle} onClick={toggleSidebar} className='closeBtn' alt='Button that closes sidebar navigation panel' />
       <div className='sidebar-content'>
+        <div className='link'>
+          <img src={book} className='icon' id='book' alt='book icon' />
+          <Link to='/' onClick={toggleSidebar}>
+            Home
+          </Link>
+        </div>
         {/* Link to the 'About' page */}
         <div className='link'>
           <img src={feather} className='icon' id='gear' alt='feather icon' />
