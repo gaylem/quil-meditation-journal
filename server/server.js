@@ -141,6 +141,7 @@ app.get('*', (req, res) => {
 });
 
 // Set Cache Control Header and ETag Header
+// Set Cache Control Header and ETag Header
 app.use((req, res, next) => {
   const originalSend = res.send;
 
@@ -150,6 +151,9 @@ app.use((req, res, next) => {
       const tag = etag(body);
       res.setHeader('ETag', tag);
     }
+
+    // Set Cache-Control header to enable caching for a specific duration (e.g., 1 hour)
+    res.setHeader('Cache-Control', 'public, max-age=3600');
 
     originalSend.call(this, body);
   };
