@@ -152,8 +152,8 @@ app.use((req, res, next) => {
       res.setHeader('ETag', tag);
     }
 
-    // Set Cache-Control header to enable caching for a specific duration (e.g., 1 hour)
-    res.setHeader('Cache-Control', 'public, max-age=3600');
+    // Set Cache-Control header to enable caching for 1 year
+    res.setHeader('Cache-Control', 'public, max-age=31536000');
 
     originalSend.call(this, body);
   };
