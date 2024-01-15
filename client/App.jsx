@@ -1,6 +1,6 @@
 //** APP COMPONENT */
 
-import React, { lazy, Suspense, useState, useEffect } from 'react';
+import React, { lazy, Suspense } from 'react';
 
 // Import BrowserRouter for managing page routes and navigation
 const { BrowserRouter, Routes, Route, Navigate } = await import('react-router-dom');
