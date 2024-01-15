@@ -64,11 +64,9 @@ const Timer = () => {
   const playOnce = () => {
     return function () {
       if (countRef.current === 1) {
-        console.log('if');
         return countRef.current;
       } else {
         // Check if the audio is paused, and initiate playback with user gesture
-        console.log('else');
         audioElement.muted = false;
         audioElement.play();
         countRef.current++;
@@ -126,19 +124,16 @@ const Timer = () => {
 
     if (isActive && duration > 0) {
       playOnceBegin();
-      console.log('play once begin');
     }
 
     // Start the duration interval when reaches zero and duration is greater than zero
     if (isActive && duration > 0 && !durationFinished) {
       durationInterval = setInterval(() => {
-        console.log(duration);
         setDuration(prevDuration => prevDuration - 1);
       }, 1000);
     }
 
     if (isActive && duration === 0 && !durationFinished) {
-      console.log('duration finished');
       setDurationFinished(true);
       countRef.current = 0
     }
@@ -152,9 +147,7 @@ const Timer = () => {
   // Effect hook to handle the playOnceEnd function
   useEffect(() => {
     if (durationFinished) {
-      console.log('play once end');
       playOnceEnd();
-      console.log('end');
       release(); // Release wake lock
       setActive(false);
     }
