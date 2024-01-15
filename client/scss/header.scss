@@ -5,7 +5,7 @@ $shadow-color: rgb(172, 172, 172);
 
 /* Font Families */
 $title-font: Pacifico, sans-serif;
-$paragraph-font: 'Poppins', Helvetica, Tahoma, sans-serif;
+$paragraph-font: 'Poppins', sans-serif;
 
 /* Box Shadow Mixin */
 @mixin box-shadow($offset-x, $offset-y, $blur, $color) {
