@@ -1,13 +1,9 @@
 # Welcome to the quil private repo!
 
-<<<<<<< HEAD
 This is where the magic happens. If you're reading this, it's likely because you've offered to help make improve quil, and I'm very grateful to you.
 <br></br>
-=======
-If you're reading this, it's likely because you've offered to help make improve quil, and I'm very grateful to you. 
 
-<br />
->>>>>>> 6e12a07f3cc6b4038e50aa5739385f8e21e559c1
+If you're reading this, it's likely because you've offered to help make improve quil, and I'm very grateful to you.
 
 ## Tech Stack
 
