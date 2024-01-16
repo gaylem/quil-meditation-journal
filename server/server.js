@@ -141,25 +141,25 @@ app.get('*', (req, res) => {
 });
 
 // Set Cache Control Header and ETag Header
-// Set Cache Control Header and ETag Header
-app.use((req, res, next) => {
-  const originalSend = res.send;
+// Cloudflare may be overriding this
+// app.use((req, res, next) => {
+//   const originalSend = res.send;
 
-  res.send = function (body) {
-    // Check if the body is a string or a Buffer before calculating ETag
-    if (typeof body === 'string' || Buffer.isBuffer(body)) {
-      const tag = etag(body);
-      res.setHeader('ETag', tag);
-    }
+//   res.send = function (body) {
+//     // Check if the body is a string or a Buffer before calculating ETag
+//     if (typeof body === 'string' || Buffer.isBuffer(body)) {
+//       const tag = etag(body);
+//       res.setHeader('ETag', tag);
+//     }
 
-    // Set Cache-Control header to enable caching for 1 year
-    res.setHeader('Cache-Control', 'public, max-age=31536000');
+//     // Set Cache-Control header to enable caching for 1 year
+//     res.setHeader('Cache-Control', 'public, max-age=31536000');
 
-    originalSend.call(this, body);
-  };
+//     originalSend.call(this, body);
+//   };
 
-  next();
-});
+//   next();
+// });
 
 // Catch-all route handler for unknown routes
 app.use((_, res) => res.status(404).send('A journey of a thousand miles begins with a single step...but not in this direction.'));
