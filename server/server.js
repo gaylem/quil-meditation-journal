@@ -80,7 +80,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'http://localhost:8080'],
           connectSrc: ["'self'", 'http://localhost:4000'],
-          formAction: ['*'],
+          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
         },
       }),
     );
@@ -93,7 +93,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", process.env.STAGING_URL],
           connectSrc: ["'self'", process.env.STAGING_URL],
-          formAction: ['*'],
+          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
         },
       }),
     );
@@ -106,7 +106,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
-          formAction: [process.env.REACT_APP_FORM_ENDPOINT],
+          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
         },
       }),
     );
