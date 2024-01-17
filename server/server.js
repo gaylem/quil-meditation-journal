@@ -80,7 +80,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'http://localhost:8080'],
           connectSrc: ["'self'", 'http://localhost:4000'],
-          formAction: [process.env.REACT_APP_FORM_ENDPOINT],
+          formAction: ['*'],
         },
       }),
     );
@@ -93,7 +93,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", process.env.STAGING_URL],
           connectSrc: ["'self'", process.env.STAGING_URL],
-          formAction: [process.env.REACT_APP_FORM_ENDPOINT],
+          formAction: ['*'],
         },
       }),
     );
