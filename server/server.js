@@ -87,7 +87,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ['self', `'nonce-${nonce}'`, 'http://localhost:8080'],
           connectSrc: ["'self'", 'http://localhost:4000'],
-          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
+          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
@@ -100,7 +100,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ['self', `'nonce-${nonce}'`, process.env.STAGING_URL],
           connectSrc: ["'self'", process.env.STAGING_URL],
-          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
+          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
@@ -113,7 +113,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ['self', `'nonce-${nonce}'`, process.env.PROD_URL, process.env.PROD_ALT_URL],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
-          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
+          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
@@ -125,7 +125,6 @@ app.use((req, res, next) => {
 
   next();
 });
-
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {
