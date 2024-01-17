@@ -92,8 +92,7 @@ app.use((req, res, next) => {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", process.env.STAGING_URL],
-          connectSrc: ["'self'", process.env.STAGING_URL],
-          formAction: ["'self'", 'https://getform.io'],
+          connectSrc: ["'self'", process.env.STAGING_URL, process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
