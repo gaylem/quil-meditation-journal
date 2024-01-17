@@ -66,14 +66,12 @@ app.use(
   }),
 );
 
-// Referrer Policy Middleware
-// app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
-
 // Function to generate a random nonce
 const generateNonce = () => {
   return randomBytes(16).toString('base64');
 };
 
+// Content Security Policy
 app.use((req, res, next) => {
   // Generate a nonce for this request
   const nonce = generateNonce();
@@ -93,7 +91,7 @@ app.use((req, res, next) => {
     );
     console.log('setupSecurityHeaders in development');
   } else if (process.env.TARGET_ENV === 'staging') {
-    // Staging CSP with nonce
+    // Staging CSP
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
@@ -106,7 +104,7 @@ app.use((req, res, next) => {
     );
     console.log('setupSecurityHeaders in staging');
   } else if (process.env.TARGET_ENV === 'production') {
-    // Production CSP with nonce
+    // Production CSP
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
