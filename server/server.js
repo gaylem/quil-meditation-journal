@@ -93,7 +93,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", process.env.STAGING_URL],
           connectSrc: ["'self'", process.env.STAGING_URL],
-          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
+          formAction: ["'self'", 'https://getform.io'],
         },
       }),
     );

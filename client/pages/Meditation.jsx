@@ -38,19 +38,15 @@ const Meditate = () => {
         <li>
           <span className='purple'>Find a quiet place where you won&apos;t be disturbed during your meditation.</span> If that place is in the bathroom because that&apos;s the only way your family or roommates will leave you alone, that will do just fine.
         </li>
-        <br />
         <li>
           <span className='purple'>Sit comfortably and with a &quot;straight&quot; spine.</span> That means different things for different people, so feel free to experiment. Do you prefer sitting cross-legged on a cushion, or in a chair with your feet on the ground? Is the couch calling to you? Lying down is also acceptable, as long as you won&apos;t fall asleep (the only exception being if you are meditating at bedtime to get a good night&apos;s rest). You can also stand if you need to. The point is, there isn&apos;t one right way to go about this, so don&apos;t let disabilities or discomfort come between you and your practice. Get creative if you have to, and find what works for you.
         </li>
-        <br />
         <li>
-          Feel free to <span className='purple'>close your eyes, or keep them slightly open</span> while gazing gently downward if that&apos;s more comfortable for you.
+          <span className='purple'>Close your eyes, or keep them slightly open</span> while gazing gently downward if that&apos;s more comfortable for you.
         </li>
-        <br />
         <li>
           <span className='purple'>Remind yourself why you are meditating.</span> Is it to be more present with your kids? Reduce anxiety? Grow spiritually? Manage depression? All reasons are valid, and remembering yours will help you stay motivated.
         </li>
-        <br />
         <li>
           <span className='purple'>When you&apos;re ready, begin by taking a few deep breaths to relax.</span> Notice any sounds or smells around you and allow your awareness of your surroundings to increase as you become present with them.
         </li>
@@ -68,7 +64,6 @@ const Meditate = () => {
             <li>Lastly, notice as your session progresses if any once-intense sensations diminish over time, or vice versa.</li>
           </ul>
         </li>
-        <br />
         <li>
           <span className='purple'>Focus on your breath.</span> When you finish your body scan, bring your attention to your breath. Ideally, you&apos;ll breathe in and out through your nose from this point on if you can. Breathing through the mouth tends to increase anxiety, rather than decrease it.
           <ul>
@@ -79,7 +74,6 @@ const Meditate = () => {
             <li>If a distracting sound pops up, rather than get angry or annoyed by it, work it into your meditation by observing it. (But if the sound indicates an emergency of some kind, attend to it.)</li>
           </ul>
         </li>
-        <br />
         <li>
           <span className='purple'>Return to your breath.</span> If your mind wanders (and it will), notice it happening and then gently bring it back to your breath without judgment.
           <ul>
@@ -90,7 +84,6 @@ const Meditate = () => {
             </li>
           </ul>
         </li>
-        <br />
         <li>
           <span className='purple'>Reflect.</span> When your meditation time is complete, bring your attention back to your breath for a few moments before slowly opening your eyes.
           <ul>
@@ -112,7 +105,6 @@ const Meditate = () => {
             <li>You can also include visualizations, such as seeing a warm glowing light expanding from your heart over your entire body and then out into the world.</li>
           </ul>
         </li>
-        <br />
         <li>
           <span className='purple'>Walking Meditation.</span> For this one, you&apos;re going to want to keep your eyes open!
           <ul>
