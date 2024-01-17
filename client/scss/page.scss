@@ -60,21 +60,15 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
     padding-left: 15px;
   }
 
-  /* Styles unordered list bullets */
-  ul li {
+  /* Styles ordered and unordered list bullets */
+  ol li, ul li {
     position: relative;
-    padding-left: 20px;
+    padding: 0 0 15px 15px;
   }
 
   ul li::marker {
     content: '\25CF';
     color: $primary-color;
-  }
-
-  /* Styles unordered list bullets */
-  ol li {
-    position: relative;
-    padding-left: 15px;
   }
 
   ol li::marker {

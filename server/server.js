@@ -15,7 +15,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import etag from 'etag';
-// import { randomBytes } from 'crypto';
+import { randomBytes } from 'crypto';
 // import fs from 'fs';
 
 // Get the directory name of the current module's file path
@@ -67,10 +67,17 @@ app.use(
 );
 
 // Referrer Policy Middleware
-app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+// app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
-// Content Security Policy
+// Function to generate a random nonce
+const generateNonce = () => {
+  return randomBytes(16).toString('base64');
+};
+
 app.use((req, res, next) => {
+  // Generate a nonce for this request
+  const nonce = generateNonce();
+
   // CSP By Environment
   if (process.env.TARGET_ENV === 'development') {
     // Development CSP
@@ -78,42 +85,47 @@ app.use((req, res, next) => {
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", 'http://localhost:8080'],
+          scriptSrc: ['self', `'nonce-${nonce}'`, 'http://localhost:8080'],
           connectSrc: ["'self'", 'http://localhost:4000'],
-          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
+          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
         },
       }),
     );
     console.log('setupSecurityHeaders in development');
   } else if (process.env.TARGET_ENV === 'staging') {
-    // Staging CSP
+    // Staging CSP with nonce
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.STAGING_URL],
+          scriptSrc: ['self', `'nonce-${nonce}'`, process.env.STAGING_URL],
           connectSrc: ["'self'", process.env.STAGING_URL],
-          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
+          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
         },
       }),
     );
     console.log('setupSecurityHeaders in staging');
   } else if (process.env.TARGET_ENV === 'production') {
-    // Production CSP
+    // Production CSP with nonce
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
+          scriptSrc: ['self', `'nonce-${nonce}'`, process.env.PROD_URL, process.env.PROD_ALT_URL],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
-          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
+          formAction: ["'self'", 'https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a'],
         },
       }),
     );
     console.log('setupSecurityHeaders in production');
   }
+
+  // Set the nonce in a response header for use in script tags
+  res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
+
   next();
 });
+
 
 // Log route requests for debugging purposes
 app.use((req, _, next) => {

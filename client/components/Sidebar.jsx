@@ -52,15 +52,15 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           </Link>
         </div>
         <div className='link'>
-          <img src={question} className='icon' id='question-mark' alt='queation mark icon' />
-          <Link to='/help' onClick={toggleSidebar}>
-            Help & FAQs
-          </Link>
-        </div>
-        <div className='link'>
           <img src={smiley} className='icon' id='smiley-face' alt='smiley face icon' />
           <Link to='/community' onClick={toggleSidebar}>
             Community
+          </Link>
+        </div>
+        <div className='link'>
+          <img src={question} className='icon' id='question-mark' alt='queation mark icon' />
+          <Link to='/help' onClick={toggleSidebar}>
+            Help & FAQs
           </Link>
         </div>
         <div className='link'>
