@@ -80,7 +80,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", 'http://localhost:8080'],
           connectSrc: ["'self'", 'http://localhost:4000'],
-          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
+          formAction: [process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
@@ -92,7 +92,8 @@ app.use((req, res, next) => {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", process.env.STAGING_URL],
-          connectSrc: ["'self'", process.env.STAGING_URL, process.env.REACT_APP_FORM_ENDPOINT],
+          connectSrc: ["'self'", process.env.STAGING_URL],
+          formAction: [process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
@@ -105,7 +106,7 @@ app.use((req, res, next) => {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
           connectSrc: ["'self'", process.env.PROD_URL, process.env.PROD_ALT_URL],
-          formAction: ["'self'", process.env.REACT_APP_FORM_ENDPOINT],
+          formAction: [process.env.REACT_APP_FORM_ENDPOINT],
         },
       }),
     );
