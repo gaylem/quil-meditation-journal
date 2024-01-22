@@ -12,7 +12,14 @@ import express from 'express';
 const router = express.Router();
 import accountController from '../controllers/accountController.js';
 
+// Account controllers
 const { downloadEntries, updateUsername, updateEmail, updatePassword, deleteAccount } = accountController;
+
+// Rate limiters
+import { downloadLimiter } from '../middlewares/rateLimiter.js';
+import { usernameLimiter } from '../middlewares/rateLimiter.js';
+import { emailLimiter } from '../middlewares/rateLimiter.js';
+import { passwordLimiter } from '../middlewares/rateLimiter.js';
 
 /**
  * @route GET /api/accounts/:userId
@@ -20,7 +27,7 @@ const { downloadEntries, updateUsername, updateEmail, updatePassword, deleteAcco
  * @param userId
  * @access Private (requires access token)
  */
-router.post('/download/:userId', downloadEntries);
+router.post('/download/:userId', downloadLimiter, downloadEntries);
 
 /**
  * @route PATCH /api/accounts/:userId
@@ -28,7 +35,7 @@ router.post('/download/:userId', downloadEntries);
  * @param userId
  * @access Private (requires access token)
  */
-router.patch('/username/:userId', updateUsername);
+router.patch('/username/:userId', usernameLimiter, updateUsername);
 
 /**
  * @route PATCH /api/accounts/:userId
@@ -36,7 +43,7 @@ router.patch('/username/:userId', updateUsername);
  * @param userId
  * @access Private (requires access token)
  */
-router.patch('/email/:userId', updateEmail);
+router.patch('/email/:userId', emailLimiter, updateEmail);
 
 /**
  * @route PATCH /api/accounts/update/:userId
@@ -44,7 +51,7 @@ router.patch('/email/:userId', updateEmail);
  * @param userId
  * @access Private (requires access token)
  */
-router.patch('/pswd/:userId', updatePassword);
+router.patch('/pswd/:userId', passwordLimiter, updatePassword);
 
 /**
  * @route DELETE /api/accounts/delete/:userId
