@@ -81,7 +81,7 @@ function Signup() {
           <div className='message-container'>
             {/* Display error message if there is an error */}
             {error && (
-              <div className='error-message'>
+              <div className='error-message' id='login-signup-error'>
                 <p>{error}</p>
               </div>
             )}

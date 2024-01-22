@@ -3,7 +3,7 @@
 .error-message,
 .success-message {
   padding-top: 1em;
-  font-size: medium;
+  font-size: small;
 }
 .error-message {
   color: rgb(154, 0, 0);
@@ -11,4 +11,8 @@
 
 .success-message {
   color: rgb(18, 96, 2);
+}
+
+#login-signup-error {
+  max-width: 20em;
 }
