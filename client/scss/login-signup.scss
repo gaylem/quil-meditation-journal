@@ -110,7 +110,7 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
     font-size: 2rem;
     margin: 0 auto;
     line-height: 1.5em;
-    padding: 0.5em 0.5em 0.5em 0;
+    padding: 0 0.5em 0.5em 0;
     color: $secondary-color;
     text-shadow: 1px 1px 5px lightgray;
   }
@@ -118,4 +118,5 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
   @media (max-width: 930px) {
     padding: 2em 1em 15em 1em;
   }
+  
 }

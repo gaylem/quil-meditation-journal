@@ -23,3 +23,24 @@ a:hover {
   color: $primary-color;
   text-decoration: underline;
 }
+
+ol,
+ul {
+  padding-left: 15px;
+}
+
+/* Styles ordered and unordered list bullets */
+ol li,
+ul li {
+  position: relative;
+  padding: 0 0 15px 15px;
+}
+
+ul li::marker {
+  content: '\25CF';
+  color: $primary-color;
+}
+
+ol li::marker {
+  color: $primary-color;
+}

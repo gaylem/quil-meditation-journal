@@ -54,24 +54,4 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
     color: $primary-color;
     font-weight: bold;
   }
-
-  ol,
-  ul {
-    padding-left: 15px;
-  }
-
-  /* Styles ordered and unordered list bullets */
-  ol li, ul li {
-    position: relative;
-    padding: 0 0 15px 15px;
-  }
-
-  ul li::marker {
-    content: '\25CF';
-    color: $primary-color;
-  }
-
-  ol li::marker {
-    color: $primary-color;
-  }
 }
