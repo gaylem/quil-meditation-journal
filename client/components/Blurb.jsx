@@ -16,6 +16,23 @@ function Blurb() {
       </div>
       <div>
         <p>Each entry you write is encrypted to ensure absolute privacy and confidentiality. Put your mind at ease and immerse yourself fully in the transformative experience of meditation.</p>
+        <ul>
+          <li>
+            <a href='/about' target='_blank'>
+              Discover more about quil
+            </a>
+          </li>
+          <li>
+            <a href='/how-to-meditate' target='_blank'>
+              Learn how to meditate
+            </a>
+          </li>
+          <li>
+            <a href='/community' target='_blank'>
+              Join our community
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   );
