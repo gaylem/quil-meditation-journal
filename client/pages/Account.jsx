@@ -65,10 +65,18 @@ const Account = () => {
             });
           }
         } catch (error) {
-          console.error('Caught error:', error);
-          setError(error => {
-            return { ...error, [index]: data[index].error };
-          });
+          // Handle rate limiting error
+          if (error.response && error.response.status === 429) {
+            setError(error => {
+              return { ...error, [index]: 'Too many requests, please try again later.' };
+            });
+          } else {
+            // Handle other errors
+            console.error('Caught error:', error);
+            setError(error => {
+              return { ...error, [index]: data[index].error };
+            });
+          }
         }
         // Update username
       } else if (endpoint === 'username') {
@@ -100,10 +108,18 @@ const Account = () => {
             });
           }
         } catch (error) {
-          console.error('Caught error:', error);
-          setError(error => {
-            return { ...error, [index]: data[index].error };
-          });
+          // Handle rate limiting error
+          if (error.response && error.response.status === 429) {
+            setError(error => {
+              return { ...error, [index]: 'Too many requests, please try again later.' };
+            });
+          } else {
+            // Handle other errors
+            console.error('Caught error:', error);
+            setError(error => {
+              return { ...error, [index]: data[index].error };
+            });
+          }
         }
         // Update email
       } else if (endpoint === 'email') {
@@ -127,10 +143,18 @@ const Account = () => {
             // if update email === fail
           }
         } catch (error) {
-          console.error('Caught error:', error);
-          setError(error => {
-            return { ...error, [index]: data[index].error };
-          });
+          // Handle rate limiting error
+          if (error.response && error.response.status === 429) {
+            setError(error => {
+              return { ...error, [index]: 'Too many requests, please try again later.' };
+            });
+          } else {
+            // Handle other errors
+            console.error('Caught error:', error);
+            setError(error => {
+              return { ...error, [index]: data[index].error };
+            });
+          }
         }
         // Update password
       } else if (endpoint === 'pswd') {
@@ -156,10 +180,18 @@ const Account = () => {
             window.location.href = '/login';
           }
         } catch (error) {
-          console.error('Caught error:', error);
-          setError(error => {
-            return { ...error, [index]: data[index].error };
-          });
+          // Handle rate limiting error
+          if (error.response && error.response.status === 429) {
+            setError(error => {
+              return { ...error, [index]: 'Too many requests, please try again later.' };
+            });
+          } else {
+            // Handle other errors
+            console.error('Caught error:', error);
+            setError(error => {
+              return { ...error, [index]: data[index].error };
+            });
+          }
         }
       } else if (endpoint === 'delete') {
         try {
