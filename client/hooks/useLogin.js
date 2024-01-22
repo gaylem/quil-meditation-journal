@@ -24,6 +24,7 @@ export const useLogin = () => {
   // Get the dispatch function from the authentication context
   const { dispatch } = useAuthContext();
 
+  
   /**
    * Function to perform user login.
    *
@@ -48,7 +49,7 @@ export const useLogin = () => {
         },
       );
 
-      // Extract JSON data from the response
+      // Extract user data from the response
       const user = response.data;
       console.log('user login: ', user);
 
@@ -60,10 +61,6 @@ export const useLogin = () => {
           secure: true, // Secure attribute (requires HTTPS)
           sameSite: 'Strict', // SameSite attribute set to 'Strict'
         });
-
-        // Log the cookie value after setting it
-        const cookieValue = Cookies.get('user');
-        console.log('user cookie:', cookieValue);
 
         // Update the authentication context with user data
         dispatch({ type: 'LOGIN', payload: user });

@@ -23,12 +23,12 @@ export const isValidSignup = async (username, email, password) => {
   try {
     // Did the user input data into all three fields?
     if (!username || !email || !password) {
-      throw { status: 400, message: 'All fields must be filled' };
+      throw new Error('All fields must be filled.');
     }
 
     // Is the email a real email?
     if (!validator.isEmail(email)) {
-      throw { status: 400, message: 'Email not valid' };
+      throw new Error('Please enter a valid email address.');
     }
 
     // Is the password strong enough?
@@ -42,25 +42,25 @@ export const isValidSignup = async (username, email, password) => {
     };
 
     if (!validator.isStrongPassword(password, customOptions)) {
-      throw { status: 400, message: 'Password not strong enough' };
+      throw new Error('Password is not strong enough. Must be 8 characters long with upper and lowercase letters, numbers, and symbols.');
     }
 
     // Is the email already being used?
     const emailExists = await User.findOne({ email });
 
     if (emailExists) {
-      throw { status: 409, message: 'Username or email already exists.' };
+      throw new Error('Username or email already exists.');
     }
 
     // Is the username already being used?
     const usernameExists = await User.findOne({ username });
     if (usernameExists) {
-      throw { status: 409, message: 'Username or email already exists.' };
+      throw new Error('Username or email already exists.');
     }
 
     return true;
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     throw error;
   }
 };

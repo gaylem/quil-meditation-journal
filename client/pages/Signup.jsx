@@ -39,7 +39,7 @@ function Signup() {
         {/* Signup form */}
         <form onSubmit={handleSubmit}>
           {/* Title */}
-          <h1 className='title'>Tranquility awaits...</h1>
+          <h1 className='title'>Sign Up</h1>
           <div className='input-box'>
             {/* Username input */}
             <label htmlFor='username'>Username:</label>
@@ -77,17 +77,17 @@ function Signup() {
           </div>
           {/* Signup button */}
           <button className='form-btn'>Sign Up</button>
-          <p className='account-emails'> You will only receive essential account-related emails.</p>
+
           <div className='message-container'>
             {/* Display error message if there is an error */}
             {error && (
-              <div className='signup-error-message'>
-                <p>{error.message}</p>
+              <div className='error-message'>
+                <p>{error}</p>
               </div>
             )}
             {/* Link to the signin page */}
             <p className='signup-signin-message'>
-              Already have an account? <Link to='/'>Sign in!</Link>
+              Already have an account? <Link to='/'>Log in!</Link>
             </p>
           </div>
         </form>

@@ -86,7 +86,7 @@ userController.signupUser = async (req, res) => {
     return res.status(error.status || 500).json({
       log: `userController.signupUser: ERROR ${error.message}`,
       status: error.status || 500,
-      message: 'Something went wrong. Please try again later.',
+      message: `${error.message}`,
     });
   }
 };
@@ -104,29 +104,19 @@ userController.loginUser = async (req, res) => {
   try {
     // Validate input
     if (!username || !password) {
-      throw new Error('All fields must be filled');
+      throw new Error('All fields must be filled.');
     }
     // Find user by username
     const user = await User.findOne({ username });
     // Throw error if username is incorrect
     if (!user) {
-      console.error(error.stack);
-      return res.status(404).json({
-        log: 'userController.loginUser: No user found',
-        status: 404,
-        message: 'Username or password are incorrect.',
-      });
+      throw new Error('Username or password is incorrect.');
     }
     // Compare passwords
     const match = await bcrypt.compare(password, user.password);
     // Throw error if password is incorrect
     if (!match) {
-      console.error(error.stack);
-      return res.status(404).json({
-        log: `userController.loginUser: ERROR ${error.message}`,
-        status: 404,
-        message: 'Username or password are incorrect.',
-      });
+      throw new Error('Username or password is incorrect.');
     }
     // Store userId and username in object for token generation
     const obj = {
@@ -145,7 +135,7 @@ userController.loginUser = async (req, res) => {
       return res.status(404).json({
         log: `userController.loginUser: ERROR ${error.message}`,
         status: 404,
-        message: 'Username or password are incorrect.',
+        message: 'Something went wrong, please try again later',
       });
     }
     // Store updatedUser's id in a variable
@@ -157,7 +147,7 @@ userController.loginUser = async (req, res) => {
     return res.status(500).json({
       log: `userController.loginUser: ERROR ${error.message}`,
       status: 500,
-      message: 'Something went wrong. Please try again later.',
+      message: `${error.message}`,
     });
   }
 };
@@ -181,7 +171,7 @@ userController.authUser = async (req, res) => {
     return res.status(403).json({
       log: `userController.authUser: ERROR ${error.message}`,
       status: 403,
-      message: 'Something went wrong. Please try again later.',
+      message: `'Something went wrong. Please try again later.'`,
     });
   }
 };

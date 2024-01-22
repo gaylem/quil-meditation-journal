@@ -14,8 +14,9 @@ import Cookies from 'js-cookie';
  * @returns {Object} An object containing signup function and error state.
  */
 export const useSignup = () => {
-  // State to manage error messages during signup
+  // State for managing error and loading states
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
 
   // Access the authentication context for updating user information
   const { dispatch } = useAuthContext();
@@ -28,7 +29,8 @@ export const useSignup = () => {
    * @param {string} password - The password for the new user.
    */
   const signup = async (username, email, password) => {
-    // Clear any previous error messages
+    // Set loading state to true and clear any previous errors
+    setIsLoading(true);
     setError(null);
 
     try {
@@ -45,32 +47,33 @@ export const useSignup = () => {
         },
       );
 
-      // Check if the signup was successful (status code 200)
-      if (response.status !== 200) {
-        // Set error message based on server response
-        setError(json.error);
-      }
+      // Extract user data from the response
+      const user = response.data;
+      console.log('user login: ', user);
 
       // If signup is successful
       if (response.status === 200) {
         // Save the user information to local storage
-        Cookies.set('user', JSON.stringify(response.data), {
+        Cookies.set('user', JSON.stringify(user), {
           expires: 28 / (24 * 60), // Expires in 28 minutes
           secure: true, // Secure attribute (requires HTTPS)
           sameSite: 'Strict', // SameSite attribute set to 'Strict'
         });
 
         // Update the auth context with the user information
-        dispatch({ type: 'LOGIN', payload: response.data });
+        dispatch({ type: 'LOGIN', payload: user });
       }
     } catch (error) {
-      // Set a generic error message
-      setError('An error occurred during the signup process.');
-      // Log the detailed error for debugging
-      console.error('Signup error:', error);
+      // Set loading to false
+      setIsLoading(false);
+
+      // Check if 'response' is defined before accessing 'error.response.data.message'
+      const errorMessage = error.response && error.response.data ? error.response.data.message : 'An error occurred';
+      setError(errorMessage);
+      console.error('Login error:', error);
     }
   };
 
   // Return an object containing the signup function and error state
-  return { signup, error };
+  return { signup, isLoading, error };
 };
