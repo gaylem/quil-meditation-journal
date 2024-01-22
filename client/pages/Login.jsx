@@ -36,7 +36,7 @@ function Login() {
         {/* Login form */}
         <form onSubmit={handleSubmit}>
           {/* Title */}
-          <h1 className='title'>Welcome back!</h1>
+          <h1 className='title'>Log In</h1>
           <div className='input-box'>
             {/* Username input */}
             <label htmlFor='username'>Username:</label>
