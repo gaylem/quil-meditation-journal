@@ -87,10 +87,9 @@ const items = [
         </p>
         <br />
         <ul>
-          <li>1 uppercase letter</li>
-          <li>1 lowercase letter</li>
-          <li>1 number</li>
-          <li>1 symbol</li>
+          <li>Upper and lowercase letters</li>
+          <li>Numbers</li>
+          <li>Symbols</li>
           <br />
         </ul>
         <p>However, more of each is better from a security standpoint.</p>
