@@ -80,10 +80,7 @@ const items = [
     title: 'Update your password',
     content: (
       <div>
-        <p>Enter your current password and new password below to update your password.</p>
-        <br />
-        <p>
-          Your new password must be <strong>at least 8 characters long</strong> and contain the following:
+        <p>Enter your current password and new password below to update your password. Your new password must be <strong>at least 8 characters long</strong> and contain the following:
         </p>
         <br />
         <ul>
@@ -92,9 +89,7 @@ const items = [
           <li>Symbols</li>
           <br />
         </ul>
-        <p>However, more of each is better from a security standpoint.</p>
-        <br />
-        <p>Once you enter your new password, you will be logged out and prompted to log back in again.</p>
+        <p>However, more of each is better from a security standpoint. Once you enter your new password, you will be logged out and prompted to log back in again.</p>
         <br />
         <p>
           Be sure to remember your new password. We recommend using a password manager such as <a href='https://passwords.google.com/'>Google Password Manager</a>, <a href='https://support.apple.com/en-us/HT204085'>iCloud Keychain</a> or <a href='https://nordpass.com/'>Nordpass</a>. These tools often provide a password generator, which makes strong password creation quick and easy.
