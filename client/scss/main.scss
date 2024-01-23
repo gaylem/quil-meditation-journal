@@ -1,5 +1,42 @@
 /* Import all scss stylesheets into one main stylesheet for index.js file */
 
+@font-face {
+  font-family: 'Neucha';
+  src: url('../../public/fonts/Neucha-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../../public/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../../public/fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../../public/fonts/Poppins-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  src: url('../../public/fonts/Pacifico-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'YourFontName', sans-serif;
+}
+
 //** GLOBAL */
 @import 'app';
 @import 'toggle';
