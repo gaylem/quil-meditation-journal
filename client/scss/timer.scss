@@ -168,9 +168,10 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
   align-items: center;
   font-size: large;
   padding: 0.2em;
-  label {
-    font-size: large;
-    font-weight: 600;
+  .visually-hidden {
+    display: none;
+    // font-size: large;
+    // font-weight: 600;
   }
   .duration-input {
     padding: 0.5em;
@@ -267,6 +268,6 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
   .low {
     width: 28px;
     height: 22px;
-    padding: 5px 20px
+    padding: 5px 20px;
   }
 }
