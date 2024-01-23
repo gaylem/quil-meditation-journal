@@ -209,7 +209,7 @@ const Timer = () => {
           {/* Time Dropdowns */}
           {/* Duration Input */}
           <div className='duration-container'>
-            <input className='duration-input' id='duration' list='duration-options' placeholder='Time in minutes' name='duration' onChange={handleDurationChange} aria-label='Duration' />
+            <input className='duration-input' id='duration' list='duration-options' placeholder='Time in minutes' name='duration' onChange={handleDurationChange} aria-label='Enter time in minutes' />
             {/* Dropdown options for duration */}
             <datalist id='duration-options'>
               <option value='1 minute' />
@@ -240,9 +240,9 @@ const Timer = () => {
             </button>
           </div>
         </div>
-        <div className='bottom-row'>
+        {/*<div className='bottom-row'>
           <VolumeSlider audioElement={audioElement} volume={volume} setVolume={setVolume} />
-        </div>
+        </div>*/}
       </div>
     </div>
   );
