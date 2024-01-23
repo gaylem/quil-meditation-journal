@@ -13,6 +13,7 @@ import BackButton from '../components/BackButton.jsx';
 
 // Import styles
 import '../scss/account-form.scss';
+import '../scss/page.scss';
 
 const Account = () => {
   const { user, dispatch } = useAuthContext();
