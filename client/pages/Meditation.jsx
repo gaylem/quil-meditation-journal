@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ContactForm from '../components/ContactForm.jsx';
+import BackButton from '../components/BackButton.jsx';
 
 /**
  * React component for the How to Meditate page.
@@ -15,6 +16,7 @@ import ContactForm from '../components/ContactForm.jsx';
 const Meditate = () => {
   return (
     <div className='page-container'>
+      <BackButton />
       <h2>How To Meditate</h2>
       <p>
         <span className='purple'>&quot;I&apos;m terrible at meditation!&quot;</span> That&apos;s something many people say when the subject comes up. And the correct response is, &quot;Yes, you are!&quot; But that&apos;s because{' '}

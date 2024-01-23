@@ -11,7 +11,7 @@ import singingBowl from '../../public/assets/audio/singing-bowl.mp3';
 import playImage from '../../public/assets/images/play-button.png';
 import resetImage from '../../public/assets/images/reset-button.png';
 import pauseImage from '../../public/assets/images/pause-button.png';
-import { parse } from 'ipaddr.js';
+import VolumeSlider from './VolumeSlider.jsx';
 
 // Initialize audio element
 const audioElement = new Audio(singingBowl);
@@ -28,6 +28,7 @@ const Timer = () => {
   const [isActive, setActive] = useState(false);
   const [duration, setDuration] = useState(0);
   const [durationFinished, setDurationFinished] = useState(false);
+  const [volume, setVolume] = useState(50); // Initial volume value
 
   // Function to stop the audio
   const stopAudio = () => {
@@ -135,7 +136,7 @@ const Timer = () => {
 
     if (isActive && duration === 0 && !durationFinished) {
       setDurationFinished(true);
-      countRef.current = 0
+      countRef.current = 0;
     }
 
     // Cleanup intervals when the component unmounts or dependencies change
@@ -204,12 +205,11 @@ const Timer = () => {
       {/* Quote */}
       <h2 className='quote'>Let&apos;s begin.</h2>
       <div className='control-panel'>
-        {/* Time Dropdowns */}
-        <div className='time-dropdown'>
+        <div className='top-row'>
+          {/* Time Dropdowns */}
           {/* Duration Input */}
           <div className='duration-container'>
-            <label htmlFor='duration'>Duration:</label>
-            <input className='duration-input' id='duration' list='duration-options' placeholder='Time in minutes' name='duration' onChange={handleDurationChange} />
+            <input className='duration-input' id='duration' list='duration-options' placeholder='Time in minutes' name='duration' onChange={handleDurationChange} aria-label='Duration' />
             {/* Dropdown options for duration */}
             <datalist id='duration-options'>
               <option value='1 minute' />
@@ -227,17 +227,21 @@ const Timer = () => {
               <option value='120 minutes' />
             </datalist>
           </div>
+
+          {/* Control Buttons */}
+          <div className='circle-button-container'>
+            {/* Play/Pause Button */}
+            <button className={`circle-button button-primary-${isActive ? 'active' : 'inactive'}`} onClick={togglePlayPause}>
+              <img src={isActive ? pauseImage : playImage} id='play-pause-btn' alt={isActive ? 'Pause' : 'Play'} />
+            </button>
+            {/* Reset Button */}
+            <button className='circle-button' onClick={reset}>
+              <img src={resetImage} alt='Reset' id='reset-btn' />
+            </button>
+          </div>
         </div>
-        {/* Control Buttons */}
-        <div className='circle-button-container'>
-          {/* Play/Pause Button */}
-          <button className={`circle-button button-primary-${isActive ? 'active' : 'inactive'}`} onClick={togglePlayPause}>
-            <img src={isActive ? pauseImage : playImage} id='play-pause-btn' alt={isActive ? 'Pause' : 'Play'} />
-          </button>
-          {/* Reset Button */}
-          <button className='circle-button' onClick={reset}>
-            <img src={resetImage} alt='Reset' id='reset-btn' />
-          </button>
+        <div className='bottom-row'>
+          <VolumeSlider audioElement={audioElement} volume={volume} setVolume={setVolume} />
         </div>
       </div>
     </div>

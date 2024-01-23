@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 
 // Import data
 import data from '../../server/db/accountPageData.js';
+import BackButton from '../components/BackButton.jsx';
 
 const Account = () => {
   const { user, dispatch } = useAuthContext();
@@ -237,6 +238,7 @@ const Account = () => {
 
   return (
     <div className='page-container'>
+      <BackButton />
       <div className='page-text'>
         <h2>Account Settings</h2>
         You can manage your account settings below. If you have any questions, check out our <a href='/help-faqs'>Help & FAQs page.</a>
