@@ -209,8 +209,7 @@ const Timer = () => {
           {/* Time Dropdowns */}
           {/* Duration Input */}
           <div className='duration-container'>
-            <label htmlFor='duration'>Duration:</label>
-            <input className='duration-input' id='duration' list='duration-options' placeholder='Time in minutes' name='duration' onChange={handleDurationChange} />
+            <input className='duration-input' id='duration' list='duration-options' placeholder='Time in minutes' name='duration' onChange={handleDurationChange} aria-label='Duration' />
             {/* Dropdown options for duration */}
             <datalist id='duration-options'>
               <option value='1 minute' />

@@ -168,10 +168,6 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
   align-items: center;
   font-size: large;
   padding: 0.2em;
-  label {
-    font-size: large;
-    font-weight: 600;
-  }
   .duration-input {
     padding: 0.5em;
     border-radius: 0.5rem;
@@ -267,6 +263,6 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
   .low {
     width: 28px;
     height: 22px;
-    padding: 5px 20px
+    padding: 5px 20px;
   }
 }

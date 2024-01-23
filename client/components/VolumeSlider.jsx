@@ -6,7 +6,6 @@ import { styled } from '@mui/system';
 const StyledSlider = styled(Slider)`
   min-width: 100%;
   color: #fbeaeb;
-  box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,bottom 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
 
 const VolumeSlider = ({ audioElement, volume, setVolume }) => {
@@ -19,7 +18,7 @@ const VolumeSlider = ({ audioElement, volume, setVolume }) => {
     <div className='audio-slider'>
       {/* Use the StyledSlider component instead of Slider */}
       <img src='assets/images/volume-off.png' className='high' alt='Volume off icon' />
-      <StyledSlider valueLabelDisplay='auto' value={volume} onChange={handleVolumeChange} aria-labelledby='continuous-slider' />
+      <StyledSlider valueLabelDisplay='auto' value={volume} onChange={handleVolumeChange} aria-label='Volume Slider' />
       <img src='assets/images/volume-high.png' className='low' alt='Volume high icon' />
     </div>
   );
