@@ -31,7 +31,7 @@ const setupCORS = () => {
   } else if (process.env.TARGET_ENV === 'staging') {
     allowedOrigins = [process.env.STAGING_URL];
   } else if (process.env.TARGET_ENV === 'production') {
-    allowedOrigins = [process.env.PROD_URL, process.env.PROD_ALT_URL];
+    allowedOrigins = [process.env.PROD_URL, process.env.PROD_ALT_URL, 'https://www.quilmind.com'];
   }
 
   // Handle CORS for all routes
@@ -71,11 +71,11 @@ const generateNonce = () => {
   return randomBytes(16).toString('base64');
 };
 
+// Generate a nonce for this request
+const nonce = generateNonce();
+
 // Content Security Policy
 app.use((req, res, next) => {
-  // Generate a nonce for this request
-  const nonce = generateNonce();
-
   // CSP By Environment
   if (process.env.TARGET_ENV === 'development') {
     // Development CSP
