@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ContactForm from '../components/ContactForm.jsx';
+import BackButton from '../components/BackButton.jsx';
 
 /**
  * React component for the About page.
@@ -15,6 +16,7 @@ import ContactForm from '../components/ContactForm.jsx';
 const About = () => {
   return (
     <div className='page-container'>
+      <BackButton />
       <h2>About quil</h2>
       <p>
         <span className='purple'>quil</span> is a portmanteau of the words "tranquil" and "quill," like the feather pen. It is your distraction-free space for chronicling your meditation journey.{' '}
