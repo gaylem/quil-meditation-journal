@@ -38,28 +38,25 @@
   font-display: swap;
 }
 
-body {
-  font-family: 'YourFontName', sans-serif;
-}
-
-//** GLOBAL */
+//** GLOBAL STYLES */
 @import 'app';
 @import 'toggle';
 @import 'success-error';
 @import 'global-buttons';
+@import 'page';
 
 //** COMPONENTS */
-@import 'entry-container';
-@import 'header';
-@import 'new-entry';
-@import 'past-entries-feed';
-@import 'sidebar';
-@import 'timer';
-@import 'footer';
+// @import 'entry-container';
+// @import 'header';
+// @import 'new-entry';
+// @import 'past-entries-feed';
+// @import 'sidebar';
+// @import 'timer';
+// @import 'footer';
 
 //** PAGES */
-@import 'login-signup';
-@import 'page';
-@import 'contact-form';
-@import 'account-form';
-@import 'not-found';
+// @import 'login-signup';
+
+// @import 'contact-form';
+// @import 'account-form';
+// @import 'not-found';
