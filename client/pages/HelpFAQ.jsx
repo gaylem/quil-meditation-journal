@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import items from '../../server/db/helpFAQPageData';
 import ContactForm from '../components/ContactForm.jsx';
+import BackButton from '../components/BackButton.jsx';
 /**
  * React component for the Help & FAQs page.
  *
@@ -23,6 +24,7 @@ const HelpFAQ = () => {
 
   return (
     <div className='page-container'>
+      <BackButton />
       <div className='page-text'>
         <h2>Help & FAQs</h2>
         <p>Here are some questions and answers if you need any help. If you don't find what you're looking for here, scroll down and reach out via the contact form at the bottom of the page.</p>

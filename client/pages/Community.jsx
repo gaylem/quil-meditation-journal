@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ContactForm from '../components/ContactForm.jsx';
+import BackButton from '../components/BackButton.jsx';
 
 /**
  * React component for the About page.
@@ -15,6 +16,7 @@ import ContactForm from '../components/ContactForm.jsx';
 const Community = () => {
   return (
     <div className='page-container'>
+      <BackButton />
       <h2>Join Our Community</h2>
       <p>
         Join our community on{' '}
