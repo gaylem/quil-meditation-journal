@@ -166,16 +166,15 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: large;
   padding: 0.2em;
   .duration-input {
     font-family: $paragraph-font;
     padding: 0.5em;
+    border: none;
     border-radius: 0.5rem;
     color: rgb(59, 59, 59);
-    font-size: large;
+    font-size: medium;
     margin: 0.2em;
-    width: 80%;
   }
 }
 
