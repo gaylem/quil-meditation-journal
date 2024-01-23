@@ -12,8 +12,6 @@ import express from 'express';
 const router = express.Router();
 import userController from '../controllers/userController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import { signupLimiter } from '../middlewares/rateLimiter.js';
-import { loginLimiter } from '../middlewares/rateLimiter.js';
 const { signupUser, loginUser, authUser, logoutUser } = userController;
 
 /**
@@ -24,7 +22,7 @@ const { signupUser, loginUser, authUser, logoutUser } = userController;
  *   - email: String
  *   - password: String
  */
-router.post('/signup', signupLimiter, signupUser);
+router.post('/signup', signupUser);
 
 /**
  * @route POST /api/users/login
@@ -34,7 +32,7 @@ router.post('/signup', signupLimiter, signupUser);
  *   - req.body.username: String
  *   - req.body.password: String
  */
-router.post('/login', loginLimiter, loginUser);
+router.post('/login', loginUser);
 
 /**
  * @route POST /api/users/token/:id

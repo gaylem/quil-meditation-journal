@@ -16,15 +16,11 @@ const VolumeSlider = ({ audioElement, volume, setVolume }) => {
 
   const handleMouseDown = () => {
     // When the slider is clicked, update the volume
-    audioElement.muted = false; // Unmute if needed
     const newVolume = volume; // Use the existing volume
     audioElement.volume = newVolume / 100;
   };
 
   const handleTouchStart = event => {
-    // Log touch start event
-    console.log('Touch started');
-
     // Calculate the percentage of the slider where the touch occurred
     const touchPercentage = (event.touches[0].clientX - event.currentTarget.getBoundingClientRect().left) / event.currentTarget.clientWidth;
 
@@ -35,8 +31,8 @@ const VolumeSlider = ({ audioElement, volume, setVolume }) => {
     setVolume(newVolume);
     audioElement.volume = newVolume / 100;
 
-    // Log the new volume
-    console.log('New volume:', newVolume);
+    // Prevent default behavior to avoid unintended actions on touch
+    event.preventDefault();
   };
 
   return (
