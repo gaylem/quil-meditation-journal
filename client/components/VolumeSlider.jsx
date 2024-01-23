@@ -1,3 +1,5 @@
+//! This is not currently in use. It won't seem to work on mobile web browsers. Saving for the future to use with React Native.
+
 import React, { useRef, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/system';

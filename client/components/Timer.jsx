@@ -240,7 +240,8 @@ const Timer = () => {
             </button>
           </div>
         </div>
-        {/*<div className='bottom-row'>
+        {/* TODO: Unncomment this when the VolumeSlider.jsx is fixed
+        <div className='bottom-row'>
           <VolumeSlider audioElement={audioElement} volume={volume} setVolume={setVolume} />
         </div>*/}
       </div>
