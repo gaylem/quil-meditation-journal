@@ -1,6 +1,7 @@
 //** CONTACT FORM */
 
 import React from 'react';
+import '../scss/contact-form.scss';
 
 /**
  * Contact form component allows users to submit messages.

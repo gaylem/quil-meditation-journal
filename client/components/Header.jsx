@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 import Sidebar from './Sidebar.jsx';
+import '../scss/header.scss';
 
 // Import icons
 import hamburger from '../../public/assets/images/hamburger.png';

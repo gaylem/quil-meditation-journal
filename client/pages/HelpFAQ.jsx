@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import items from '../../server/db/helpFAQPageData';
 import ContactForm from '../components/ContactForm.jsx';
 import BackButton from '../components/BackButton.jsx';
+import '../scss/page.scss';
+
 /**
  * React component for the Help & FAQs page.
  *

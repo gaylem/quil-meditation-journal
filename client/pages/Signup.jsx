@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSignup } from '../hooks/useSignup.js';
 import Blurb from '../components/Blurb.jsx';
-
+import '../scss/login-signup.scss';
 /**
  * Signup component represents the signup page of the application.
  *
