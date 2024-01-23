@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 const { Link } = await import('react-router-dom');
 import { useLogin } from '../hooks/useLogin.js';
 import Blurb from '../components/Blurb.jsx';
+import '../scss/login-signup.scss';
 
 /**
  * Login component represents the login page of the application.

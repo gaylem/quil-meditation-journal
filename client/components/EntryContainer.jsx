@@ -3,6 +3,7 @@
 import React from 'react';
 import PastEntriesFeed from './PastEntriesFeed.jsx';
 import Timer from './Timer.jsx';
+import '../scss/entry-container.scss';
 
 /**
  * EntryContainer - Main journal entry container that organizes new and past entries.

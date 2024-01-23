@@ -1,4 +1,5 @@
 import React from 'react';
+import '../scss/not-found.scss';
 
 /**
  * Home component represents the main page of the application.

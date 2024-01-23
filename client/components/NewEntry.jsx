@@ -10,6 +10,7 @@ import { useAuthContext } from '../hooks/useAuthContext.js';
 import axios from '../axiosConfig.js';
 import format from 'date-fns/format';
 import Cookies from 'js-cookie';
+import '../scss/new-entry.scss';
 
 /**
  * NewEntry component handles the creation of new journal entries.

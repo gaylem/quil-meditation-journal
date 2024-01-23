@@ -15,6 +15,9 @@ import book from '../../public/assets/images/book.png';
 // Import props validation
 import PropTypes from 'prop-types';
 
+// Import styles
+import '../scss/sidebar.scss';
+
 /**
  * Sidebar component for internal navigation links.
  *

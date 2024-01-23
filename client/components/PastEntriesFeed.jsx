@@ -4,9 +4,10 @@ import React, { useEffect } from 'react';
 import { useEntriesContext } from '../hooks/useEntriesContext.js';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
-// Import components
+// Import components and styles
 import PastEntry from './PastEntry.jsx';
 import NewEntry from './NewEntry.jsx';
+import '../scss/past-entries-feed.scss';
 
 // Import other libraries
 import axios from '../axiosConfig.js';

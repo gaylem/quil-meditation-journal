@@ -11,6 +11,9 @@ import Cookies from 'js-cookie';
 import data from '../../server/db/accountPageData.js';
 import BackButton from '../components/BackButton.jsx';
 
+// Import styles
+import '../scss/account-form.scss';
+
 const Account = () => {
   const { user, dispatch } = useAuthContext();
   const initialItemStates = Array(2).fill(false);
