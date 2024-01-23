@@ -16,10 +16,11 @@ import accountController from '../controllers/accountController.js';
 const { downloadEntries, updateUsername, updateEmail, updatePassword, deleteAccount } = accountController;
 
 // Rate limiters
-import { downloadLimiter } from '../middlewares/rateLimiter.js';
-import { usernameLimiter } from '../middlewares/rateLimiter.js';
-import { emailLimiter } from '../middlewares/rateLimiter.js';
-import { passwordLimiter } from '../middlewares/rateLimiter.js';
+// import { downloadLimiter } from '../middlewares/rateLimiter.js';
+// import { usernameLimiter } from '../middlewares/rateLimiter.js';
+// import { emailLimiter } from '../middlewares/rateLimiter.js';
+// import { passwordLimiter } from '../middlewares/rateLimiter.js';
+import { accountRateLimiter } from '../middlewares/accountRateLimiter.js';
 
 /**
  * @route GET /api/accounts/:userId
@@ -27,7 +28,7 @@ import { passwordLimiter } from '../middlewares/rateLimiter.js';
  * @param userId
  * @access Private (requires access token)
  */
-router.post('/download/:userId', downloadLimiter, downloadEntries);
+router.post('/download/:userId', accountRateLimiter, downloadEntries);
 
 /**
  * @route PATCH /api/accounts/:userId
@@ -35,7 +36,7 @@ router.post('/download/:userId', downloadLimiter, downloadEntries);
  * @param userId
  * @access Private (requires access token)
  */
-router.patch('/username/:userId', usernameLimiter, updateUsername);
+router.patch('/username/:userId', accountRateLimiter, updateUsername);
 
 /**
  * @route PATCH /api/accounts/:userId
@@ -43,7 +44,7 @@ router.patch('/username/:userId', usernameLimiter, updateUsername);
  * @param userId
  * @access Private (requires access token)
  */
-router.patch('/email/:userId', emailLimiter, updateEmail);
+router.patch('/email/:userId', accountRateLimiter, updateEmail);
 
 /**
  * @route PATCH /api/accounts/update/:userId
@@ -51,7 +52,7 @@ router.patch('/email/:userId', emailLimiter, updateEmail);
  * @param userId
  * @access Private (requires access token)
  */
-router.patch('/pswd/:userId', passwordLimiter, updatePassword);
+router.patch('/pswd/:userId', accountRateLimiter, updatePassword);
 
 /**
  * @route DELETE /api/accounts/delete/:userId
