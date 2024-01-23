@@ -3,6 +3,7 @@
 import React from 'react';
 import ContactForm from '../components/ContactForm.jsx';
 import BackButton from '../components/BackButton.jsx';
+import '../scss/page.scss';
 
 /**
  * React component for the About page.
