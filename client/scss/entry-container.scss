@@ -12,14 +12,14 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
 .entry-container {
   display: flex;
   flex-direction: column;
-  padding-bottom: 10rem;
   box-shadow:
     8px 0 20px -12px $shadow-color,
     -8px 0 13px -12px $shadow-color;
-  top: 0;
   margin: auto;
   max-width: 900px;
   color: black;
+  min-height: 100vh;
+  padding-bottom: 5em;
 
   @media (max-width: 1000px) {
     min-width: 100vw;
