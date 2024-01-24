@@ -7,9 +7,10 @@ import { useAuthContext } from '../hooks/useAuthContext.js';
 import axios from '../axiosConfig.js';
 import Cookies from 'js-cookie';
 
-// Import data
+// Import data and components
 import data from '../../server/db/accountPageData.js';
 import BackButton from '../components/BackButton.jsx';
+import ContactForm from '../components/ContactForm.jsx';
 
 // Import styles
 import '../scss/account-form.scss';
@@ -287,6 +288,14 @@ const Account = () => {
             )}
           </div>
         ))}
+      </div>
+      <br />
+      <div className='page-text'>
+        <h2>Need help?</h2>
+        <p>If you encountered any issues with your account updates, reach out through the form below.</p>
+      </div>
+      <div className='feed-container'>
+        <ContactForm />
       </div>
     </div>
   );
