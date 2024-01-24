@@ -1,4 +1,4 @@
-/* Import all scss stylesheets into one main stylesheet for index.js file */
+/* Import fonts and global styles into index.js file */
 
 @font-face {
   font-family: 'Neucha';
@@ -43,20 +43,3 @@
 @import 'toggle';
 @import 'success-error';
 @import 'global-buttons';
-// @import 'page';
-
-//** COMPONENTS */
-// @import 'entry-container';
-// @import 'header';
-// @import 'new-entry';
-// @import 'past-entries-feed';
-// @import 'sidebar';
-// @import 'timer';
-// @import 'footer';
-
-//** PAGES */
-// @import 'login-signup';
-
-// @import 'contact-form';
-// @import 'account-form';
-// @import 'not-found';
