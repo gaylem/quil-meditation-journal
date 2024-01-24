@@ -15,7 +15,7 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
   height: 100%;
   flex-wrap: wrap;
   font-family: $paragraph-font;
-  padding-top: 3em;
+  padding: 3em 0 45em 0;
   @media (max-width: 930px) {
     flex-direction: column;
     background-color: white;
