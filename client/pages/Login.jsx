@@ -41,7 +41,7 @@ function Login() {
           <div className='input-box'>
             {/* Username input */}
             <label htmlFor='username'>Username:</label>
-            <input type='username' id='username' onChange={e => setUsername(e.target.value)} placeholder='ex: jane' value={username} />
+            <input type='username' id='username' onChange={e => setUsername(e.target.value)} placeholder='ex: jane' value={username} autoComplete='username' />
             {/* Password input */}
             <label htmlFor='password'>Password:</label>
             <input type='password' id='password' onChange={e => setPassword(e.target.value)} placeholder='Enter your password' value={password} />
