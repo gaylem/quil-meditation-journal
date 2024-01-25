@@ -51,6 +51,7 @@ function Signup() {
               }}
               placeholder='ex: jane'
               value={username}
+              autoComplete='username'
             />
             {/* Email input */}
             <label htmlFor='email'>Email:</label>
@@ -62,6 +63,7 @@ function Signup() {
               }}
               placeholder='ex: jane@example.com'
               value={email}
+              autoComplete='email'
             />
             {/* Password input */}
             <label htmlFor='password'>Password:</label>
