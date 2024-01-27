@@ -10,7 +10,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node -r newrelic server/server.js && node -r newrelic client/index.js",
     "build": "webpack --mode production",
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "client": "webpack-dev-server --hot --mode development",
@@ -42,6 +42,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.0.0",
     "mongoose": "^7.4.5",
+    "newrelic": "^11.10.1",
     "plugin": "^0.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
