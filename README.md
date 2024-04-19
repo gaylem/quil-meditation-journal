@@ -12,8 +12,6 @@
 * Additional security measures to prevent MitM, DDoS, XSS, and other attacks
 * Pipeline with production and staging environments built on Heroku
 
-<br></br>
-
 ## Tech Stack
 
 <div>
@@ -26,8 +24,6 @@
     <img align="left" alt="MongoDB" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" />
     <img align="left" alt="Heroku" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/heroku/heroku-plain-wordmark.svg" />
 </div>
-
-<br></br>
 
 ## Progress
 
@@ -51,7 +47,3 @@
 ✅ = Ready to use
 ⏳ = In progress
 ⏸️ = Not started
-
-<br></br>
-
-quil contribution friendly! If you're interested in helping us make quil even better, please visit <a href="https://quilmind.com/community">quilmind.com/community</a> to connect!
