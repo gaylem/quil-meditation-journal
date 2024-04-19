@@ -25,7 +25,7 @@
     <img align="left" alt="Heroku" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/heroku/heroku-plain-wordmark.svg" />
 </div>
 
-## Progress
+## Progress 
 
 | Feature                                  | Status |
 | ---------------------------------------- | ------ |
