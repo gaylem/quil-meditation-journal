@@ -25,6 +25,7 @@
     <img align="left" alt="Heroku" width="40px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/heroku/heroku-plain-wordmark.svg" />
 </div>
 
+<br></br>
 ## Progress 
 
 | Feature                                  | Status |
@@ -44,6 +45,6 @@
 | Design advice                            | ⏸️     |
 | Build random meditation quotes API       | ⏸️     |
 
-✅ = Ready to use
-⏳ = In progress
-⏸️ = Not started
+- ✅ = Ready to use
+- ⏳ = In progress
+- ⏸️ = Not started
