@@ -38,6 +38,7 @@
     "express-rate-limit": "^7.1.5",
     "hammerjs": "^2.0.8",
     "helmet": "^7.1.0",
+    "husky": "^9.0.11",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.0.0",
