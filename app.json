@@ -4,8 +4,12 @@
       "env": {
         "NODE_ENV": "development",
         "TARGET_ENV": "development",
+        "MONGODB_URI": "mongodb+srv://quilAdmin:TJGB8UrLR16qMOyo@quil-dev.c9kpce7.mongodb.net/?retryWrites=true&w=majority",
+        "PORT": 4000,
+        "REACT_APP_FORM_ENDPOINT": "https://getform.io/f/26155a73-618a-4442-bac8-7a66c744534a",
         "ENCRYPTION_KEY": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
-        "TOKEN_KEY": "zZxeZtu6gBcEpspAZV1FVVvTD6yWRWVMnD13z7KGUdPeT8FRxmT7R35xPhNvuW37"
+        "TOKEN_KEY": "zZxeZtu6gBcEpspAZV1FVVvTD6yWRWVMnD13z7KGUdPeT8FRxmT7R35xPhNvuW37",
+        "SALT_WORK_FACTOR": 12
       }
     }
   }
