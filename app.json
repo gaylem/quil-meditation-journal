@@ -1,0 +1,12 @@
+{
+  "environments": {
+    "test": {
+      "env": {
+        "NODE_ENV": "development",
+        "TARGET_ENV": "development",
+        "ENCRYPTION_KEY": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "TOKEN_KEY": "zZxeZtu6gBcEpspAZV1FVVvTD6yWRWVMnD13z7KGUdPeT8FRxmT7R35xPhNvuW37"
+      }
+    }
+  }
+}
