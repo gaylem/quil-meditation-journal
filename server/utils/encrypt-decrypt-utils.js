@@ -28,7 +28,6 @@ export function encrypt(text, key = process.env.ENCRYPTION_KEY) {
     // Return an object containing the IV and the encrypted data
     return { iv: iv.toString('hex'), encryptedData: encrypted };
   } catch (error) {
-    console.error('Encryption Error:', error);
     throw error;
   }
 }
@@ -52,7 +51,6 @@ export function decrypt(encryptedText, decryptionIv, key = process.env.ENCRYPTIO
     // Return decrypted text
     return decrypted;
   } catch (error) {
-    console.error('Decryption Error:', error);
     throw error;
   }
 }
