@@ -28,7 +28,6 @@ describe('encrypt function', () => {
     const result2 = encrypt('Text 2');
     expect(result1.iv).not.toEqual(result2.iv);
   });
-
 });
 
 describe('decrypt function', () => {
@@ -49,9 +48,6 @@ describe('decrypt function', () => {
     expect(() => {
       const encryptedText = encryptResult.encryptedData;
       const decryptTest = decrypt(encryptedText, 'invalid_iv');
-      console.log('decryptTest: ', decryptTest);
     }).toThrow('Invalid initialization vector');
   });
-
 });
-
