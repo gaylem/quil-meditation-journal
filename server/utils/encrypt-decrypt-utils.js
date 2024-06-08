@@ -10,9 +10,6 @@ import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 // Algorithm
 const algorithm = 'aes-256-cbc';
 
-// Key
-const key = process.env.ENCRYPTION_KEY;
-
 /**
  * Encrypts the given text using AES-256-CBC algorithm and a unique IV.
  *
@@ -20,7 +17,7 @@ const key = process.env.ENCRYPTION_KEY;
  * @returns {Object} An object containing the IV and the encrypted data.
  * @throws {Error} Throws an error if encryption fails.
  */
-export function encrypt(text) {
+export function encrypt(text, key = process.env.ENCRYPTION_KEY) {
   try {
     // Generate a random IV for each encryption
     const iv = randomBytes(16);
@@ -31,8 +28,8 @@ export function encrypt(text) {
     // Return an object containing the IV and the encrypted data
     return { iv: iv.toString('hex'), encryptedData: encrypted };
   } catch (error) {
-    console.error('Decryption Error:', error);
-    throw error; // Re-throw the error for better debugging
+    console.error('Encryption Error:', error);
+    throw error;
   }
 }
 
@@ -44,7 +41,7 @@ export function encrypt(text) {
  * @returns {string} The decrypted text.
  * @throws {Error} Throws an error if decryption fails.
  */
-export function decrypt(encryptedText, decryptionIv) {
+export function decrypt(encryptedText, decryptionIv, key = process.env.ENCRYPTION_KEY) {
   try {
     // Convert the IV from hex string to Buffer
     const iv = Buffer.from(decryptionIv, 'hex');
@@ -56,5 +53,6 @@ export function decrypt(encryptedText, decryptionIv) {
     return decrypted;
   } catch (error) {
     console.error('Decryption Error:', error);
+    throw error;
   }
 }
