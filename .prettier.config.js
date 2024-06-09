@@ -6,7 +6,7 @@ module.exports = {
   tabWidth: 2,
   overrides: [
     {
-      files: ['.eslintrc.js', '.eslintrc.json', '.eslintignore'],
+      files: ['.eslintrc', '.eslintignore'],
       options: {
         parser: 'json',
       },
