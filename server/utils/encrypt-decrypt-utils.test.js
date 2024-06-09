@@ -47,7 +47,7 @@ describe('decrypt function', () => {
 
     expect(() => {
       const encryptedText = encryptResult.encryptedData;
-      const decryptTest = decrypt(encryptedText, 'invalid_iv');
+      decrypt(encryptedText, 'invalid_iv');
     }).toThrow('Invalid initialization vector');
   });
 });

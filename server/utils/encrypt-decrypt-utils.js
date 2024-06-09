@@ -1,11 +1,12 @@
-//** ENCRYPT DECRYPT UTILS */
+//* ENCRYPT DECRYPT UTILS */
 
 // Import Dotenv
 import dotenv from 'dotenv';
-dotenv.config();
 
 // Import crypto methods
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
+
+dotenv.config();
 
 // Algorithm
 const algorithm = 'aes-256-cbc';
