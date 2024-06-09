@@ -1,6 +1,7 @@
 //! This is not currently in use. It won't seem to work on mobile web browsers. Saving for the future to use with React Native.
 
 import React, { useRef, useEffect } from 'react';
+//! Deleted @mui/material from package.json, reinstall if this component is used
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/system';
 import Hammer from 'hammerjs';
@@ -10,7 +11,7 @@ const StyledSlider = styled(Slider)`
   color: #fbeaeb;
 `;
 
-const VolumeSlider = ({ audioElement, volume, setVolume }) => {
+function VolumeSlider({ audioElement, volume, setVolume }) {
   const sliderRef = useRef(null);
 
   useEffect(() => {
@@ -43,6 +44,6 @@ const VolumeSlider = ({ audioElement, volume, setVolume }) => {
       <img src='assets/images/volume-high.png' className='low' alt='Volume high icon' />
     </div>
   );
-};
+}
 
 export default VolumeSlider;
