@@ -1,4 +1,7 @@
-//* ENCRYPT DECRYPT UTILS */
+//* ENCRYPTION & DECRYPTION UTILITY FUNCTIONS */
+
+/* These functions are used to encrypt journal entries before they land in the database
+and decrypt them when they are sent back to the client when the user authenticates */
 
 import dotenv from 'dotenv';
 
