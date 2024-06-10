@@ -1,6 +1,6 @@
 //* ENCRYPTION & DECRYPTION UTILITY FUNCTIONS */
 
-/* These functions do the following:
+/* Includes:
 1. Encrypt journal entries before they land in the database
 2. Decrypt journal entries before they are sent back to the client when the user authenticates */
 
