@@ -1,12 +1,13 @@
-//** USER CREDENTIALS FUNCTIONS */
+//* USER CREDENTIALS FUNCTIONS */
 
 /* Includes:
     1. isValidSignup - Checks if user inputs at signup are valid, called by the userController
+    2. verifyPassword - Confirms if password provided matches password in database
 */
 
-import { User } from '../db/models.js';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
+import { User } from '../db/models.js';
 
 /**
  * Checks if user inputs at signup are valid.
@@ -71,7 +72,7 @@ export const verifyPassword = async (input, userId) => {
     const user = await User.findOne({ _id: userId });
     // Throw error if no user
     if (!user) {
-      throw Error('User does not exist ');
+      throw Error('User does not exist');
     }
     // Confirm old password matches user password
     const match = await bcrypt.compare(input, user.password);
