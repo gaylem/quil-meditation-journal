@@ -1,17 +1,19 @@
-//** ENCRYPT DECRYPT UTILS */
+//* ENCRYPTION & DECRYPTION UTILITY FUNCTIONS */
 
-// Import Dotenv
+/* Includes:
+1. Encrypt journal entries before they land in the database
+2. Decrypt journal entries before they are sent back to the client when the user authenticates */
+
 import dotenv from 'dotenv';
-dotenv.config();
 
-// Import crypto methods
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 
-// Algorithm
+dotenv.config();
+
 const algorithm = 'aes-256-cbc';
 
 /**
- * Encrypts the given text using AES-256-CBC algorithm and a unique IV.
+ * Encrypts the given text using AES-256-CBC algorithm and a unique initialization vector (IV).
  *
  * @param {string} text - The text to be encrypted.
  * @returns {Object} An object containing the IV and the encrypted data.
