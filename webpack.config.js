@@ -98,7 +98,18 @@ export default {
           },
         ],
       },
-
+      {
+        test: /\.(mp4|mov)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[hash].[ext]',
+              outputPath: 'assets/videos',
+            },
+          },
+        ],
+      },
       {
         test: /\.(mp3|ogg|wav)$/i,
         loader: 'file-loader',
