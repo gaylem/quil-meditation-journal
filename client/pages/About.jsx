@@ -1,9 +1,10 @@
-//** ABOUT PAGE */
+//* ABOUT PAGE */
 
 import React from 'react';
 import ContactForm from '../components/ContactForm.jsx';
 import BackButton from '../components/BackButton.jsx';
 import '../scss/page.scss';
+import demo from '../../public/assets/video/quil-demo.mp4';
 
 /**
  * React component for the About page.
@@ -14,13 +15,16 @@ import '../scss/page.scss';
  *
  * @returns {JSX.Element} The rendered About page component.
  */
-const About = () => {
+function About() {
   return (
     <div className='page-container'>
       <BackButton />
       <h2>About quil</h2>
       <p>
         <span className='purple'>quil</span> is a portmanteau of the words "tranquil" and "quill," like the feather pen. It is your distraction-free space for chronicling your meditation journey.{' '}
+      </p>
+      <p>
+        <video className='responsive-video' src={demo} controls='controls' autoPlay='true' autoPlay loop muted />
       </p>
       <br />
       <p>Sure, you could use any other digital note-taking app instead, but the last thing you need when you&apos;re about to meditate is to glance at your to-do list.</p>
@@ -66,6 +70,6 @@ const About = () => {
       <ContactForm />
     </div>
   );
-};
+}
 
 export default About;
