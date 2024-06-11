@@ -1,5 +1,9 @@
 # quil, a meditation journal
 
+
+https://github.com/gaylem/quil-meditation-journal/assets/76500899/3819b6e4-eae7-44bb-aa87-a29b44f1931d
+
+
 **<a href="https://www.quilmind.com">quilmind.com</a> is a meditation app with the following features:**
 
 * A meditation timer with soothing sounds and SCSS animations
@@ -8,8 +12,9 @@
 * Optimized site performance with enhanced minification, code splitting, compression, lazy loading, and caching 
 * Server-side JSON Web Token (JWT) authentication 
 * Password hashing and journal entry encryption to protect user privacy
-* Additional security measures to prevent MitM, DDoS, XSS, and other attacks
+* Rate limiting and additional measures to prevent DDoS, XSS, and other attacks
 * Pipeline with production and staging environments built on Heroku
+* Static IP addresses for database security and load balancing
 
 ## Tech Stack
 
@@ -36,8 +41,9 @@
 | Design & accessibility improvements      | ✅     |
 | Performance improvements                 | ✅     |
 | Security enhancements                    | ✅     |
+| Refactor to TypeScript                   | ⏳     |
+| Testing Coverage                         | ⏳     |
 | Password reset functionality             | ⏸️     |
-| Testing Coverage                         | ⏸️     |
 | Search functionality                     | ⏸️     |
 | Stats page                               | ⏸️     |
 | OAuth with Passport.js                   | ⏸️     |
