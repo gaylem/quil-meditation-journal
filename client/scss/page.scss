@@ -49,6 +49,14 @@ $header-font: 'Neucha', 'Poppins', sans-serif;
     text-shadow: 1px 1px 5px lightgray;
   }
 
+  .responsive-video {
+    width: 100%;
+    height: auto;
+    padding: 2em 0 0 0;
+    max-width: 100%;
+    display: block;
+  }
+
   // Bold paragraph text
   .purple {
     color: $primary-color;
