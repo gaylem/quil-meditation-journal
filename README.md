@@ -1,8 +1,6 @@
 # quil, a meditation journal
 
-
-https://github.com/gaylem/quil-meditation-journal/assets/76500899/3819b6e4-eae7-44bb-aa87-a29b44f1931d
-
+https://github.com/gaylem/quil-meditation-journal/assets/76500899/c0a0e7ce-9016-4eaa-87ff-5d3cc9aa655c
 
 **<a href="https://www.quilmind.com">quilmind.com</a> is a meditation app with the following features:**
 
